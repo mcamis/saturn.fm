@@ -1,0 +1,15 @@
+## Environment
+.env
+
+## Node
+web/client/.sass-cache
+**/dist
+**/node_modules
+
+## Logs
+**/log
+#**/*.log
+
+## Testing reports
+web/client/test-results.xml
+**/coverage

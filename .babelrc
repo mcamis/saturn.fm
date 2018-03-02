@@ -1,0 +1,13 @@
+{
+  "presets": ["env", "react", "airbnb"],
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./src"]
+    }]
+  ],
+  "env": {
+    "coverage": {
+      "plugins": [ "istanbul" ]
+    }
+  }
+}
