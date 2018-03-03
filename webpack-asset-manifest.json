@@ -1,0 +1,22 @@
+{
+  "/images/dashboard.png": "/images/dashboard.png",
+  "/images/ffwd.png": "/images/ffwd.png",
+  "/images/galaxy.png": "/images/galaxy.png",
+  "/images/globe.png": "/images/globe.png",
+  "/images/header.png": "/images/header.png",
+  "/images/orb-bottom.png": "/images/orb-bottom.png",
+  "/images/orb-middle.png": "/images/orb-middle.png",
+  "/images/orb-shadow.png": "/images/orb-shadow.png",
+  "/images/orb-top.png": "/images/orb-top.png",
+  "/images/play-pause.png": "/images/play-pause.png",
+  "/images/repeat.png": "/images/repeat.png",
+  "/images/rwd.png": "/images/rwd.png",
+  "/images/spotify.png": "/images/spotify.png",
+  "/images/stop.png": "/images/stop.png",
+  "/images/time.png": "/images/time.png",
+  "/images/visualizer.png": "/images/visualizer.png",
+  "app.css": "styles/app7fe1cc9086ceaed1dc8c.css",
+  "app.js": "js/app.7fe1cc9086ceaed1dc8c.js",
+  "main.js": "js/main.4a32842c3696b8612018.js",
+  "vendor.js": "js/vendor.00dab230227b73f4a546.js"
+}
