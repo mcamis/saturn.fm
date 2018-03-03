@@ -128,6 +128,9 @@ ul {
       image-rendering: pixelated;
       content: "";
       margin-bottom: .25em;
+      &:focused {
+        outline: none;
+      }
       &.bottom {
         background: url("../images/orb-bottom.png") center center / cover no-repeat;
       }

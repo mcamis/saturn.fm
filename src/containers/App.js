@@ -10,6 +10,9 @@ const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
 class App extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      audio: undefined,
+    };
     autobind(this);
   }
 
@@ -23,18 +26,18 @@ class App extends Component {
     this.mount.removeChild(this.renderer.domElement);
   }
 
-  onResize(){
+  onResize() {
     const width = window.innerWidth > 1000 ? 1000 : window.innerWidth;
-    const height = width * .75;
+    const height = width * 0.75;
     this.camera.aspect = width / height;
 
     this.camera.updateProjectionMatrix();
-    this.renderer.setSize( width, height );
+    this.renderer.setSize(width, height);
   }
 
   setupScene() {
     const width = window.innerWidth > 1000 ? 1000 : window.innerWidth;
-    const height = width * .75;
+    const height = width * 0.75;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(20, width / height, 1, 1000);
@@ -59,7 +62,7 @@ class App extends Component {
     this.start();
     this.addCubes();
     this.analyzeAudio();
-    window.addEventListener( 'resize', this.onResize, false );
+    window.addEventListener('resize', this.onResize, false);
   }
 
   start() {
@@ -152,12 +155,15 @@ class App extends Component {
     renderFrame();
 
     this.audio = audio;
+    this.setState({
+      audio,
+    });
   }
 
   // idleAnimation() {
-    // TODO: Animate up and down while idle
-    // this.leftCube.rotation.y += 0.009;
-    // this.rightCube.rotation.y -= 0.009;
+  // TODO: Animate up and down while idle
+  // this.leftCube.rotation.y += 0.009;
+  // this.rightCube.rotation.y -= 0.009;
   // }
 
   animate() {
@@ -169,16 +175,6 @@ class App extends Component {
     // }
     this.renderScene();
     this.frameId = window.requestAnimationFrame(this.animate);
-  }
-
-  // TODO: Responsive render
-
-  playOrPause() {
-    if (this.audio.paused) {
-      this.audio.play();
-    } else {
-      this.audio.pause();
-    }
   }
 
   renderScene() {
@@ -195,7 +191,7 @@ class App extends Component {
             this.mount = mount;
           }}
         />
-        <Menu />
+        <Menu audio={this.state.audio} />
         <div className="dashboard" />
         <StarField />
       </div>

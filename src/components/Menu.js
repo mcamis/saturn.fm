@@ -9,20 +9,72 @@ import stopIcon from 'images/stop.png';
 import repeatIcon from 'images/repeat.png';
 import visualizerIcon from 'images/visualizer.png';
 
+import autobind from 'utilities/autobind';
 import OrbButton from 'components/OrbButton';
 
-const Menu = () => (
-  <ul>
-    <OrbButton className="gold" icon={spotifyIcon} />
-    <OrbButton className="gold" icon={spotifyIcon} />
-    <OrbButton className="gold" icon={visualizerIcon} />
-    <OrbButton className="middle rewind" icon={rwdIcon} />
-    <OrbButton className="middle play-pause" icon={playPauseIcon} />
-    <OrbButton className="middle fast-forward" icon={ffwdIcon} />
-    <OrbButton className="bottom repeat" icon={repeatIcon} />
-    <OrbButton className="bottom stop" icon={stopIcon} />
-    <OrbButton className="bottom globe" />
-  </ul>
-);
+class Menu extends Component {
+  constructor(props) {
+    super(props);
+    autobind(this);
+  }
+
+  playOrPause() {
+    const { audio } = this.props;
+    if (audio.paused || audio.ended) {
+      audio.play();
+    } else {
+      audio.pause();
+    }
+  }
+
+  rewind() {
+    const { audio } = this.props;
+    audio.currentTime = 0;
+  }
+
+  stop() {
+    const { audio } = this.props;
+    audio.pause();
+    audio.currentTime = 0;
+  }
+
+  toggleRepeat() {
+    const { audio } = this.props;
+    const loopEnabled = audio.loop;
+    audio.loop = !loopEnabled;
+  }
+
+  render() {
+    return (
+      <ul>
+        <OrbButton className="gold" icon={spotifyIcon} />
+        <OrbButton className="gold" icon={spotifyIcon} />
+        <OrbButton className="gold" icon={visualizerIcon} />
+        <OrbButton
+          className="middle rewind"
+          icon={rwdIcon}
+          callback={this.rewind}
+        />
+        <OrbButton
+          className="middle play-pause"
+          icon={playPauseIcon}
+          callback={this.playOrPause}
+        />
+        <OrbButton className="middle fast-forward" icon={ffwdIcon} />
+        <OrbButton
+          className="bottom repeat"
+          icon={repeatIcon}
+          callback={this.toggleRepeat}
+        />
+        <OrbButton
+          className="bottom stop"
+          icon={stopIcon}
+          callback={this.stop}
+        />
+        <OrbButton className="bottom globe" />
+      </ul>
+    );
+  }
+}
 
 export default Menu;
