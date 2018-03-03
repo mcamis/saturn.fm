@@ -5,6 +5,8 @@ import spotifyIcon from 'images/spotify.png';
 import playPauseIcon from 'images/play-pause.png';
 import ffwdIcon from 'images/ffwd.png';
 import rwdIcon from 'images/rwd.png';
+import stopIcon from 'images/stop.png';
+import repeatIcon from 'images/repeat.png';
 import visualizerIcon from 'images/visualizer.png';
 
 import OrbButton from 'components/OrbButton';
@@ -17,9 +19,9 @@ const Menu = () => (
     <OrbButton className="middle rewind" icon={rwdIcon} />
     <OrbButton className="middle play-pause" icon={playPauseIcon} />
     <OrbButton className="middle fast-forward" icon={ffwdIcon} />
-    <OrbButton className="bottom" icon={spotifyIcon} />
-    <OrbButton className="bottom" icon={spotifyIcon} />
-    <OrbButton className="bottom" icon={spotifyIcon} />
+    <OrbButton className="bottom repeat" icon={repeatIcon} />
+    <OrbButton className="bottom stop" icon={stopIcon} />
+    <OrbButton className="bottom globe" />
   </ul>
 );
 

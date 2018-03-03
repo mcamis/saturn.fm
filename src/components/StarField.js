@@ -20,8 +20,17 @@ class StarField extends Component {
     this.stop();
   }
 
+  onResize(){
+    const width = window.innerWidth > 1000 ? 1000 : window.innerWidth;
+    const height = window.innerHeight;
+    this.camera.aspect = width / height;
+
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize( width, height );
+  }
+
   setupScene() {
-    const width = window.innerWidth;
+    const width = window.innerWidth > 1000 ? 1000 : window.innerWidth;
     const height = window.innerHeight;
 
     const scene = new THREE.Scene();
@@ -41,6 +50,7 @@ class StarField extends Component {
     this.mount.appendChild(this.renderer.domElement);
     this.start();
     this.addStars();
+    window.addEventListener( 'resize', this.onResize, false );
   }
 
   start() {

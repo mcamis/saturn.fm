@@ -22,14 +22,24 @@ class App extends Component {
     this.stop();
     this.mount.removeChild(this.renderer.domElement);
   }
+
+  onResize(){
+    const width = window.innerWidth > 1000 ? 1000 : window.innerWidth;
+    const height = width * .75;
+    this.camera.aspect = width / height;
+
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize( width, height );
+  }
+
   setupScene() {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+    const width = window.innerWidth > 1000 ? 1000 : window.innerWidth;
+    const height = width * .75;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(20, width / height, 1, 1000);
     camera.position.z = 45;
-    camera.position.y = -28;
+    camera.position.y = -28.5;
 
     const ambient = new THREE.AmbientLight(0xffffff, 0.35); // soft white light
     const directional = new THREE.DirectionalLight(0xffffff, 0.7);
@@ -49,6 +59,7 @@ class App extends Component {
     this.start();
     this.addCubes();
     this.analyzeAudio();
+    window.addEventListener( 'resize', this.onResize, false );
   }
 
   start() {
@@ -69,13 +80,7 @@ class App extends Component {
     this.geometry = geometry;
     this.scene.add(leftCube, rightCube);
 
-    let xOffset;
-    if (window.innerWidth < 900) {
-      // xOffset = window.innerWidth * -0.0085;
-      xOffset = 7;
-    } else {
-      xOffset = 8;
-    }
+    const xOffset = 7;
 
     leftCube.position.set(xOffset * -1, -30, 0);
     rightCube.position.set(xOffset, -30, 0);

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const OrbButton = ({ icon, className, callback }) => (
   <li>
     <button className={className} onClick={() => callback()}>
-      <img src={icon} alt="TODO" />
+      {icon && (<img src={icon} alt="TODO" />)}
     </button>
   </li>
 );
@@ -12,10 +12,11 @@ const OrbButton = ({ icon, className, callback }) => (
 OrbButton.defaultProps = {
   callback: () => {},
   className: '',
+  icon: ''
 };
 
 OrbButton.propTypes = {
-  icon: PropTypes.string.isRequired,
+  icon: PropTypes.string,
   className: PropTypes.string,
   callback: PropTypes.func
 }
