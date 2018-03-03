@@ -52,7 +52,7 @@
     "scripts": {
         "build": "NODE_ENV=production webpack --config config/webpack.config.prod.js",
         "build:analyze": "NODE_ENV=production webpack --config config/webpack.config.analyze.js",
-        "deploy": "gh-pages -d dist",
+        "deploy": "NODE_ENV=production webpack --config config/webpack.config.prod.js gh-pages -d dist",
         "lint": "eslint ./src ./test ./config",
         "lint:fix": "eslint --fix ./src ./test ./config",
         "start": "webpack-dev-server --hot --inline --config config/webpack.config.dev.js",
