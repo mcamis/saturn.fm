@@ -5,13 +5,25 @@ import autobind from 'utilities/autobind';
 import StarField from 'components/StarField';
 import Menu from 'components/Menu';
 
+import timeSrc from 'images/time.png';
+
 const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
+
+const formatTime = time =>
+  Math.trunc(time / 60)
+    .toString()
+    .padStart(2, '0') +
+  ':' +
+  Math.trunc(time % 60)
+    .toString()
+    .padStart(2, '0');
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       audio: undefined,
+      currentTime: 0,
     };
     autobind(this);
   }
@@ -150,6 +162,7 @@ class App extends Component {
 
       this.volumeLeft = average(dataArrayLeft);
       this.volumeRight = average(dataArrayRight);
+      this.setState({ currentTime: formatTime(audio.currentTime) });
     };
 
     renderFrame();
@@ -182,8 +195,16 @@ class App extends Component {
   }
 
   render() {
+    const { currentTime } = this.state;
+
     return (
       <div>
+        <header>
+          <div className="time">
+            <img src={timeSrc} />
+          </div>
+          <div className="timer">{currentTime}</div>
+        </header>
         <div id="canvas" />
         <div
           className="cubes"

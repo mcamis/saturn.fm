@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as THREE from 'three';
 import autobind from 'utilities/autobind';
 
-const randomSize = () => Math.random() * (6 - 2) + 2;
+const randomSize = () => Math.random() * (6 - 4) + 4;
 const randomPosition = () => Math.random() * 1000 - 500;
 class StarField extends Component {
   constructor(props) {

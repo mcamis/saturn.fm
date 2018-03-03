@@ -9,7 +9,7 @@ You're gonna like the way this looks, I guarantee it.
 * {
   box-sizing: border-box;
   text-rendering: optimizelegibility;
-  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: none;
   font-size: inherit;
 }
 
@@ -54,15 +54,16 @@ canvas {
   bottom: 0; // height: 100% !important;
 }
 
-// .StarField {
-//   canvas {
-//     position: fixed;
-//     top: 0;
-//     left: 0;
-//     right: 0;
-//     bottom: 0;
-//   }
-// }
+.StarField {
+  canvas {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+  }
+}
 .cubes {
   canvas {
     z-index: 9999;
@@ -128,7 +129,7 @@ ul {
       image-rendering: pixelated;
       content: "";
       margin-bottom: .25em;
-      &:focused {
+      &:focus {
         outline: none;
       }
       &.bottom {
@@ -188,7 +189,7 @@ ul {
   content: "";
   background: url("../images/dashboard.png") no-repeat; // background-position: center center;
   image-rendering: pixelated;
-  background-size: 100% 60%;
+  background-size: 100% 57%;
   background-position: 0 100%;
   position: absolute;
   left: 0;
@@ -213,5 +214,39 @@ ul {
   .dashboard,
   .dashboard:after {
     height: 750px;
+  }
+}
+
+header {
+  content: "";
+  background: url("../images/header.png") top center / cover no-repeat;
+  image-rendering: pixelated;
+  width: 80%;
+  height: 0;
+  padding-top: calc(36 / 254 * 80%);
+  // background-size: 100% 14.5%;
+  margin: 0 auto;
+  // background-size: 100% 60%;
+  position: relative;
+  .time{
+    position: absolute;
+    top: 24%;
+    left: 50%;
+    width: 8%;
+    line-height: 0;
+
+    img {
+      width: 100%;
+    }
+  }
+  .timer {
+    position: absolute;
+    top: 35%;
+    left: 60%;
+    font-family: "Monaco";
+    color: #004848;
+    font-size: 140%;
+    line-height: 0;
+
   }
 }
