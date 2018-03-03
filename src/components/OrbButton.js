@@ -15,7 +15,7 @@ OrbButton.defaultProps = {
 };
 
 OrbButton.propTypes = {
-  icon: PropTypes.element.isRequired,
+  icon: PropTypes.string.isRequired,
   className: PropTypes.string,
   callback: PropTypes.func
 }

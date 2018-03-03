@@ -72,7 +72,7 @@ class App extends Component {
     let xOffset;
     if (window.innerWidth < 900) {
       // xOffset = window.innerWidth * -0.0085;
-      xOffset = 4;
+      xOffset = 7;
     } else {
       xOffset = 8;
     }

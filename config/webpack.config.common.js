@@ -12,7 +12,6 @@ module.exports = {
       'babel-polyfill',
       'prop-types',
       'react',
-      'react-dates',
       'react-dom',
       'react-redux',
       'react-router',
