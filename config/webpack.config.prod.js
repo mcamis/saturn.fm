@@ -17,6 +17,10 @@ module.exports = merge(common, {
     publicPath: '.',
   },
 
+  externals: [
+    'child_process'
+  ],
+
   module: {
     rules: [
       {

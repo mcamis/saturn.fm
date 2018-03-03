@@ -3,7 +3,6 @@
 
 ## Node
 web/client/.sass-cache
-**/dist
 **/node_modules
 
 ## Logs
