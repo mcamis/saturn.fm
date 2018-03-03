@@ -13,6 +13,8 @@ import StarField from 'components/StarField';
 import Menu from 'components/Menu';
 
 import timeSrc from 'images/time.png';
+import songSrc from 'songs/sample.mp3';
+
 
 const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
 
@@ -134,7 +136,7 @@ class App extends Component {
   analyzeAudio() {
     const audio = new Audio();
     audio.crossOrigin = 'Anonymous';
-    audio.src = '/src/songs/sample.mp3';
+    audio.src = songSrc;
     audio.play();
     const context = new AudioContext();
     const src = context.createMediaElementSource(audio);

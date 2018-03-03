@@ -42,6 +42,19 @@ module.exports = merge(common, {
         ],
       },
       {
+        test: /\.mp3$/,
+        include: app.src,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: '/songs/',
+            },
+          },
+        ],
+      },
+      {
         test: /\.(ttf|woff|woff2|eot)$/,
         include: app.src,
         use: [
