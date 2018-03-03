@@ -138,6 +138,8 @@ class App extends Component {
     audio.crossOrigin = 'Anonymous';
     audio.src = songSrc;
     audio.play();
+    const AudioContext = window.AudioContext || window.webkitAudioContext || false;
+    // TODO: Handle false!
     const context = new AudioContext();
     const src = context.createMediaElementSource(audio);
     const analyserLeft = context.createAnalyser();
