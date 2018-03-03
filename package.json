@@ -24,6 +24,7 @@
         "extract-text-webpack-plugin": "^3.0.2",
         "fetch-mock": "^5.13.1",
         "file-loader": "^1.1.5",
+        "gh-pages": "^1.1.0",
         "html-webpack-plugin": "^2.30.1",
         "istanbul-instrumenter-loader": "^3.0.0",
         "jsdom": "11.3.0",
@@ -51,6 +52,7 @@
     "scripts": {
         "build": "NODE_ENV=production webpack --config config/webpack.config.prod.js",
         "build:analyze": "NODE_ENV=production webpack --config config/webpack.config.analyze.js",
+        "deploy": "NODE_ENV=production webpack --config config/webpack.config.prod.js gh-pages -d dist",
         "lint": "eslint ./src ./test ./config",
         "lint:fix": "eslint --fix ./src ./test ./config",
         "start": "webpack-dev-server --hot --inline --config config/webpack.config.dev.js",
