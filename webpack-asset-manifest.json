@@ -15,8 +15,10 @@
   "/images/stop.png": "/images/stop.png",
   "/images/time.png": "/images/time.png",
   "/images/visualizer.png": "/images/visualizer.png",
-  "app.css": "styles/app7fe1cc9086ceaed1dc8c.css",
-  "app.js": "js/app.7fe1cc9086ceaed1dc8c.js",
-  "main.js": "js/main.4a32842c3696b8612018.js",
-  "vendor.js": "js/vendor.00dab230227b73f4a546.js"
+  "app.css": "styles/app896632fd90905013c587.css",
+  "app.css.map": "styles/app896632fd90905013c587.css.map",
+  "app.js": "js/app.896632fd90905013c587.js",
+  "app.js.map": "js/app.896632fd90905013c587.js.map",
+  "vendor.js": "js/vendor.98c8dd4fe12011e309c5.js",
+  "vendor.js.map": "js/vendor.98c8dd4fe12011e309c5.js.map"
 }
