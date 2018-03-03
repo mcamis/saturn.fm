@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import * as THREE from 'three';
+import { AmbientLight } from 'three/src/lights/AmbientLight';
+import { DirectionalLight } from 'three/src/lights/DirectionalLight';
+import { Scene } from 'three/src/scenes/Scene';
+import { PerspectiveCamera } from 'three/src/cameras/PerspectiveCamera';
+import { BoxGeometry } from 'three/src/geometries/Geometries';
+import { MeshLambertMaterial } from 'three/src/materials/Materials';
+import { Mesh } from 'three/src/objects/Mesh';
+import { WebGLRenderer } from 'three/src/renderers/WebGLRenderer';
 
 import autobind from 'utilities/autobind';
 import StarField from 'components/StarField';
@@ -51,17 +58,17 @@ class App extends Component {
     const width = window.innerWidth > 1000 ? 1000 : window.innerWidth;
     const height = width * 0.75;
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(20, width / height, 1, 1000);
+    const scene = new Scene();
+    const camera = new PerspectiveCamera(20, width / height, 1, 1000);
     camera.position.z = 45;
     camera.position.y = -28.5;
 
-    const ambient = new THREE.AmbientLight(0xffffff, 0.35); // soft white light
-    const directional = new THREE.DirectionalLight(0xffffff, 0.7);
+    const ambient = new AmbientLight(0xffffff, 0.35); // soft white light
+    const directional = new DirectionalLight(0xffffff, 0.7);
     directional.position.set(0, 0, 900);
     scene.add(ambient, directional);
 
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
+    const renderer = new WebGLRenderer({ alpha: true, antialias: false });
     renderer.setPixelRatio(window.devicePixelRatio * 0.25); // Retina
     // renderer.setPixelRatio(window.devicePixelRatio * 0.35); // Regular
     renderer.setSize(width, height);
@@ -86,10 +93,10 @@ class App extends Component {
   }
 
   addCubes() {
-    const geometry = new THREE.BoxGeometry(1, 1, 1, 1, 1, 1);
-    const material = new THREE.MeshLambertMaterial({ color: 0x69ea78 });
-    const leftCube = new THREE.Mesh(geometry, material);
-    const rightCube = new THREE.Mesh(geometry, material);
+    const geometry = new BoxGeometry(1, 1, 1, 1, 1, 1);
+    const material = new MeshLambertMaterial({ color: 0x69ea78 });
+    const leftCube = new Mesh(geometry, material);
+    const rightCube = new Mesh(geometry, material);
     this.leftCube = leftCube;
     this.rightCube = rightCube;
     this.geometry = geometry;

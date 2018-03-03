@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import * as THREE from 'three';
+
+import { Scene } from 'three/src/scenes/Scene';
+import { PerspectiveCamera } from 'three/src/cameras/PerspectiveCamera';
+import { BoxGeometry } from 'three/src/geometries/Geometries';
+import { MeshBasicMaterial } from 'three/src/materials/Materials';
+import { Mesh } from 'three/src/objects/Mesh';
+import { WebGLRenderer } from 'three/src/renderers/WebGLRenderer';
+
 import autobind from 'utilities/autobind';
 
 const randomSize = () => Math.random() * (6 - 4) + 4;
@@ -33,10 +40,10 @@ class StarField extends Component {
     const width = window.innerWidth > 1000 ? 1000 : window.innerWidth;
     const height = window.innerHeight;
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(100, width / height, 1, 1000);
+    const scene = new Scene();
+    const camera = new PerspectiveCamera(100, width / height, 1, 1000);
 
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
+    const renderer = new WebGLRenderer({ alpha: true, antialias: false });
     camera.position.z = 500;
 
     renderer.setPixelRatio(window.devicePixelRatio * 0.25);
@@ -68,17 +75,17 @@ class StarField extends Component {
   }
 
   addStars() {
-    const geometry = new THREE.BoxGeometry(0.75, 0.75, 0.75);
+    const geometry = new BoxGeometry(0.75, 0.75, 0.75);
 
     for (let z = -1000; z < 1000; z += 20) {
       let material;
       if (z > 0 && z < 20) {
-        material = new THREE.MeshBasicMaterial({ color: 0xff757a });
+        material = new MeshBasicMaterial({ color: 0xff757a });
       } else {
-        material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        material = new MeshBasicMaterial({ color: 0xffffff });
       }
 
-      const sphere = new THREE.Mesh(geometry, material);
+      const sphere = new Mesh(geometry, material);
 
       sphere.position.x = randomPosition();
       sphere.position.y = randomPosition();
