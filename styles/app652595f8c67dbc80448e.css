@@ -169,29 +169,59 @@ ul {
     height: 750px; } }
 
 header {
-  content: "";
-  background: url(..//images/header.png) top center/cover no-repeat;
-  image-rendering: pixelated;
-  width: 80%;
-  height: 0;
-  padding-top: calc(36 / 254 * 80%);
-  margin: 0 auto;
   position: relative; }
-  header .time {
-    position: absolute;
-    top: 24%;
-    left: 50%;
-    width: 8%;
-    line-height: 0; }
-    header .time img {
-      width: 100%; }
-  header .timer {
-    position: absolute;
-    top: 35%;
-    left: 60%;
-    font-family: "Monaco";
-    color: #004848;
-    font-size: 140%;
-    line-height: 0; }
+  header .info {
+    background: url(..//images/header.png) top center/cover no-repeat;
+    image-rendering: pixelated;
+    width: 80%;
+    height: 0;
+    padding-top: calc(36 / 254 * 80%);
+    margin: 0 auto;
+    position: relative;
+    z-index: 2; }
+    header .info .time,
+    header .info .track {
+      position: absolute;
+      top: 24%;
+      left: 50%;
+      width: 8%;
+      line-height: 0; }
+      header .info .time img,
+      header .info .track img {
+        width: 100%; }
+    header .info .track {
+      left: 15%;
+      width: 11.79%; }
+    header .info .timer {
+      position: absolute;
+      top: 35%;
+      left: 60%;
+      font-family: "Monaco";
+      color: #004848;
+      font-size: 140%;
+      line-height: 0; }
 
-/*# sourceMappingURL=appccb72193ba54a52b0616.css.map*/
+@keyframes knight-rider {
+  from {
+    left: 22.5%; }
+  to {
+    left: 69.9%; } }
+
+.knight-rider {
+  content: "";
+  background: url(..//images/knight-rider.png) no-repeat;
+  background-position: center center;
+  image-rendering: pixelated;
+  background-size: 100% 100%;
+  height: 12%;
+  width: 6%;
+  position: absolute;
+  left: 24%;
+  bottom: 5%;
+  z-index: 1;
+  animation-name: knight-rider;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear; }
+
+/*# sourceMappingURL=app652595f8c67dbc80448e.css.map*/
