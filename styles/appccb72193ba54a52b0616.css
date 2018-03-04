@@ -26,11 +26,12 @@ body {
 
 #root {
   width: 100%;
+  height: 100%;
   max-width: 1000px;
   margin: 0 auto;
   overflow: hidden; }
   #root > div {
-    height: 100vh;
+    height: 100%;
     width: 100%;
     position: relative; }
 
@@ -193,4 +194,4 @@ header {
     font-size: 140%;
     line-height: 0; }
 
-/*# sourceMappingURL=app5f2431d769a512a1a4dc.css.map*/
+/*# sourceMappingURL=appccb72193ba54a52b0616.css.map*/
