@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const OrbButton = ({ icon, className, callback }) => (
+const OrbButton = ({ icon, className, callback, tooltipText }) => (
   <li>
     <button className={className} onClick={() => callback()}>
       {icon && <img src={icon} alt="TODO" />}
     </button>
+    <div className="tooltip">{tooltipText}</div>
   </li>
 );
 
@@ -13,6 +14,7 @@ OrbButton.defaultProps = {
   callback: () => {},
   className: '',
   icon: '',
+  tooltipText: '',
 };
 
 OrbButton.propTypes = {

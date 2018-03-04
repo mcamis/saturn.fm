@@ -96,6 +96,15 @@ canvas {
   }
 }
 
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 ul {
   width: 300px;
   padding: 0;
@@ -109,7 +118,7 @@ ul {
   li {
     width: 33%;
     float: left; // TODO easing function
-    transition: all 150ms linear;
+    // transition: all 50ms linear;
     position: relative;
     button {
       -webkit-appearance: none;
@@ -121,6 +130,7 @@ ul {
       background-size: cover;
       display: block;
       image-rendering: pixelated;
+      transition: all 100ms ease-out; // TODO: Recreate curve from saturn
       content: "";
       margin-bottom: .25em;
       &:focus {
@@ -166,13 +176,37 @@ ul {
       }
       &.stop {
         img {
-          padding-top: 15px;
-          width: 40px;
+          padding-top: 18px;
+          width: 34px;
         }
       }
+      &:active {
+        z-index: 999;
+        position: relative;
+        transform: scale(1.8);
+      }
+    }
+    .tooltip {
+      display: none;
+      color: black;
+      background: rgba(255, 255, 255, .7);
+      position: fixed;
+      bottom: -60px;
+      left: 50%;
+      transform: translate(-50%, 0);
+      width: fit-content;
+      padding: 0 5px;
     }
     &:hover {
-      transform: scale(1.25);
+      .tooltip {
+        display: block;
+        animation-name: fadeOut;
+        animation-duration: 100ms;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+        animation-delay: 10s;
+        animation-timing-function: linear;
+      }
     }
   }
 }
@@ -182,7 +216,7 @@ ul {
   content: "";
   background: url("../images/dashboard.png") no-repeat;
   image-rendering: pixelated;
-  background-size: 100% 57%;
+  background-size: 100% 50%;
   background-position: 0 100%;
   position: absolute;
   left: 0;
@@ -250,10 +284,10 @@ header {
 
 @keyframes knight-rider {
   from {
-    left: 22.5%;
+    left: 25%;
   }
   to {
-    left: 69.9%;
+    left: 69%;
   }
 }
 
@@ -266,7 +300,7 @@ header {
   height: 12%;
   width: 6%;
   position: absolute;
-  left: 24%;
+  left: 50%;
   bottom: 5%;
   z-index: 1;
   animation-name: knight-rider;

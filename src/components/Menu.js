@@ -53,30 +53,46 @@ class Menu extends Component {
     return (
       <ul>
         <OrbButton className="gold" icon={spotifyIcon} />
-        <OrbButton className="gold" icon={moreIcon} />
-        <OrbButton className="gold" icon={visualizerIcon} />
+        <OrbButton
+          className="gold"
+          icon={moreIcon}
+          tooltipText="System Settings"
+        />
+        <OrbButton
+          className="gold"
+          icon={visualizerIcon}
+          tooltipText="Hide Controls"
+        />
         <OrbButton
           className="middle rewind"
           icon={rwdIcon}
           callback={this.rewind}
+          tooltipText="Skip Backwards"
         />
         <OrbButton
           className="middle play-pause"
           icon={playPauseIcon}
           callback={this.playOrPause}
+          tooltipText="Play / Pause"
         />
-        <OrbButton className="middle fast-forward" icon={ffwdIcon} />
+        <OrbButton
+          className="middle fast-forward"
+          icon={ffwdIcon}
+          tooltipText="Skip Forwards"
+        />
         <OrbButton
           className="bottom repeat"
           icon={repeatIcon}
           callback={this.toggleRepeat}
+          tooltipText="Repeat: 1 / All / Off"
         />
         <OrbButton
           className="bottom stop"
           icon={stopIcon}
           callback={this.stop}
+          tooltipText="Stop"
         />
-        <OrbButton className="bottom globe" />
+        <OrbButton className="bottom globe" tooltipText="Advanced Controls" />
       </ul>
     );
   }

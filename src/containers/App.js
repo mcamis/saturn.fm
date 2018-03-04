@@ -65,7 +65,7 @@ class App extends Component {
     const scene = new Scene();
     const camera = new PerspectiveCamera(20, width / height, 1, 1000);
     camera.position.z = 45;
-    camera.position.y = -28.5;
+    camera.position.y = -27;
 
     const ambient = new AmbientLight(0xffffff, 0.35); // soft white light
     const directional = new DirectionalLight(0xffffff, 0.7);
@@ -98,7 +98,7 @@ class App extends Component {
 
   addCubes() {
     const geometry = new BoxGeometry(1, 1, 1, 1, 1, 1);
-    const material = new MeshLambertMaterial({ color: 0x69ea78 });
+    const material = new MeshLambertMaterial({ color: 0x00f55c });
     const leftCube = new Mesh(geometry, material);
     const rightCube = new Mesh(geometry, material);
     this.leftCube = leftCube;
@@ -215,14 +215,14 @@ class App extends Component {
     return (
       <div>
         <header>
-        <div className="info">
-          <div className="track">
-            <img src={trackSrc} />
-          </div>
-          <div className="time">
-            <img src={timeSrc} />
-          </div>
-          <div className="timer">{currentTime}</div>
+          <div className="info">
+            <div className="track">
+              <img src={trackSrc} />
+            </div>
+            <div className="time">
+              <img src={timeSrc} />
+            </div>
+            <div className="timer">{currentTime}</div>
           </div>
           <div className="knight-rider" />
         </header>

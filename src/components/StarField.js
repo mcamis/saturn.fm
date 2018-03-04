@@ -102,7 +102,7 @@ class StarField extends Component {
     this.stars.forEach(star => {
       const animatedStar = star;
 
-      animatedStar.position.z += Math.random() * (8 - 4) + 4;
+      animatedStar.position.z += Math.random() * (12 - 8) + 8;
 
       // if the particle is too close move it to the back
       if (animatedStar.position.z > 1000) {
