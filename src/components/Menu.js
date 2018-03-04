@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import spotifyIcon from 'images/spotify.png';
 import playPauseIcon from 'images/play-pause.png';
 import ffwdIcon from 'images/ffwd.png';
+import moreIcon from 'images/more.png';
+
 import rwdIcon from 'images/rwd.png';
 import stopIcon from 'images/stop.png';
 import repeatIcon from 'images/repeat.png';
@@ -19,8 +21,10 @@ class Menu extends Component {
   }
 
   playOrPause() {
-    const { audio,audioContext } = this.props;
+    const { audio, audioContext } = this.props;
     if (audio.paused || audio.ended) {
+      // iOS will auto-suspend AudioContext
+      // TODO: make this resume more intelligent
       audioContext.resume();
       audio.play();
     } else {
@@ -49,7 +53,7 @@ class Menu extends Component {
     return (
       <ul>
         <OrbButton className="gold" icon={spotifyIcon} />
-        <OrbButton className="gold" icon={spotifyIcon} />
+        <OrbButton className="gold" icon={moreIcon} />
         <OrbButton className="gold" icon={visualizerIcon} />
         <OrbButton
           className="middle rewind"

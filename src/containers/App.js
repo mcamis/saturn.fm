@@ -13,8 +13,9 @@ import StarField from 'components/StarField';
 import Menu from 'components/Menu';
 
 import timeSrc from 'images/time.png';
-import songSrc from 'songs/sample.mp3';
+import trackSrc from 'images/track.png';
 
+import songSrc from 'songs/sample.mp3';
 
 const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
 
@@ -139,7 +140,8 @@ class App extends Component {
     audio.crossOrigin = 'Anonymous';
     audio.src = songSrc;
     audio.play();
-    const AudioContext = window.AudioContext || window.webkitAudioContext || false;
+    const AudioContext =
+      window.AudioContext || window.webkitAudioContext || false;
     // TODO: Handle false!
     const context = new AudioContext();
     const src = context.createMediaElementSource(audio);
@@ -182,7 +184,7 @@ class App extends Component {
     this.audio = audio;
     this.setState({
       audio,
-      audioContext: context
+      audioContext: context,
     });
   }
 
@@ -213,10 +215,16 @@ class App extends Component {
     return (
       <div>
         <header>
+        <div className="info">
+          <div className="track">
+            <img src={trackSrc} />
+          </div>
           <div className="time">
             <img src={timeSrc} />
           </div>
           <div className="timer">{currentTime}</div>
+          </div>
+          <div className="knight-rider" />
         </header>
         <div id="canvas" />
         <div
