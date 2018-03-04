@@ -19,10 +19,10 @@
   "/images/track.png": "/images/track.png",
   "/images/visualizer.png": "/images/visualizer.png",
   "/songs/sample.mp3": "/songs/sample.mp3",
-  "app.css": "styles/appd3129e09c845b64150f3.css",
-  "app.css.map": "styles/appd3129e09c845b64150f3.css.map",
-  "app.js": "js/app.d3129e09c845b64150f3.js",
-  "app.js.map": "js/app.d3129e09c845b64150f3.js.map",
-  "vendor.js": "js/vendor.98c8dd4fe12011e309c5.js",
-  "vendor.js.map": "js/vendor.98c8dd4fe12011e309c5.js.map"
+  "app.css": "styles/app826fcd792c649ca3863b.css",
+  "app.css.map": "styles/app826fcd792c649ca3863b.css.map",
+  "app.js": "js/app.826fcd792c649ca3863b.js",
+  "app.js.map": "js/app.826fcd792c649ca3863b.js.map",
+  "vendor.js": "js/vendor.3bb75a3e24c43cab17ef.js",
+  "vendor.js.map": "js/vendor.3bb75a3e24c43cab17ef.js.map"
 }
