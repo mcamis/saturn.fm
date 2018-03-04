@@ -8,9 +8,8 @@ import { Mesh } from 'three/src/objects/Mesh';
 import { WebGLRenderer } from 'three/src/renderers/WebGLRenderer';
 
 import autobind from 'utilities/autobind';
+import { randomSize, randomPosition } from 'utilities/helpers';
 
-const randomSize = () => Math.random() * (6 - 4) + 4;
-const randomPosition = () => Math.random() * 1000 - 500;
 class StarField extends Component {
   constructor(props) {
     super(props);

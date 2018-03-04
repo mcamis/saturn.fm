@@ -1,63 +1,14 @@
 import React, { Component } from 'react';
-import { AmbientLight } from 'three/src/lights/AmbientLight';
-import { DirectionalLight } from 'three/src/lights/DirectionalLight';
-import { Scene } from 'three/src/scenes/Scene';
-import { PerspectiveCamera } from 'three/src/cameras/PerspectiveCamera';
-import { BoxGeometry } from 'three/src/geometries/Geometries';
-import { MeshLambertMaterial } from 'three/src/materials/Materials';
-import { Mesh } from 'three/src/objects/Mesh';
-import { WebGLRenderer } from 'three/src/renderers/WebGLRenderer';
-import * as THREE from 'three';
-
-import TWEEN from '@tweenjs/tween.js';
 
 import autobind from 'utilities/autobind';
+import { average, formatTime } from 'utilities/helpers';
 import StarField from 'components/StarField';
+import Cubes from 'components/Cubes';
 import Menu from 'components/Menu';
 
 import timeSrc from 'images/time.png';
 import trackSrc from 'images/track.png';
-
 import songSrc from 'songs/sample.mp3';
-
-const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
-
-const formatTime = time =>
-  Math.trunc(time / 60)
-    .toString()
-    .padStart(2, '0') +
-  ':' +
-  Math.trunc(time % 60)
-    .toString()
-    .padStart(2, '0');
-
-// I am very bad at maths
-// https://stackoverflow.com/a/846249
-const logarithmic = position => {
-  const minp = 0;
-  const maxp = 100;
-  const minv = Math.log(1);
-  const maxv = Math.log(142);
-  const scale = (maxv-minv) / (maxp-minp);
-  return Math.exp(minv + scale*(position-minp));
-}
-
-const colorTween = (target, volume) => {
-  const logVal = logarithmic(volume * .6);
-  const hue = 142.5 - logVal;
-
-  const initial = new THREE.Color(target.material.color.getHex());
-  // TODO: This HSL change is quick but doesn't exactly match the original behavior
-  const newColor = new THREE.Color(`hsl(${hue > 0 ? hue : 0}, 100%, 48%)`);
-
-  return new TWEEN.Tween(initial)
-      .to(newColor, 100)
-      .easing(TWEEN.Easing.Quadratic.Out)
-      .onUpdate(()=>{
-          target.material.color.set(initial);
-      })
-      .start();
-}
 
 class App extends Component {
   constructor(props) {
@@ -71,105 +22,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.setupScene();
-    this.volumeLeft = 1;
-    this.volumeRight = 1;
-  }
-  componentWillUnmount() {
-    this.stop();
-    this.mount.removeChild(this.renderer.domElement);
-  }
-
-  onResize() {
-    const width = window.innerWidth > 1000 ? 1000 : window.innerWidth;
-    const height = width * 0.75;
-    this.camera.aspect = width / height;
-
-    this.camera.updateProjectionMatrix();
-    this.renderer.setSize(width, height);
-  }
-
-  setupScene() {
-    const width = window.innerWidth > 1000 ? 1000 : window.innerWidth;
-    const height = width * 0.75;
-
-    const scene = new Scene();
-    const camera = new PerspectiveCamera(20, width / height, 1, 1000);
-    camera.position.z = 45;
-    camera.position.y = -27;
-
-    const ambient = new AmbientLight(0xffffff, 0.35); // soft white light
-    const directional = new DirectionalLight(0xffffff, 0.7);
-    directional.position.set(0, 0, 900);
-    scene.add(ambient, directional);
-
-    const renderer = new WebGLRenderer({ alpha: true, antialias: false });
-    renderer.setPixelRatio(window.devicePixelRatio * 0.25); // Retina
-    // renderer.setPixelRatio(window.devicePixelRatio * 0.35); // Regular
-    renderer.setSize(width, height);
-    renderer.setClearColor(0x000000, 0); // the default
-
-    this.scene = scene;
-    this.camera = camera;
-    this.renderer = renderer;
-    this.mount.appendChild(this.renderer.domElement);
-    this.start();
-    this.addCubes();
     this.analyzeAudio();
-    window.addEventListener('resize', this.onResize, false);
-  }
-
-  start() {
-    this.frameId = this.frameId || requestAnimationFrame(this.animate);
-  }
-
-  stop() {
-    cancelAnimationFrame(this.frameId);
-  }
-
-  addCubes() {
-    const geometry = new BoxGeometry(1, 1, 1, 1, 1, 1);
-    const leftMaterial = new MeshLambertMaterial({ color: new THREE.Color("hsl(142.5, 100%, 48%)") });
-    const rightMaterial = new MeshLambertMaterial({ color: new THREE.Color("hsl(142.5, 100%, 48%)") });
-    const leftCube = new Mesh(geometry, leftMaterial);
-    const rightCube = new Mesh(geometry, rightMaterial);
-    this.leftCube = leftCube;
-    this.rightCube = rightCube;
-    this.geometry = geometry;
-    this.scene.add(leftCube, rightCube);
-
-
-    const xOffset = 7;
-
-    leftCube.position.set(xOffset * -1, -30, 0);
-    rightCube.position.set(xOffset, -30, 0);
-    rightCube.rotateY(0.75);
-    rightCube.rotateX(0.015);
-    leftCube.rotateX(0.015);
-  }
-
-  rotateCubes() {
-    this.leftCube.rotation.x += Math.random() * (0.03 - 0.01) + 0.01;
-    this.leftCube.rotation.y += Math.random() * (0.03 - 0.01) + 0.01;
-    this.rightCube.rotation.x -= Math.random() * (0.03 - 0.01) + 0.01;
-    this.rightCube.rotation.y -= Math.random() * (0.03 - 0.01) + 0.01;
-  }
-
-
-  scaleCubes() {
-    const sizeLeft = this.volumeLeft * 0.01 + 1;
-    const sizeRight = this.volumeRight * 0.01 + 1;
-
-
-    // this.leftCube.material.color = newColor;
-    colorTween(this.leftCube, this.volumeRight);
-    colorTween(this.rightCube, this.volumeLeft);
-
-    // TODO: Tween scale
-
-    // TODO/WTF R/L are swapped because of the camera/scene? hmm
-    this.leftCube.scale.set(sizeRight, sizeRight, sizeRight);
-    this.rightCube.scale.set(sizeLeft, sizeLeft, sizeLeft);
   }
 
   analyzeAudio() {
@@ -211,41 +64,19 @@ class App extends Component {
       requestAnimationFrame(renderFrame);
       analyserLeft.getByteFrequencyData(dataArrayLeft);
       analyserRight.getByteFrequencyData(dataArrayRight);
-
-      this.volumeLeft = average(dataArrayLeft);
-      this.volumeRight = average(dataArrayRight);
-      this.setState({ currentTime: formatTime(audio.currentTime) });
+      this.setState({
+        currentTime: formatTime(audio.currentTime),
+        volumeLeft: average(dataArrayLeft),
+        volumeRight: average(dataArrayRight),
+      });
     };
 
     renderFrame();
 
-    this.audio = audio;
     this.setState({
       audio,
       audioContext: context,
     });
-  }
-
-  // idleAnimation() {
-  // TODO: Animate up and down while idle
-  // this.leftCube.rotation.y += 0.009;
-  // this.rightCube.rotation.y -= 0.009;
-  // }
-
-  animate() {
-    TWEEN.update();
-    // if (this.state.playing) {
-    this.rotateCubes();
-    this.scaleCubes();
-    // } else {
-    //   this.idleAnimation();
-    // }
-    this.renderScene();
-    this.frameId = window.requestAnimationFrame(this.animate);
-  }
-
-  renderScene() {
-    this.renderer.render(this.scene, this.camera);
   }
 
   render() {
@@ -265,15 +96,13 @@ class App extends Component {
           </div>
           <div className="knight-rider" />
         </header>
-        <div id="canvas" />
-        <div
-          className="cubes"
-          ref={mount => {
-            this.mount = mount;
-          }}
-        />
         <Menu audio={this.state.audio} audioContext={this.state.audioContext} />
         <div className="dashboard" />
+        <Cubes
+          volumeLeft={this.state.volumeLeft}
+          volumeRight={this.state.volumeRight}
+        />
+
         <StarField />
       </div>
     );
