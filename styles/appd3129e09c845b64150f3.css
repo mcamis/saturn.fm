@@ -77,6 +77,12 @@ canvas {
     animation-timing-function: linear;
     z-index: -1; }
 
+@keyframes fadeOut {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
+
 ul {
   width: 300px;
   padding: 0;
@@ -90,7 +96,6 @@ ul {
   ul li {
     width: 33%;
     float: left;
-    transition: all 150ms linear;
     position: relative; }
     ul li button {
       -webkit-appearance: none;
@@ -102,6 +107,7 @@ ul {
       background-size: cover;
       display: block;
       image-rendering: pixelated;
+      transition: all 100ms ease-out;
       content: "";
       margin-bottom: .25em; }
       ul li button:focus {
@@ -135,17 +141,37 @@ ul {
       ul li button.middle img, ul li button.bottom img {
         padding-top: 10px; }
       ul li button.stop img {
-        padding-top: 15px;
-        width: 40px; }
-    ul li:hover {
-      transform: scale(1.25); }
+        padding-top: 18px;
+        width: 34px; }
+      ul li button:active {
+        z-index: 999;
+        position: relative;
+        transform: scale(1.8); }
+    ul li .tooltip {
+      display: none;
+      color: black;
+      background: rgba(255, 255, 255, 0.7);
+      position: fixed;
+      bottom: -60px;
+      left: 50%;
+      transform: translate(-50%, 0);
+      width: fit-content;
+      padding: 0 5px; }
+    ul li:hover .tooltip {
+      display: block;
+      animation-name: fadeOut;
+      animation-duration: 100ms;
+      animation-iteration-count: 1;
+      animation-fill-mode: forwards;
+      animation-delay: 10s;
+      animation-timing-function: linear; }
 
 .dashboard,
 .dashboard:after {
   content: "";
   background: url(..//images/dashboard.png) no-repeat;
   image-rendering: pixelated;
-  background-size: 100% 57%;
+  background-size: 100% 50%;
   background-position: 0 100%;
   position: absolute;
   left: 0;
@@ -203,9 +229,9 @@ header {
 
 @keyframes knight-rider {
   from {
-    left: 22.5%; }
+    left: 25%; }
   to {
-    left: 69.9%; } }
+    left: 69%; } }
 
 .knight-rider {
   content: "";
@@ -216,7 +242,7 @@ header {
   height: 12%;
   width: 6%;
   position: absolute;
-  left: 24%;
+  left: 50%;
   bottom: 5%;
   z-index: 1;
   animation-name: knight-rider;
@@ -224,4 +250,4 @@ header {
   animation-iteration-count: infinite;
   animation-timing-function: linear; }
 
-/*# sourceMappingURL=app652595f8c67dbc80448e.css.map*/
+/*# sourceMappingURL=appd3129e09c845b64150f3.css.map*/
