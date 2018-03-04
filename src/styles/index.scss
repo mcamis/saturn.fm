@@ -31,6 +31,7 @@ body {
 
 #root {
   width: 100%;
+  height: 100%;
   max-width: 1000px;
   margin: 0 auto;
   overflow: hidden;
@@ -41,7 +42,7 @@ body {
   //   background: black;
   // }
   >div {
-    height: 100vh;
+    height: 100%;
     width: 100%;
     position: relative;
   }

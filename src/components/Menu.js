@@ -19,8 +19,9 @@ class Menu extends Component {
   }
 
   playOrPause() {
-    const { audio } = this.props;
+    const { audio,audioContext } = this.props;
     if (audio.paused || audio.ended) {
+      audioContext.resume();
       audio.play();
     } else {
       audio.pause();

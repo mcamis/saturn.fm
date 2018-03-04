@@ -32,6 +32,7 @@ class App extends Component {
     super(props);
     this.state = {
       audio: undefined,
+      audioContext: undefined,
       currentTime: 0,
     };
     autobind(this);
@@ -181,6 +182,7 @@ class App extends Component {
     this.audio = audio;
     this.setState({
       audio,
+      audioContext: context
     });
   }
 
@@ -223,7 +225,7 @@ class App extends Component {
             this.mount = mount;
           }}
         />
-        <Menu audio={this.state.audio} />
+        <Menu audio={this.state.audio} audioContext={this.state.audioContext} />
         <div className="dashboard" />
         <StarField />
       </div>
