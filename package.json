@@ -62,6 +62,7 @@
         "prettier": "prettier --single-quote --trailing-comma es5 --write './**/*.js'"
     },
     "dependencies": {
+        "@tweenjs/tween.js": "^17.2.0",
         "babel-polyfill": "^6.26.0",
         "expo-three": "^2.2.2-alpha.1",
         "history": "^4.7.2",
