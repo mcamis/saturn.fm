@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 
 import autobind from 'utilities/autobind';
-import { average, formatTime } from 'utilities/helpers';
-import StarField from 'components/StarField';
-import Cubes from 'components/Cubes';
-import Menu from 'components/Menu';
 
-import timeSrc from 'images/time.png';
-import trackSrc from 'images/track.png';
+import MusicPicker from 'components/MusicPicker';
+import MainScreen from 'components/MainScreen';
+
 import songSrc from 'songs/sample.mp3';
 
 class App extends Component {
@@ -22,86 +20,24 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.analyzeAudio();
+    this.loadAudio();
   }
 
-  analyzeAudio() {
+  loadAudio() {
     const audio = new Audio();
     audio.crossOrigin = 'Anonymous';
-    audio.src = songSrc;
-    audio.play();
-
-    const AudioContext =
-      window.AudioContext || window.webkitAudioContext || false;
-    // TODO: Handle false!
-    const context = new AudioContext();
-    const src = context.createMediaElementSource(audio);
-    const analyserLeft = context.createAnalyser();
-    const analyserRight = context.createAnalyser();
-
-    analyserLeft.fftSize = 32;
-    analyserLeft.smoothingTimeConstant = 0.3;
-    analyserRight.fftSize = 32;
-    analyserRight.smoothingTimeConstant = 0.3;
-
-    const splitter = context.createChannelSplitter(2);
-
-    src.connect(splitter);
-
-    splitter.connect(analyserRight, 1, 0);
-    splitter.connect(analyserLeft, 0, 0);
-
-    analyserLeft.connect(context.destination);
-    analyserRight.connect(context.destination);
-
-    const bufferLengthLeft = analyserLeft.frequencyBinCount;
-    const dataArrayLeft = new Uint8Array(bufferLengthLeft);
-    const bufferLengthRight = analyserRight.frequencyBinCount;
-    const dataArrayRight = new Uint8Array(bufferLengthRight);
-
-    const renderFrame = () => {
-      requestAnimationFrame(renderFrame);
-      analyserLeft.getByteFrequencyData(dataArrayLeft);
-      analyserRight.getByteFrequencyData(dataArrayRight);
-      this.setState({
-        currentTime: formatTime(audio.currentTime),
-        volumeLeft: average(dataArrayLeft),
-        volumeRight: average(dataArrayRight),
-      });
-    };
-
-    renderFrame();
-
-    this.setState({
-      audio,
-      audioContext: context,
-    });
+    audio.src = 'http://pulseedm.cdnstream1.com:8124/1373_128';
+    this.setState({ audio });
   }
 
   render() {
-    const { currentTime } = this.state;
+    const { audio } = this.state;
+    console.log(audio);
 
     return (
       <div>
-        <header>
-          <div className="info">
-            <div className="track">
-              <img src={trackSrc} />
-            </div>
-            <div className="time">
-              <img src={timeSrc} />
-            </div>
-            <div className="timer">{currentTime}</div>
-          </div>
-          <div className="knight-rider" />
-        </header>
-        <Menu audio={this.state.audio} audioContext={this.state.audioContext} />
-        <div className="dashboard" />
-        <Cubes
-          volumeLeft={this.state.volumeLeft}
-          volumeRight={this.state.volumeRight}
-        />
-        <StarField />
+        <Route path="/" render={() => <MainScreen audio={audio} />} />
+        <Route path="/music" component={MusicPicker} />
       </div>
     );
   }
