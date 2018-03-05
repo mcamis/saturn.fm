@@ -35,7 +35,7 @@ export const colorTween = (target, volume) => {
   const newColor = new Color(`hsl(${hue > 0 ? hue : 0}, 100%, 48%)`);
 
   return new Tween(initial)
-    .to(newColor, 100)
+    .to(newColor, 20)
     .easing(Easing.Quadratic.Out)
     .onUpdate(() => {
       target.material.color.set(initial);

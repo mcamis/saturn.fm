@@ -58,12 +58,6 @@ canvas {
   }
 }
 
-.cubes {
-  canvas {
-    z-index: 9999;
-  }
-}
-
 @keyframes spin {
   from {
     transform: rotate(-0deg);
@@ -223,7 +217,7 @@ ul {
   bottom: 0;
   width: 50%;
   height: 75vw;
-  z-index: 8888;
+  z-index: 6666;
 }
 
 .dashboard:after {
@@ -235,6 +229,7 @@ ul {
 
 .cubes {
   z-index: 7777;
+  position: relative;
 }
 
 @media (min-width: 1000px) {

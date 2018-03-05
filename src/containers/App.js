@@ -30,7 +30,6 @@ class App extends Component {
     audio.crossOrigin = 'Anonymous';
     audio.src = songSrc;
     audio.play();
-    audio.currentTime = 60;
 
     const AudioContext =
       window.AudioContext || window.webkitAudioContext || false;
@@ -102,7 +101,6 @@ class App extends Component {
           volumeLeft={this.state.volumeLeft}
           volumeRight={this.state.volumeRight}
         />
-
         <StarField />
       </div>
     );
