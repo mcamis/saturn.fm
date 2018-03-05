@@ -47,9 +47,6 @@ canvas {
   bottom: 0;
   z-index: 1; }
 
-.cubes canvas {
-  z-index: 9999; }
-
 @keyframes spin {
   from {
     transform: rotate(0deg); }
@@ -178,7 +175,7 @@ ul {
   bottom: 0;
   width: 50%;
   height: 75vw;
-  z-index: 8888; }
+  z-index: 6666; }
 
 .dashboard:after {
   left: 100%;
@@ -187,7 +184,8 @@ ul {
   width: 100%; }
 
 .cubes {
-  z-index: 7777; }
+  z-index: 7777;
+  position: relative; }
 
 @media (min-width: 1000px) {
   .dashboard,
@@ -250,4 +248,4 @@ header {
   animation-iteration-count: infinite;
   animation-timing-function: linear; }
 
-/*# sourceMappingURL=app826fcd792c649ca3863b.css.map*/
+/*# sourceMappingURL=appc77d2f9251f649db606d.css.map*/
