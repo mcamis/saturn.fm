@@ -29,15 +29,20 @@ class MainScreen extends Component {
       requestAnimationFrame(syncStateToAnalysis);
       const {
         currentTime,
+        currentTimeRaw,
         volumeLeft,
         volumeRight,
       } = this.analyser.getAudioInfo();
 
-      this.setState({
-        currentTime,
-        volumeLeft,
-        volumeRight,
-      });
+      if (currentTimeRaw) {
+        // const currentSegment = segmentsReversed.find(segment => segment.start <= currentTimeRaw);
+        // const loudnessNormalized = (currentSegment.loudness_max -10) * -1;
+        this.setState({
+          currentTime,
+          volumeLeft,
+          volumeRight
+        });
+      }
     };
     syncStateToAnalysis();
   }

@@ -14,6 +14,8 @@ import visualizerIcon from 'images/visualizer.png';
 import autobind from 'utilities/autobind';
 import OrbButton from 'components/OrbButton';
 
+import { Link } from 'react-router-dom'
+
 class Menu extends Component {
   constructor(props) {
     super(props);
@@ -52,7 +54,9 @@ class Menu extends Component {
   render() {
     return (
       <ul>
+        <Link to="music">
         <OrbButton className="gold" icon={spotifyIcon} />
+        </Link>
         <OrbButton
           className="gold"
           icon={moreIcon}

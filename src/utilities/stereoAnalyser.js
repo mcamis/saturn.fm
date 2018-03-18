@@ -92,7 +92,7 @@ export default class StereoAnalyser {
       requestAnimationFrame(renderFrame);
       analyserLeft.getByteFrequencyData(dataArrayLeft);
       analyserRight.getByteFrequencyData(dataArrayRight);
-      this.currentTime = formatTime(audio.currentTime);
+      this.currentTimeRaw = audio.currentTime;
       this.volumeLeft = average(dataArrayLeft);
       this.volumeRight = average(dataArrayRight);
     };
@@ -105,10 +105,12 @@ export default class StereoAnalyser {
   }
 
   getAudioInfo() {
+    const { currentTimeRaw, volumeLeft, volumeRight } = this;
     return {
-      currentTime: this.currentTime,
-      volumeLeft: this.volumeLeft,
-      volumeRight: this.volumeRight,
+      currentTime: formatTime(currentTimeRaw),
+      currentTimeRaw,
+      volumeLeft,
+      volumeRight
     };
   }
 }

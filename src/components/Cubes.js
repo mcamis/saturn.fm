@@ -52,7 +52,6 @@ class Cubes extends Component {
 
     const renderer = new WebGLRenderer({ alpha: true, antialias: false });
     renderer.setPixelRatio(window.devicePixelRatio * 0.25); // Retina
-    // renderer.setPixelRatio(window.devicePixelRatio * 0.35); // Regular
     renderer.setSize(width, height);
     renderer.setClearColor(0x000000, 0); // the default
 
@@ -105,15 +104,17 @@ class Cubes extends Component {
   }
 
   scaleCubes() {
-    const sizeLeft = this.props.volumeLeft * 0.01 + 1;
-    const sizeRight = this.props.volumeRight * 0.01 + 1;
+    // const sizeLeft = this.props.volumeLeft * 0.01 + 1; // Web Audio
+    // const sizeRight = this.props.volumeRight * 0.01 + 1; // Web Audio
 
-    // this.leftCube.material.color = newColor;
+    const sizeLeft = this.props.volumeLeft * .05 + 1;
+    const sizeRight = this.props.volumeRight * .1 + 1;
+
+
     colorTween(this.leftCube, this.props.volumeRight);
     colorTween(this.rightCube, this.props.volumeLeft);
 
     // TODO: Tween scale
-
     // TODO/WTF R/L are swapped because of the camera/scene? hmm
     this.leftCube.scale.set(sizeRight, sizeRight, sizeRight);
     this.rightCube.scale.set(sizeLeft, sizeLeft, sizeLeft);
