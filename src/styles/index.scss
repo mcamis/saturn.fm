@@ -148,7 +148,8 @@ ul {
     float: left; // TODO easing function
     // transition: all 50ms linear;
     position: relative;
-    button {
+    button,
+    a {
       -webkit-appearance: none;
       border-width: 0px !important;
       margin: 0 auto;
@@ -336,4 +337,8 @@ header {
   animation-duration: 1s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
+}
+
+.music-picker {
+  background: white;
 }

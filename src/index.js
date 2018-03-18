@@ -1,38 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from 'containers/App';
-import { BrowserRouter } from 'react-router-dom';
+import { ConnectedRouter } from 'react-router-redux';
+import { Provider } from 'react-redux';
+import configureStore, { history } from 'store/configure';
 
 import 'styles/index.scss';
 
-window.onSpotifyWebPlaybackSDKReady = () => {
-  const token = '[My Spotify Web API access token]';
-  const player = new Spotify.Player({
-    name: 'Web Playback SDK Quick Start Player',
-    getOAuthToken: cb => { cb(token); }
-  });
+const store = configureStore();
 
-  // Error handling
-  player.addListener('initialization_error', ({ message }) => { console.error(message); });
-  player.addListener('authentication_error', ({ message }) => { console.error(message); });
-  player.addListener('account_error', ({ message }) => { console.error(message); });
-  player.addListener('playback_error', ({ message }) => { console.error(message); });
 
-  // Playback status updates
-  player.addListener('player_state_changed', state => { console.log(state); });
-
-  // Ready
-  player.addListener('ready', ({ device_id }) => {
-    console.log('Ready with Device ID', device_id);
-  });
-
-  // Connect to the player!
-  player.connect();
-};
-
+const hash = window.location.hash.substring(1);
+const params = {}
+hash.split('&').map(hashKey => {
+  const hashKeyVal = hashKey.split('=');
+  params[hashKeyVal[0]] = hashKeyVal[1]
+    });
+if (!localStorage.getItem('access_token') && params.access_token) {
+    localStorage.setItem('access_token', params.access_token);
+}
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <Provider store={store}>
+  <ConnectedRouter history={history}>
+  <App store={store} />
+  </ConnectedRouter>
+  </Provider>,
   document.getElementById('root')
 );

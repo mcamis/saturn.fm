@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-import spotifyIcon from 'images/spotify.png';
+import discIcon from 'images/disc.png';
 import playPauseIcon from 'images/play-pause.png';
 import ffwdIcon from 'images/ffwd.png';
 import moreIcon from 'images/more.png';
@@ -13,8 +14,6 @@ import visualizerIcon from 'images/visualizer.png';
 
 import autobind from 'utilities/autobind';
 import OrbButton from 'components/OrbButton';
-
-import { Link } from 'react-router-dom'
 
 class Menu extends Component {
   constructor(props) {
@@ -54,9 +53,12 @@ class Menu extends Component {
   render() {
     return (
       <ul>
-        <Link to="music">
-        <OrbButton className="gold" icon={spotifyIcon} />
-        </Link>
+        <li>
+          <Link to="source" className="gold disc">
+            <img src={discIcon} alt="TODO" />
+          </Link>
+          <div className="tooltip">WELP</div>
+        </li>
         <OrbButton
           className="gold"
           icon={moreIcon}
