@@ -68,6 +68,7 @@ class Menu extends Component {
           className="gold"
           icon={visualizerIcon}
           tooltipText="Hide Controls"
+          callback={() => this.props.getInfo()}
         />
         <OrbButton
           className="middle rewind"

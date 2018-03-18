@@ -40,7 +40,7 @@ class MainScreen extends Component {
         this.setState({
           currentTime,
           volumeLeft,
-          volumeRight
+          volumeRight,
         });
       }
     };
@@ -72,7 +72,11 @@ class MainScreen extends Component {
           </div>
           <div className="knight-rider" />
         </header>
-        <Menu audio={this.props.audio} audioContext={audioContext} />
+        <Menu
+          audio={this.props.audio}
+          audioContext={audioContext}
+          getInfo={this.props.getInfo}
+        />
         <div className="dashboard" />
         <Cubes volumeLeft={volumeLeft} volumeRight={volumeRight} />
         <StarField />

@@ -17,13 +17,12 @@ class App extends Component {
     this.state = {
       audio: undefined,
       audioContext: undefined,
-      currentTime: 0,
       playerType,
-      playerReady: false
+      playerReady: false,
     };
     window.onSpotifyWebPlaybackSDKReady = () => {
-      return this.setState({playerReady: true});
-    }
+      return this.setState({ playerReady: true });
+    };
     autobind(this);
   }
 
@@ -36,7 +35,11 @@ class App extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    if (!this.spotifyPlayer && this.state.playerType === 'spotify' && nextState.playerReady) {
+    if (
+      !this.spotifyPlayer &&
+      this.state.playerType === 'spotify' &&
+      nextState.playerReady
+    ) {
       this.spotifyPlayer = new SpotifyPlayer(this.props.store);
     }
   }
@@ -48,11 +51,23 @@ class App extends Component {
     this.setState({ audio });
   }
 
+  getInfo() {
+    if (this.spotifyPlayer) {
+      return this.spotifyPlayer.getCurrentState();
+    } else {
+      return;
+    }
+  }
+
   render() {
     const { audio } = this.state;
     return (
       <div>
-        <Route exact path="/" render={() => <MainScreen audio={audio} />} />
+        <Route
+          exact
+          path="/"
+          render={() => <MainScreen audio={audio} getInfo={this.getInfo} />}
+        />
         <Route path="/music" component={MusicPicker} />
         <Route path="/spotify-auth" component={MusicPicker} />
         <Route path="/source" component={SourcePicker} />

@@ -107,9 +107,8 @@ class Cubes extends Component {
     // const sizeLeft = this.props.volumeLeft * 0.01 + 1; // Web Audio
     // const sizeRight = this.props.volumeRight * 0.01 + 1; // Web Audio
 
-    const sizeLeft = this.props.volumeLeft * .05 + 1;
-    const sizeRight = this.props.volumeRight * .1 + 1;
-
+    const sizeLeft = this.props.volumeLeft * 0.05 + 1;
+    const sizeRight = this.props.volumeRight * 0.1 + 1;
 
     colorTween(this.leftCube, this.props.volumeRight);
     colorTween(this.rightCube, this.props.volumeLeft);

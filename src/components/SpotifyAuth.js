@@ -20,9 +20,9 @@ class MusicPicker extends Component {
   render() {
     return (
       <section className="music-picker">
-        <p>Hello!</p>
+        <p>Login with Spotify</p>
         <a href="https://accounts.spotify.com/authorize?client_id=f36c9747244748e3a4cb450a718e403c&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fspotify-auth&scope=user-read-private%20user-read-email&response_type=token&state=123">
-          Login to Spotify
+          {`Let's go`}
         </a>
       </section>
     );

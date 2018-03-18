@@ -26,7 +26,9 @@ class SourcePicker extends Component {
           <button onClick={() => this.setType('web')}>Select</button>
         </div>
         <div className="option">
-          <h2>Spotify Connect <label>BETA</label></h2>
+          <h2>
+            Spotify Connect <label>BETA</label>
+          </h2>
           <img src="" />
           <p>Choice copy</p>
 

@@ -59,12 +59,10 @@ export default class StereoAnalyser {
     this.audioContext = new AudioContext();
 
     const splitter = this.audioContext.createChannelSplitter(2);
-    const analyserLeft = new AnalyserNode(
-      this.audioContext,
+    const analyserLeft = this.audioContext.createAnalyser(
       this.options.analyser
     );
-    const analyserRight = new AnalyserNode(
-      this.audioContext,
+    const analyserRight = this.audioContext.createAnalyser(
       this.options.analyser
     );
 
@@ -110,7 +108,7 @@ export default class StereoAnalyser {
       currentTime: formatTime(currentTimeRaw),
       currentTimeRaw,
       volumeLeft,
-      volumeRight
+      volumeRight,
     };
   }
 }
