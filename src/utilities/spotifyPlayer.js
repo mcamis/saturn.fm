@@ -1,49 +1,49 @@
-import { push } from 'react-router-redux';
 import autobind from 'utilities/autobind';
 
 const spotifyUrl = 'https://api.spotify.com/v1/';
 export default class SpotifyPlayer {
-  constructor(store) {
-    this.store = store;
+  constructor(push) {
+    this.push = push;
+
     const token = localStorage.getItem('access_token');
     this.token = token;
     if (token) {
-      this.initializePlayer(token);
+      this.player = new Spotify.Player({
+        name: 'Saturn.fm',
+        getOAuthToken: cb => {
+          cb(token);
+        },
+      });
+      this.initializePlayer();
     } else {
-      store.dispatch(push('spotify-auth'));
+      console.log('yo!');
+      push('spotify');
     }
+
     autobind(this);
   }
 
-  initializePlayer(token) {
-    const player = new Spotify.Player({
-      name: 'Saturn.fm',
-      getOAuthToken: cb => {
-        cb(token);
-      },
-    });
-
-    this.player = player;
+  initializePlayer() {
     this.setupErrorHandling();
 
     // Playback status updates
-    player.addListener(
+    this.player.addListener(
       'player_state_changed',
       ({ position, duration, track_window: { current_track } }) => {
         console.log('Currently Playing', current_track);
-        console.log('Position in Song', position);
-        console.log('Duration of Song', duration);
+        this.currentTrackId = current_track.id;
       }
     );
 
     // Ready
-    player.addListener('ready', ({ device_id }) => {
+    this.player.addListener('ready', ({ device_id }) => {
       // TODO: Toast for ready
+      this.device_id = device_id;
       console.log('Ready with Device ID', device_id);
     });
 
     // Connect to the player!
-    player.connect().then(success => {
+    this.player.connect().then(success => {
       if (success) {
         this.syncInstanceToPlayer();
       }
@@ -68,6 +68,7 @@ export default class SpotifyPlayer {
   }
 
   setupErrorHandling() {
+    //TODO 429 errors?
     const { player } = this;
     // Error handling
     player.addListener('initialization_error', ({ message }) => {
@@ -76,7 +77,7 @@ export default class SpotifyPlayer {
     player.addListener('authentication_error', ({ message }) => {
       console.error(message);
       localStorage.removeItem('access_token');
-      this.store.dispatch(push('spotify-auth'));
+      this.push('spotify');
     });
     player.addListener('account_error', ({ message }) => {
       console.error(message);
@@ -86,23 +87,39 @@ export default class SpotifyPlayer {
     });
   }
 
-  getCurrentState() {
+  getStats() {
     this.player.getCurrentState().then(state => {
       if (!state) {
         return;
       }
-      const {
-        track_window: { current_track, next_tracks: [next_track] },
-      } = state;
-
-      console.log('Currently Playing', current_track);
-      console.log('Playing Next', next_track);
+      // const {
+      //   track_window: { current_track, next_tracks: [next_track] },
+      // } = state;
+      console.log(state);
+      // console.log('Currently Playing', current_track);
+      // console.log('Playing Next', next_track);
     });
   }
 
-  createHeaders() {
+  togglePlay() {
+    this.player.togglePlay();
+  }
+
+  skipForwards() {
+    this.player.nextTrack();
+  }
+
+  skipBackwards() {
+    this.player.previousTrack();
+  }
+
+  pause() {
+    this.player.pause();
+  }
+
+  createHeaders(method = 'GET') {
     return {
-      method: 'GET',
+      method,
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${this.token}`,
@@ -110,21 +127,37 @@ export default class SpotifyPlayer {
     };
   }
 
-  buildQuery(endpoint) {
-    fetch(spotifyUrl + endpoint, this.createHeaders())
-      .then(response => {
-        if (!response.ok) {
-          return Promise.reject(Error([{ message: response }]));
-        }
-        return response.json();
-      })
-      .then(body => {
-        console.log(body);
-        return body;
-      });
+  buildQuery(method, endpoint, params) {
+    const queryArgs = Object.keys(params)
+      .map(key => key + '=' + params[key])
+      .join('&');
+    fetch(
+      spotifyUrl + endpoint + '?' + queryArgs,
+      this.createHeaders(method)
+    ).then(response => {
+      if (!response.ok) {
+        return Promise.reject(Error([{ message: response }]));
+      }
+      console.log(response);
+      return response;
+    });
   }
 
   getAudioAnalysis() {
-    this.buildQuery('audio-analysis/06AKEBrKUckW0KREUWRnvT');
+    this.buildQuery('GET', 'audio-analysis/06AKEBrKUckW0KREUWRnvT');
+  }
+
+  // TODO: Toggle enum
+
+  toggleRepeat(state = 'context') {
+    // state: value
+    // enum of [track, context, off]
+    // track will repeat the current track.
+    // context will repeat the current context.
+    // off will turn repeat off.
+    this.buildQuery('PUT', 'me/player/repeat', {
+      state,
+      device_id: this.device_id,
+    });
   }
 }

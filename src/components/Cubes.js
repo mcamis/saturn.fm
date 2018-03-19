@@ -134,7 +134,7 @@ class Cubes extends Component {
     //   this.idleAnimation();
     // }
     this.renderScene();
-    this.frameId = window.requestAnimationFrame(this.animate);
+    this.frameId = requestAnimationFrame(this.animate);
   }
 
   renderScene() {

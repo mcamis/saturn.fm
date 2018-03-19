@@ -10,8 +10,9 @@ class SourcePicker extends Component {
     autobind(this);
   }
 
-  setType(selection) {
-    console.log(selection);
+  setSourceAndRedirect(source) {
+    this.props.setSource(source);
+    this.props.history.push('/');
   }
 
   render() {
@@ -23,7 +24,9 @@ class SourcePicker extends Component {
           <h2>Playlist</h2>
           <img src="" />
           <p>{`I made a mixtape just for you <3`}</p>
-          <button onClick={() => this.setType('web')}>Select</button>
+          <button onClick={() => this.setSourceAndRedirect('web')}>
+            Select
+          </button>
         </div>
         <div className="option">
           <h2>
@@ -31,8 +34,9 @@ class SourcePicker extends Component {
           </h2>
           <img src="" />
           <p>Choice copy</p>
-
-          <Link to="/spotify-auth">Select</Link>
+          <button onClick={() => this.setSourceAndRedirect('spotify')}>
+            Select
+          </button>
         </div>
       </section>
     );

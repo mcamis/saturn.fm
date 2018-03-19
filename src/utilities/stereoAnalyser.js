@@ -87,12 +87,12 @@ export default class StereoAnalyser {
     const { analyserLeft, analyserRight, dataArrayLeft, dataArrayRight } = this;
 
     const renderFrame = () => {
-      requestAnimationFrame(renderFrame);
       analyserLeft.getByteFrequencyData(dataArrayLeft);
       analyserRight.getByteFrequencyData(dataArrayRight);
       this.currentTimeRaw = audio.currentTime;
       this.volumeLeft = average(dataArrayLeft);
       this.volumeRight = average(dataArrayRight);
+      requestAnimationFrame(renderFrame);
     };
 
     renderFrame();
