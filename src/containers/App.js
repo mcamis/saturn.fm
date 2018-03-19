@@ -13,28 +13,13 @@ class App extends Component {
     super(props);
     const source = localStorage.getItem('source') || 'web';
     this.state = {
-      // audio: null,
       source,
       playerReady: false,
-      // spotifyPlayer: null,
     };
-    // if (playerType === 'web') {
-    //   this.loadAudio();
-    // }
     window.onSpotifyWebPlaybackSDKReady = () =>
       this.setState({ playerReady: true });
     autobind(this);
   }
-
-  // componentWillUpdate(nextProps, nextState) {
-  //   // if (
-  //   //   !this.spotifyPlayer &&
-  //   //   this.state.playerType === 'spotify' &&
-  //   //   nextState.playerReady
-  //   // ) {
-  //   //   this.setState({ spotifyPlayer: new SpotifyPlayer(this.props.store) });
-  //   // }
-  // }
 
   setSource(source) {
     this.setState({ source }, () => {
@@ -58,12 +43,10 @@ class App extends Component {
                     push={props.history.push}
                   />
                 );
-              } else {
-                return <p>Loading!</p>;
               }
-            } else {
-              return <WebAudio {...props} />;
+              return <p>Loading!</p>;
             }
+            return <WebAudio {...props} />;
           }}
         />
         <Route path="/music" component={MusicPicker} />
@@ -80,5 +63,3 @@ class App extends Component {
 }
 
 export default App;
-
-//

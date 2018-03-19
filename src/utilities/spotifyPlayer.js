@@ -3,10 +3,7 @@ import autobind from 'utilities/autobind';
 const spotifyUrl = 'https://api.spotify.com/v1/';
 export default class SpotifyPlayer {
   constructor(push) {
-    this.push = push;
-
     const token = localStorage.getItem('access_token');
-    this.token = token;
     if (token) {
       this.player = new Spotify.Player({
         name: 'Saturn.fm',
@@ -16,10 +13,10 @@ export default class SpotifyPlayer {
       });
       this.initializePlayer();
     } else {
-      console.log('yo!');
       push('spotify');
     }
-
+    this.push = push;
+    this.token = token;
     autobind(this);
   }
 
@@ -29,7 +26,7 @@ export default class SpotifyPlayer {
     // Playback status updates
     this.player.addListener(
       'player_state_changed',
-      ({ position, duration, track_window: { current_track } }) => {
+      ({ track_window: { current_track } }) => {
         console.log('Currently Playing', current_track);
         this.currentTrackId = current_track.id;
       }
@@ -68,7 +65,7 @@ export default class SpotifyPlayer {
   }
 
   setupErrorHandling() {
-    //TODO 429 errors?
+    // TODO 429 errors?
     const { player } = this;
     // Error handling
     player.addListener('initialization_error', ({ message }) => {
@@ -92,12 +89,7 @@ export default class SpotifyPlayer {
       if (!state) {
         return;
       }
-      // const {
-      //   track_window: { current_track, next_tracks: [next_track] },
-      // } = state;
       console.log(state);
-      // console.log('Currently Playing', current_track);
-      // console.log('Playing Next', next_track);
     });
   }
 
@@ -129,10 +121,10 @@ export default class SpotifyPlayer {
 
   buildQuery(method, endpoint, params) {
     const queryArgs = Object.keys(params)
-      .map(key => key + '=' + params[key])
+      .map(key => `${key}=${params[key]}`)
       .join('&');
     fetch(
-      spotifyUrl + endpoint + '?' + queryArgs,
+      `${spotifyUrl + endpoint}?${queryArgs}`,
       this.createHeaders(method)
     ).then(response => {
       if (!response.ok) {
@@ -148,7 +140,6 @@ export default class SpotifyPlayer {
   }
 
   // TODO: Toggle enum
-
   toggleRepeat(state = 'context') {
     // state: value
     // enum of [track, context, off]

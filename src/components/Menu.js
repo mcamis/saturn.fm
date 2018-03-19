@@ -21,36 +21,8 @@ class Menu extends Component {
     autobind(this);
   }
 
-  playOrPause() {
-    const { audio, audioContext } = this.props;
-    if (audio.paused || audio.ended) {
-      // iOS will auto-suspend AudioContext
-      // TODO: make this resume more intelligent
-      audioContext.resume();
-      audio.play();
-    } else {
-      audio.pause();
-    }
-  }
-
-  rewind() {
-    const { audio } = this.props;
-    audio.currentTime = 0;
-  }
-
-  stop() {
-    const { audio } = this.props;
-    audio.pause();
-    audio.currentTime = 0;
-  }
-
-  toggleRepeat() {
-    const { audio } = this.props;
-    const loopEnabled = audio.loop;
-    audio.loop = !loopEnabled;
-  }
-
   render() {
+    const { audioManager } = this.props;
     return (
       <ul>
         <li>
@@ -68,29 +40,29 @@ class Menu extends Component {
           className="gold"
           icon={visualizerIcon}
           tooltipText="Hide Controls"
-          callback={() => this.props.getInfo()}
         />
         <OrbButton
           className="middle rewind"
           icon={rwdIcon}
-          callback={this.rewind}
+          callback={audioManager.previousTrack}
           tooltipText="Skip Backwards"
         />
         <OrbButton
           className="middle play-pause"
           icon={playPauseIcon}
-          callback={this.playOrPause}
+          callback={audioManager.togglePlay}
           tooltipText="Play / Pause"
         />
         <OrbButton
           className="middle fast-forward"
           icon={ffwdIcon}
           tooltipText="Skip Forwards"
+          callback={audioManager.nextTrack}
         />
         <OrbButton
           className="bottom repeat"
           icon={repeatIcon}
-          callback={this.toggleRepeat}
+          callback={audioManager.toggleRepeat}
           tooltipText="Repeat: 1 / All / Off"
         />
         <OrbButton

@@ -39,14 +39,15 @@ const SMOOTHING = 0.3;
 //
 
 export default class StereoAnalyser {
-  constructor(options) {
+  constructor(audio) {
     const defaultOptions = {
       analyser: {
         fftSize: FFT_SIZE,
         smoothingTimeConstant: SMOOTHING,
       },
     };
-    this.options = { ...defaultOptions, options };
+    this.options = { ...defaultOptions };
+    this.audio = audio;
     this.setupRack();
     autobind(this);
   }
@@ -77,25 +78,33 @@ export default class StereoAnalyser {
     this.splitter = splitter;
     this.analyserLeft = analyserLeft;
     this.analyserRight = analyserRight;
+
+    // Initialize all the components in the rack
+    const mediaElement = this.audioContext.createMediaElementSource(this.audio);
+    mediaElement.connect(this.splitter);
   }
 
-  startAnalysis(audio) {
-    // Initialize all the components in the rack
-    const mediaElement = this.audioContext.createMediaElementSource(audio);
-    mediaElement.connect(this.splitter);
-
+  startAnalysis() {
     const { analyserLeft, analyserRight, dataArrayLeft, dataArrayRight } = this;
 
-    const renderFrame = () => {
-      analyserLeft.getByteFrequencyData(dataArrayLeft);
-      analyserRight.getByteFrequencyData(dataArrayRight);
-      this.currentTimeRaw = audio.currentTime;
-      this.volumeLeft = average(dataArrayLeft);
-      this.volumeRight = average(dataArrayRight);
-      requestAnimationFrame(renderFrame);
-    };
+    analyserLeft.getByteFrequencyData(dataArrayLeft);
+    analyserRight.getByteFrequencyData(dataArrayRight);
+    this.currentTimeRaw = this.audio.currentTime;
+    this.volumeLeft = average(dataArrayLeft);
+    this.volumeRight = average(dataArrayRight);
 
-    renderFrame();
+    // TODO: Send values to redux
+
+    this.frameId = requestAnimationFrame(this.startAnalysis);
+  }
+
+  start() {
+    this.frameId = this.frameId || requestAnimationFrame(this.startAnalysis);
+  }
+
+  stop() {
+    cancelAnimationFrame(this.frameId);
+    this.frameId = undefined;
   }
 
   getContext() {
