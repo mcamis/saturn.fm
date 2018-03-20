@@ -24,6 +24,12 @@ class StarField extends Component {
   componentWillUnmount() {
     this.mount.removeChild(this.renderer.domElement);
     this.stop();
+    window.removeEventListener('resize', this.onResize, false);
+    this.renderer.dispose();
+    // this.renderer.forceContextLoss();
+    // this.renderer.context=undefined;
+    // this.renderer.domElement=undefined;
+    // TODO: Move renderer up to containing element so it's not recreated on every mount
   }
 
   onResize() {

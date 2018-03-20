@@ -1,20 +1,34 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
-
+import { Route, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import autobind from 'utilities/autobind';
 
 import MusicPicker from 'components/MusicPicker';
 import SourcePicker from 'components/SourcePicker';
-import WebAudio from 'containers/WebAudio';
+
+import StarField from 'components/StarField';
+import Cubes from 'components/Cubes';
+import Menu from 'components/Menu';
+import AudioManager from 'utilities/audioManager';
+
+import timeSrc from 'images/time.png';
+import trackSrc from 'images/track.png';
+
 import Spotify from 'containers/Spotify';
 
 class App extends Component {
   constructor(props) {
     super(props);
     const source = localStorage.getItem('source') || 'web';
+    this.audioManager = new AudioManager();
+
     this.state = {
       source,
       playerReady: false,
+      leftChannel: 1,
+      rightChannel: 1,
+      currentTime: 0,
     };
     window.onSpotifyWebPlaybackSDKReady = () =>
       this.setState({ playerReady: true });
@@ -27,39 +41,74 @@ class App extends Component {
     });
   }
 
+  componentDidMount() {
+    this.start();
+  }
+
+  start() {
+    this.frameId = this.frameId || requestAnimationFrame(this.animate);
+  }
+
+  stop() {
+    cancelAnimationFrame(this.frameId);
+  }
+
+  animate() {
+   const newState = this.audioManager.getAnalysis();
+   this.setState( {...newState});
+    this.frameId = requestAnimationFrame(this.animate);
+  }
+
+
+
+
   render() {
-    const { source, playerReady } = this.state;
+    const { currentTime, leftChannel, rightChannel } = this.state;
+    // console.log(this.props);
     return (
       <div>
-        <Route
-          exact
-          path="/"
-          render={props => {
-            if (source === 'spotify') {
-              if (playerReady) {
-                return (
-                  <Spotify
-                    playerReady={playerReady}
-                    push={props.history.push}
-                  />
-                );
-              }
-              return <p>Loading!</p>;
-            }
-            return <WebAudio {...props} />;
-          }}
-        />
-        <Route path="/music" component={MusicPicker} />
-        <Route path="/spotify" component={MusicPicker} />
-        <Route
-          path="/source"
-          render={props => (
-            <SourcePicker setSource={this.setSource} {...props} />
-          )}
-        />
+        <header>
+          <div className="info">
+            <div className="track">
+              <img src={trackSrc} alt="TODO" />
+            </div>
+            <div className="time">
+              <img src={timeSrc} alt="TODO" />
+            </div>
+            <div className="timer">{0}</div>
+          </div>
+          <div className="knight-rider" />
+        </header>
+        <Menu audioManager={this.audioManager} />
+        <div className="dashboard" />
+        <Cubes leftChannel={leftChannel} rightChannel={rightChannel} />
+        <StarField />
+
+        <div className="overlay">
+          <Route path="/music" component={MusicPicker} />
+          <Route path="/spotify" component={MusicPicker} />
+          <Route
+            path="/source"
+            render={props => (
+              <SourcePicker setSource={this.setSource} {...props} />
+            )}
+          />
+        </div>
       </div>
     );
   }
 }
 
-export default App;
+
+/* istanbul ignore next */
+function mapStateToProps(state) {
+  return {
+    analysis: {},
+  };
+}
+
+export const AppContainer = App;
+export default withRouter(connect(mapStateToProps)(App));
+
+
+

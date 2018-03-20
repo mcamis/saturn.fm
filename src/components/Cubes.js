@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+
 import { AmbientLight } from 'three/src/lights/AmbientLight';
 import { BoxGeometry } from 'three/src/geometries/Geometries';
 import { Color } from 'three/src/math/Color';
@@ -25,6 +28,9 @@ class Cubes extends Component {
   componentWillUnmount() {
     this.stop();
     this.mount.removeChild(this.renderer.domElement);
+    window.removeEventListener('resize', this.onResize, false);
+    // TODO: Move renderer up to containing element so it's not recreated on every mount
+    this.renderer.dispose();
   }
 
   onResize() {
@@ -104,14 +110,14 @@ class Cubes extends Component {
   }
 
   scaleCubes() {
-    // const sizeLeft = this.props.volumeLeft * 0.01 + 1; // Web Audio
-    // const sizeRight = this.props.volumeRight * 0.01 + 1; // Web Audio
+    const { leftChannel, rightChannel } = this.props;
+    const sizeLeft = leftChannel * 0.01 + 1; // Web Audio
+    const sizeRight = rightChannel * 0.01 + 1; // Web Audio
+    // const sizeLeft = this.props.volumeLeft * 0.05 + 1;
+    // const sizeRight = this.props.volumeRight * 0.1 + 1;
 
-    const sizeLeft = this.props.volumeLeft * 0.05 + 1;
-    const sizeRight = this.props.volumeRight * 0.1 + 1;
-
-    colorTween(this.leftCube, this.props.volumeRight);
-    colorTween(this.rightCube, this.props.volumeLeft);
+    colorTween(this.leftCube, leftChannel);
+    colorTween(this.rightCube, rightChannel);
 
     // TODO: Tween scale
     // TODO/WTF R/L are swapped because of the camera/scene? hmm
@@ -154,3 +160,16 @@ class Cubes extends Component {
 }
 
 export default Cubes;
+
+// /* istanbul ignore next */
+// function mapStateToProps(state) {
+//   return {...state.analysis};
+// }
+
+// export const CubesUnconnected = Cubes;
+// export default connect(mapStateToProps)(Cubes);
+
+
+
+
+

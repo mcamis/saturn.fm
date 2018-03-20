@@ -22,6 +22,12 @@ class WebAudio extends Component {
     autobind(this);
   }
 
+  componentWillUnmount() {
+    this.audioManager.teardown();
+    this.audioManager = null;
+    delete this.audioManager;
+  }
+
   render() {
     const { currentTime, volumeLeft, volumeRight } = this.state;
     return (

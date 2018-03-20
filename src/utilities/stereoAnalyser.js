@@ -1,8 +1,9 @@
 import autobind from 'utilities/autobind';
 import { formatTime, average } from 'utilities/helpers';
+import { store } from 'index';
 
 const FFT_SIZE = 32;
-const SMOOTHING = 0.3;
+const SMOOTHING = 0.1;
 
 // tl;dr; Put some audio in, get averaged FFT data out
 //
@@ -37,6 +38,11 @@ const SMOOTHING = 0.3;
 //      | Speakers |
 //      +----+-----+
 //
+
+const updateAnalysis = ({ currentTime, leftChannel, rightChannel}) => ({
+  type: 'SONG_ANALYSIS',
+  data: { currentTime, leftChannel, rightChannel }
+});
 
 export default class StereoAnalyser {
   constructor(audio) {
@@ -86,16 +92,28 @@ export default class StereoAnalyser {
 
   startAnalysis() {
     const { analyserLeft, analyserRight, dataArrayLeft, dataArrayRight } = this;
-
     analyserLeft.getByteFrequencyData(dataArrayLeft);
     analyserRight.getByteFrequencyData(dataArrayRight);
-    this.currentTimeRaw = this.audio.currentTime;
-    this.volumeLeft = average(dataArrayLeft);
-    this.volumeRight = average(dataArrayRight);
+    const { currentTime } = this.audio;
+    this.leftChannel = average(dataArrayLeft);
+    this.rightChannel = average(dataArrayRight);
+    this.currentTime = currentTime;
+    // store.dispatch(updateAnalysis({
+    //   currentTime,
+    //   leftChannel,
+    //   rightChannel
+    // }));
 
     // TODO: Send values to redux
-
     this.frameId = requestAnimationFrame(this.startAnalysis);
+  }
+
+  getAnalysis() {
+    return {
+      currentTime: this.currentTime,
+      leftChannel: this.leftChannel,
+      rightChannel: this.rightChannel
+    }
   }
 
   start() {

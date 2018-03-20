@@ -7,7 +7,7 @@ import configureStore, { history } from 'store/configure';
 
 import 'styles/index.scss';
 
-const store = configureStore();
+export const store = configureStore();
 
 const hash = window.location.hash.substring(1);
 const params = {};
@@ -21,7 +21,7 @@ if (!localStorage.getItem('access_token') && params.access_token) {
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <App store={store} />
+      <App />
     </ConnectedRouter>
   </Provider>,
   document.getElementById('root')

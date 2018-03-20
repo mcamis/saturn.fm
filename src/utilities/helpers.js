@@ -27,7 +27,7 @@ const logarithmic = position => {
 };
 
 export const colorTween = (target, volume) => {
-  const logVal = logarithmic(volume * 0.5);
+  const logVal = logarithmic(volume * 0.44);
   const hue = 142.5 - logVal;
 
   const initial = new Color(target.material.color.getHex());
@@ -35,7 +35,7 @@ export const colorTween = (target, volume) => {
   const newColor = new Color(`hsl(${hue > 0 ? hue : 0}, 100%, 48%)`);
 
   return new Tween(initial)
-    .to(newColor, 150)
+    .to(newColor, 100)
     .easing(Easing.Quadratic.Out)
     .onUpdate(() => {
       target.material.color.set(initial);
