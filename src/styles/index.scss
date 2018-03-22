@@ -158,12 +158,18 @@ ul {
       width: 88px;
       background-size: cover;
       display: block;
+      padding: 1px 7px 2px;
+      align-items: flex-start;
+      text-align: center;
       image-rendering: pixelated;
       transition: all 100ms ease-out; // TODO: Recreate curve from saturn
       content: "";
       margin-bottom: .25em;
       &:focus {
         outline: none;
+      }
+      &.disc {
+        padding-top: 11px;
       }
       &.bottom {
         background: url("../images/orb-bottom.png") center center / cover no-repeat;
