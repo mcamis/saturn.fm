@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-
 import { AmbientLight } from 'three/src/lights/AmbientLight';
 import { BoxGeometry } from 'three/src/geometries/Geometries';
 import { Color } from 'three/src/math/Color';
@@ -110,7 +109,7 @@ class Cubes extends Component {
   }
 
   scaleCubes() {
-    const { leftChannel, rightChannel } = this.props;
+    const { leftChannel, rightChannel } = this.props.audioManager.getAnalysis();
     const sizeLeft = leftChannel * 0.01 + 1; // Web Audio
     const sizeRight = rightChannel * 0.01 + 1; // Web Audio
     // const sizeLeft = this.props.volumeLeft * 0.05 + 1;
@@ -168,8 +167,3 @@ export default Cubes;
 
 // export const CubesUnconnected = Cubes;
 // export default connect(mapStateToProps)(Cubes);
-
-
-
-
-

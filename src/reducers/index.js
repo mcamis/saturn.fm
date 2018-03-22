@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
-import analysisReducer from 'reducers/analysis';
+import audioReducer from 'reducers/audio';
 
 export default combineReducers({
-  analysis: analysisReducer,
+  audio: audioReducer,
   router: routerReducer,
 });
 

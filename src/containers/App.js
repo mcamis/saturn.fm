@@ -3,112 +3,97 @@ import { Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import autobind from 'utilities/autobind';
+import { formatTime } from 'utilities/helpers';
 
 import MusicPicker from 'components/MusicPicker';
-import SourcePicker from 'components/SourcePicker';
 
 import StarField from 'components/StarField';
 import Cubes from 'components/Cubes';
+import FileReader from 'components/FileReader';
 import Menu from 'components/Menu';
 import AudioManager from 'utilities/audioManager';
 
 import timeSrc from 'images/time.png';
 import trackSrc from 'images/track.png';
 
+import { updateTime } from 'actions/audio';
+
 import Spotify from 'containers/Spotify';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    const source = localStorage.getItem('source') || 'web';
     this.audioManager = new AudioManager();
 
     this.state = {
-      source,
       playerReady: false,
       leftChannel: 1,
       rightChannel: 1,
-      currentTime: 0,
+      currentTime: formatTime(0),
     };
     window.onSpotifyWebPlaybackSDKReady = () =>
       this.setState({ playerReady: true });
     autobind(this);
   }
-
-  setSource(source) {
-    this.setState({ source }, () => {
-      localStorage.setItem('source', this.state.source);
-    });
-  }
-
   componentDidMount() {
-    this.start();
+    // setInterval because requestAnimationFrame is overkill for this
+    const currentTimeInterval = setInterval(this.syncCurrentTime, 500);
+    this.setState({ currentTimeInterval });
   }
 
-  start() {
-    this.frameId = this.frameId || requestAnimationFrame(this.animate);
+  componentWillUnmount() {
+    clearInterval(this.state.currentTimeInterval);
   }
 
-  stop() {
-    cancelAnimationFrame(this.frameId);
+  syncCurrentTime() {
+    // updateTime(this.audioManager.getCurrentTime());
+    this.setState({
+      currentTime: formatTime(this.audioManager.getCurrentTime()),
+    });
+    // this.frameId = requestAnimationFrame(this.syncCurrentTime);
   }
-
-  animate() {
-   const newState = this.audioManager.getAnalysis();
-   this.setState( {...newState});
-    this.frameId = requestAnimationFrame(this.animate);
-  }
-
-
-
 
   render() {
     const { currentTime, leftChannel, rightChannel } = this.state;
-    // console.log(this.props);
     return (
       <div>
         <header>
           <div className="info">
             <div className="track">
               <img src={trackSrc} alt="TODO" />
+              <div className="track-number">{this.props.audio.trackNumber}</div>
             </div>
             <div className="time">
               <img src={timeSrc} alt="TODO" />
             </div>
-            <div className="timer">{0}</div>
+            <div className="timer">{this.state.currentTime}</div>
           </div>
           <div className="knight-rider" />
         </header>
-        <Menu audioManager={this.audioManager} />
+        <Menu
+          audioManager={this.audioManager}
+          repeat={this.props.audio.repeat}
+        />
         <div className="dashboard" />
-        <Cubes leftChannel={leftChannel} rightChannel={rightChannel} />
+        <Cubes audioManager={this.audioManager} />
         <StarField />
 
         <div className="overlay">
+          <Route path="/upload" component={FileReader} />
           <Route path="/music" component={MusicPicker} />
           <Route path="/spotify" component={MusicPicker} />
-          <Route
-            path="/source"
-            render={props => (
-              <SourcePicker setSource={this.setSource} {...props} />
-            )}
-          />
         </div>
       </div>
     );
   }
 }
 
-
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
-    analysis: {},
+    audio: state.audio,
   };
 }
 
 export const AppContainer = App;
 export default withRouter(connect(mapStateToProps)(App));
-
-
-

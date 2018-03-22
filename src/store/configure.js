@@ -11,13 +11,13 @@ export const history = createHistory();
 function getMiddleware() {
   const middleware = [promiseMiddleware(), routerMiddleware(history)];
 
-  // if (process.env.NODE_ENV !== 'production') {
-  //   const { createLogger } = require('redux-logger'); // eslint-disable-line global-require
-  //   const logger = createLogger({
-  //     collapsed: true,
-  //   });
-  //   middleware.push(logger);
-  // }
+  if (process.env.NODE_ENV !== 'production') {
+    const { createLogger } = require('redux-logger'); // eslint-disable-line global-require
+    const logger = createLogger({
+      collapsed: true,
+    });
+    middleware.push(logger);
+  }
 
   return middleware;
 }

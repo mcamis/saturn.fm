@@ -2,33 +2,17 @@ import autobind from 'utilities/autobind';
 import StereoAnalyser from 'utilities/stereoAnalyser';
 import Sample from 'songs/sample.mp3';
 import Rhyme from 'songs/Rhyme.mp3';
-import { store } from 'index';
-
-const loadingStart = () => ({
-  type: 'LOADING_STARTED',
-  data: { loading: true },
-});
-
-const loadingFinish = () => ({
-  type: 'LOADING_FINISHED',
-  data: { loading: false },
-});
-
-const playing = () => ({
-  type: 'PLAYING',
-});
-
-const paused = () => ({
-  type: 'PAUSED',
-});
+import * as audioActions from 'actions/audio';
 
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio
 export default class AudioManager {
-  constructor(push) {
+  constructor() {
     this.currentSong = new Audio();
+    this.currentSong.controls = true;
     this.currentSong.crossOrigin = 'anonymous';
+    this.currentSong.volume = 1;
     this.repeat = 'off';
-
+    // TODO: Preloading & total track time
     this.playlist = [
       'http://localhost:3000/src/songs/1.mp3',
       'http://localhost:3000/src/songs/2.mp3',
@@ -36,45 +20,55 @@ export default class AudioManager {
       'http://localhost:3000/src/songs/4.mp3',
       'http://localhost:3000/src/songs/5.mp3',
       'http://localhost:3000/src/songs/6.mp3',
+      'http://localhost:3000/src/songs/7.mp3',
+      'http://localhost:3000/src/songs/8.mp3',
+      'http://localhost:3000/src/songs/9.mp3',
     ];
-
     this.analyser = new StereoAnalyser(this.currentSong);
-    this.currentSong.src = Rhyme;
+    this.currentSong.src = this.playlist[0];
     this.setupEventListeners();
     autobind(this);
   }
 
-
-  getAudio(){
+  getAudio() {
     return this.currentSong;
   }
 
   // using named functions so we can unbind
 
   playAndReport() {
-    store.dispatch(playing());
+    // TODO: Use mp3 meta tags for info
+    audioActions.playing(this.getTrackNumber());
     this.currentSong.play();
   }
 
   setupEventListeners() {
     // https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events
     this.currentSong.addEventListener('loadstart', () =>
-      store.dispatch(loadingStart())
+      audioActions.loadingStart()
     );
 
-    this.currentSong.addEventListener('loadeddata', this.playAndReport());
+    // TODO: Get this working locally
+    this.currentSong.addEventListener('canplaythrough', () =>
+      audioActions.loadingFinish()
+    );
 
     this.currentSong.addEventListener('play', () => {
-      store.dispatch(playing());
+      audioActions.playing(this.getTrackNumber());
       this.analyser.start();
     });
     this.currentSong.addEventListener('pause', () => {
-      store.dispatch(paused());
-
+      audioActions.paused();
       this.analyser.stop();
     });
 
-    this.currentSong.addEventListener('ended', () => this.loadNext(true));
+    this.currentSong.addEventListener('ended', () => {
+      if (this.repeat === 'track') {
+        this.togglePlay();
+      } else {
+        this.loadNext(true);
+      }
+    });
 
     // TODO: Error handling
     /*
@@ -89,21 +83,35 @@ export default class AudioManager {
       stalled
       Media data is unexpectedly no longer available.
     */
+
+    window.onkeyup = e => {
+      if (e.keyCode === 32) {
+        this.togglePlay();
+      }
+    };
   }
 
+  getTrackNumber() {
+    const currentIndex = this.playlist.indexOf(this.currentSong.src);
+    return currentIndex + 1;
+  }
   loadPrevious() {
-    const nextIndex = this.playlist.indexOf(this.currentSong.src) - 1 || 0;
-    this.currentSong.src = this.playlist[nextIndex];
+    const currentIndex = this.playlist.indexOf(this.currentSong.src);
+    const previousIndex = currentIndex ? currentIndex - 1 : 0;
+    this.currentSong.src = this.playlist[previousIndex];
+    this.currentSong.play();
   }
   loadNext(auto) {
     const nextIndex = this.playlist.indexOf(this.currentSong.src) + 1;
-    if (nextIndex > this.playlist.length) {
-      if (!auto) {
-        this.currentSong.src = this.playlist[0];
+    if (nextIndex >= this.playlist.length) {
+      this.currentSong.src = this.playlist[0];
+      if (!auto || this.repeat === 'context') {
+        this.currentSong.play();
       }
+    } else {
+      this.currentSong.src = this.playlist[nextIndex];
+      this.currentSong.play();
     }
-    this.currentSong.src = this.playlist[nextIndex];
-    this.currentSong.play();
   }
 
   // Controls
@@ -125,7 +133,8 @@ export default class AudioManager {
 
   previousTrack() {
     // TODO: Figure out saturn offset for skip back
-    if (this.currentSong.currentTime >= 2) {
+    console.log(this.currentSong.currentTime);
+    if (this.currentSong.currentTime >= 3) {
       this.currentSong.currentTime = 0;
     } else {
       this.loadPrevious();
@@ -137,8 +146,14 @@ export default class AudioManager {
   }
 
   stop() {
+    // TODO: Saturn behavior
     this.currentSong.pause();
+    this.currentSong.src = this.playlist[0];
     this.currentSong.currentTime = 0;
+  }
+
+  getCurrentTime() {
+    return this.currentSong.currentTime;
   }
 
   getAnalysis() {
@@ -157,5 +172,6 @@ export default class AudioManager {
         this.repeat = 'off';
         break;
     }
+    audioActions.toggleRepeat(this.repeat);
   }
 }

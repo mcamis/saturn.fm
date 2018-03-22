@@ -27,7 +27,7 @@ const logarithmic = position => {
 };
 
 export const colorTween = (target, volume) => {
-  const logVal = logarithmic(volume * 0.44);
+  const logVal = logarithmic(volume * 0.5);
   const hue = 142.5 - logVal;
 
   const initial = new Color(target.material.color.getHex());

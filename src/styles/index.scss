@@ -342,3 +342,23 @@ header {
 .music-picker {
   background: white;
 }
+
+.FileReader {
+  position: absolute;
+  top: 25%;
+  left: 10%;
+  right: 10%;
+  bottom: 25%;
+  background: white;
+  z-index: 9999;
+}
+
+.track-number {
+  position: absolute;
+  left: 114%;
+  top: 61%;
+  font-family: "Monaco";
+  color: #004848;
+  font-size: 140%;
+  line-height: 0;
+}

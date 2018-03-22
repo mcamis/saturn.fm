@@ -24,6 +24,15 @@ class Menu extends Component {
     this.buttonEffect.src = buttonSrc;
   }
 
+  componentDidMount() {
+    window.onkeydown = e => {
+      e.preventDefault();
+      if (e.keyCode === 32) {
+        this.buttonClick(() => {});
+      }
+    };
+  }
+
   buttonClick(callback) {
     this.buttonEffect.currentTime = 0;
     this.buttonEffect.play();
@@ -31,7 +40,27 @@ class Menu extends Component {
   }
 
   render() {
-    const { audioManager } = this.props;
+    const { audioManager, repeat } = this.props;
+    let repeatElement;
+    if (repeat === 'track') {
+      repeatElement = (
+        <div>
+          Repeat: <strong>1</strong> / All / Off
+        </div>
+      );
+    } else if (repeat === 'context') {
+      repeatElement = (
+        <div>
+          Repeat: 1 / <strong>All</strong> / Off
+        </div>
+      );
+    } else {
+      repeatElement = (
+        <div>
+          Repeat: 1 / All / <strong>Off</strong>
+        </div>
+      );
+    }
     return (
       <ul>
         <li>
@@ -78,7 +107,7 @@ class Menu extends Component {
           className="bottom repeat"
           icon={repeatIcon}
           callback={audioManager.toggleRepeat}
-          tooltipText="Repeat: 1 / All / Off"
+          tooltipText={repeatElement}
         />
         <OrbButton
           buttonClick={this.buttonClick}

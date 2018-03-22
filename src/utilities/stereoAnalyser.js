@@ -1,9 +1,8 @@
 import autobind from 'utilities/autobind';
-import { formatTime, average } from 'utilities/helpers';
-import { store } from 'index';
+import { average } from 'utilities/helpers';
 
 const FFT_SIZE = 32;
-const SMOOTHING = 0.1;
+const SMOOTHING = 0.3;
 
 // tl;dr; Put some audio in, get averaged FFT data out
 //
@@ -39,21 +38,12 @@ const SMOOTHING = 0.1;
 //      +----+-----+
 //
 
-const updateAnalysis = ({ currentTime, leftChannel, rightChannel}) => ({
-  type: 'SONG_ANALYSIS',
-  data: { currentTime, leftChannel, rightChannel }
-});
-
 export default class StereoAnalyser {
   constructor(audio) {
-    const defaultOptions = {
-      analyser: {
-        fftSize: FFT_SIZE,
-        smoothingTimeConstant: SMOOTHING,
-      },
-    };
-    this.options = { ...defaultOptions };
     this.audio = audio;
+    this.leftChannel = 1;
+    this.rightChannel = 1;
+    this.currentTime = 0;
     this.setupRack();
     autobind(this);
   }
@@ -64,14 +54,15 @@ export default class StereoAnalyser {
     // TODO: Handle false!
 
     this.audioContext = new AudioContext();
-
     const splitter = this.audioContext.createChannelSplitter(2);
-    const analyserLeft = this.audioContext.createAnalyser(
-      this.options.analyser
-    );
-    const analyserRight = this.audioContext.createAnalyser(
-      this.options.analyser
-    );
+    const analyserLeft = this.audioContext.createAnalyser();
+
+    const analyserRight = this.audioContext.createAnalyser();
+
+    analyserLeft.smoothingTimeConstant = SMOOTHING;
+    analyserRight.smoothingTimeConstant = SMOOTHING;
+    analyserLeft.fftSize = FFT_SIZE;
+    analyserRight.fftSize = FFT_SIZE;
 
     // Wire it all up together
     analyserLeft.connect(this.audioContext.destination);
@@ -94,26 +85,16 @@ export default class StereoAnalyser {
     const { analyserLeft, analyserRight, dataArrayLeft, dataArrayRight } = this;
     analyserLeft.getByteFrequencyData(dataArrayLeft);
     analyserRight.getByteFrequencyData(dataArrayRight);
-    const { currentTime } = this.audio;
     this.leftChannel = average(dataArrayLeft);
     this.rightChannel = average(dataArrayRight);
-    this.currentTime = currentTime;
-    // store.dispatch(updateAnalysis({
-    //   currentTime,
-    //   leftChannel,
-    //   rightChannel
-    // }));
-
-    // TODO: Send values to redux
     this.frameId = requestAnimationFrame(this.startAnalysis);
   }
 
   getAnalysis() {
     return {
-      currentTime: this.currentTime,
       leftChannel: this.leftChannel,
-      rightChannel: this.rightChannel
-    }
+      rightChannel: this.rightChannel,
+    };
   }
 
   start() {
@@ -127,15 +108,5 @@ export default class StereoAnalyser {
 
   getContext() {
     return this.audioContext;
-  }
-
-  getAudioInfo() {
-    const { currentTimeRaw, volumeLeft, volumeRight } = this;
-    return {
-      currentTime: formatTime(currentTimeRaw),
-      currentTimeRaw,
-      volumeLeft,
-      volumeRight,
-    };
   }
 }
