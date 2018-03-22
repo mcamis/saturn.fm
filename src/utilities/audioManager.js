@@ -1,7 +1,5 @@
 import autobind from 'utilities/autobind';
 import StereoAnalyser from 'utilities/stereoAnalyser';
-import Sample from 'songs/sample.mp3';
-import Rhyme from 'songs/Rhyme.mp3';
 import * as audioActions from 'actions/audio';
 
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio
@@ -14,7 +12,7 @@ export default class AudioManager {
     this.repeat = 'off';
     // TODO: Preloading & total track time
     this.playlist = [
-      'http://localhost:3000/src/songs/1.mp3',
+      'http://localhost:3000/src/songs/Rhyme.mp3',
       'http://localhost:3000/src/songs/2.mp3',
       'http://localhost:3000/src/songs/3.mp3',
       'http://localhost:3000/src/songs/4.mp3',
@@ -33,8 +31,6 @@ export default class AudioManager {
   getAudio() {
     return this.currentSong;
   }
-
-  // using named functions so we can unbind
 
   playAndReport() {
     // TODO: Use mp3 meta tags for info
@@ -133,7 +129,6 @@ export default class AudioManager {
 
   previousTrack() {
     // TODO: Figure out saturn offset for skip back
-    console.log(this.currentSong.currentTime);
     if (this.currentSong.currentTime >= 3) {
       this.currentSong.currentTime = 0;
     } else {

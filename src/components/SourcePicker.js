@@ -28,16 +28,6 @@ class SourcePicker extends Component {
             Select
           </button>
         </div>
-        <div className="option">
-          <h2>
-            Spotify Connect <label>BETA</label>
-          </h2>
-          <img src="" />
-          <p>Choice copy</p>
-          <button onClick={() => this.setSourceAndRedirect('spotify')}>
-            Select
-          </button>
-        </div>
       </section>
     );
   }

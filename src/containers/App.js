@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import autobind from 'utilities/autobind';
 import { formatTime } from 'utilities/helpers';
-
-import MusicPicker from 'components/MusicPicker';
 
 import StarField from 'components/StarField';
 import Cubes from 'components/Cubes';
@@ -16,29 +13,18 @@ import AudioManager from 'utilities/audioManager';
 import timeSrc from 'images/time.png';
 import trackSrc from 'images/track.png';
 
-import { updateTime } from 'actions/audio';
-
-import Spotify from 'containers/Spotify';
-
 class App extends Component {
   constructor(props) {
     super(props);
+    autobind(this);
+
     this.audioManager = new AudioManager();
+    const currentTimeInterval = setInterval(this.syncCurrentTime, 500);
 
     this.state = {
-      playerReady: false,
-      leftChannel: 1,
-      rightChannel: 1,
       currentTime: formatTime(0),
+      currentTimeInterval,
     };
-    window.onSpotifyWebPlaybackSDKReady = () =>
-      this.setState({ playerReady: true });
-    autobind(this);
-  }
-  componentDidMount() {
-    // setInterval because requestAnimationFrame is overkill for this
-    const currentTimeInterval = setInterval(this.syncCurrentTime, 500);
-    this.setState({ currentTimeInterval });
   }
 
   componentWillUnmount() {
@@ -46,15 +32,12 @@ class App extends Component {
   }
 
   syncCurrentTime() {
-    // updateTime(this.audioManager.getCurrentTime());
     this.setState({
       currentTime: formatTime(this.audioManager.getCurrentTime()),
     });
-    // this.frameId = requestAnimationFrame(this.syncCurrentTime);
   }
 
   render() {
-    const { currentTime, leftChannel, rightChannel } = this.state;
     return (
       <div>
         <header>
@@ -80,15 +63,12 @@ class App extends Component {
 
         <div className="overlay">
           <Route path="/upload" component={FileReader} />
-          <Route path="/music" component={MusicPicker} />
-          <Route path="/spotify" component={MusicPicker} />
         </div>
       </div>
     );
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     audio: state.audio,
