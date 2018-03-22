@@ -64,10 +64,6 @@
     "dependencies": {
         "@tweenjs/tween.js": "^17.2.0",
         "babel-polyfill": "^6.26.0",
-        "expo-three": "^2.2.2-alpha.1",
-        "history": "^4.7.2",
-        "moment": "^2.19.4",
-        "orbit-controls-es6": "^1.0.10",
         "prop-types": "^15.6.0",
         "react": "^16.0.0",
         "react-dom": "^16.0.0",
