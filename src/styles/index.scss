@@ -102,11 +102,9 @@ canvas {
 }
 
 .StarField {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
   &:after {
     content: "";
     background: url("../images/galaxy.png") no-repeat;
@@ -183,7 +181,7 @@ ul {
         background: url("../images/orb-top.png") center center / cover no-repeat;
       }
       &.globe {
-        background: url("../images/globe.gif") center center / cover no-repeat;
+        background: url("../images/globe.png") center center / cover no-repeat;
       }
       &.bottom:after {
         content: "";
