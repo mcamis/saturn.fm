@@ -10,6 +10,7 @@ module.exports = {
   entry: {
     vendor: [
       'babel-polyfill',
+      'history',
       'prop-types',
       'react',
       'react-dom',

@@ -7,7 +7,7 @@ class FileReader extends Component {
   }
 
   handleChange() {
-    console.log(this.fileInput.files);
+    console.log(this.fileInput.files); // eslint-disable-line no-console
   }
 
   render() {

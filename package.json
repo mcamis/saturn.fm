@@ -64,6 +64,7 @@
     "dependencies": {
         "@tweenjs/tween.js": "^17.2.0",
         "babel-polyfill": "^6.26.0",
+        "history": "^4.7.2",
         "prop-types": "^15.6.0",
         "react": "^16.0.0",
         "react-dom": "^16.0.0",

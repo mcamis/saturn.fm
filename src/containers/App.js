@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import autobind from 'utilities/autobind';
 import { formatTime } from 'utilities/helpers';
 
@@ -68,6 +70,13 @@ class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  audio: PropTypes.shape({
+    trackNumber: PropTypes.number.isRequired,
+    repeat: PropTypes.oneOf(['off', 'context', 'track']).isRequired,
+  }).isRequired,
+};
 
 function mapStateToProps(state) {
   return {

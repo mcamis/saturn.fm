@@ -22,7 +22,6 @@ class StarField extends PureComponent {
   }
 
   onResize() {
-    console.log('stars!');
     const width = window.innerWidth > 1000 ? 1000 : window.innerWidth;
     const height = window.innerHeight;
     this.camera.aspect = width / height;

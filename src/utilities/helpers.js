@@ -4,13 +4,13 @@ import { Color } from 'three/src/math/Color';
 export const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
 
 export const formatTime = time =>
-  Math.trunc(time / 60)
+  `${Math.trunc(time / 60)
     .toString()
-    .padStart(2, '0') +
-  ':' +
-  Math.trunc(time % 60)
+    .padStart(2, '0')}
+  :
+  ${Math.trunc(time % 60)
     .toString()
-    .padStart(2, '0');
+    .padStart(2, '0')}`;
 
 export const randomSize = () => Math.random() * (6 - 4) + 4;
 export const randomPosition = () => Math.random() * 1000 - 500;
@@ -31,6 +31,7 @@ export const colorTween = (target, volume) => {
   const hue = 142.5 - logVal;
 
   const initial = new Color(target.material.color.getHex());
+
   // TODO: This HSL change is quick but doesn't exactly match the original behavior
   const newColor = new Color(`hsl(${hue > 0 ? hue : 0}, 100%, 48%)`);
 

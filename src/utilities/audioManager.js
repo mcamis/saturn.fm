@@ -23,7 +23,8 @@ export default class AudioManager {
       'http://localhost:3000/src/songs/9.mp3',
     ];
     this.analyser = new StereoAnalyser(this.currentSong);
-    this.currentSong.src = this.playlist[0];
+    const [firstSong] = this.playlist;
+    this.currentSong.src = firstSong;
     this.setupEventListeners();
     autobind(this);
   }
@@ -100,7 +101,8 @@ export default class AudioManager {
   loadNext(auto) {
     const nextIndex = this.playlist.indexOf(this.currentSong.src) + 1;
     if (nextIndex >= this.playlist.length) {
-      this.currentSong.src = this.playlist[0];
+      const [firstSong] = this.playlist;
+      this.currentSong.src = firstSong;
       if (!auto || this.repeat === 'context') {
         this.currentSong.play();
       }
@@ -142,8 +144,9 @@ export default class AudioManager {
 
   stop() {
     // TODO: Saturn behavior
+    const [firstSong] = this.playlist;
     this.currentSong.pause();
-    this.currentSong.src = this.playlist[0];
+    this.currentSong.src = firstSong;
     this.currentSong.currentTime = 0;
   }
 

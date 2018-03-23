@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+import AudioManager from 'utilities/audioManager';
+
 import discIcon from 'images/disc.png';
 import playPauseIcon from 'images/play-pause.png';
 import ffwdIcon from 'images/ffwd.png';
@@ -61,7 +63,7 @@ class Menu extends PureComponent {
         </div>
       );
     }
-    console.log('menu');
+
     return (
       <ul>
         <li>
@@ -126,5 +128,10 @@ class Menu extends PureComponent {
     );
   }
 }
+
+Menu.propTypes = {
+  audioManager: PropTypes.instanceOf(AudioManager).isRequired,
+  repeat: PropTypes.oneOf(['off', 'context', 'track']).isRequired,
+};
 
 export default Menu;

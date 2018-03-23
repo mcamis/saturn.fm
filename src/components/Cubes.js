@@ -1,6 +1,9 @@
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
+import AudioManager from 'utilities/audioManager';
+
+// Three.js imports
 import { AmbientLight } from 'three/src/lights/AmbientLight';
 import { BoxGeometry } from 'three/src/geometries/Geometries';
 import { Color } from 'three/src/math/Color';
@@ -10,6 +13,8 @@ import { MeshLambertMaterial } from 'three/src/materials/Materials';
 import { PerspectiveCamera } from 'three/src/cameras/PerspectiveCamera';
 import { Scene } from 'three/src/scenes/Scene';
 import { WebGLRenderer } from 'three/src/renderers/WebGLRenderer';
+
+// Todo: Import specific tween functions as needed
 import TWEEN from '@tweenjs/tween.js';
 
 import autobind from 'utilities/autobind';
@@ -147,12 +152,8 @@ class Cubes extends PureComponent {
   }
 }
 
+Cubes.propTypes = {
+  audioManager: PropTypes.instanceOf(AudioManager).isRequired,
+};
+
 export default Cubes;
-
-// /* istanbul ignore next */
-// function mapStateToProps(state) {
-//   return {...state.analysis};
-// }
-
-// export const CubesUnconnected = Cubes;
-// export default connect(mapStateToProps)(Cubes);

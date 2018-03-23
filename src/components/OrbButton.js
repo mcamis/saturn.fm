@@ -18,8 +18,10 @@ OrbButton.defaultProps = {
 };
 
 OrbButton.propTypes = {
+  buttonClick: PropTypes.func.isRequired,
   icon: PropTypes.string,
   className: PropTypes.string,
   callback: PropTypes.func,
+  tooltipText: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 };
 export default OrbButton;
