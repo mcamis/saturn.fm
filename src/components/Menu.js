@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ import autobind from 'utilities/autobind';
 import OrbButton from 'components/OrbButton';
 import buttonSrc from 'songs/button-press.mp3';
 
-class Menu extends Component {
+class Menu extends PureComponent {
   constructor(props) {
     super(props);
     autobind(this);
@@ -61,6 +61,7 @@ class Menu extends Component {
         </div>
       );
     }
+    console.log('menu');
     return (
       <ul>
         <li>

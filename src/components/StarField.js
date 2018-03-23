@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import { Scene } from 'three/src/scenes/Scene';
 import { PerspectiveCamera } from 'three/src/cameras/PerspectiveCamera';
@@ -10,10 +10,10 @@ import { WebGLRenderer } from 'three/src/renderers/WebGLRenderer';
 import autobind from 'utilities/autobind';
 import { randomSize, randomPosition } from 'utilities/helpers';
 
-class StarField extends Component {
+class StarField extends PureComponent {
   constructor(props) {
     super(props);
-
+    this.timeOut = null;
     autobind(this);
   }
 
@@ -21,18 +21,8 @@ class StarField extends Component {
     this.setupScene();
   }
 
-  componentWillUnmount() {
-    this.mount.removeChild(this.renderer.domElement);
-    this.stop();
-    window.removeEventListener('resize', this.onResize, false);
-    this.renderer.dispose();
-    // this.renderer.forceContextLoss();
-    // this.renderer.context=undefined;
-    // this.renderer.domElement=undefined;
-    // TODO: Move renderer up to containing element so it's not recreated on every mount
-  }
-
   onResize() {
+    console.log('stars!');
     const width = window.innerWidth > 1000 ? 1000 : window.innerWidth;
     const height = window.innerHeight;
     this.camera.aspect = width / height;
@@ -60,46 +50,43 @@ class StarField extends Component {
     this.scene = scene;
     this.stars = this.stars || [];
     this.mount.appendChild(this.renderer.domElement);
-    this.start();
+    requestAnimationFrame(this.animate);
     this.addStars();
-    window.addEventListener('resize', this.onResize, false);
-  }
-
-  start() {
-    this.frameId = this.frameId || requestAnimationFrame(this.animate);
-  }
-
-  stop() {
-    cancelAnimationFrame(this.frameId);
+    window.addEventListener('resize', () => {
+      clearTimeout(this.timeOut);
+      this.timeOut = setTimeout(this.onResize, 250);
+    });
   }
 
   animate() {
     this.animateStars();
     this.renderScene();
-    this.frameId = window.requestAnimationFrame(this.animate);
+    requestAnimationFrame(this.animate);
   }
 
   addStars() {
     const geometry = new BoxGeometry(0.75, 0.75, 0.75);
 
-    for (let z = -1000; z < 1000; z += 20) {
+    for (let z = -1000; z < 1000; z += 15) {
       let material;
-      if (z > 0 && z < 20) {
+      // TODO: More colors
+      if (z > 0 && z < 100) {
         material = new MeshBasicMaterial({ color: 0xff757a });
       } else {
         material = new MeshBasicMaterial({ color: 0xffffff });
       }
 
-      const sphere = new Mesh(geometry, material);
+      const star = new Mesh(geometry, material);
 
-      sphere.position.x = randomPosition();
-      sphere.position.y = randomPosition();
-      sphere.position.z = z;
+      // TODO: Better positioning so stars don't smack the viewer in the face
+      star.position.x = randomPosition();
+      star.position.y = randomPosition();
+      star.position.z = z;
 
-      sphere.scale.set(randomSize(), randomSize(), 1);
+      star.scale.set(randomSize(), randomSize(), 1);
 
-      this.scene.add(sphere);
-      this.stars.push(sphere);
+      this.scene.add(star);
+      this.stars.push(star);
     }
   }
 

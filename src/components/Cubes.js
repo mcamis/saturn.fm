@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
 import { AmbientLight } from 'three/src/lights/AmbientLight';
@@ -15,21 +15,15 @@ import TWEEN from '@tweenjs/tween.js';
 import autobind from 'utilities/autobind';
 import { colorTween } from 'utilities/helpers';
 
-class Cubes extends Component {
+class Cubes extends PureComponent {
   constructor(props) {
     super(props);
+    this.timeOut = null;
     autobind(this);
   }
 
   componentDidMount() {
     this.setupScene();
-  }
-  componentWillUnmount() {
-    this.stop();
-    this.mount.removeChild(this.renderer.domElement);
-    window.removeEventListener('resize', this.onResize, false);
-    // TODO: Move renderer up to containing element so it's not recreated on every mount
-    this.renderer.dispose();
   }
 
   onResize() {
@@ -64,17 +58,12 @@ class Cubes extends Component {
     this.camera = camera;
     this.renderer = renderer;
     this.mount.appendChild(this.renderer.domElement);
-    this.start();
     this.addCubes();
-    window.addEventListener('resize', this.onResize, false);
-  }
-
-  start() {
-    this.frameId = this.frameId || requestAnimationFrame(this.animate);
-  }
-
-  stop() {
-    cancelAnimationFrame(this.frameId);
+    requestAnimationFrame(this.animate);
+    window.addEventListener('resize', () => {
+      clearTimeout(this.timeOut);
+      this.timeOut = setTimeout(this.onResize, 250);
+    });
   }
 
   addCubes() {
@@ -139,7 +128,7 @@ class Cubes extends Component {
     //   this.idleAnimation();
     // }
     this.renderScene();
-    this.frameId = requestAnimationFrame(this.animate);
+    requestAnimationFrame(this.animate);
   }
 
   renderScene() {
