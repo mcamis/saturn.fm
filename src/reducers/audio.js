@@ -16,6 +16,7 @@ export default (state = defaultAnalysisState, action) => {
         ...state,
         trackNumber: action.data.trackNumber,
         playing: true,
+        paused: false,
       };
     case 'PAUSED':
       return {

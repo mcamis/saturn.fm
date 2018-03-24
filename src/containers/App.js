@@ -14,6 +14,7 @@ import StarField from 'components/StarField';
 
 import timeSrc from 'images/time.png';
 import trackSrc from 'images/track.png';
+import playPauseIcon from 'images/play-pause.png';
 
 class App extends Component {
   constructor(props) {
@@ -53,8 +54,14 @@ class App extends Component {
   render() {
     const { audio: { playing, paused, repeat } } = this.props;
     const hiddenClass = this.state.hidden ? 'hidden' : '';
+    const pausedClass = paused ? 'paused' : '';
+    const playingClass = playing ? 'playing' : '';
+
     return (
-      <div className={hiddenClass} onClick={() => this.showIfHidden()}>
+      <div
+        className={`${hiddenClass} ${pausedClass} ${playingClass}`}
+        onClick={() => this.showIfHidden()}
+      >
         {/* TODO: Move header into component */}
         <header>
           <div className="info">
@@ -69,6 +76,7 @@ class App extends Component {
           </div>
           <div className="knight-rider" />
         </header>
+        {paused && <img src={playPauseIcon} className="toast blink" />}
         <Menu
           audioManager={this.audioManager}
           hideDash={this.hideDash}
@@ -77,7 +85,11 @@ class App extends Component {
           playing={playing}
         />
         <div className="dashboard" />
-        <Cubes audioManager={this.audioManager} />
+        <Cubes
+          audioManager={this.audioManager}
+          paused={paused}
+          playing={playing}
+        />
         <StarField />
 
         <div className="overlay">

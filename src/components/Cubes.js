@@ -95,11 +95,11 @@ class Cubes extends PureComponent {
     leftCube.rotateX(0.015);
   }
 
-  rotateCubes() {
-    this.leftCube.rotation.x += Math.random() * (0.03 - 0.01) + 0.01;
-    this.leftCube.rotation.y += Math.random() * (0.03 - 0.01) + 0.01;
-    this.rightCube.rotation.x -= Math.random() * (0.03 - 0.01) + 0.01;
-    this.rightCube.rotation.y -= Math.random() * (0.03 - 0.01) + 0.01;
+  rotateCubes(max, min) {
+    this.leftCube.rotation.y += Math.random() * (max - max) + max;
+    this.rightCube.rotation.y -= Math.random() * (max - max) + max;
+    this.rightCube.rotation.x -= Math.random() * (max - max) + max;
+    this.leftCube.rotation.x += Math.random() * (max - max) + max;
   }
 
   scaleCubes() {
@@ -117,21 +117,28 @@ class Cubes extends PureComponent {
     this.leftCube.scale.set(sizeRight, sizeRight, sizeRight);
     this.rightCube.scale.set(sizeLeft, sizeLeft, sizeLeft);
   }
+  pausedAnimation() {
+    // TODO: Animate up and down while idle
+    this.leftCube.rotation.x += 0.009;
+    this.rightCube.rotation.x -= 0.009;
+  }
 
-  // idleAnimation() {
-  // TODO: Animate up and down while idle
-  // this.leftCube.rotation.y += 0.009;
-  // this.rightCube.rotation.y -= 0.009;
-  // }
+  idleAnimation() {
+    // TODO: Animate up and down while idle
+    this.leftCube.rotation.y += 0.009;
+    this.rightCube.rotation.y -= 0.009;
+  }
 
   animate() {
     TWEEN.update();
-    // if (this.state.playing) {
-    this.rotateCubes();
+    if (this.props.playing) {
+      this.rotateCubes(0.03, 0.01);
+    } else if (this.props.paused) {
+      this.rotateCubes(0.01, 0.005);
+    } else {
+      this.idleAnimation();
+    }
     this.scaleCubes();
-    // } else {
-    //   this.idleAnimation();
-    // }
     this.renderScene();
     requestAnimationFrame(this.animate);
   }
