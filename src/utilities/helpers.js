@@ -3,14 +3,16 @@ import { Color } from 'three/src/math/Color';
 
 export const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
 
-export const formatTime = time =>
-  `${Math.trunc(time / 60)
+export const formatTime = time => {
+  const MM = Math.trunc(time / 60)
     .toString()
-    .padStart(2, '0')}
-  :
-  ${Math.trunc(time % 60)
+    .padStart(2, '0');
+  const SS = Math.trunc(time % 60)
     .toString()
-    .padStart(2, '0')}`;
+    .padStart(2, '0');
+
+  return `${MM}:${SS}`;
+};
 
 export const randomSize = () => Math.random() * (6 - 4) + 4;
 export const randomPosition = () => Math.random() * 1000 - 500;

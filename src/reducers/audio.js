@@ -5,6 +5,8 @@ export const defaultAnalysisState = {
   loading: false,
   repeat: 'off',
   currentTime: formatTime(0),
+  playing: false,
+  paused: false,
 };
 
 export default (state = defaultAnalysisState, action) => {
@@ -13,16 +15,18 @@ export default (state = defaultAnalysisState, action) => {
       return {
         ...state,
         trackNumber: action.data.trackNumber,
+        playing: true,
+      };
+    case 'PAUSED':
+      return {
+        ...state,
+        playing: false,
+        paused: true,
       };
     case 'TOGGLE_REPEAT':
       return {
         ...state,
         repeat: action.data.repeat,
-      };
-    case 'UPDATE_TIME':
-      return {
-        ...state,
-        currentTime: formatTime(action.data.currentTime),
       };
     default:
       return state;

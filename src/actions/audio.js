@@ -30,9 +30,3 @@ export const paused = () =>
   store.dispatch({
     type: 'PAUSED',
   });
-
-export const updateTime = currentTime =>
-  store.dispatch({
-    type: 'UPDATE_TIME',
-    data: { currentTime },
-  });

@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import configureStore, { history } from 'store/configure';
 import 'styles/index.scss';
 
+// Export the store so it can be used outside of react-redux
 export const store = configureStore(); // eslint-disable-line import/prefer-default-export
 
 ReactDOM.render(

@@ -29,10 +29,6 @@ export default class AudioManager {
     autobind(this);
   }
 
-  getAudio() {
-    return this.currentSong;
-  }
-
   playAndReport() {
     // TODO: Use mp3 meta tags for info
     audioActions.playing(this.getTrackNumber());
@@ -54,6 +50,7 @@ export default class AudioManager {
       audioActions.playing(this.getTrackNumber());
       this.analyser.start();
     });
+
     this.currentSong.addEventListener('pause', () => {
       audioActions.paused();
       this.analyser.stop();
@@ -150,14 +147,6 @@ export default class AudioManager {
     this.currentSong.currentTime = 0;
   }
 
-  getCurrentTime() {
-    return this.currentSong.currentTime;
-  }
-
-  getAnalysis() {
-    return this.analyser.getAnalysis();
-  }
-
   toggleRepeat() {
     switch (this.repeat) {
       case 'off':
@@ -171,5 +160,13 @@ export default class AudioManager {
         break;
     }
     audioActions.toggleRepeat(this.repeat);
+  }
+
+  get averageFFT() {
+    return this.analyser.averageFFT;
+  }
+
+  get currentTime() {
+    return this.currentSong.currentTime;
   }
 }

@@ -4,13 +4,13 @@ import { Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import autobind from 'utilities/autobind';
+import AudioManager from 'utilities/audioManager';
 import { formatTime } from 'utilities/helpers';
 
-import StarField from 'components/StarField';
 import Cubes from 'components/Cubes';
-import FileReader from 'components/FileReader';
 import Menu from 'components/Menu';
-import AudioManager from 'utilities/audioManager';
+import FileReader from 'components/FileReader';
+import StarField from 'components/StarField';
 
 import timeSrc from 'images/time.png';
 import trackSrc from 'images/track.png';
@@ -24,7 +24,8 @@ class App extends Component {
     const currentTimeInterval = setInterval(this.syncCurrentTime, 500);
 
     this.state = {
-      currentTime: formatTime(0),
+      hidden: false,
+      currentTime: 0,
       currentTimeInterval,
     };
   }
@@ -35,13 +36,26 @@ class App extends Component {
 
   syncCurrentTime() {
     this.setState({
-      currentTime: formatTime(this.audioManager.getCurrentTime()),
+      currentTime: formatTime(this.audioManager.currentTime),
     });
   }
 
+  hideDash() {
+    this.setState(prevState => ({ hidden: !prevState.hidden }));
+  }
+
+  showIfHidden() {
+    if (this.state.hidden) {
+      this.setState({ hidden: false });
+    }
+  }
+
   render() {
+    const { audio: { playing, paused, repeat } } = this.props;
+    const hiddenClass = this.state.hidden ? 'hidden' : '';
     return (
-      <div>
+      <div className={hiddenClass} onClick={() => this.showIfHidden()}>
+        {/* TODO: Move header into component */}
         <header>
           <div className="info">
             <div className="track">
@@ -57,7 +71,10 @@ class App extends Component {
         </header>
         <Menu
           audioManager={this.audioManager}
-          repeat={this.props.audio.repeat}
+          hideDash={this.hideDash}
+          repeat={repeat}
+          paused={paused}
+          playing={playing}
         />
         <div className="dashboard" />
         <Cubes audioManager={this.audioManager} />

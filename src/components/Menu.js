@@ -28,8 +28,8 @@ class Menu extends PureComponent {
 
   componentDidMount() {
     window.onkeydown = e => {
-      e.preventDefault();
       if (e.keyCode === 32) {
+        e.preventDefault();
         this.buttonClick(() => {});
       }
     };
@@ -42,8 +42,12 @@ class Menu extends PureComponent {
   }
 
   render() {
-    const { audioManager, repeat } = this.props;
-    let repeatElement;
+    const { audioManager, repeat, playing, paused } = this.props;
+    let repeatElement = (
+      <div>
+        Repeat: 1 / All / <strong>Off</strong>
+      </div>
+    );
     if (repeat === 'track') {
       repeatElement = (
         <div>
@@ -56,10 +60,19 @@ class Menu extends PureComponent {
           Repeat: 1 / <strong>All</strong> / Off
         </div>
       );
-    } else {
-      repeatElement = (
+    }
+
+    let playElement = <div>Play / Pause</div>;
+    if (playing) {
+      playElement = (
         <div>
-          Repeat: 1 / All / <strong>Off</strong>
+          <strong>Play</strong> / Pause
+        </div>
+      );
+    } else if (paused) {
+      playElement = (
+        <div>
+          Play / <strong>Pause</strong>
         </div>
       );
     }
@@ -81,6 +94,7 @@ class Menu extends PureComponent {
         <OrbButton
           buttonClick={this.buttonClick}
           className="gold"
+          callback={this.props.hideDash}
           icon={visualizerIcon}
           tooltipText="Hide Controls"
         />
@@ -96,7 +110,7 @@ class Menu extends PureComponent {
           className="middle play-pause"
           icon={playPauseIcon}
           callback={audioManager.togglePlay}
-          tooltipText="Play / Pause"
+          tooltipText={playElement}
         />
         <OrbButton
           buttonClick={this.buttonClick}

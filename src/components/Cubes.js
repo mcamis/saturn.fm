@@ -103,7 +103,7 @@ class Cubes extends PureComponent {
   }
 
   scaleCubes() {
-    const { leftChannel, rightChannel } = this.props.audioManager.getAnalysis();
+    const { leftChannel, rightChannel } = this.props.audioManager.averageFFT;
     const sizeLeft = leftChannel * 0.01 + 1; // Web Audio
     const sizeRight = rightChannel * 0.01 + 1; // Web Audio
     // const sizeLeft = this.props.volumeLeft * 0.05 + 1;

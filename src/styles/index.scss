@@ -104,7 +104,7 @@ canvas {
 .StarField {
   width: 100%;
   height: 100%;
-  position: relative;
+  position: absolute;
   &:after {
     content: "";
     background: url("../images/galaxy.png") no-repeat;
@@ -367,4 +367,115 @@ header {
   color: #004848;
   font-size: 140%;
   line-height: 0;
+}
+
+@keyframes floatDownRelative {
+  from {
+    transform: translateY(0%);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes floatUpRelative {
+  from {
+    transform: translateY(0%);
+  }
+  to {
+    transform: translateY(-105%);
+  }
+}
+
+@keyframes floatDownButtons {
+  from {
+    transform: translateY(0%);
+  }
+  to {
+    transform: translateY(50vh);
+  }
+}
+
+.hidden {
+  header {
+    animation-name: floatUpRelative;
+    animation-duration: 1000ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards; // animation-delay: 10s;
+    animation-timing-function: linear;
+  }
+  .dashboard,
+  .cubes canvas,
+  li {
+    animation-name: floatDownRelative;
+    animation-duration: 2000ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards; // animation-delay: 10s;
+    animation-timing-function: linear;
+  }
+  li {
+    animation-name: floatDownButtons;
+    animation-duration: 400ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards; // animation-delay: 10s;
+    animation-timing-function: ease-in
+  }
+  li {
+    &:nth-child(1) {
+      animation-delay: 1400ms;
+      animation-duration: 300ms;
+    }
+    &:nth-child(2) {
+      animation-delay: 1300ms;
+      animation-duration: 300ms;
+    }
+    &:nth-child(3) {
+      animation-delay: 1100ms;
+      animation-duration: 300ms;
+    }
+    &:nth-child(4) {
+      animation-delay: 780ms;
+      animation-duration: 350ms;
+    }
+    &:nth-child(5) {
+      animation-delay: 800ms;
+      animation-duration: 350ms;
+    }
+    &:nth-child(6) {
+      animation-delay: 1000ms;
+      animation-duration: 350ms;
+    }
+    &:nth-child(7) {
+      animation-delay: 680ms;
+    }
+    &:nth-child(8) {
+      animation-delay: 600ms;
+    }
+    &:nth-child(9) {
+      animation-delay: 720ms;
+    }
+  }
+  li {
+    button,
+    a {
+      &.bottom:after {
+        animation-name: fadeOut;
+        animation-duration: 200ms;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards; // animation-delay: 10s;
+        animation-timing-function: linear;
+      }
+    }
+    .tooltip {
+      display: none !important;
+    }
+  }
+}
+
+
+.tooltip {
+  strong {
+    font-weight: normal;
+    color: rgb(255, 32,52);
+  }
 }

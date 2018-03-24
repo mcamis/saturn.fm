@@ -41,8 +41,8 @@ const SMOOTHING = 0.3;
 export default class StereoAnalyser {
   constructor(audio) {
     this.audio = audio;
-    this.leftChannel = 1;
-    this.rightChannel = 1;
+    this.leftChannel = [1];
+    this.rightChannel = [1];
     this.currentTime = 0;
     this.setupRack();
     autobind(this);
@@ -85,16 +85,9 @@ export default class StereoAnalyser {
     const { analyserLeft, analyserRight, dataArrayLeft, dataArrayRight } = this;
     analyserLeft.getByteFrequencyData(dataArrayLeft);
     analyserRight.getByteFrequencyData(dataArrayRight);
-    this.leftChannel = average(dataArrayLeft);
-    this.rightChannel = average(dataArrayRight);
+    this.leftChannel = dataArrayLeft;
+    this.rightChannel = dataArrayRight;
     this.frameId = requestAnimationFrame(this.startAnalysis);
-  }
-
-  getAnalysis() {
-    return {
-      leftChannel: this.leftChannel,
-      rightChannel: this.rightChannel,
-    };
   }
 
   start() {
@@ -108,5 +101,12 @@ export default class StereoAnalyser {
 
   getContext() {
     return this.audioContext;
+  }
+
+  get averageFFT() {
+    return {
+      leftChannel: average(this.leftChannel),
+      rightChannel: average(this.rightChannel),
+    };
   }
 }
