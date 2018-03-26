@@ -64,7 +64,7 @@ class StarField extends PureComponent {
   }
 
   addStars() {
-    const geometry = new BoxGeometry(0.75, 0.75, 0.75);
+    const geometry = new BoxGeometry(0.75, 0.75, 0);
 
     for (let z = -1000; z < 1000; z += 15) {
       let material;

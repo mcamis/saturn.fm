@@ -25,6 +25,7 @@ class App extends Component {
     const currentTimeInterval = setInterval(this.syncCurrentTime, 500);
 
     this.state = {
+      show: false,
       hidden: false,
       currentTime: 0,
       currentTimeInterval,
@@ -42,12 +43,12 @@ class App extends Component {
   }
 
   hideDash() {
-    this.setState(prevState => ({ hidden: !prevState.hidden }));
+    this.setState(prevState => ({ hidden: !prevState.hidden, show: false }));
   }
 
   showIfHidden() {
     if (this.state.hidden) {
-      this.setState({ hidden: false });
+      this.setState({ hidden: false, show: true });
     }
   }
 
@@ -56,11 +57,11 @@ class App extends Component {
     const hiddenClass = this.state.hidden ? 'hidden' : '';
     const pausedClass = paused ? 'paused' : '';
     const playingClass = playing ? 'playing' : '';
+    const showClass = this.state.show ? 'show' : '';
 
     return (
       <div
-        className={`${hiddenClass} ${pausedClass} ${playingClass}`}
-        onClick={() => this.showIfHidden()}
+        className={`${hiddenClass} ${pausedClass} ${playingClass} ${showClass}`}
       >
         {/* TODO: Move header into component */}
         <header>

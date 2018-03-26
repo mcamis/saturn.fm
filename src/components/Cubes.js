@@ -13,6 +13,7 @@ import { MeshLambertMaterial } from 'three/src/materials/Materials';
 import { PerspectiveCamera } from 'three/src/cameras/PerspectiveCamera';
 import { Scene } from 'three/src/scenes/Scene';
 import { WebGLRenderer } from 'three/src/renderers/WebGLRenderer';
+import * as THREE from 'three';
 
 // Todo: Import specific tween functions as needed
 import TWEEN from '@tweenjs/tween.js';
@@ -37,6 +38,7 @@ class Cubes extends PureComponent {
     this.camera.aspect = width / height;
 
     this.camera.updateProjectionMatrix();
+    // this.camera.set(0);
     this.renderer.setSize(width, height);
   }
 
@@ -59,6 +61,8 @@ class Cubes extends PureComponent {
     renderer.setSize(width, height);
     renderer.setClearColor(0x000000, 0); // the default
 
+    this.mouse = new THREE.Vector2();
+    this.raycaster = new THREE.Raycaster();
     this.scene = scene;
     this.camera = camera;
     this.renderer = renderer;
@@ -74,16 +78,19 @@ class Cubes extends PureComponent {
   addCubes() {
     const geometry = new BoxGeometry(1, 1, 1, 1, 1, 1);
     const leftMaterial = new MeshLambertMaterial({
-      color: new Color('hsl(142.5, 100%, 48%)'),
+      color: new Color('hsl(143, 100%, 48%)'),
     });
     const rightMaterial = new MeshLambertMaterial({
-      color: new Color('hsl(142.5, 100%, 48%)'),
+      color: new Color('hsl(143, 100%, 48%)'),
     });
     const leftCube = new Mesh(geometry, leftMaterial);
     const rightCube = new Mesh(geometry, rightMaterial);
+
     this.leftCube = leftCube;
     this.rightCube = rightCube;
+
     this.geometry = geometry;
+
     this.scene.add(leftCube, rightCube);
 
     const xOffset = 7;
@@ -117,6 +124,7 @@ class Cubes extends PureComponent {
     this.leftCube.scale.set(sizeRight, sizeRight, sizeRight);
     this.rightCube.scale.set(sizeLeft, sizeLeft, sizeLeft);
   }
+
   pausedAnimation() {
     // TODO: Animate up and down while idle
     this.leftCube.rotation.x += 0.009;
@@ -134,9 +142,10 @@ class Cubes extends PureComponent {
     if (this.props.playing) {
       this.rotateCubes(0.03, 0.01);
     } else if (this.props.paused) {
-      this.rotateCubes(0.01, 0.005);
+      this.rotateCubes(0.002, 0.002);
     } else {
-      this.idleAnimation();
+      // this.idleAnimation();
+      this.rotateCubes(0.002, 0.002);
     }
     this.scaleCubes();
     this.renderScene();

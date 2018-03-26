@@ -2,7 +2,7 @@ import autobind from 'utilities/autobind';
 import { average } from 'utilities/helpers';
 
 const FFT_SIZE = 32;
-const SMOOTHING = 0.3;
+const SMOOTHING = 0.45;
 
 // tl;dr; Put some audio in, get averaged FFT data out
 //
@@ -41,8 +41,8 @@ const SMOOTHING = 0.3;
 export default class StereoAnalyser {
   constructor(audio) {
     this.audio = audio;
-    this.leftChannel = [1];
-    this.rightChannel = [1];
+    this.leftChannel = [80];
+    this.rightChannel = [80];
     this.currentTime = 0;
     this.setupRack();
     autobind(this);

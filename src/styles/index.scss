@@ -79,6 +79,15 @@ body {
 canvas {
   position: fixed;
   bottom: 0;
+  image-rendering: pixelated;
+}
+.Cubes canvas{
+  left: 0;
+  padding: 0;
+  right: 0;
+}
+.menu canvas {
+  z-index: 9999;
 }
 
 @keyframes spin {
@@ -385,10 +394,11 @@ header {
   }
   header {
     animation-name: floatUpRelative;
-    animation-duration: 500ms;
+    animation-duration: 1000ms;
     animation-iteration-count: 1;
     animation-fill-mode: forwards; // animation-delay: 10s;
-    animation-timing-function: linear;
+    animation-timing-function: ease-out;
+    // animation-delay: 150ms;
   }
   .dashboard,
   .cubes canvas,
@@ -524,5 +534,107 @@ blink {
   .toast,
   .knight-rider {
     animation: blink 1s infinite;
+  }
+}
+
+@keyframes floatInRelative {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes floatDownInRelative {
+  from {
+    transform: translateY(-105%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes floatInButtons {
+  from {
+    transform: translateY(50vh);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
+.show {
+  header {
+    animation-name: floatDownInRelative;
+    animation-duration: 600ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: backwards; // animation-delay: 10s;
+    animation-timing-function: linear;
+    animation-delay: 800ms;
+  }
+  .dashboard,
+  .cubes canvas {
+    animation-name: floatInRelative;
+    animation-duration: 800ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: backwards; // animation-delay: 10s;
+    animation-timing-function: linear;
+    animation-delay: 300ms;
+  }
+  li {
+    animation-name: floatInButtons;
+    animation-duration: 400ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: backwards; // animation-delay: 10s;
+    animation-timing-function: ease-in;
+    &:nth-child(9) {
+      animation-delay: 900ms;
+      animation-duration: 300ms;
+    }
+    &:nth-child(8) {
+      animation-delay: 700ms;
+      animation-duration: 300ms;
+    }
+    &:nth-child(7) {
+      animation-delay: 600ms;
+      animation-duration: 300ms;
+    }
+    &:nth-child(6) {
+      animation-delay: 280ms;
+      animation-duration: 350ms;
+    }
+    &:nth-child(5) {
+      animation-delay: 300ms;
+      animation-duration: 350ms;
+    }
+    &:nth-child(4) {
+      animation-delay: 500ms;
+      animation-duration: 350ms;
+    }
+    &:nth-child(3) {
+      animation-delay: 180ms;
+    }
+    &:nth-child(2) {
+      animation-delay: 100ms;
+    }
+    &:nth-child(1) {
+      animation-delay: 220ms;
+    }
+  }
+  li {
+    button,
+    a {
+      &.bottom:after {
+        animation-name: fadeOut;
+        animation-duration: 200ms;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards; // animation-delay: 10s;
+        animation-timing-function: linear;
+      }
+    }
+    .tooltip {
+      display: none !important;
+    }
   }
 }
