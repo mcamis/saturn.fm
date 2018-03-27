@@ -9,6 +9,7 @@ import {
   PlaneGeometry,
 } from 'three/src/geometries/Geometries';
 import { Mesh } from 'three/src/objects/Mesh';
+
 import { MeshBasicMaterial } from 'three/src/materials/Materials';
 import { PerspectiveCamera } from 'three/src/cameras/PerspectiveCamera';
 import { Scene } from 'three/src/scenes/Scene';
@@ -22,18 +23,29 @@ import buttonSrc from 'songs/button-press.mp3';
 import highlightSrc from 'songs/button-highlight.mp3';
 
 import textureSrc from 'images/texture.gif';
-import pinkSrc from 'images/pinkTexture.gif';
+import pinkSrc from 'images/pink.gif';
 import pinkAlphaSrc from 'images/pinkAlphaMap.gif';
-import playPauseIcon from 'images/play-pause.png';
+import purpleAlphaSrc from 'images/purpleAlpha.png';
 
-import orbSrc from 'images/orb-top.png';
+import discSrc from 'images/disc.png';
+import moreSrc from 'images/more.png';
+import hideSrc from 'images/hide.png';
+import rwdSrc from 'images/rwd.png';
+import playSrc from 'images/play-pause.png';
+import ffwdSrc from 'images/ffwd.png';
+import stopSrc from 'images/stop.png';
+import repeatSrc from 'images/repeat.png';
+import advancedSrc from 'images/advanced.png';
+
 import orbAlpha from 'images/orb-alpha.png';
 
 import autobind from 'utilities/autobind';
 
-const orbitGeometry = new CylinderGeometry(1.15, 1.15, 0.17, 30, 1, true);
+const orbitGeometry = new CylinderGeometry(1.45, 1.45, 0.35, 12, 1, true);
 const orbitTexture = new THREE.TextureLoader().load(textureSrc);
 const pinkTexture = new THREE.TextureLoader().load(pinkSrc);
+
+const purpleAlpha = new THREE.TextureLoader().load(purpleAlphaSrc);
 
 // NearestFilter gets us that sweet sweet pixelated look
 orbitTexture.magFilter = THREE.NearestFilter;
@@ -44,9 +56,11 @@ const purpleMesh = new MeshBasicMaterial({
   side: THREE.DoubleSide,
   transparent: true,
   map: orbitTexture,
+  // alphaMap: purpleAlpha
 });
 
-const alphaTexture = new THREE.TextureLoader().load(pinkAlphaSrc);
+const alphaTexture = new THREE.TextureLoader().load(orbAlpha);
+alphaTexture.magFilter = THREE.NearestFilter;
 
 const pinkMesh = new MeshBasicMaterial({
   lights: false,
@@ -55,10 +69,7 @@ const pinkMesh = new MeshBasicMaterial({
   map: pinkTexture,
 });
 
-const planeTexture = new THREE.TextureLoader().load(orbSrc);
-planeTexture.magFilter = THREE.NearestFilter;
-
-const planeGeometry = new PlaneGeometry(1.5, 1.5, 1, 1);
+const planeGeometry = new PlaneGeometry(2, 2, 1, 1);
 
 class Menu extends PureComponent {
   constructor(props) {
@@ -101,7 +112,9 @@ class Menu extends PureComponent {
 
     const intersects = this.raycaster.intersectObjects(this.planes);
     if (intersects.length > 0) {
-      const { object: { material: { userData: { callback } } } } = intersects[0];
+      const {
+        object: { material: { userData: { callback } } },
+      } = intersects[0];
       this.buttonEffect.currentTime = 0;
       this.buttonEffect.play();
       callback();
@@ -126,7 +139,7 @@ class Menu extends PureComponent {
     camera.position.y = -27;
 
     const renderer = new WebGLRenderer({ alpha: true, antialias: false });
-    renderer.setPixelRatio(window.devicePixelRatio * 0.25); // Retina
+    renderer.setPixelRatio(window.devicePixelRatio); // Retina
     renderer.setSize(width, height);
     renderer.setClearColor(0x000000, 0); // the default
 
@@ -136,7 +149,6 @@ class Menu extends PureComponent {
     this.camera = camera;
     this.renderer = renderer;
     this.mount.appendChild(this.renderer.domElement);
-
 
     this.createMenuElements();
     this.setupEventListeners();
@@ -165,21 +177,59 @@ class Menu extends PureComponent {
 
   createMenuElements() {
     this.createButton(
-      'play',
-      [1, -32, 1],
+      'disc',
+      [-2.25, -28, 1],
       this.props.audioManager.togglePlay,
-      playPauseIcon
+      discSrc
+    );
+    this.createButton('settings', [0, -28, 1], () => {}, moreSrc);
+    this.createButton('hide', [2.25, -28, 1], this.props.hideDash, hideSrc);
+    this.createButton(
+      'rewind',
+      [-2.25, -30.15, 1],
+      this.props.audioManager.previousTrack,
+      rwdSrc
     );
     this.createButton(
-      'hide',
-      [-2, -32, 1],
-      this.props.hideDash,
-      playPauseIcon
+      'play',
+      [0, -30.15, 1],
+      this.props.audioManager.togglePlay,
+      playSrc
     );
+    this.createButton(
+      'fastforward',
+      [2.25, -30.15, 1],
+      this.props.audioManager.nextTrack,
+      ffwdSrc
+    );
+    this.createButton(
+      'repeat',
+      [-2.25, -32.3, 1],
+      this.props.audioManager.toggleRepeat,
+      repeatSrc
+    );
+    this.createButton(
+      'stop',
+      [0, -32.3, 1],
+      this.props.audioManager.stop,
+      stopSrc
+    );
+    this.createButton(
+      'advanced',
+      [2.25, -32.3, 1],
+      this.props.hideDash,
+      advancedSrc
+    );
+
+    // TODO: Shadows
   }
 
   createButton(name = '', coords, callback, mapSrc) {
     const [x, y, z] = coords;
+
+    const planeTexture = new THREE.TextureLoader().load(mapSrc);
+    planeTexture.magFilter = THREE.NearestFilter;
+    planeTexture.minFilter = THREE.NearestFilter;
 
     // Setup orbits
     const pink = new Mesh(orbitGeometry, pinkMesh);
@@ -187,24 +237,27 @@ class Menu extends PureComponent {
 
     const planeMaterial = new MeshBasicMaterial({
       map: planeTexture,
+      transparent: true,
       name,
       userData: {
         callback,
       },
+      alphaMap: alphaTexture,
     });
     const plane = new Mesh(planeGeometry, planeMaterial);
 
-    pink.position.set(x, y, z);
-    pink.rotateX(0.15);
+    // Push the orbits slight ahead in Z so they hit the plan at the eges of the sphere
+    pink.position.set(x, y, 2);
+    pink.rotateX(0.35);
     pink.rotateZ(-0.8);
 
-    purple.position.set(x, y, 1.5);
+    purple.position.set(x, y, 2.03);
     purple.rotateZ(0.8);
-    purple.rotateX(0.15);
+    purple.rotateX(0.25);
     purple.rotateY(1);
 
     plane.position.set(x, y, z);
-    plane.rotateZ(0.75);
+    // plane.rotateZ(0.75);
 
     this.orbits = {
       ...this.orbits,
@@ -221,12 +274,11 @@ class Menu extends PureComponent {
 
   orbitButton() {
     const { pink, purple } = this.orbits[this.state.activeButton];
-    pink.rotateY(-0.075);
-    purple.rotateY(0.08);
+    pink.rotateY(-0.065);
+    purple.rotateY(0.07);
   }
 
   manageActiveButton() {
-
     this.raycaster.setFromCamera(this.mouse, this.camera);
     const intersects = this.raycaster.intersectObjects(this.planes);
     if (intersects.length > 0) {
@@ -271,114 +323,4 @@ Menu.propTypes = {
   repeat: PropTypes.oneOf(['off', 'context', 'track']).isRequired,
 };
 
-
 export default Menu;
-
-//   buttonClick(callback) {
-//     this.buttonEffect.currentTime = 0;
-//     this.buttonEffect.play();
-//     callback();
-//   }
-
-//   fooRender() {
-//     const { audioManager, repeat, playing, paused } = this.props;
-//     let repeatElement = (
-//       <div>
-//         Repeat: 1 / All / <strong>Off</strong>
-//       </div>
-//     );
-//     if (repeat === 'track') {
-//       repeatElement = (
-//         <div>
-//           Repeat: <strong>1</strong> / All / Off
-//         </div>
-//       );
-//     } else if (repeat === 'context') {
-//       repeatElement = (
-//         <div>
-//           Repeat: 1 / <strong>All</strong> / Off
-//         </div>
-//       );
-//     }
-
-//     let playElement = <div>Play / Pause</div>;
-//     if (playing) {
-//       playElement = (
-//         <div>
-//           <strong>Play</strong> / Pause
-//         </div>
-//       );
-//     } else if (paused) {
-//       playElement = (
-//         <div>
-//           Play / <strong>Pause</strong>
-//         </div>
-//       );
-//     }
-
-//     return (
-//       <ul>
-//         <li>
-//           <Link to="source" className="gold disc">
-//             <img src={discIcon} alt="TODO" />
-//           </Link>
-//         <OrbButton
-//           buttonClick={this.buttonClick}
-//           className="gold"
-//           icon={moreIcon}
-//           tooltipText="System Settings"
-//         />
-//         <OrbButton
-//           buttonClick={this.buttonClick}
-//           className="gold test"
-//           callback={this.props.hideDash}
-//           icon={visualizerIcon}
-//           tooltipText="Hide Controls"
-//         />
-//         <OrbButton
-//           buttonClick={this.buttonClick}
-//           className="middle rewind"
-//           icon={rwdIcon}
-//           callback={audioManager.previousTrack}
-//           tooltipText="Skip Backwards"
-//         />
-//         <OrbButton
-//           buttonClick={this.buttonClick}
-//           className="middle play-pause"
-//           icon={playPauseIcon}
-//           callback={audioManager.togglePlay}
-//           tooltipText={playElement}
-//         />
-//         <OrbButton
-//           buttonClick={this.buttonClick}
-//           className="middle fast-forward"
-//           icon={ffwdIcon}
-//           tooltipText="Skip Forwards"
-//           callback={audioManager.nextTrack}
-//         />
-//         <OrbButton
-//           buttonClick={this.buttonClick}
-//           className="bottom repeat"
-//           icon={repeatIcon}
-//           callback={audioManager.toggleRepeat}
-//           tooltipText={repeatElement}
-//         />
-//         <OrbButton
-//           buttonClick={this.buttonClick}
-//           className="bottom stop"
-//           icon={stopIcon}
-//           callback={audioManager.stop}
-//           tooltipText="Stop"
-//         />
-//         <OrbButton
-//           buttonClick={this.buttonClick}
-//           className="bottom globe"
-//           tooltipText="Advanced Controls"
-//         />
-//       </ul>
-//     );
-//   }
-// }
-
-
-// export default Menu;

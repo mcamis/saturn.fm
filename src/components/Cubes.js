@@ -128,13 +128,15 @@ class Cubes extends PureComponent {
   pausedAnimation() {
     // TODO: Animate up and down while idle
     this.leftCube.rotation.x += 0.009;
-    this.rightCube.rotation.x -= 0.009;
+    // this.rightCube.rotation.x -= 0.009;
+    this.rightCube.rotateX(-0.009);
   }
 
   idleAnimation() {
     // TODO: Animate up and down while idle
     this.leftCube.rotation.y += 0.009;
-    this.rightCube.rotation.y -= 0.009;
+    // this.rightCube.rotation.y -= 0.009;
+    this.rightCube.rotateX(-0.009);
   }
 
   animate() {
@@ -144,7 +146,6 @@ class Cubes extends PureComponent {
     } else if (this.props.paused) {
       this.rotateCubes(0.002, 0.002);
     } else {
-      // this.idleAnimation();
       this.rotateCubes(0.002, 0.002);
     }
     this.scaleCubes();
