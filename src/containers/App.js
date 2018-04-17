@@ -53,7 +53,9 @@ class App extends Component {
   }
 
   render() {
-    const { audio: { playing, paused, repeat } } = this.props;
+    const {
+      audio: { playing, paused, repeat },
+    } = this.props;
     const hiddenClass = this.state.hidden ? 'hidden' : '';
     const pausedClass = paused ? 'paused' : '';
     const playingClass = playing ? 'playing' : '';
@@ -103,7 +105,7 @@ class App extends Component {
 
 App.propTypes = {
   audio: PropTypes.shape({
-    trackNumber: PropTypes.number.isRequired,
+    trackNumber: PropTypes.number,
     repeat: PropTypes.oneOf(['off', 'context', 'track']).isRequired,
   }).isRequired,
 };

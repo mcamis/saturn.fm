@@ -2,7 +2,9 @@
  * Path information about the project for use in the webpack config files.
  */
 
-let { env: { NODE_ENV } } = process;
+let {
+  env: { NODE_ENV },
+} = process;
 
 switch (process.env.MODE) {
   case 'staging':

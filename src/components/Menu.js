@@ -113,7 +113,11 @@ class Menu extends PureComponent {
     const intersects = this.raycaster.intersectObjects(this.planes);
     if (intersects.length > 0) {
       const {
-        object: { material: { userData: { callback } } },
+        object: {
+          material: {
+            userData: { callback },
+          },
+        },
       } = intersects[0];
       this.buttonEffect.currentTime = 0;
       this.buttonEffect.play();
@@ -157,7 +161,9 @@ class Menu extends PureComponent {
   }
 
   setupEventListeners() {
-    const { renderer: { domElement } } = this;
+    const {
+      renderer: { domElement },
+    } = this;
     window.addEventListener('resize', () => {
       clearTimeout(this.timeOut);
       this.timeOut = setTimeout(this.onResize, 250);
@@ -282,7 +288,11 @@ class Menu extends PureComponent {
     this.raycaster.setFromCamera(this.mouse, this.camera);
     const intersects = this.raycaster.intersectObjects(this.planes);
     if (intersects.length > 0) {
-      const { object: { material: { name } } } = intersects[0];
+      const {
+        object: {
+          material: { name },
+        },
+      } = intersects[0];
       if (name) {
         this.setState({ activeButton: name });
       }

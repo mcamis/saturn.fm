@@ -13,18 +13,22 @@ import { MeshLambertMaterial } from 'three/src/materials/Materials';
 import { PerspectiveCamera } from 'three/src/cameras/PerspectiveCamera';
 import { Scene } from 'three/src/scenes/Scene';
 import { WebGLRenderer } from 'three/src/renderers/WebGLRenderer';
-import * as THREE from 'three';
 
 // Todo: Import specific tween functions as needed
 import TWEEN from '@tweenjs/tween.js';
 
 import autobind from 'utilities/autobind';
-import { colorTween } from 'utilities/helpers';
+import { sceneWidth } from 'utilities/helpers';
+import {
+  activeRotation,
+  idleRotation,
+  updateScaleAndColor,
+} from 'utilities/cubeTransforms';
 
 class Cubes extends PureComponent {
   constructor(props) {
     super(props);
-    this.timeOut = null;
+    this.debouncedResize = null;
     autobind(this);
   }
 
@@ -33,7 +37,7 @@ class Cubes extends PureComponent {
   }
 
   onResize() {
-    const width = window.innerWidth > 1000 ? 1000 : window.innerWidth;
+    const width = sceneWidth();
     const height = width * 0.75;
     this.camera.aspect = width / height;
 
@@ -43,7 +47,7 @@ class Cubes extends PureComponent {
   }
 
   setupScene() {
-    const width = window.innerWidth > 1000 ? 1000 : window.innerWidth;
+    const width = sceneWidth();
     const height = width * 0.75;
 
     const scene = new Scene();
@@ -59,10 +63,7 @@ class Cubes extends PureComponent {
     const renderer = new WebGLRenderer({ alpha: true, antialias: false });
     renderer.setPixelRatio(window.devicePixelRatio * 0.25); // Retina
     renderer.setSize(width, height);
-    renderer.setClearColor(0x000000, 0); // the default
 
-    this.mouse = new THREE.Vector2();
-    this.raycaster = new THREE.Raycaster();
     this.scene = scene;
     this.camera = camera;
     this.renderer = renderer;
@@ -71,7 +72,7 @@ class Cubes extends PureComponent {
     requestAnimationFrame(this.animate);
     window.addEventListener('resize', () => {
       clearTimeout(this.timeOut);
-      this.timeOut = setTimeout(this.onResize, 250);
+      this.debouncedResize = setTimeout(this.onResize, 250);
     });
   }
 
@@ -95,66 +96,31 @@ class Cubes extends PureComponent {
 
     const xOffset = 7;
 
-    leftCube.position.set(xOffset * -1, -30, 0);
+    leftCube.position.set(-Math.abs(xOffset), -30, 0);
     rightCube.position.set(xOffset, -30, 0);
     rightCube.rotateY(0.75);
     rightCube.rotateX(0.015);
     leftCube.rotateX(0.015);
   }
 
-  rotateCubes(max, min) {
-    this.leftCube.rotation.y += Math.random() * (max - max) + max;
-    this.rightCube.rotation.y -= Math.random() * (max - max) + max;
-    this.rightCube.rotation.x -= Math.random() * (max - max) + max;
-    this.leftCube.rotation.x += Math.random() * (max - max) + max;
-  }
-
-  scaleCubes() {
-    const { leftChannel, rightChannel } = this.props.audioManager.averageFFT;
-    const sizeLeft = leftChannel * 0.01 + 1; // Web Audio
-    const sizeRight = rightChannel * 0.01 + 1; // Web Audio
-    // const sizeLeft = this.props.volumeLeft * 0.05 + 1;
-    // const sizeRight = this.props.volumeRight * 0.1 + 1;
-
-    colorTween(this.leftCube, leftChannel);
-    colorTween(this.rightCube, rightChannel);
-
-    // TODO: Tween scale
-    // TODO/WTF R/L are swapped because of the camera/scene? hmm
-    this.leftCube.scale.set(sizeRight, sizeRight, sizeRight);
-    this.rightCube.scale.set(sizeLeft, sizeLeft, sizeLeft);
-  }
-
-  pausedAnimation() {
-    // TODO: Animate up and down while idle
-    this.leftCube.rotation.x += 0.009;
-    // this.rightCube.rotation.x -= 0.009;
-    this.rightCube.rotateX(-0.009);
-  }
-
-  idleAnimation() {
-    // TODO: Animate up and down while idle
-    this.leftCube.rotation.y += 0.009;
-    // this.rightCube.rotation.y -= 0.009;
-    this.rightCube.rotateX(-0.009);
-  }
-
   animate() {
-    TWEEN.update();
-    if (this.props.playing) {
-      this.rotateCubes(0.03, 0.01);
-    } else if (this.props.paused) {
-      this.rotateCubes(0.002, 0.002);
-    } else {
-      this.rotateCubes(0.002, 0.002);
-    }
-    this.scaleCubes();
-    this.renderScene();
-    requestAnimationFrame(this.animate);
-  }
+    const { leftChannel, rightChannel } = this.props.audioManager.analyserFFT;
 
-  renderScene() {
+    TWEEN.update();
+    // Only animated the cubes when audio is playing
+    if (this.props.playing) {
+      updateScaleAndColor(this.leftCube, leftChannel);
+      updateScaleAndColor(this.rightCube, rightChannel);
+      activeRotation(this.leftCube);
+      activeRotation(this.rightCube, -1);
+    } else {
+      idleRotation(this.leftCube);
+      idleRotation(this.rightCube, -1);
+    }
+
     this.renderer.render(this.scene, this.camera);
+
+    requestAnimationFrame(this.animate);
   }
 
   render() {
@@ -171,6 +137,7 @@ class Cubes extends PureComponent {
 
 Cubes.propTypes = {
   audioManager: PropTypes.instanceOf(AudioManager).isRequired,
+  playing: PropTypes.bool.isRequired,
 };
 
 export default Cubes;

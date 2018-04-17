@@ -1,10 +1,10 @@
 import autobind from 'utilities/autobind';
 import { average } from 'utilities/helpers';
 
-const FFT_SIZE = 32;
+const FFT_SIZE = 128;
 const SMOOTHING = 0.45;
 
-// tl;dr; Put some audio in, get averaged FFT data out
+// tl;dr; Put stereo audio in, get averaged FFT data out
 //
 //      +-----------+
 //      |   AUDIO   |
@@ -41,66 +41,106 @@ const SMOOTHING = 0.45;
 export default class StereoAnalyser {
   constructor(audio) {
     this.audio = audio;
-    this.leftChannel = [80];
-    this.rightChannel = [80];
-    this.currentTime = 0;
-    this.setupRack();
+    this.leftChannel = [];
+    this.rightChannel = [];
+    this.setupAudioNodes();
     autobind(this);
   }
 
-  setupRack() {
-    const AudioContext =
-      window.AudioContext || window.webkitAudioContext || false;
-    // TODO: Handle false!
-
+  /**
+   * Initializes and connects all the necessary AudioContext nodes for analysis
+   * @private
+   */
+  setupAudioNodes() {
+    // Safari is still prefixed
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
     this.audioContext = new AudioContext();
+
+    // Initialize analyser nodes
+    const analyserLeft = this.createAnalyserNode();
+    const analyserRight = this.createAnalyserNode();
+    // TODO: Test # of channels before splitting
     const splitter = this.audioContext.createChannelSplitter(2);
-    const analyserLeft = this.audioContext.createAnalyser();
 
-    const analyserRight = this.audioContext.createAnalyser();
+    const mediaElement = this.audioContext.createMediaElementSource(this.audio);
 
-    analyserLeft.smoothingTimeConstant = SMOOTHING;
-    analyserRight.smoothingTimeConstant = SMOOTHING;
-    analyserLeft.fftSize = FFT_SIZE;
-    analyserRight.fftSize = FFT_SIZE;
+    // Plug source into the splitter
+    mediaElement.connect(splitter);
 
-    // Wire it all up together
-    analyserLeft.connect(this.audioContext.destination);
-    analyserRight.connect(this.audioContext.destination);
-    splitter.connect(analyserRight, 1, 0);
-    splitter.connect(analyserLeft, 0, 0);
+    // Plug split channels into separate nodes
+    splitter.connect(analyserLeft, 0);
+    splitter.connect(analyserRight, 1);
 
-    this.dataArrayLeft = new Uint8Array(FFT_SIZE * 0.5);
-    this.dataArrayRight = new Uint8Array(FFT_SIZE * 0.5);
-    this.splitter = splitter;
+    this.dataArrayLeft = new Uint8Array(analyserLeft.frequencyBinCount);
+    this.dataArrayRight = new Uint8Array(analyserRight.frequencyBinCount);
     this.analyserLeft = analyserLeft;
     this.analyserRight = analyserRight;
-
-    // Initialize all the components in the rack
-    const mediaElement = this.audioContext.createMediaElementSource(this.audio);
-    mediaElement.connect(this.splitter);
   }
 
+  /**
+   * Creates an analyser nodes and automatically connects
+   * it to context destination
+   * @private
+   */
+  createAnalyserNode() {
+    const analysisNode = this.audioContext.createAnalyser();
+
+    analysisNode.smoothingTimeConstant = SMOOTHING;
+    analysisNode.fftSize = FFT_SIZE;
+
+    // Ensure channel is still audible
+    analysisNode.connect(this.audioContext.destination);
+
+    return analysisNode;
+  }
+
+  /**
+   * Syncs analysis data to `leftChannel` & `rightChannel` on display refresh rate
+   * @private
+   */
   startAnalysis() {
     const { analyserLeft, analyserRight, dataArrayLeft, dataArrayRight } = this;
+    // getByteFrequencyData mutates the arrays
     analyserLeft.getByteFrequencyData(dataArrayLeft);
     analyserRight.getByteFrequencyData(dataArrayRight);
     this.leftChannel = dataArrayLeft;
     this.rightChannel = dataArrayRight;
+
+    // Set to frameId so we can cancel later
     this.frameId = requestAnimationFrame(this.startAnalysis);
   }
 
-  start() {
+  /**
+   * @private
+   */
+  startAnalyser() {
     this.frameId = this.frameId || requestAnimationFrame(this.startAnalysis);
   }
 
-  stop() {
+  /**
+   * @private
+   */
+  pauseAnalyser() {
     cancelAnimationFrame(this.frameId);
     this.frameId = undefined;
   }
 
-  getContext() {
-    return this.audioContext;
+  // Public methods ahoy
+  start() {
+    if (this.audioContext.state === 'suspended') {
+      this.audioContext.resume();
+    }
+    this.startAnalyser();
+  }
+
+  pause() {
+    this.pauseAnalyser();
+    this.audioContext.suspend();
+  }
+
+  stop() {
+    this.pauseAnalyser();
+    this.audioContext.close();
   }
 
   get averageFFT() {

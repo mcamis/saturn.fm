@@ -5,26 +5,22 @@ import * as audioActions from 'actions/audio';
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio
 export default class AudioManager {
   constructor() {
-    this.currentSong = new Audio();
-    this.currentSong.controls = true;
-    this.currentSong.crossOrigin = 'anonymous';
-    this.currentSong.volume = 1;
+    this.audioElement = new Audio();
+    this.audioElement.crossOrigin = 'anonymous';
+    // Lowered volume so sound effects are more audible
+    this.audioElement.volume = 0.75;
     this.repeat = 'off';
+
     // TODO: Preloading & total track time
+    // TODO: External playlist management
     this.playlist = [
       'http://localhost:3000/src/songs/Rhyme.mp3',
-      'http://localhost:3000/src/songs/2.mp3',
-      'http://localhost:3000/src/songs/3.mp3',
-      'http://localhost:3000/src/songs/4.mp3',
-      'http://localhost:3000/src/songs/5.mp3',
-      'http://localhost:3000/src/songs/6.mp3',
-      'http://localhost:3000/src/songs/7.mp3',
-      'http://localhost:3000/src/songs/8.mp3',
-      'http://localhost:3000/src/songs/9.mp3',
+      'http://localhost:3000/src/songs/No-Refuge.mp3',
     ];
-    this.analyser = new StereoAnalyser(this.currentSong);
-    const [firstSong] = this.playlist;
-    this.currentSong.src = firstSong;
+
+    this.audioElement.src = this.playlist[0]; // eslint-disable-line prefer-destructuring
+    this.analyser = new StereoAnalyser(this.audioElement);
+
     this.setupEventListeners();
     autobind(this);
   }
@@ -32,31 +28,31 @@ export default class AudioManager {
   playAndReport() {
     // TODO: Use mp3 meta tags for info
     audioActions.playing(this.getTrackNumber());
-    this.currentSong.play();
+    this.audioElement.play();
   }
 
   setupEventListeners() {
-    // https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events
-    this.currentSong.addEventListener('loadstart', () =>
+    // https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Mediaevents
+    this.audioElement.addEventListener('loadstart', () =>
       audioActions.loadingStart()
     );
 
     // TODO: Get this working locally
-    this.currentSong.addEventListener('canplaythrough', () =>
+    this.audioElement.addEventListener('canplaythrough', () =>
       audioActions.loadingFinish()
     );
 
-    this.currentSong.addEventListener('play', () => {
+    this.audioElement.addEventListener('play', () => {
       audioActions.playing(this.getTrackNumber());
       this.analyser.start();
     });
 
-    this.currentSong.addEventListener('pause', () => {
+    this.audioElement.addEventListener('pause', () => {
       audioActions.paused();
-      this.analyser.stop();
+      this.analyser.pause();
     });
 
-    this.currentSong.addEventListener('ended', () => {
+    this.audioElement.addEventListener('ended', () => {
       if (this.repeat === 'track') {
         this.togglePlay();
       } else {
@@ -77,48 +73,45 @@ export default class AudioManager {
       stalled
       Media data is unexpectedly no longer available.
     */
-
-    window.onkeyup = e => {
-      if (e.keyCode === 32) {
-        this.togglePlay();
-      }
-    };
   }
 
   getTrackNumber() {
-    const currentIndex = this.playlist.indexOf(this.currentSong.src);
+    const currentIndex = this.playlist.indexOf(this.audioElement.src);
+
+    // Humans do not count from zero
     return currentIndex + 1;
   }
+
   loadPrevious() {
-    const currentIndex = this.playlist.indexOf(this.currentSong.src);
+    const currentIndex = this.playlist.indexOf(this.audioElement.src);
     const previousIndex = currentIndex ? currentIndex - 1 : 0;
-    this.currentSong.src = this.playlist[previousIndex];
-    this.currentSong.play();
+    this.audioElement.src = this.playlist[previousIndex];
+    this.audioElement.play();
   }
+
   loadNext(auto) {
-    const nextIndex = this.playlist.indexOf(this.currentSong.src) + 1;
+    const nextIndex = this.playlist.indexOf(this.audioElement.src) + 1;
+
+    // TODO: Clean up this mess
     if (nextIndex >= this.playlist.length) {
       const [firstSong] = this.playlist;
-      this.currentSong.src = firstSong;
+      this.audioElement.src = firstSong;
       if (!auto || this.repeat === 'context') {
-        this.currentSong.play();
+        this.audioElement.play();
       }
     } else {
-      this.currentSong.src = this.playlist[nextIndex];
-      this.currentSong.play();
+      this.audioElement.src = this.playlist[nextIndex];
+      this.audioElement.play();
     }
   }
 
   // Controls
   togglePlay() {
-    const { currentSong } = this;
-    if (currentSong.paused || currentSong.ended) {
-      // iOS will auto-suspend AudioContext
-      // TODO: make this resume more intelligent
-      // audioContext.resume();
-      currentSong.play();
+    const { audioElement } = this;
+    if (audioElement.paused || audioElement.ended) {
+      audioElement.play();
     } else {
-      currentSong.pause();
+      audioElement.pause();
     }
   }
 
@@ -126,25 +119,28 @@ export default class AudioManager {
     this.loadNext();
   }
 
+  /**
+   *
+   */
   previousTrack() {
     // TODO: Figure out saturn offset for skip back
-    if (this.currentSong.currentTime >= 3) {
-      this.currentSong.currentTime = 0;
+    if (this.audioElement.currentTime >= 3) {
+      this.audioElement.currentTime = 0;
     } else {
       this.loadPrevious();
     }
   }
 
   pause() {
-    this.currentSong.pause();
+    this.audioElement.pause();
   }
 
   stop() {
     // TODO: Saturn behavior
     const [firstSong] = this.playlist;
-    this.currentSong.pause();
-    this.currentSong.src = firstSong;
-    this.currentSong.currentTime = 0;
+    this.audioElement.pause();
+    this.audioElement.src = firstSong;
+    this.audioElement.currentTime = 0;
   }
 
   toggleRepeat() {
@@ -162,11 +158,11 @@ export default class AudioManager {
     audioActions.toggleRepeat(this.repeat);
   }
 
-  get averageFFT() {
+  get analyserFFT() {
     return this.analyser.averageFFT;
   }
 
   get currentTime() {
-    return this.currentSong.currentTime;
+    return this.audioElement.currentTime;
   }
 }

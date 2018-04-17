@@ -3,6 +3,8 @@ import { Color } from 'three/src/math/Color';
 
 export const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
 
+export const sceneWidth = () =>
+  window.innerWidth > 1000 ? 1000 : window.innerWidth;
 export const formatTime = time => {
   const MM = Math.trunc(time / 60)
     .toString()
@@ -19,29 +21,11 @@ export const randomPosition = () => Math.random() * 1000 - 500;
 
 // I am very bad at maths
 // https://stackoverflow.com/a/846249
-const logarithmic = position => {
+export const logarithmic = position => {
   const minp = 0;
   const maxp = 100;
   const minv = Math.log(1);
   const maxv = Math.log(142);
   const scale = (maxv - minv) / (maxp - minp);
   return Math.exp(minv + scale * (position - minp));
-};
-
-export const colorTween = (target, volume) => {
-  const logVal = logarithmic(volume * 0.5);
-  const hue = 142.5 - logVal;
-
-  const initial = new Color(target.material.color.getHex());
-
-  // TODO: This HSL change is quick but doesn't exactly match the original behavior
-  const newColor = new Color(`hsl(${hue > 0 ? hue : 0}, 100%, 48%)`);
-
-  return new Tween(initial)
-    .to(newColor, 150)
-    .easing(Easing.Quadratic.Out)
-    .onUpdate(() => {
-      target.material.color.set(initial);
-    })
-    .start();
 };
