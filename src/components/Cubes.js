@@ -40,9 +40,7 @@ class Cubes extends PureComponent {
     const width = sceneWidth();
     const height = width * 0.75;
     this.camera.aspect = width / height;
-
     this.camera.updateProjectionMatrix();
-    // this.camera.set(0);
     this.renderer.setSize(width, height);
   }
 
@@ -61,7 +59,10 @@ class Cubes extends PureComponent {
     scene.add(ambient, directional);
 
     const renderer = new WebGLRenderer({ alpha: true, antialias: false });
-    renderer.setPixelRatio(window.devicePixelRatio * 0.25); // Retina
+
+    // TODO: Test on low DPI screens
+    // Pixelated on Retina with * .25
+    renderer.setPixelRatio(window.devicePixelRatio * 0.25);
     renderer.setSize(width, height);
 
     this.scene = scene;
@@ -71,7 +72,7 @@ class Cubes extends PureComponent {
     this.addCubes();
     requestAnimationFrame(this.animate);
     window.addEventListener('resize', () => {
-      clearTimeout(this.timeOut);
+      clearTimeout(this.debouncedResize);
       this.debouncedResize = setTimeout(this.onResize, 250);
     });
   }

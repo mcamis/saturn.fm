@@ -8,7 +8,7 @@ import { Mesh } from 'three/src/objects/Mesh';
 import { WebGLRenderer } from 'three/src/renderers/WebGLRenderer';
 
 import autobind from 'utilities/autobind';
-import { randomSize, randomPosition } from 'utilities/helpers';
+import { randomSize, randomPosition, sceneWidth } from 'utilities/helpers';
 
 class StarField extends PureComponent {
   constructor(props) {
@@ -22,7 +22,7 @@ class StarField extends PureComponent {
   }
 
   onResize() {
-    const width = window.innerWidth > 1000 ? 1000 : window.innerWidth;
+    const width = sceneWidth()
     const height = window.innerHeight;
     this.camera.aspect = width / height;
 
@@ -31,7 +31,7 @@ class StarField extends PureComponent {
   }
 
   setupScene() {
-    const width = window.innerWidth > 1000 ? 1000 : window.innerWidth;
+    const width = sceneWidth()
     const height = window.innerHeight;
 
     const scene = new Scene();
@@ -40,7 +40,7 @@ class StarField extends PureComponent {
     const renderer = new WebGLRenderer({ alpha: true, antialias: false });
     camera.position.z = 500;
 
-    renderer.setPixelRatio(window.devicePixelRatio * 0.25);
+    renderer.setPixelRatio(window.devicePixelRatio * 0.15);
     renderer.setSize(width, height);
     renderer.setClearColor(0x000000, 0); // the default
 

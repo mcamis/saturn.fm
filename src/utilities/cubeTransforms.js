@@ -3,12 +3,13 @@ import { Color } from 'three/src/math/Color';
 
 import { logarithmic } from 'utilities/helpers';
 
+const COLOR_TWEENING_SCALE = .75;
 const MAX_ACTIVE_ROTATION = 0.03;
 const MIN_ACTIVE_ROTATION = 0.01;
 const IDLE_ROTATION = 0.0025;
 
-const colorTween = (target, volume) => {
-  const logVal = logarithmic(volume * 0.7);
+const colorTween = (target, channelFFT) => {
+  const logVal = logarithmic(channelFFT * COLOR_TWEENING_SCALE);
   const hue = 142.5 - logVal;
 
   const initial = new Color(target.material.color.getHex());
