@@ -48,7 +48,7 @@ export default class StereoAnalyser {
   }
 
   /**
-   * Initializes and connects all the necessary AudioContext nodes for analysis
+   * Construct and connect all the necessary AudioContext nodes
    * @private
    */
   setupAudioNodes() {
@@ -56,18 +56,15 @@ export default class StereoAnalyser {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     this.audioContext = new AudioContext();
 
-    // Initialize analyser nodes
     const analyserLeft = this.createAnalyserNode();
     const analyserRight = this.createAnalyserNode();
-    // TODO: Test # of channels before splitting
     const splitter = this.audioContext.createChannelSplitter(2);
-
     const mediaElement = this.audioContext.createMediaElementSource(this.audio);
 
     // Plug source into the splitter
     mediaElement.connect(splitter);
 
-    // Plug split channels into separate nodes
+    // Plug analysers nodes into separate channels
     splitter.connect(analyserLeft, 0);
     splitter.connect(analyserRight, 1);
 
@@ -78,8 +75,7 @@ export default class StereoAnalyser {
   }
 
   /**
-   * Creates an analyser nodes and automatically connects
-   * it to context destination
+   * Creates an analyser node and connects context destination
    * @private
    */
   createAnalyserNode() {
@@ -126,6 +122,7 @@ export default class StereoAnalyser {
   }
 
   // Public methods ahoy
+
   start() {
     if (this.audioContext.state === 'suspended') {
       this.audioContext.resume();
@@ -147,6 +144,13 @@ export default class StereoAnalyser {
     return {
       leftChannel: average(this.leftChannel),
       rightChannel: average(this.rightChannel),
+    };
+  }
+
+  get rawFFT() {
+    return {
+      leftChannel: this.leftChannel,
+      rightChannel: this.rightChannel,
     };
   }
 }

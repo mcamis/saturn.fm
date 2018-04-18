@@ -34,9 +34,7 @@ export const updateScaleAndColor = (cube, channelFFT) => {
   cube.scale.set(derivedSize, derivedSize, derivedSize);
 };
 
-const randomRange = (max, min) => {
-  return Math.random() * (max - min) + min;
-};
+const randomRange = (max, min) => Math.random() * (max - min) + min;
 
 export const activeRotation = (cube, modifier) => {
   const derivedMax = modifier

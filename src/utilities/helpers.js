@@ -1,10 +1,8 @@
-import { Tween, Easing } from '@tweenjs/tween.js';
-import { Color } from 'three/src/math/Color';
-
 export const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
 
 export const sceneWidth = () =>
   window.innerWidth > 1000 ? 1000 : window.innerWidth;
+
 export const formatTime = time => {
   const MM = Math.trunc(time / 60)
     .toString()

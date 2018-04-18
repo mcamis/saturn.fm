@@ -53,7 +53,7 @@ class Cubes extends PureComponent {
     camera.position.z = 45;
     camera.position.y = -27;
 
-    const ambient = new AmbientLight(0xffffff, 0.35); // soft white light
+    const ambient = new AmbientLight(0xffffff, 0.35);
     const directional = new DirectionalLight(0xffffff, 0.7);
     directional.position.set(0, 0, 900);
     scene.add(ambient, directional);
@@ -88,20 +88,18 @@ class Cubes extends PureComponent {
     const leftCube = new Mesh(geometry, leftMaterial);
     const rightCube = new Mesh(geometry, rightMaterial);
 
-    this.leftCube = leftCube;
-    this.rightCube = rightCube;
+    leftCube.position.set(-Math.abs(7), -30, 0);
+    rightCube.position.set(7, -30, 0);
 
-    this.geometry = geometry;
-
-    this.scene.add(leftCube, rightCube);
-
-    const xOffset = 7;
-
-    leftCube.position.set(-Math.abs(xOffset), -30, 0);
-    rightCube.position.set(xOffset, -30, 0);
+    // Offset rotations so they're not symmetrical
     rightCube.rotateY(0.75);
     rightCube.rotateX(0.015);
     leftCube.rotateX(0.015);
+
+    this.leftCube = leftCube;
+    this.rightCube = rightCube;
+    this.scene.add(leftCube, rightCube);
+
   }
 
   animate() {
