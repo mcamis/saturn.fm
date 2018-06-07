@@ -1,0 +1,434 @@
+/*
+                                                                      ..;===+.
+                                                                  .:=iiiiii=+=
+                                                               .=i))=;::+)i=+,
+                                                            ,=i);)I)))I):=i=;
+                                                         .=i==))))ii)))I:i++
+                                                       +)+))iiiiiiii))I=i+:'
+                                  .,:;;++++++;:,.       )iii+:::;iii))+i='
+                               .:;++=iiiiiiiiii=++;.    =::,,,:::=i));=+'
+                             ,;+==ii)))))))))))ii==+;,      ,,,:=i))+=:
+                           ,;+=ii))))))IIIIII))))ii===;.    ,,:=i)=i+
+                          ;+=ii)))IIIIITIIIIII))))iiii=+,   ,:=));=,
+                        ,+=i))IIIIIITTTTTITIIIIII)))I)i=+,,:+i)=i+
+                       ,+i))IIIIIITTTTTTTTTTTTI))IIII))i=::i))i='
+                      ,=i))IIIIITLLTTTTTTTTTTIITTTTIII)+;+i)+i`
+                      =i))IIITTLTLTTTTTTTTTIITTLLTTTII+:i)ii:'
+                     +i))IITTTLLLTTTTTTTTTTTTLLLTTTT+:i)))=,
+                     =))ITTTTTTTTTTTLTTTTTTLLLLLLTi:=)IIiii;
+                    .i)IIITTTTTTTTLTTTITLLLLLLLT);=)I)))))i;
+                    :))IIITTTTTLTTTTTTLLHLLLLL);=)II)IIIIi=:
+                    :i)IIITTTTTTTTTLLLHLLHLL)+=)II)ITTTI)i=
+                    .i)IIITTTTITTLLLHHLLLL);=)II)ITTTTII)i+
+                    =i)IIIIIITTLLLLLLHLL=:i)II)TTTTTTIII)i'
+                  +i)i)))IITTLLLLLLLLT=:i)II)TTTTLTTIII)i;
+                +ii)i:)IITTLLTLLLLT=;+i)I)ITTTTLTTTII))i;
+               =;)i=:,=)ITTTTLTTI=:i))I)TTTLLLTTTTTII)i;
+             +i)ii::,  +)IIITI+:+i)I))TTTTLLTTTTTII))=,
+           :=;)i=:,,    ,i++::i))I)ITTTTTTTTTTIIII)=+'
+         .+ii)i=::,,   ,,::=i)))iIITTTTTTTTIIIII)=+
+        ,==)ii=;:,,,,:::=ii)i)iIIIITIIITIIII))i+:'
+       +=:))i==;:::;=iii)+)=  `:i)))IIIII)ii+'
+     .+=:))iiiiiiii)))+ii;
+    .+=;))iiiiii)));ii+
+   .+=i:)))))))=+ii+
+  .;==i+::::=)i=;
+  ,+==iiiiii+,
+  `+=+++;`
+
+*/
+/* Typography & Base Styling */
+* {
+  box-sizing: border-box;
+  text-rendering: optimizelegibility;
+  -webkit-font-smoothing: none;
+  font-size: inherit; }
+
+html {
+  height: 100%; }
+
+body {
+  font-family: 'Avenir Next', 'Avenir', Helvetica, Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.3;
+  height: 100%;
+  overflow: hidden;
+  color: #444;
+  margin: 0;
+  background: black; }
+
+#root {
+  width: 100%;
+  height: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  overflow: hidden; }
+  #root > div {
+    height: 100%;
+    width: 100%;
+    position: relative; }
+
+canvas {
+  position: fixed;
+  bottom: 0;
+  image-rendering: pixelated; }
+
+.Cubes canvas {
+  left: 0;
+  padding: 0;
+  right: 0; }
+
+.menu canvas {
+  z-index: 9999; }
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(-360deg); } }
+
+.StarField {
+  top: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute; }
+  .StarField:after {
+    content: "";
+    background: url(..//images/galaxy.png) no-repeat;
+    background-size: cover;
+    background-color: black;
+    position: absolute;
+    image-rendering: pixelated;
+    left: -35%;
+    right: -35%;
+    top: -35%;
+    bottom: -35%;
+    animation-name: spin;
+    animation-duration: 700s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    z-index: -1; }
+  .StarField canvas {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1; }
+
+@keyframes fadeOut {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
+
+.dashboard,
+.dashboard:after {
+  content: "";
+  background: url(..//images/dashboard.png) no-repeat;
+  image-rendering: pixelated;
+  background-size: 100% 50%;
+  background-position: 0 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50%;
+  height: 75vw;
+  z-index: 6666; }
+
+.dashboard:after {
+  left: 100%;
+  right: 0;
+  transform: scaleX(-1);
+  width: 100%; }
+
+.cubes {
+  z-index: 7777;
+  position: relative; }
+
+@media (min-width: 1000px) {
+  .dashboard,
+  .dashboard:after {
+    height: 750px; } }
+
+header {
+  position: relative; }
+  header .info {
+    background: url(..//images/header.png) top center/cover no-repeat;
+    image-rendering: pixelated;
+    width: 80%;
+    height: 0;
+    padding-top: calc(36 / 254 * 80%);
+    margin: 0 auto;
+    position: relative;
+    z-index: 2; }
+    header .info .time,
+    header .info .track {
+      position: absolute;
+      top: 24%;
+      left: 50%;
+      width: 8%;
+      line-height: 0; }
+      header .info .time img,
+      header .info .track img {
+        width: 100%; }
+    header .info .track {
+      left: 15%;
+      width: 11.79%; }
+    header .info .timer {
+      position: absolute;
+      top: 35%;
+      left: 60%;
+      font-family: "Monaco", monospace;
+      color: #004848;
+      font-size: 140%;
+      line-height: 0; }
+
+.music-picker {
+  background: white; }
+
+.FileReader {
+  position: absolute;
+  top: 25%;
+  left: 10%;
+  right: 10%;
+  bottom: 25%;
+  background: white;
+  z-index: 9999; }
+
+.track-number {
+  position: absolute;
+  left: 114%;
+  top: 61%;
+  font-family: "Monaco", monospace;
+  color: #004848;
+  font-size: 140%;
+  line-height: 0; }
+
+@keyframes floatDownRelative {
+  from {
+    transform: translateY(0%); }
+  to {
+    transform: translateY(100%); } }
+
+@keyframes floatUpRelative {
+  from {
+    transform: translateY(0%); }
+  to {
+    transform: translateY(-105%); } }
+
+@keyframes floatDownButtons {
+  from {
+    transform: translateY(0%); }
+  to {
+    transform: translateY(50vh); } }
+
+@keyframes blink {
+  0% {
+    opacity: 0; }
+  49% {
+    opacity: 0; }
+  50% {
+    opacity: 1; } }
+
+.hidden .toast {
+  animation: blink 1s infinite, fadeOut 0ms linear 3s 1 forwards running !important; }
+
+.hidden header {
+  animation-name: floatUpRelative;
+  animation-duration: 1000ms;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out; }
+
+.hidden .dashboard,
+.hidden .cubes canvas,
+.hidden li {
+  animation-name: floatDownRelative;
+  animation-duration: 2000ms;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear; }
+
+.hidden li {
+  animation-name: floatDownButtons;
+  animation-duration: 400ms;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in; }
+
+.hidden li:nth-child(1) {
+  animation-delay: 1400ms;
+  animation-duration: 300ms; }
+
+.hidden li:nth-child(2) {
+  animation-delay: 1300ms;
+  animation-duration: 300ms; }
+
+.hidden li:nth-child(3) {
+  animation-delay: 1100ms;
+  animation-duration: 300ms; }
+
+.hidden li:nth-child(4) {
+  animation-delay: 780ms;
+  animation-duration: 350ms; }
+
+.hidden li:nth-child(5) {
+  animation-delay: 800ms;
+  animation-duration: 350ms; }
+
+.hidden li:nth-child(6) {
+  animation-delay: 1000ms;
+  animation-duration: 350ms; }
+
+.hidden li:nth-child(7) {
+  animation-delay: 680ms; }
+
+.hidden li:nth-child(8) {
+  animation-delay: 600ms; }
+
+.hidden li:nth-child(9) {
+  animation-delay: 720ms; }
+
+.hidden li button.bottom:after,
+.hidden li a.bottom:after {
+  animation-name: fadeOut;
+  animation-duration: 200ms;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear; }
+
+.hidden li .tooltip {
+  display: none !important; }
+
+.tooltip strong {
+  font-weight: normal;
+  color: #ff2034; }
+
+@keyframes knight-rider {
+  from {
+    left: 25%; }
+  to {
+    left: 69%; } }
+
+.knight-rider {
+  display: none;
+  content: "";
+  background: url(..//images/knight-rider.png) no-repeat;
+  background-position: center center;
+  image-rendering: pixelated;
+  background-size: 100% 100%;
+  height: 12%;
+  width: 6%;
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  z-index: 1;
+  animation-name: knight-rider;
+  animation-duration: 1300ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear; }
+
+.playing .knight-rider {
+  display: inline-block; }
+
+blink {
+  animation: blink 1s infinite; }
+
+.toast {
+  image-rendering: pixelated;
+  position: fixed;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  width: 6em;
+  z-index: 9999; }
+
+.paused .knight-rider {
+  display: inline-block;
+  animation-play-state: paused; }
+
+.paused .timer,
+.paused .toast,
+.paused .knight-rider {
+  animation: blink 1s infinite; }
+
+@keyframes floatInRelative {
+  from {
+    transform: translateY(100%); }
+  to {
+    transform: translateY(0%); } }
+
+@keyframes floatDownInRelative {
+  from {
+    transform: translateY(-105%); }
+  to {
+    transform: translateY(0%); } }
+
+@keyframes floatInButtons {
+  from {
+    transform: translateY(50vh); }
+  to {
+    transform: translateY(0%); } }
+
+.show header {
+  animation-name: floatDownInRelative;
+  animation-duration: 600ms;
+  animation-iteration-count: 1;
+  animation-fill-mode: backwards;
+  animation-timing-function: linear;
+  animation-delay: 800ms; }
+
+.show .dashboard,
+.show .cubes canvas {
+  animation-name: floatInRelative;
+  animation-duration: 800ms;
+  animation-iteration-count: 1;
+  animation-fill-mode: backwards;
+  animation-timing-function: linear;
+  animation-delay: 300ms; }
+
+.show li {
+  animation-name: floatInButtons;
+  animation-duration: 400ms;
+  animation-iteration-count: 1;
+  animation-fill-mode: backwards;
+  animation-timing-function: ease-in; }
+  .show li:nth-child(9) {
+    animation-delay: 900ms;
+    animation-duration: 300ms; }
+  .show li:nth-child(8) {
+    animation-delay: 700ms;
+    animation-duration: 300ms; }
+  .show li:nth-child(7) {
+    animation-delay: 600ms;
+    animation-duration: 300ms; }
+  .show li:nth-child(6) {
+    animation-delay: 280ms;
+    animation-duration: 350ms; }
+  .show li:nth-child(5) {
+    animation-delay: 300ms;
+    animation-duration: 350ms; }
+  .show li:nth-child(4) {
+    animation-delay: 500ms;
+    animation-duration: 350ms; }
+  .show li:nth-child(3) {
+    animation-delay: 180ms; }
+  .show li:nth-child(2) {
+    animation-delay: 100ms; }
+  .show li:nth-child(1) {
+    animation-delay: 220ms; }
+
+.show li button.bottom:after,
+.show li a.bottom:after {
+  animation-name: fadeOut;
+  animation-duration: 200ms;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear; }
+
+.show li .tooltip {
+  display: none !important; }
+
+/*# sourceMappingURL=app0bab940c5540e1041ace.css.map*/
