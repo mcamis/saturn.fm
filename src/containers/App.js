@@ -82,6 +82,8 @@ class App extends Component {
         {paused && <img src={playPauseIcon} className="toast blink" />}
         <Menu
           audioManager={this.audioManager}
+          hidden={this.state.hidden}
+          showIfHidden={this.showIfHidden}
           hideDash={this.hideDash}
           repeat={repeat}
           paused={paused}

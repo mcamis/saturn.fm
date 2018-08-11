@@ -3,7 +3,7 @@ import { Color } from 'three/src/math/Color';
 
 import { logarithmic } from 'utilities/helpers';
 
-const COLOR_TWEENING_SCALE = .75;
+const COLOR_TWEENING_SCALE = 0.75;
 const MAX_ACTIVE_ROTATION = 0.03;
 const MIN_ACTIVE_ROTATION = 0.01;
 const IDLE_ROTATION = 0.0025;

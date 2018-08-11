@@ -22,7 +22,7 @@ class StarField extends PureComponent {
   }
 
   onResize() {
-    const width = sceneWidth()
+    const width = sceneWidth();
     const height = window.innerHeight;
     this.camera.aspect = width / height;
 
@@ -31,7 +31,7 @@ class StarField extends PureComponent {
   }
 
   setupScene() {
-    const width = sceneWidth()
+    const width = sceneWidth();
     const height = window.innerHeight;
 
     const scene = new Scene();

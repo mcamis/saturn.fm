@@ -99,7 +99,6 @@ class Cubes extends PureComponent {
     this.leftCube = leftCube;
     this.rightCube = rightCube;
     this.scene.add(leftCube, rightCube);
-
   }
 
   animate() {

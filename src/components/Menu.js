@@ -24,8 +24,6 @@ import highlightSrc from 'songs/button-highlight.mp3';
 
 import textureSrc from 'images/texture.gif';
 import pinkSrc from 'images/pink.gif';
-import pinkAlphaSrc from 'images/pinkAlphaMap.gif';
-import purpleAlphaSrc from 'images/purpleAlpha.png';
 
 import discSrc from 'images/disc.png';
 import moreSrc from 'images/more.png';
@@ -45,8 +43,6 @@ const orbitGeometry = new CylinderGeometry(1.45, 1.45, 0.35, 12, 1, true);
 const orbitTexture = new THREE.TextureLoader().load(textureSrc);
 const pinkTexture = new THREE.TextureLoader().load(pinkSrc);
 
-const purpleAlpha = new THREE.TextureLoader().load(purpleAlphaSrc);
-
 // NearestFilter gets us that sweet sweet pixelated look
 orbitTexture.magFilter = THREE.NearestFilter;
 pinkTexture.magFilter = THREE.NearestFilter;
@@ -56,7 +52,6 @@ const purpleMesh = new MeshBasicMaterial({
   side: THREE.DoubleSide,
   transparent: true,
   map: orbitTexture,
-  // alphaMap: purpleAlpha
 });
 
 const alphaTexture = new THREE.TextureLoader().load(orbAlpha);
@@ -83,6 +78,7 @@ class Menu extends PureComponent {
     this.highlightEffect.src = highlightSrc;
     this.state = {
       activeButton: 'play',
+      allowToggle: false,
     };
     autobind(this);
   }
@@ -115,13 +111,13 @@ class Menu extends PureComponent {
       const {
         object: {
           material: {
-            userData: { callback },
+            userData: { onClick },
           },
         },
       } = intersects[0];
       this.buttonEffect.currentTime = 0;
       this.buttonEffect.play();
-      callback();
+      onClick();
     }
   }
 
@@ -129,7 +125,7 @@ class Menu extends PureComponent {
     const rect = this.renderer.domElement.getBoundingClientRect();
     // TODO/WTF: Why is * 1.5 necessary!?
     this.mouse.x =
-      (e.clientX - rect.left * 1.5) / (rect.width - rect.left) * 2 - 1;
+      ((e.clientX - rect.left * 1.5) / (rect.width - rect.left)) * 2 - 1;
     this.mouse.y = -((e.clientY - rect.top) / (rect.bottom - rect.top)) * 2 + 1;
   }
 
@@ -182,56 +178,95 @@ class Menu extends PureComponent {
   }
 
   createMenuElements() {
-    this.createButton(
-      'disc',
-      [-2.25, -28, 1],
-      this.props.audioManager.togglePlay,
-      discSrc
-    );
-    this.createButton('settings', [0, -28, 1], () => {}, moreSrc);
-    this.createButton('hide', [2.25, -28, 1], this.props.hideDash, hideSrc);
-    this.createButton(
-      'rewind',
-      [-2.25, -30.15, 1],
-      this.props.audioManager.previousTrack,
-      rwdSrc
-    );
-    this.createButton(
-      'play',
-      [0, -30.15, 1],
-      this.props.audioManager.togglePlay,
-      playSrc
-    );
-    this.createButton(
-      'fastforward',
-      [2.25, -30.15, 1],
-      this.props.audioManager.nextTrack,
-      ffwdSrc
-    );
-    this.createButton(
-      'repeat',
-      [-2.25, -32.3, 1],
-      this.props.audioManager.toggleRepeat,
-      repeatSrc
-    );
-    this.createButton(
-      'stop',
-      [0, -32.3, 1],
-      this.props.audioManager.stop,
-      stopSrc
-    );
-    this.createButton(
-      'advanced',
-      [2.25, -32.3, 1],
-      this.props.hideDash,
-      advancedSrc
-    );
+    const menuButtons = [
+      {
+        name: 'disc',
+        position: [-2.25, -28, 1],
+        onClick: this.props.audioManager.togglePlay,
+        animationDuration: 400,
+        animationDelay: 220,
+        mapSrc: discSrc,
+      },
+      {
+        name: 'settings',
+        position: [0, -28, 1],
+        onClick: this.props.audioManager.previousTrack,
+        animationDelay: 100,
+        animationDuration: 400,
+        mapSrc: moreSrc,
+      },
+      {
+        name: 'hide',
+        position: [2.25, -28, 1],
+        onClick: this.testFunc,
+        animationDelay: 180,
+        animationDuration: 400,
+        mapSrc: hideSrc,
+      },
+      {
+        name: 'rewind',
+        position: [-2.25, -30.15, 1],
+        onClick: this.props.audioManager.previousTrack,
+        animationDelay: 500,
+        animationDuration: 350,
+        mapSrc: rwdSrc,
+      },
+      {
+        name: 'play',
+        position: [0, -30.15, 1],
+        onClick: this.props.audioManager.togglePlay,
+        animationDelay: 300,
+        animationDuration: 350,
+        mapSrc: playSrc,
+      },
+      {
+        name: 'fastforward',
+        position: [2.25, -30.15, 1],
+        onClick: this.props.audioManager.nextTrack,
+        animationDelay: 280,
+        animationDuration: 350,
+        mapSrc: ffwdSrc,
+      },
+      {
+        name: 'repeat',
+        position: [-2.25, -32.3, 1],
+        onClick: this.props.audioManager.toggleRepeat,
+        animationDelay: 600,
+        animationDuration: 300,
+        mapSrc: repeatSrc,
+      },
+      {
+        name: 'stop',
+        position: [0, -32.3, 1],
+        onClick: this.props.audioManager.stop,
+        animationDelay: 700,
+        animationDuration: 300,
+        mapSrc: stopSrc,
+      },
 
+      {
+        name: 'advanced',
+        position: [2.25, -32.3, 1],
+        onClick: this.props.hideDash,
+        animationDelay: 900,
+        animationDuration: 300,
+        mapSrc: advancedSrc,
+      },
+    ];
+
+    menuButtons.forEach(button => this.createButton(button));
     // TODO: Shadows
   }
 
-  createButton(name = '', coords, callback, mapSrc) {
-    const [x, y, z] = coords;
+  createButton({
+    name = '',
+    position,
+    onClick,
+    mapSrc,
+    animationDelay,
+    animationDuration,
+  }) {
+    const [x, y, z] = position;
 
     const planeTexture = new THREE.TextureLoader().load(mapSrc);
     planeTexture.magFilter = THREE.NearestFilter;
@@ -246,7 +281,10 @@ class Menu extends PureComponent {
       transparent: true,
       name,
       userData: {
-        callback,
+        onClick,
+        animationDelay,
+        originalPosition: position,
+        animationDuration,
       },
       alphaMap: alphaTexture,
     });
@@ -279,9 +317,15 @@ class Menu extends PureComponent {
   }
 
   orbitButton() {
-    const { pink, purple } = this.orbits[this.state.activeButton];
-    pink.rotateY(-0.065);
-    purple.rotateY(0.07);
+    const activeButton = this.orbits[this.state.activeButton];
+    const { pink, purple } = activeButton;
+    if (this.props.hidden) {
+      pink.material.visible = false;
+      purple.material.visible = false;
+    } else {
+      pink.rotateY(-0.065);
+      purple.rotateY(0.07);
+    }
   }
 
   manageActiveButton() {
@@ -296,6 +340,9 @@ class Menu extends PureComponent {
       if (name) {
         this.setState({ activeButton: name });
       }
+      document.body.classList.add('pointer');
+    } else {
+      document.body.classList.remove('pointer');
     }
 
     Object.keys(this.orbits).forEach(key => {
@@ -309,6 +356,49 @@ class Menu extends PureComponent {
     });
   }
 
+  /* Animates a Vector3 to the target */
+  animateVector3(vectorToAnimate, target, options = {}) {
+    // get targets from options or set to defaults
+    const to = target || THREE.Vector3();
+    const easing = options.easing || TWEEN.Easing.Quadratic.In;
+    const duration = options.duration || 2000;
+    // create the tween
+    const tweenVector3 = new TWEEN.Tween(vectorToAnimate)
+      .to({ x: to.x, y: to.y, z: to.z }, duration)
+      .easing(easing)
+      .onUpdate(d => {
+        if (options.update) {
+          options.update(d);
+        }
+      })
+      .onComplete(() => {
+        if (options.callback) options.callback();
+      })
+      .delay(options.delay);
+    // start the tween
+    tweenVector3.start();
+    // return the tween in case we want to manipulate it later on
+    return tweenVector3;
+  }
+
+  testFunc() {
+    this.planes.forEach(plane => {
+      const { x, y, z } = plane.position;
+      const target = new THREE.Vector3(x, y - 8, z); // create on init
+      this.hideButton(plane, target);
+    });
+    this.props.hideDash();
+    setTimeout(() => this.setState({ allowToggle: true }), 1200);
+    // this.setState(() => ({allowToggle: true }), this.props.hideDash() );
+  }
+
+  hideButton(plane, target) {
+    this.animateVector3(plane.position, target, {
+      duration: plane.material.userData.animationDuration,
+      delay: plane.material.userData.animationDelay,
+      easing: TWEEN.Easing.Quadratic.InOut,
+    });
+  }
   animate() {
     TWEEN.update();
     this.orbitButton();
@@ -317,9 +407,23 @@ class Menu extends PureComponent {
     requestAnimationFrame(this.animate);
   }
 
+  showIfHidden() {
+    if (this.state.allowToggle && this.props.hidden) {
+      this.props.showIfHidden();
+      this.setState({ allowToggle: false });
+      this.planes.forEach(plane => {
+        const { x, y, z } = plane.position;
+
+        const target = new THREE.Vector3(x, y + 8, z); // create on init
+        this.hideButton(plane, target);
+      });
+    }
+  }
+
   render() {
     return (
       <div
+        onClick={this.showIfHidden}
         className="menu"
         ref={mount => {
           this.mount = mount;

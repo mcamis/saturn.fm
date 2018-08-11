@@ -65,8 +65,14 @@ export default class StereoAnalyser {
     mediaElement.connect(splitter);
 
     // Plug analysers nodes into separate channels
-    splitter.connect(analyserLeft, 0);
-    splitter.connect(analyserRight, 1);
+    splitter.connect(
+      analyserLeft,
+      0
+    );
+    splitter.connect(
+      analyserRight,
+      1
+    );
 
     this.dataArrayLeft = new Uint8Array(analyserLeft.frequencyBinCount);
     this.dataArrayRight = new Uint8Array(analyserRight.frequencyBinCount);
