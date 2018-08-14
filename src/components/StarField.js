@@ -1,9 +1,17 @@
 import React, { PureComponent } from 'react';
 
+// import * as THREE from 'three/build/three';
+const THREE = (global.THREE = require('three'));
+require('three/examples/js/loaders/GLTFLoader');
+
+import { AmbientLight } from 'three/src/lights/AmbientLight';
+import { DirectionalLight } from 'three/src/lights/DirectionalLight';
+
 import { Scene } from 'three/src/scenes/Scene';
 import { PerspectiveCamera } from 'three/src/cameras/PerspectiveCamera';
 import { BoxGeometry } from 'three/src/geometries/Geometries';
 import { MeshBasicMaterial } from 'three/src/materials/Materials';
+
 import { Mesh } from 'three/src/objects/Mesh';
 import { WebGLRenderer } from 'three/src/renderers/WebGLRenderer';
 
@@ -37,10 +45,15 @@ class StarField extends PureComponent {
     const scene = new Scene();
     const camera = new PerspectiveCamera(100, width / height, 1, 1000);
 
+    const ambient = new AmbientLight(0xffffff, 1);
+    const directional = new DirectionalLight(0xffffff, 5);
+    directional.position.set(0, 0, 500);
+    scene.add(ambient, directional);
     const renderer = new WebGLRenderer({ alpha: true, antialias: false });
     camera.position.z = 500;
 
-    renderer.setPixelRatio(window.devicePixelRatio * 0.15);
+    // renderer.setPixelRatio(window.devicePixelRatio * 0.15);
+    renderer.setPixelRatio(window.devicePixelRatio * 0.25);
     renderer.setSize(width, height);
     renderer.setClearColor(0x000000, 0); // the default
 
@@ -49,17 +62,43 @@ class StarField extends PureComponent {
     this.scene = scene;
     this.stars = this.stars || [];
     this.mount.appendChild(this.renderer.domElement);
-    requestAnimationFrame(this.animate);
+    this.setupSpaceShip();
     this.addStars();
+
+    requestAnimationFrame(this.animate);
+
     window.addEventListener('resize', () => {
       clearTimeout(this.timeOut);
       this.timeOut = setTimeout(this.onResize, 250);
     });
   }
 
+  setupSpaceShip() {
+    const loader = new THREE.GLTFLoader();
+
+    loader.load('/public/models/saturn_v1.gltf', ({ scene: shipModel }) => {
+      shipModel.position.set(0, -2, 490);
+      shipModel.rotateX(0.25);
+      shipModel.rotateY(9.5);
+      shipModel.visible = false;
+
+      this.spaceShip = shipModel;
+      this.scene.add(shipModel);
+    });
+  }
+
   animate() {
     this.animateStars();
     this.renderScene();
+    if (this.spaceShip) {
+      if (this.props.hidden) {
+        this.spaceShip.rotateZ(0.0125);
+        this.spaceShip.visible = true;
+      } else {
+        this.spaceShip.visible = false;
+      }
+    }
+
     requestAnimationFrame(this.animate);
   }
 

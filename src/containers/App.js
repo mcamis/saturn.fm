@@ -95,7 +95,7 @@ class App extends Component {
           paused={paused}
           playing={playing}
         />
-        <StarField />
+        <StarField hidden={this.state.hidden} />
 
         <div className="overlay">
           <Route path="/upload" component={FileReader} />
