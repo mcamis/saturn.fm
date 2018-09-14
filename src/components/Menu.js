@@ -198,7 +198,7 @@ class Menu extends PureComponent {
       {
         name: 'hide',
         position: [2.25, -28, 1],
-        onClick: this.testFunc,
+        onClick: this.hideMenu,
         animationDelay: 180,
         animationDuration: 400,
         mapSrc: hideSrc,
@@ -323,6 +323,8 @@ class Menu extends PureComponent {
       pink.material.visible = false;
       purple.material.visible = false;
     } else {
+      pink.material.visible = true;
+      purple.material.visible = true;
       pink.rotateY(-0.065);
       purple.rotateY(0.07);
     }
@@ -381,7 +383,7 @@ class Menu extends PureComponent {
     return tweenVector3;
   }
 
-  testFunc() {
+  hideMenu() {
     this.planes.forEach(plane => {
       const { x, y, z } = plane.position;
       const target = new THREE.Vector3(x, y - 8, z); // create on init
