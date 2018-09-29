@@ -38,6 +38,7 @@
 
 */
 
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
 /* Typography & Base Styling */
 
 * {
@@ -52,7 +53,7 @@ html {
 }
 
 body {
-  font-family: 'Avenir Next', 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Press Start 2P', 'Monaco', monospace;
   font-size: 22px;
   font-weight: 500;
   line-height: 1.3;
@@ -206,12 +207,12 @@ header {
     }
     .timer {
       position: absolute;
-      top: 35%;
+      top: 38%;
       left: 60%;
-      font-family: "Monaco", monospace;
       color: #004848;
-      font-size: 140%;
+      font-size: 22px;
       line-height: 0;
+      -webkit-font-smoothing: none;  
     }
   }
 }
@@ -233,11 +234,11 @@ header {
 .track-number {
   position: absolute;
   left: 114%;
-  top: 61%;
-  font-family: "Monaco", monospace;
+  top: 112%;
   color: #004848;
   font-size: 140%;
   line-height: 0;
+  -webkit-font-smoothing: none;  
 }
 
 @keyframes floatDownRelative {
