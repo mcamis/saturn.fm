@@ -177,6 +177,8 @@ class Menu extends PureComponent {
     // Setup orbits
     const pink = new Mesh(orbitGeometry, pinkMesh);
     const purple = new Mesh(orbitGeometry, purpleMesh);
+    pink.visible = false;
+    purple.visible = false;
 
     const planeMaterial = new MeshBasicMaterial({
       map: planeTexture,
