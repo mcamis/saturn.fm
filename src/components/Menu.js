@@ -160,34 +160,42 @@ class Menu extends PureComponent {
     const menuElements = createButtons(
       this.props.audioManager,
       this.hideMenu,
-      this.props.hideDash
+      this.props.toggleMenu
     );
     menuElements.forEach(button => this.placeInScene(button));
   }
 
   setupOrbAnimation() {
-    const [x, y, z] = [0, 0, 1];
+    const [x, y, z] = [2.25, -4.3, 1];
 
     const globeTexture = new THREE.TextureLoader().load(testPng);
     globeTexture.magFilter = THREE.NearestFilter;
     globeTexture.minFilter = THREE.NearestFilter;
 
     // https://stemkoski.github.io/Three.js/Texture-Animation.html
-    this.textureAnimator = new this.TextureAnimator(globeTexture, 24, 1, 24, 500); // texture, #horiz, #vert, #total, duration.
+    this.textureAnimator = new this.TextureAnimator(
+      globeTexture,
+      461,
+      1,
+      461,
+      40
+    ); // texture, #horiz, #vert, #total, duration.
     const globeMaterial = new THREE.MeshBasicMaterial({
       map: globeTexture,
       transparent: true,
       name: 'foobar',
+      userData: {
+        animationDelay: 900,
+        animationDuration: 300,
+      },
     });
     const spinningGlobe = new Mesh(planeGeometry, globeMaterial);
-    spinningGlobe.position.set(0, 0, 1);
+    spinningGlobe.position.set(x, y, z);
 
     this.planes.push(spinningGlobe);
     this.scene.add(spinningGlobe);
-    this.placeOrbitsInScene("foobar", [x,y,z])
-
+    this.placeOrbitsInScene('foobar', [x, y, z]);
   }
-
 
   // TODO: Move to utility class
   TextureAnimator(texture, tilesHoriz, tilesVert, numTiles, tileDispDuration) {
@@ -215,32 +223,30 @@ class Menu extends PureComponent {
     };
   }
 
-  placeOrbitsInScene(name, [x,y,z]) {
+  placeOrbitsInScene(name, [x, y, z]) {
     const pink = new Mesh(orbitGeometry, pinkMesh);
     const purple = new Mesh(orbitGeometry, purpleMesh);
     pink.visible = false;
     purple.visible = false;
 
-        // Push the orbits slight ahead in Z so they hit the plane at the eges of the sphere
-        pink.position.set(x, y, 2);
-        pink.rotateX(0.35);
-        pink.rotateZ(-0.8);
-    
-        purple.position.set(x, y, 2.03);
-        purple.rotateZ(0.8);
-        purple.rotateX(0.25);
-        purple.rotateY(1);
+    // Push the orbits slight ahead in Z so they hit the plane at the eges of the sphere
+    pink.position.set(x, y, 2);
+    pink.rotateX(0.35);
+    pink.rotateZ(-0.8);
 
+    purple.position.set(x, y, 2.03);
+    purple.rotateZ(0.8);
+    purple.rotateX(0.25);
+    purple.rotateY(1);
 
-        this.orbits = {
-          ...this.orbits,
-          [name]: {
-            pink,
-            purple,
-          },
-        };
-        this.scene.add(pink, purple);
-
+    this.orbits = {
+      ...this.orbits,
+      [name]: {
+        pink,
+        purple,
+      },
+    };
+    this.scene.add(pink, purple);
   }
 
   placeInScene({
@@ -256,7 +262,6 @@ class Menu extends PureComponent {
     const planeTexture = new THREE.TextureLoader().load(mapSrc);
     planeTexture.magFilter = THREE.NearestFilter;
     planeTexture.minFilter = THREE.NearestFilter;
-
 
     const planeMaterial = new MeshBasicMaterial({
       map: planeTexture,
@@ -313,6 +318,7 @@ class Menu extends PureComponent {
   }
 
   hideMenu() {
+    console.log(this.planes);
     this.planes.forEach(plane => {
       const { x, y, z } = plane.position;
       animateButtonPosition(plane, new THREE.Vector3(x, y - 10, z));

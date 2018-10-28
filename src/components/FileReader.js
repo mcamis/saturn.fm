@@ -13,6 +13,8 @@ class FileReader extends Component {
   render() {
     return (
       <div className="FileReader">
+        <p>Professor Kliq -- Entertainment System</p>
+        <p>Professor Kliq -- Entertainment System</p>
         <input
           type="file"
           onChange={() => this.handleChange()}
@@ -21,6 +23,7 @@ class FileReader extends Component {
           }}
           multiple
         />
+        <button onClick={this.props.toggleMenu}>Close</button>
       </div>
     );
   }

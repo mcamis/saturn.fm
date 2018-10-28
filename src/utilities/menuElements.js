@@ -58,12 +58,12 @@ export const pinkMesh = new MeshBasicMaterial({
 
 export const planeGeometry = new PlaneGeometry(2, 2, 1, 1);
 
-export const createButtons = (audioManager, hideMenu, hideDash) => {
+export const createButtons = (audioManager, hideMenu, toggleMenu) => {
   return [
     {
       name: 'disc',
       position: [-2.25, 0, 1],
-      onClick: audioManager.togglePlay,
+      onClick: toggleMenu,
       animationDuration: 400,
       animationDelay: 220,
       mapSrc: discSrc,
@@ -125,14 +125,14 @@ export const createButtons = (audioManager, hideMenu, hideDash) => {
       mapSrc: stopSrc,
     },
 
-    {
-      name: 'advanced',
-      position: [2.25, -4.3, 1],
-      onClick: hideDash,
-      animationDelay: 900,
-      animationDuration: 300,
-      mapSrc: advancedSrc,
-    },
+    // {
+    //   name: 'advanced',
+    //   position: [2.25, -4.3, 1],
+    //   onClick: hideDash,
+    //   animationDelay: 900,
+    //   animationDuration: 300,
+    //   mapSrc: advancedSrc,
+    // },
   ];
 };
 

@@ -23,6 +23,7 @@ class App extends Component {
     this.state = {
       show: false,
       hidden: false,
+      menuVisible: false,
     };
   }
 
@@ -62,6 +63,7 @@ class App extends Component {
           audioManager={this.audioManager}
           hidden={this.state.hidden}
           showIfHidden={this.showIfHidden}
+          toggleMenu={() => this.setState({ menuVisible: true })}
           hideDash={this.hideDash}
           repeat={repeat}
           paused={paused}
@@ -75,7 +77,14 @@ class App extends Component {
         />
         <StarField hidden={this.state.hidden} />
 
-        <div className="overlay">{/* <FileReader /> */}</div>
+        {/* <div className="overlay"><FileReader /></div> */}
+        {this.state.menuVisible && (
+          <div className="overlay">
+            <FileReader
+              toggleMenu={() => this.setState(state => ({menuVisible: !state.menuVisible }))}
+            />
+          </div>
+        )}
       </div>
     );
   }

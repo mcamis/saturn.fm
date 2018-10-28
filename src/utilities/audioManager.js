@@ -48,7 +48,8 @@ export default class AudioManager {
     });
 
     this.audioElement.addEventListener('pause', () => {
-      audioActions.paused();
+      // TODO: Manually set pause state to fix stop
+      // audioActions.paused();
       this.analyser.pause();
     });
 
