@@ -1,5 +1,5 @@
 {
-  "presets": ["env", "react", "airbnb"],
+  "presets": ["@babel/env", "@babel/react", "airbnb"],
   "plugins": [
     ["module-resolver", {
       "root": ["./src"]

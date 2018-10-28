@@ -3,6 +3,7 @@ const common = require('./webpack.config.common.js');
 const app = require('./helpers/app.js');
 
 module.exports = merge(common, {
+  mode: 'development',
   output: {
     filename: 'js/[name].js',
     pathinfo: true,
