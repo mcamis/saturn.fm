@@ -11,7 +11,7 @@ const Header = ({ audioManager, audio }) => {
   useEffect(() => {
     const id = setInterval(() => {
       setComponentTime(audioManager.currentTime);
-    }, 500);
+    }, 1000);
 
     intervalRef.current = id;
     return () => {

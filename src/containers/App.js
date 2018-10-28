@@ -36,19 +36,26 @@ class App extends Component {
     }
   }
 
-  render() {
+  getClassNames() {
     const {
       audio: { playing, paused, repeat },
     } = this.props;
+
     const hiddenClass = this.state.hidden ? 'hidden' : '';
     const pausedClass = paused ? 'paused' : '';
     const playingClass = playing ? 'playing' : '';
     const showClass = this.state.show ? 'show' : '';
 
+    return `${hiddenClass} ${pausedClass} ${playingClass} ${showClass}`;
+  }
+
+  render() {
+    const {
+      audio: { playing, paused, repeat },
+    } = this.props;
+
     return (
-      <div
-        className={`${hiddenClass} ${pausedClass} ${playingClass} ${showClass}`}
-      >
+      <div className={this.getClassNames()}>
         <Header audio={this.props.audio} audioManager={this.audioManager} />
         {paused && <img src={playPauseIcon} className="toast blink" />}
         <Menu
