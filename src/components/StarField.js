@@ -1,9 +1,5 @@
 import React, { PureComponent } from 'react';
 
-// import * as THREE from 'three/build/three';
-const THREE = (global.THREE = require('three'));
-require('three/examples/js/loaders/GLTFLoader');
-
 import { AmbientLight } from 'three/src/lights/AmbientLight';
 import { DirectionalLight } from 'three/src/lights/DirectionalLight';
 
@@ -17,6 +13,10 @@ import { WebGLRenderer } from 'three/src/renderers/WebGLRenderer';
 
 import autobind from 'utilities/autobind';
 import { randomSize, randomPosition, sceneWidth } from 'utilities/helpers';
+
+// import * as THREE from 'three/build/three';
+const THREE = (global.THREE = require('three'));
+require('three/examples/js/loaders/GLTFLoader');
 
 class StarField extends PureComponent {
   constructor(props) {

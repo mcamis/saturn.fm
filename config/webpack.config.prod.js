@@ -1,13 +1,13 @@
 const webpack = require('webpack');
 
 const merge = require('webpack-merge');
-const common = require('./webpack.config.common.js');
-const app = require('./helpers/app.js');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const app = require('./helpers/app.js');
+const common = require('./webpack.config.common.js');
 
 module.exports = merge(common, {
   devtool: 'source-map',

@@ -9,6 +9,7 @@ module.exports = {
   rules: {
     camelcase: 0,
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    'react/destructuring-assignment': 0,
     'no-unused-expressions': 0,
     'jsx-a11y/anchor-is-valid': [
       'error',
@@ -26,7 +27,6 @@ module.exports = {
       },
     },
   },
-  plugins: ['chai-friendly'],
   globals: {
     after: true,
     afterEach: true,

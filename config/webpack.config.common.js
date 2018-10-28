@@ -1,8 +1,8 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
 const app = require('./helpers/app.js');
 const env = require('./helpers/env.js');
-const webpack = require('webpack');
 
 module.exports = {
   devtool: 'cheap-module-source-map',
