@@ -166,48 +166,26 @@ class Menu extends PureComponent {
   }
 
   setupOrbAnimation() {
-    const [x, y, z] = [0, 3, 1];
+    const [x, y, z] = [0, 0, 1];
 
-    // Setup orbits
-    const pink = new Mesh(orbitGeometry, pinkMesh);
-    const purple = new Mesh(orbitGeometry, purpleMesh);
-    pink.visible = false;
-    purple.visible = false;
-
-    // Push the orbits slight ahead in Z so they hit the plane at the eges of the sphere
-    pink.position.set(x, y, 2);
-    pink.rotateX(0.35);
-    pink.rotateZ(-0.8);
-
-    purple.position.set(x, y, 2.03);
-    purple.rotateZ(0.8);
-    purple.rotateX(0.25);
-    purple.rotateY(1);
-
-    this.orbits = {
-      ...this.orbits,
-      foobar: {
-        pink,
-        purple,
-      },
-    };
-
-    const runnerTexture = new THREE.TextureLoader().load(testPng);
-    runnerTexture.magFilter = THREE.NearestFilter;
-    runnerTexture.minFilter = THREE.NearestFilter;
+    const globeTexture = new THREE.TextureLoader().load(testPng);
+    globeTexture.magFilter = THREE.NearestFilter;
+    globeTexture.minFilter = THREE.NearestFilter;
 
     // https://stemkoski.github.io/Three.js/Texture-Animation.html
-    this.textureAnimator = new this.TextureAnimator(runnerTexture, 24, 1, 24, 500); // texture, #horiz, #vert, #total, duration.
-    const runnerMaterial = new THREE.MeshBasicMaterial({
-      map: runnerTexture,
+    this.textureAnimator = new this.TextureAnimator(globeTexture, 24, 1, 24, 500); // texture, #horiz, #vert, #total, duration.
+    const globeMaterial = new THREE.MeshBasicMaterial({
+      map: globeTexture,
       transparent: true,
       name: 'foobar',
     });
-    this.runner = new Mesh(planeGeometry, runnerMaterial);
-    this.runner.position.set(0, 3, 1);
+    const spinningGlobe = new Mesh(planeGeometry, globeMaterial);
+    spinningGlobe.position.set(0, 0, 1);
 
-    this.planes.push(this.runner);
-    this.scene.add(pink, purple, this.runner);
+    this.planes.push(spinningGlobe);
+    this.scene.add(spinningGlobe);
+    this.placeOrbitsInScene("foobar", [x,y,z])
+
   }
 
 
@@ -237,6 +215,34 @@ class Menu extends PureComponent {
     };
   }
 
+  placeOrbitsInScene(name, [x,y,z]) {
+    const pink = new Mesh(orbitGeometry, pinkMesh);
+    const purple = new Mesh(orbitGeometry, purpleMesh);
+    pink.visible = false;
+    purple.visible = false;
+
+        // Push the orbits slight ahead in Z so they hit the plane at the eges of the sphere
+        pink.position.set(x, y, 2);
+        pink.rotateX(0.35);
+        pink.rotateZ(-0.8);
+    
+        purple.position.set(x, y, 2.03);
+        purple.rotateZ(0.8);
+        purple.rotateX(0.25);
+        purple.rotateY(1);
+
+
+        this.orbits = {
+          ...this.orbits,
+          [name]: {
+            pink,
+            purple,
+          },
+        };
+        this.scene.add(pink, purple);
+
+  }
+
   placeInScene({
     name = '',
     position,
@@ -251,11 +257,6 @@ class Menu extends PureComponent {
     planeTexture.magFilter = THREE.NearestFilter;
     planeTexture.minFilter = THREE.NearestFilter;
 
-    // Setup orbits
-    const pink = new Mesh(orbitGeometry, pinkMesh);
-    const purple = new Mesh(orbitGeometry, purpleMesh);
-    pink.visible = false;
-    purple.visible = false;
 
     const planeMaterial = new MeshBasicMaterial({
       map: planeTexture,
@@ -270,31 +271,11 @@ class Menu extends PureComponent {
       alphaMap: alphaTexture,
     });
     const plane = new Mesh(planeGeometry, planeMaterial);
-
-    // Push the orbits slight ahead in Z so they hit the plane at the eges of the sphere
-    pink.position.set(x, y, 2);
-    pink.rotateX(0.35);
-    pink.rotateZ(-0.8);
-
-    purple.position.set(x, y, 2.03);
-    purple.rotateZ(0.8);
-    purple.rotateX(0.25);
-    purple.rotateY(1);
-
     plane.position.set(x, y, z);
     // plane.rotateZ(0.75);
-
-    this.orbits = {
-      ...this.orbits,
-      [name]: {
-        pink,
-        purple,
-      },
-    };
-
     this.planes.push(plane);
-
-    this.scene.add(pink, purple, plane);
+    this.scene.add(plane);
+    this.placeOrbitsInScene(name, position);
   }
 
   orbitButton() {
