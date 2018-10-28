@@ -282,15 +282,72 @@ class Menu extends PureComponent {
     }
   }
 
+  getToolTip() {
+    const { playing, paused, repeat } = this.props;
+
+    const tooltips = {
+      disc: () => <p>Yo!</p>,
+      settings: () => <p>System Settings</p>,
+      hide: () => <p>Hide</p>,
+      rewind: () => <p>Rewind</p>,
+      fastforward: () => <p>Fast Forward</p>,
+      play: () => {
+        let playElement = <p>Play / Pause</p>;
+        if (playing) {
+          playElement = (
+            <p>
+              <strong>Play</strong> / Pause
+            </p>
+          );
+        } else if (paused) {
+          playElement = (
+            <p>
+              Play / <strong>Pause</strong>
+            </p>
+          );
+        }
+        return playElement;
+      },
+      repeat: () => {
+        let repeatElement = (
+          <p>
+            Repeat: 1 / All / <strong>Off</strong>
+          </p>
+        );
+        if (repeat === 'track') {
+          repeatElement = (
+            <p>
+              Repeat: <strong>1</strong> / All / Off
+            </p>
+          );
+        } else if (repeat === 'context') {
+          repeatElement = (
+            <p>
+              Repeat: 1 / <strong>All</strong> / Off
+            </p>
+          );
+        }
+        return repeatElement;
+      },
+      stop: () => <p>Stop</p>,
+      advanced: () => <p>Advanced</p>,
+    };
+
+    return tooltips[this.state.activeButton]();
+  }
+
   render() {
     return (
-      <div
-        onClick={this.showIfHidden}
-        className="menu"
-        ref={mount => {
-          this.mount = mount;
-        }}
-      />
+      <div>
+        <div
+          onClick={this.showIfHidden}
+          className="menu"
+          ref={mount => {
+            this.mount = mount;
+          }}
+        />
+        <div className="tooltips">{this.getToolTip()}</div>
+      </div>
     );
   }
 }
