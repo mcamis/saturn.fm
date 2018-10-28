@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import autobind from 'utilities/autobind';
@@ -97,9 +96,7 @@ class App extends Component {
         />
         <StarField hidden={this.state.hidden} />
 
-        <div className="overlay">
-          <Route path="/upload" component={FileReader} />
-        </div>
+        <div className="overlay">{/* <FileReader /> */}</div>
       </div>
     );
   }
@@ -119,4 +116,4 @@ function mapStateToProps(state) {
 }
 
 export const AppContainer = App;
-export default withRouter(connect(mapStateToProps)(App));
+export default connect(mapStateToProps)(App);

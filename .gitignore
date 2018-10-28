@@ -1,5 +1,6 @@
 ## Environment
 .env
+**/.DS_STORE
 
 ## Node
 web/client/.sass-cache
