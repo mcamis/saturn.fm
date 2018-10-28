@@ -52,8 +52,8 @@
         "@tweenjs/tween.js": "^17.2.0",
         "babel-polyfill": "^6.26.0",
         "prop-types": "^15.6.2",
-        "react": "^16.4.2",
-        "react-dom": "^16.4.2",
+        "react": "16.7.0-alpha.0",
+        "react-dom": "16.7.0-alpha.0",
         "react-redux": "^5.0.6",
         "redux": "^4.0.1",
         "three": "^0.97.0"

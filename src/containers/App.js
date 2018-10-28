@@ -4,15 +4,13 @@ import { connect } from 'react-redux';
 
 import autobind from 'utilities/autobind';
 import AudioManager from 'utilities/audioManager';
-import { formatTime } from 'utilities/helpers';
 
 import Cubes from 'components/Cubes';
 import Menu from 'components/Menu';
 import FileReader from 'components/FileReader';
+import Header from 'components/Header';
 import StarField from 'components/StarField';
 
-import timeSrc from 'images/time.png';
-import trackSrc from 'images/track.png';
 import playPauseIcon from 'images/play-pause.png';
 
 class App extends Component {
@@ -21,24 +19,11 @@ class App extends Component {
     autobind(this);
 
     this.audioManager = new AudioManager();
-    const currentTimeInterval = setInterval(this.syncCurrentTime, 500);
 
     this.state = {
       show: false,
       hidden: false,
-      currentTime: 0,
-      currentTimeInterval,
     };
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.state.currentTimeInterval);
-  }
-
-  syncCurrentTime() {
-    this.setState({
-      currentTime: formatTime(this.audioManager.currentTime),
-    });
   }
 
   hideDash() {
@@ -64,20 +49,7 @@ class App extends Component {
       <div
         className={`${hiddenClass} ${pausedClass} ${playingClass} ${showClass}`}
       >
-        {/* TODO: Move header into component */}
-        <header>
-          <div className="info">
-            <div className="track">
-              <img src={trackSrc} alt="TODO" />
-              <div className="track-number">{this.props.audio.trackNumber}</div>
-            </div>
-            <div className="time">
-              <img src={timeSrc} alt="TODO" />
-            </div>
-            <div className="timer">{this.state.currentTime}</div>
-          </div>
-          <div className="knight-rider" />
-        </header>
+        <Header audio={this.props.audio} audioManager={this.audioManager} />
         {paused && <img src={playPauseIcon} className="toast blink" />}
         <Menu
           audioManager={this.audioManager}
