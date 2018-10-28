@@ -6,7 +6,8 @@ import playSrc from 'images/play-pause.png';
 import ffwdSrc from 'images/ffwd.png';
 import stopSrc from 'images/stop.png';
 import repeatSrc from 'images/repeat.png';
-import advancedSrc from 'images/advanced.png';
+import advancedSrc from 'images/globe.gif';
+
 import textureSrc from 'images/texture.gif';
 import pinkSrc from 'images/pink.gif';
 

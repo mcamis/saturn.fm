@@ -12,6 +12,8 @@ import {
   planeGeometry,
 } from 'utilities/menuElements';
 
+import testPng from 'images/test.png';
+
 // Todo: Import specific tween functions as needed
 import TWEEN from '@tweenjs/tween.js';
 
@@ -44,6 +46,9 @@ class Menu extends PureComponent {
       activeButton: 'play',
       allowToggle: false,
     };
+
+    this.clock = new THREE.Clock();
+
     autobind(this);
   }
 
@@ -130,6 +135,7 @@ class Menu extends PureComponent {
     this.mount.appendChild(this.renderer.domElement);
 
     this.createMenuElements();
+    this.setupOrbAnimation();
     this.setupEventListeners();
 
     requestAnimationFrame(this.animate);
@@ -156,8 +162,79 @@ class Menu extends PureComponent {
       this.hideMenu,
       this.props.hideDash
     );
-
     menuElements.forEach(button => this.placeInScene(button));
+  }
+
+  setupOrbAnimation() {
+    const [x, y, z] = [0, 3, 1];
+
+    // Setup orbits
+    const pink = new Mesh(orbitGeometry, pinkMesh);
+    const purple = new Mesh(orbitGeometry, purpleMesh);
+    pink.visible = false;
+    purple.visible = false;
+
+    // Push the orbits slight ahead in Z so they hit the plane at the eges of the sphere
+    pink.position.set(x, y, 2);
+    pink.rotateX(0.35);
+    pink.rotateZ(-0.8);
+
+    purple.position.set(x, y, 2.03);
+    purple.rotateZ(0.8);
+    purple.rotateX(0.25);
+    purple.rotateY(1);
+
+    this.orbits = {
+      ...this.orbits,
+      foobar: {
+        pink,
+        purple,
+      },
+    };
+
+    const runnerTexture = new THREE.TextureLoader().load(testPng);
+    runnerTexture.magFilter = THREE.NearestFilter;
+    runnerTexture.minFilter = THREE.NearestFilter;
+
+    // https://stemkoski.github.io/Three.js/Texture-Animation.html
+    this.textureAnimator = new this.TextureAnimator(runnerTexture, 24, 1, 24, 500); // texture, #horiz, #vert, #total, duration.
+    const runnerMaterial = new THREE.MeshBasicMaterial({
+      map: runnerTexture,
+      transparent: true,
+      name: 'foobar',
+    });
+    this.runner = new Mesh(planeGeometry, runnerMaterial);
+    this.runner.position.set(0, 3, 1);
+
+    this.planes.push(this.runner);
+    this.scene.add(pink, purple, this.runner);
+  }
+
+
+  // TODO: Move to utility class
+  TextureAnimator(texture, tilesHoriz, tilesVert, numTiles, tileDispDuration) {
+    this.tilesHorizontal = tilesHoriz;
+    this.tilesVertical = tilesVert;
+    this.numberOfTiles = numTiles;
+    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(1 / this.tilesHorizontal, 1 / this.tilesVertical);
+
+    this.tileDisplayDuration = tileDispDuration;
+    this.currentDisplayTime = 0;
+    this.currentTile = 0;
+
+    this.update = function(milliSec) {
+      this.currentDisplayTime += milliSec;
+      while (this.currentDisplayTime > this.tileDisplayDuration) {
+        this.currentDisplayTime -= this.tileDisplayDuration;
+        this.currentTile++;
+        if (this.currentTile === this.numberOfTiles) this.currentTile = 0;
+        const currentColumn = this.currentTile % this.tilesHorizontal;
+        texture.offset.x = currentColumn / this.tilesHorizontal;
+        const currentRow = Math.floor(this.currentTile / this.tilesHorizontal);
+        texture.offset.y = currentRow / this.tilesVertical;
+      }
+    };
   }
 
   placeInScene({
@@ -234,6 +311,7 @@ class Menu extends PureComponent {
     }
   }
 
+  // TODO: Throttle this
   manageActiveButton() {
     this.raycaster.setFromCamera(this.mouse, this.camera);
     const intersects = this.raycaster.intersectObjects(this.planes);
@@ -243,6 +321,7 @@ class Menu extends PureComponent {
           material: { name },
         },
       } = intersects[0];
+      console.log(name);
       if (name && name !== this.state.activeButton) {
         this.setState({ activeButton: name });
       }
@@ -268,6 +347,11 @@ class Menu extends PureComponent {
     this.orbitButton();
     this.manageActiveButton();
     this.renderer.render(this.scene, this.camera);
+
+    const delta = this.clock.getDelta();
+
+    this.textureAnimator.update(1000 * delta);
+
     requestAnimationFrame(this.animate);
   }
 
@@ -331,6 +415,7 @@ class Menu extends PureComponent {
       },
       stop: () => <p>Stop</p>,
       advanced: () => <p>Advanced</p>,
+      foobar: () => <p>Advanced</p>,
     };
 
     return tooltips[this.state.activeButton]();

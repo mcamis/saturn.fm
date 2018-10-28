@@ -387,10 +387,10 @@ header {
                 animation-timing-function: linear;
             }
         }
+    }
 
-        .tooltips {
-            display: none !important;
-        }
+    .tooltips {
+        display: none !important;
     }
 }
 
@@ -513,7 +513,7 @@ blink {
         animation-iteration-count: 1;
         animation-fill-mode: backwards; // animation-delay: 10s;
         animation-timing-function: linear;
-        animation-delay: 800ms;
+        animation-delay: 700ms;
     }
 
     .dashboard,
@@ -527,56 +527,6 @@ blink {
     }
 
     li {
-        animation-name: floatInButtons;
-        animation-duration: 400ms;
-        animation-iteration-count: 1;
-        animation-fill-mode: backwards; // animation-delay: 10s;
-        animation-timing-function: ease-in;
-
-        &:nth-child(9) {
-            animation-delay: 900ms;
-            animation-duration: 300ms;
-        }
-
-        &:nth-child(8) {
-            animation-delay: 700ms;
-            animation-duration: 300ms;
-        }
-
-        &:nth-child(7) {
-            animation-delay: 600ms;
-            animation-duration: 300ms;
-        }
-
-        &:nth-child(6) {
-            animation-delay: 280ms;
-            animation-duration: 350ms;
-        }
-
-        &:nth-child(5) {
-            animation-delay: 300ms;
-            animation-duration: 350ms;
-        }
-
-        &:nth-child(4) {
-            animation-delay: 500ms;
-            animation-duration: 350ms;
-        }
-
-        &:nth-child(3) {
-            animation-delay: 180ms;
-        }
-
-        &:nth-child(2) {
-            animation-delay: 100ms;
-        }
-
-        &:nth-child(1) {
-            animation-delay: 220ms;
-        }
-    }
-
-    li {
         button,
         a {
             &.bottom:after {
@@ -586,10 +536,6 @@ blink {
                 animation-fill-mode: forwards; // animation-delay: 10s;
                 animation-timing-function: linear;
             }
-        }
-
-        .tooltip {
-            display: none !important;
         }
     }
 }

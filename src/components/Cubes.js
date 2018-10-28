@@ -103,6 +103,8 @@ class Cubes extends PureComponent {
 
   animate() {
     const { leftChannel, rightChannel } = this.props.audioManager.analyserFFT;
+
+    // TWEEN.update();
     // Only animated the cubes when audio is playing
     if (this.props.playing) {
       updateScaleAndColor(this.leftCube, leftChannel);
