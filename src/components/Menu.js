@@ -48,7 +48,6 @@ class Menu extends PureComponent {
     };
 
     this.clock = new THREE.Clock();
-
     autobind(this);
   }
 
@@ -111,6 +110,8 @@ class Menu extends PureComponent {
     this.mouse.x =
       ((e.clientX - rect.left * 1.5) / (rect.width - rect.left)) * 2 - 1;
     this.mouse.y = -((e.clientY - rect.top) / (rect.bottom - rect.top)) * 2 + 1;
+
+    this.manageActiveButton();
   }
 
   setupScene() {
@@ -332,7 +333,6 @@ class Menu extends PureComponent {
     // TODO: Move tween.update to a central location?
     TWEEN.update();
     this.orbitButton();
-    this.manageActiveButton();
     this.renderer.render(this.scene, this.camera);
 
     const delta = this.clock.getDelta();

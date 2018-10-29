@@ -81,7 +81,10 @@ class App extends Component {
         {this.state.menuVisible && (
           <div className="overlay">
             <FileReader
-              toggleMenu={() => this.setState(state => ({menuVisible: !state.menuVisible }))}
+              audioManager={this.audioManager}
+              toggleMenu={() =>
+                this.setState(state => ({ menuVisible: !state.menuVisible }))
+              }
             />
           </div>
         )}

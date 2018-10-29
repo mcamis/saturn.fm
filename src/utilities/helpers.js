@@ -27,3 +27,20 @@ export const logarithmic = position => {
   const scale = (maxv - minv) / (maxp - minp);
   return Math.exp(minv + scale * (position - minp));
 };
+
+export const playlists = [
+  {
+    name: 'Professor Kliq - Rhyme',
+    tracks: [
+      'http://localhost:3000/src/songs/Rhyme.mp3',
+      'http://localhost:3000/src/songs/No-Refuge.mp3',
+    ],
+  },
+  {
+    name: 'Professor Kliq - No-Refuge',
+    tracks: [
+      'http://localhost:3000/src/songs/No-Refuge.mp3',
+      'http://localhost:3000/src/songs/Rhyme.mp3',
+    ],
+  },
+];

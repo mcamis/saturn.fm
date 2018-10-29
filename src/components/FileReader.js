@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { playlists } from 'utilities/helpers';
+
 class FileReader extends Component {
   constructor(props) {
     super(props);
@@ -13,8 +15,17 @@ class FileReader extends Component {
   render() {
     return (
       <div className="FileReader">
-        <p>Professor Kliq -- Entertainment System</p>
-        <p>Professor Kliq -- Entertainment System</p>
+        {playlists.map(playlist => {
+          return (
+            <p
+              onClick={() =>
+                this.props.audioManager.setPlaylist(playlist.tracks)
+              }
+            >
+              {playlist.name}
+            </p>
+          );
+        })}
         <input
           type="file"
           onChange={() => this.handleChange()}

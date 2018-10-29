@@ -25,6 +25,13 @@ export default class AudioManager {
     autobind(this);
   }
 
+  setPlaylist(playlist) {
+    console.log('yo whatup', playlist);
+    this.playlist = playlist;
+    this.audioElement.src = this.playlist[0];
+    this.audioElement.currentTime = 0;
+  }
+
   playAndReport() {
     // TODO: Use mp3 meta tags for info
     audioActions.playing(this.getTrackNumber());
