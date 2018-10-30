@@ -2,6 +2,9 @@ import autobind from 'utilities/autobind';
 import StereoAnalyser from 'utilities/stereoAnalyser';
 import * as audioActions from 'actions/audio';
 
+import Rhyme from '../songs/Rhyme.mp3';
+import NoRefuge from '../songs/No-Refuge.mp3';
+
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio
 export default class AudioManager {
   constructor() {
@@ -13,10 +16,7 @@ export default class AudioManager {
 
     // TODO: Preloading & total track time
     // TODO: External playlist management
-    this.playlist = [
-      'http://localhost:3000/src/songs/Rhyme.mp3',
-      'http://localhost:3000/src/songs/No-Refuge.mp3',
-    ];
+    this.playlist = [Rhyme, NoRefuge];
 
     this.audioElement.src = this.playlist[0]; // eslint-disable-line prefer-destructuring
     this.analyser = new StereoAnalyser(this.audioElement);
@@ -118,7 +118,7 @@ export default class AudioManager {
     const { audioElement } = this;
     if (audioElement.paused || audioElement.ended) {
       // Delay so the song and SE don't overlap
-      setTimeout( () => audioElement.play(), 500);
+      setTimeout(() => audioElement.play(), 500);
     } else {
       audioElement.pause();
     }

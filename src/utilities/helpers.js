@@ -1,3 +1,6 @@
+import Rhyme from '../songs/Rhyme.mp3';
+import NoRefuge from '../songs/No-Refuge.mp3';
+
 export const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
 
 export const sceneWidth = () =>
@@ -31,16 +34,10 @@ export const logarithmic = position => {
 export const playlists = [
   {
     name: 'Professor Kliq - Rhyme',
-    tracks: [
-      'http://localhost:3000/src/songs/Rhyme.mp3',
-      'http://localhost:3000/src/songs/No-Refuge.mp3',
-    ],
+    tracks: [Rhyme, NoRefuge],
   },
   {
     name: 'Professor Kliq - No-Refuge',
-    tracks: [
-      'http://localhost:3000/src/songs/No-Refuge.mp3',
-      'http://localhost:3000/src/songs/Rhyme.mp3',
-    ],
+    tracks: [NoRefuge, Rhyme],
   },
 ];
