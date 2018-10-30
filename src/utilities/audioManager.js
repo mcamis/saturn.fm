@@ -84,7 +84,10 @@ export default class AudioManager {
   }
 
   getTrackNumber() {
-    const currentIndex = this.playlist.indexOf(this.audioElement.src);
+    const [host, src] = this.audioElement.src.split(window.location.href);
+    console.log(src);
+    const currentIndex = this.playlist.indexOf(`/${src}`);
+    console.log(this.playlist, this.audioElement.src);
 
     // Humans do not count from zero
     return currentIndex + 1;
@@ -118,7 +121,7 @@ export default class AudioManager {
     const { audioElement } = this;
     if (audioElement.paused || audioElement.ended) {
       // Delay so the song and SE don't overlap
-      setTimeout(() => audioElement.play(), 500);
+      setTimeout(() => this.playAndReport(), 500);
     } else {
       audioElement.pause();
     }

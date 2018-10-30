@@ -24,6 +24,8 @@ class App extends Component {
       show: false,
       hidden: false,
       menuVisible: false,
+      isDriveDoorOpen: false,
+      isCheckingDisc: true,
     };
   }
 
