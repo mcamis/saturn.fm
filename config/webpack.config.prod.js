@@ -5,11 +5,14 @@ const merge = require('webpack-merge');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 const ManifestPlugin = require('webpack-manifest-plugin');
 const app = require('./helpers/app.js');
 const common = require('./webpack.config.common.js');
 
 module.exports = merge(common, {
+  mode: 'production',
   devtool: 'source-map',
   output: {
     path: app.dist,
@@ -67,24 +70,13 @@ module.exports = merge(common, {
       },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          publicPath: '../',
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-            },
-            {
-              loader: 'sass-loader',
-            },
-          ],
-        }),
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
     ],
   },
 
   plugins: [
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       filename: 'styles/app[chunkhash].css',
       allChunks: true,
     }),
@@ -96,9 +88,6 @@ module.exports = merge(common, {
     }),
     new UglifyJSPlugin({
       sourceMap: true,
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
     }),
   ],
 });
