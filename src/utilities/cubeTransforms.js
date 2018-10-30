@@ -37,6 +37,7 @@ export const updateScaleAndColor = (cube, channelFFT) => {
 const randomRange = (max, min) => Math.random() * (max - min) + min;
 
 export const activeRotation = (cube, modifier) => {
+  // TODO: At random interval, flip directions
   const derivedMax = modifier
     ? -Math.abs(MAX_ACTIVE_ROTATION)
     : MAX_ACTIVE_ROTATION;

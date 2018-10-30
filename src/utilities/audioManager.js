@@ -117,7 +117,8 @@ export default class AudioManager {
   togglePlay() {
     const { audioElement } = this;
     if (audioElement.paused || audioElement.ended) {
-      audioElement.play();
+      // Delay so the song and SE don't overlap
+      setTimeout( () => audioElement.play(), 500);
     } else {
       audioElement.pause();
     }

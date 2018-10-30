@@ -60,9 +60,8 @@ class Cubes extends PureComponent {
 
     const renderer = new WebGLRenderer({ alpha: true, antialias: false });
 
-    // TODO: Test on low DPI screens
-    // Pixelated on Retina with * .25
-    renderer.setPixelRatio(window.devicePixelRatio * 0.25);
+    const pixRatio = window.devicePixelRatio;
+    renderer.setPixelRatio(pixRatio == 1 ? pixRatio * 0.65 : pixRatio * 0.25);
     renderer.setSize(width, height);
 
     this.scene = scene;

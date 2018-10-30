@@ -125,7 +125,6 @@ class Menu extends PureComponent {
     camera.position.y = 0.5;
 
     const renderer = new WebGLRenderer({ alpha: true, antialias: false });
-    renderer.setPixelRatio(window.devicePixelRatio); // Retina
     renderer.setSize(width, height);
 
     this.mouse = new THREE.Vector2();

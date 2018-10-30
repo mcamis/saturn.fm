@@ -40,6 +40,13 @@
 
 @import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
 
+@mixin pixelated {
+    -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: pixelated;
+}
+
 /* Typography & Base Styling */
 
 * {
@@ -63,6 +70,8 @@ body {
     color: #444;
     margin: 0;
     background: black;
+    @include pixelated;
+
 }
 
 p {
@@ -100,7 +109,6 @@ p {
 canvas {
     position: fixed;
     bottom: 0;
-    image-rendering: pixelated;
 }
 
 .Cubes canvas {
@@ -135,7 +143,6 @@ canvas {
         background-size: cover;
         background-color: black;
         position: absolute;
-        image-rendering: pixelated;
         left: -35%;
         right: -35%;
         top: -35%;
@@ -171,7 +178,6 @@ canvas {
 .dashboard:after {
     content: "";
     background: url("../images/dashboard.png") no-repeat;
-    image-rendering: pixelated;
     background-size: 100% 50%;
     background-position: 0 100%;
     position: absolute;
@@ -206,7 +212,6 @@ header {
 
     .info {
         background: url("../images/header.png") top (center / cover) no-repeat;
-        image-rendering: pixelated;
         width: 80%;
         height: 0;
         padding-top: calc(36 / 254 * 80%);
@@ -461,7 +466,6 @@ header {
     content: "";
     background: url("../images/knight-rider.png") no-repeat;
     background-position: center center;
-    image-rendering: pixelated;
     background-size: 100% 100%;
     height: 12%;
     width: 6%;
@@ -486,7 +490,6 @@ blink {
 }
 
 .toast {
-    image-rendering: pixelated;
     position: fixed;
     left: 50%;
     top: 40%;
