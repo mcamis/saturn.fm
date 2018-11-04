@@ -150,7 +150,7 @@ class Menu extends PureComponent {
           nextIndex += 3;
           break;
         case 'Enter':
-          console.log('activate current button');
+          this.menuElements[this.buttons[nextIndex]]();
           break;
         default:
           nextIndex = -1;
@@ -356,13 +356,15 @@ class Menu extends PureComponent {
   }
 
   hideMenu() {
+    if (this.props.hidden) {
+      return this.showIfHidden();
+    }
     this.planes.forEach(plane => {
       const { x, y, z } = plane.position;
       animateButtonPosition(plane, new THREE.Vector3(x, y - 10, z));
     });
     this.props.hideDash();
     setTimeout(() => this.setState({ allowToggle: true }), 1400);
-    // this.setState(() => ({allowToggle: true }), this.props.hideDash() );
   }
 
   animate() {
@@ -450,6 +452,13 @@ class Menu extends PureComponent {
       this.props.toggleMenu
     );
     menuElements.forEach(button => this.placeInScene(button));
+    this.menuElements = menuElements.reduce(
+      (obj, { name, onClick }) => ({
+        [name]: onClick,
+        ...obj,
+      }),
+      {}
+    );
   }
 
   render() {
