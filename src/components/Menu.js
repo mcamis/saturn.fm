@@ -48,11 +48,25 @@ class Menu extends PureComponent {
     };
 
     this.clock = new THREE.Clock();
+
+    this.buttons = [
+      'disc',
+      'settings',
+      'hide',
+      'rewind',
+      'play',
+      'fastforward',
+      'repeat',
+      'stop',
+      'advanced',
+    ];
     autobind(this);
   }
 
   componentDidMount() {
     this.setupScene();
+
+    this.setupKeyboardListeners();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -114,6 +128,40 @@ class Menu extends PureComponent {
     this.manageActiveButton();
   }
 
+  setupKeyboardListeners() {
+    window.addEventListener('keydown', e => {
+      let nextIndex = this.buttons.indexOf(this.state.activeButton);
+      switch (e.code) {
+        case 'ArrowRight':
+          if (nextIndex !== 2 && nextIndex !== 5) {
+            nextIndex += 1;
+          }
+          break;
+        case 'ArrowLeft':
+          if (nextIndex !== 3 && nextIndex !== 6) {
+            nextIndex -= 1;
+          }
+          break;
+
+        case 'ArrowUp':
+          nextIndex -= 3;
+          break;
+        case 'ArrowDown':
+          nextIndex += 3;
+          break;
+        case 'Enter':
+          console.log('activate current button');
+          break;
+        default:
+          nextIndex = -1;
+      }
+
+      if (nextIndex >= 0 && nextIndex < this.buttons.length) {
+        this.setState({ activeButton: this.buttons[nextIndex] });
+      }
+    });
+  }
+
   setupScene() {
     const width = window.innerWidth > 1000 ? 1000 : window.innerWidth;
     const height = width * 0.75;
@@ -156,15 +204,6 @@ class Menu extends PureComponent {
     domElement.addEventListener('mousemove', e => this.onMouseMove(e), false);
   }
 
-  createMenuElements() {
-    const menuElements = createButtons(
-      this.props.audioManager,
-      this.hideMenu,
-      this.props.toggleMenu
-    );
-    menuElements.forEach(button => this.placeInScene(button));
-  }
-
   setupOrbAnimation() {
     const [x, y, z] = [2.25, -4.3, 1];
 
@@ -183,7 +222,7 @@ class Menu extends PureComponent {
     const globeMaterial = new THREE.MeshBasicMaterial({
       map: globeTexture,
       transparent: true,
-      name: 'foobar',
+      name: 'advanced',
       userData: {
         animationDelay: 900,
         animationDuration: 300,
@@ -194,7 +233,7 @@ class Menu extends PureComponent {
 
     this.planes.push(spinningGlobe);
     this.scene.add(spinningGlobe);
-    this.placeOrbitsInScene('foobar', [x, y, z]);
+    this.placeOrbitsInScene('advanced', [x, y, z]);
   }
 
   // TODO: Move to utility class
@@ -307,7 +346,6 @@ class Menu extends PureComponent {
           material: { name },
         },
       } = intersects[0];
-      console.log(name);
       if (name && name !== this.state.activeButton) {
         this.setState({ activeButton: name });
       }
@@ -318,7 +356,6 @@ class Menu extends PureComponent {
   }
 
   hideMenu() {
-    console.log(this.planes);
     this.planes.forEach(plane => {
       const { x, y, z } = plane.position;
       animateButtonPosition(plane, new THREE.Vector3(x, y - 10, z));
@@ -366,7 +403,7 @@ class Menu extends PureComponent {
         if (playing) {
           playElement = (
             <p>
-              <strong>Play</strong> / Pause
+              <strong>Play</strong>/ Pause
             </p>
           );
         } else if (paused) {
@@ -401,10 +438,18 @@ class Menu extends PureComponent {
       },
       stop: () => <p>Stop</p>,
       advanced: () => <p>Advanced</p>,
-      foobar: () => <p>Advanced</p>,
     };
 
     return tooltips[this.state.activeButton]();
+  }
+
+  createMenuElements() {
+    const menuElements = createButtons(
+      this.props.audioManager,
+      this.hideMenu,
+      this.props.toggleMenu
+    );
+    menuElements.forEach(button => this.placeInScene(button));
   }
 
   render() {
@@ -424,6 +469,7 @@ class Menu extends PureComponent {
 }
 
 Menu.propTypes = {
+  toggleMenu: PropTypes.func.isRequired,
   audioManager: PropTypes.instanceOf(AudioManager).isRequired,
   repeat: PropTypes.oneOf(['off', 'context', 'track']).isRequired,
   hideDash: PropTypes.func.isRequired,
