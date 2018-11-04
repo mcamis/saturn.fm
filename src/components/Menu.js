@@ -73,16 +73,9 @@ class Menu extends PureComponent {
     if (this.state.activeButton !== prevState.activeButton) {
       this.highlightEffect.currentTime = 0;
       this.highlightEffect.play();
-
-      Object.keys(this.orbits).forEach(key => {
-        if (this.state.activeButton === key) {
-          this.orbits[key].pink.visible = true;
-          this.orbits[key].purple.visible = true;
-        } else {
-          this.orbits[key].pink.visible = false;
-          this.orbits[key].purple.visible = false;
-        }
-      });
+      const [x, y] = this.menuElements[this.state.activeButton].position;
+      this.orbits.pink.position.set(x, y, 2);
+      this.orbits.purple.position.set(x, y, 2.03);
     }
   }
 
@@ -150,7 +143,7 @@ class Menu extends PureComponent {
           nextIndex += 3;
           break;
         case 'Enter':
-          this.menuElements[this.buttons[nextIndex]]();
+          this.menuElements[this.buttons[nextIndex]].onClick();
           break;
         default:
           nextIndex = -1;
@@ -233,7 +226,6 @@ class Menu extends PureComponent {
 
     this.planes.push(spinningGlobe);
     this.scene.add(spinningGlobe);
-    this.placeOrbitsInScene('advanced', [x, y, z]);
   }
 
   // TODO: Move to utility class
@@ -262,11 +254,12 @@ class Menu extends PureComponent {
     };
   }
 
-  placeOrbitsInScene(name, [x, y, z]) {
+  placeOrbitsInScene() {
+    const [x,y] = [0, -2.15];
     const pink = new Mesh(orbitGeometry, pinkMesh);
     const purple = new Mesh(orbitGeometry, purpleMesh);
-    pink.visible = false;
-    purple.visible = false;
+    // pink.visible = false;
+    // purple.visible = false;
 
     // Push the orbits slight ahead in Z so they hit the plane at the eges of the sphere
     pink.position.set(x, y, 2);
@@ -279,12 +272,10 @@ class Menu extends PureComponent {
     purple.rotateY(1);
 
     this.orbits = {
-      ...this.orbits,
-      [name]: {
-        pink,
-        purple,
-      },
+      pink,
+      purple
     };
+
     this.scene.add(pink, purple);
   }
 
@@ -319,11 +310,10 @@ class Menu extends PureComponent {
     // plane.rotateZ(0.75);
     this.planes.push(plane);
     this.scene.add(plane);
-    this.placeOrbitsInScene(name, position);
   }
 
   orbitButton() {
-    const { pink, purple } = this.orbits[this.state.activeButton];
+    const { pink, purple } = this.orbits;
 
     if (this.props.hidden) {
       pink.material.visible = false;
@@ -453,12 +443,21 @@ class Menu extends PureComponent {
     );
     menuElements.forEach(button => this.placeInScene(button));
     this.menuElements = menuElements.reduce(
-      (obj, { name, onClick }) => ({
-        [name]: onClick,
+      (obj, { name, position, onClick }) => ({
+        [name]: {
+          onClick,
+          position
+        },
         ...obj,
       }),
       {}
     );
+    this.menuElements.advanced = { 
+        onClick: () => {},
+        position: [2.25, -4.3, 1]
+    };
+
+    this.placeOrbitsInScene();
   }
 
   render() {
