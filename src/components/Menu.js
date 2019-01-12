@@ -160,6 +160,7 @@ class Menu extends PureComponent {
     const height = width * 0.75;
 
     const scene = new Scene();
+    // TODO: OrthographicCamera?
     const camera = new PerspectiveCamera(2.5, width / height, 1, 500);
 
     camera.position.z = 360;
@@ -255,7 +256,7 @@ class Menu extends PureComponent {
   }
 
   placeOrbitsInScene() {
-    const [x,y] = [0, -2.15];
+    const [x, y] = [0, -2.15];
     const pink = new Mesh(orbitGeometry, pinkMesh);
     const purple = new Mesh(orbitGeometry, purpleMesh);
     // pink.visible = false;
@@ -273,7 +274,7 @@ class Menu extends PureComponent {
 
     this.orbits = {
       pink,
-      purple
+      purple,
     };
 
     this.scene.add(pink, purple);
@@ -446,15 +447,15 @@ class Menu extends PureComponent {
       (obj, { name, position, onClick }) => ({
         [name]: {
           onClick,
-          position
+          position,
         },
         ...obj,
       }),
       {}
     );
-    this.menuElements.advanced = { 
-        onClick: () => {},
-        position: [2.25, -4.3, 1]
+    this.menuElements.advanced = {
+      onClick: () => {},
+      position: [2.25, -4.3, 1],
     };
 
     this.placeOrbitsInScene();

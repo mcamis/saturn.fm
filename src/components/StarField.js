@@ -22,11 +22,13 @@ class StarField extends PureComponent {
   constructor(props) {
     super(props);
     this.timeOut = null;
+    // this.Zspeed = Math.random() * (0.025 - 0.10) + 0.10;
     autobind(this);
   }
 
   componentDidMount() {
     this.setupScene();
+    this.clock = new THREE.Clock();
   }
 
   onResize() {
@@ -47,13 +49,16 @@ class StarField extends PureComponent {
 
     const ambient = new AmbientLight(0xffffff, 1);
     const directional = new DirectionalLight(0xffffff, 5);
-    directional.position.set(0, 0, 500);
+    ambient.position.set(0, -5, 600);
+    directional.position.set(0, -5, 600);
     scene.add(ambient, directional);
+    // scene.add(directional, );
+
     const renderer = new WebGLRenderer({ alpha: true, antialias: false });
     camera.position.z = 500;
 
     const pixRatio = window.devicePixelRatio;
-    renderer.setPixelRatio(pixRatio == 1 ? pixRatio * 0.65 : pixRatio * 0.25);
+    renderer.setPixelRatio(pixRatio === 1 ? pixRatio * 0.65 : pixRatio * 0.25);
     renderer.setSize(width, height);
     renderer.setClearColor(0x000000, 0); // the default
 
@@ -76,14 +81,25 @@ class StarField extends PureComponent {
   setupSpaceShip() {
     const loader = new THREE.GLTFLoader();
 
-    loader.load('/public/models/saturn_v1.gltf', ({ scene: shipModel }) => {
-      shipModel.position.set(0, -2, 490);
-      shipModel.rotateX(0.25);
-      shipModel.rotateY(9.5);
-      shipModel.visible = false;
+    loader.load('/public/models/saturn_v1.gltf', gltf => {
+      const { scene: shipModel } = gltf;
+      shipModel.position.set(2, -2, 495);
+      // shipModel.rotateY(9.5);
+      shipModel.rotateY(Math.PI);
+      // shipModel.visible = false;
+
+      // Disable texture filtering for the authenitc chunky Saturn gfx
+      const shipMap = shipModel.children[1].material.map;
+      1;
+      shipMap.magFilter = THREE.LinearFilter;
+      shipMap.minFilter = THREE.LinearFilter;
+      shipMap.generateMipmaps = false;
 
       this.spaceShip = shipModel;
       this.scene.add(shipModel);
+
+      this.mixer = new THREE.AnimationMixer(shipModel);
+      this.mixer.clipAction(gltf.animations[0]).play();
     });
   }
 
@@ -92,14 +108,19 @@ class StarField extends PureComponent {
     this.renderScene();
     if (this.spaceShip) {
       if (this.props.hidden) {
-        this.spaceShip.rotateZ(0.0125);
         this.spaceShip.visible = true;
+        this.animateSpaceshipZ();
       } else {
         this.spaceShip.visible = false;
       }
     }
 
     requestAnimationFrame(this.animate);
+  }
+
+  animateSpaceshipZ() {
+    const delta = this.clock.getDelta();
+    this.mixer.update(delta);
   }
 
   addStars() {
