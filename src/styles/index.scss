@@ -70,8 +70,8 @@ body {
     color: #444;
     margin: 0;
     background: black;
-    @include pixelated;
 
+    @include pixelated;
 }
 
 p {
@@ -89,7 +89,7 @@ p {
     bottom: 0;
     right: 0;
     left: 0;
-    z-index: 9999;
+    z-index: 100;
 }
 
 #root {
@@ -118,7 +118,7 @@ canvas {
 }
 
 .menu canvas {
-    z-index: 9999;
+    z-index: 90;
 }
 
 @keyframes spin {
@@ -185,7 +185,7 @@ canvas {
     bottom: 0;
     width: 50%;
     height: 75vw;
-    z-index: 6666;
+    z-index: 20;
 }
 
 .dashboard:after {
@@ -196,7 +196,7 @@ canvas {
 }
 
 .cubes {
-    z-index: 7777;
+    z-index: 70;
     position: relative;
 }
 
@@ -254,28 +254,116 @@ header {
 }
 
 .FileReader {
-    margin: 2em;
     padding: 2em;
-
-    // position: absolute;
-    // top: 25%;
-    // left: 10%;
-    // right: 10%;
-    // bottom: 25%;
-    background: white;
+    height: 100%;
 
     // z-index: 9999;
     font-size: 14px;
 
-  p {
-    padding: 8px;
-    border: 1px solid transparent;
-  }
+    &:before {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        content: " ";
+        display: block;
+        filter: brightness(0);
+        @include pixelated;
+        background: url("../images/menuBg.png") repeat-y;
+        background-position: center;
+        background-size: contain;
+        z-index: -1;
+        animation-name: menuBrightness;
+        animation-duration: 1s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards; // animation-delay: 10s;
+        animation-timing-function: ease-out;
+        animation-delay: 500ms;
 
-    p:hover {
-      background: #f2f2f2;
-      border: 1px solid #444;
-      border-radius: 2px;
+        @keyframes menuBrightness {
+            from {
+                filter: brightness(0);
+            }
+
+            to {
+                filter: brightness(1);
+            }
+        }
+    }
+
+    .content {
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto;
+        opacity: 0;
+        animation-name: menuContentFadeIn;
+        animation-duration: 10ms;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards; // animation-delay: 10s;
+        animation-timing-function: ease-out;
+        animation-delay: 1.35s;
+
+        @keyframes menuContentFadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        // &:nth-child(2) {
+        //     animation-delay: 1575ms;
+        // }
+        // &:nth-child(3) {
+        //     animation-delay: 1600ms;
+        // }
+        // &:nth-child(4) {
+        //     animation-delay: 1625ms;
+        // }
+    }
+
+    h2 {
+        background: url("../images/header_bg.png");
+        background-color: rgba(0,0,0,.5);
+        border-radius: 10px;
+
+        line-height: 53px;
+        padding: 0 1.5em;
+        background-size: cover;
+        @include pixelated;
+        color: white;
+        text-transform: capitalize;
+        margin: 0 auto;
+        margin-bottom: 2em;
+        display: inline-block;
+    }
+
+    .playlists {
+        background-color: rgba(131, 23, 71, 0.65);
+        border-radius: 3px;
+        padding: 1em;
+        height: 50%;
+        box-shadow: 0 0 0 2px rgba(53, 59, 101, 0.8), 0 0 0 3.5px rgba(149, 149, 149, 0.8), 0 0 0 5px rgba(53, 59, 101, 0.8);
+        font-size: 13px;
+        color: white;
+        font-weight: 400;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        margin: 0 0 2em;
+        div {
+            padding: 10px 0;
+            margin: 0 0 10px;
+            p {
+                margin: 0;
+                padding: 0;
+            }
+            &:hover {
+                background: rgba(255,255,255,.25);
+            }
+
+        }
     }
 }
 
@@ -438,7 +526,7 @@ header {
         left: 50%;
         transform: translate(-50%, 0);
         bottom: 0;
-        z-index: 9999;
+        z-index: 20;
         padding: 5px 10px;
         text-align: center;
         font-size: 14px;

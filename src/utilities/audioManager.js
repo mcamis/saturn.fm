@@ -4,6 +4,7 @@ import * as audioActions from 'actions/audio';
 
 import Rhyme from '../songs/Rhyme.mp3';
 import NoRefuge from '../songs/No-Refuge.mp3';
+import Higher from '../songs/Higher.mp3';
 
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio
 export default class AudioManager {
@@ -16,8 +17,7 @@ export default class AudioManager {
 
     // TODO: Preloading & total track time
     // TODO: External playlist management
-    this.playlist = [Rhyme, NoRefuge];
-
+    this.playlist = [Higher, Rhyme, NoRefuge];
     this.audioElement.src = this.playlist[0]; // eslint-disable-line prefer-destructuring
     this.analyser = new StereoAnalyser(this.audioElement);
 
@@ -25,17 +25,18 @@ export default class AudioManager {
     autobind(this);
   }
 
-  setPlaylist(playlist) {
-    console.log('yo whatup', playlist);
-    this.playlist = playlist;
-    this.audioElement.src = this.playlist[0];
-    this.audioElement.currentTime = 0;
+  addToPlaylist(files) {
+    // TODO: Handle errors?
+    for (let i = 0; i < files.length; i++) {
+      this.playlist = [...this.playlist, files[i]];
+    }
   }
 
   playAndReport() {
     // TODO: Use mp3 meta tags for info
     audioActions.playing(this.getTrackNumber());
     this.audioElement.play();
+    console.log(this.audioElement);
   }
 
   setupEventListeners() {
@@ -84,13 +85,13 @@ export default class AudioManager {
   }
 
   getTrackNumber() {
-    const [host, src] = this.audioElement.src.split(window.location.href);
-    console.log(src);
-    const currentIndex = this.playlist.indexOf(`/${src}`);
-    console.log(this.playlist, this.audioElement.src);
+    if (this.audioElement.src.indexOf(window.location.href) !== -1) {
+      const [host, src] = this.audioElement.src.split(window.location.href);
+      return this.playlist.indexOf(`/${src}`) + 1;
+    }
 
     // Humans do not count from zero
-    return currentIndex + 1;
+    return this.playlist.indexOf(this.audioElement.src) + 1;
   }
 
   loadPrevious() {
@@ -101,18 +102,33 @@ export default class AudioManager {
   }
 
   loadNext(auto) {
-    const nextIndex = this.playlist.indexOf(this.audioElement.src) + 1;
-
+    console.log(this.playlist);
+    //     const nextIndex = this.playlist.indexOf(this.audioElement.src) + 1;
+    // console.log(nextIndex);
+    const nextIndex = this.getTrackNumber();
     // TODO: Clean up this mess
     if (nextIndex >= this.playlist.length) {
-      const [firstSong] = this.playlist;
-      this.audioElement.src = firstSong;
+      //   const [firstSong] = this.playlist;
+      this.audioElement.src = this.playlist[0];
       if (!auto || this.repeat === 'context') {
         this.audioElement.play();
       }
     } else {
-      this.audioElement.src = this.playlist[nextIndex];
-      this.audioElement.play();
+      const nextSong = this.playlist[nextIndex];
+      console.log(nextSong);
+      if (nextSong instanceof File) {
+        console.log('its a file!');
+        const reader = new FileReader();
+        reader.onload = e => {
+          this.audioElement.src = e.target.result;
+          this.playAndReport();
+        };
+        reader.readAsDataURL(nextSong);
+      } else {
+        this.audioElement.src = nextSong;
+        this.playAndReport();
+      }
+      // this.audioElement.play();
     }
   }
 

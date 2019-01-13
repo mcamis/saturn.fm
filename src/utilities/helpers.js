@@ -1,5 +1,6 @@
 import Rhyme from '../songs/Rhyme.mp3';
 import NoRefuge from '../songs/No-Refuge.mp3';
+import YMO from '../images/ymo.jpg';
 
 export const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
 
@@ -33,11 +34,45 @@ export const logarithmic = position => {
 
 export const playlists = [
   {
-    name: 'Professor Kliq - Rhyme',
+    artist: 'Professor Kliq',
+    name: 'Rhyme',
     tracks: [Rhyme, NoRefuge],
+    coverArt: YMO,
   },
   {
-    name: 'Professor Kliq - No-Refuge',
+    artist: 'Haruomi Hosono',
+    name: 'Paraiso',
+
     tracks: [NoRefuge, Rhyme],
+    coverArt: YMO,
+  },
+  {
+    artist: 'Big Time Fun',
+    name: 'Wetness',
+    tracks: [NoRefuge, Rhyme],
+    coverArt: YMO,
+  },
+  {
+    artist: 'Polish Bride ',
+    name: 'Butt Dimples',
+    tracks: [NoRefuge, Rhyme],
+    coverArt: YMO,
   },
 ];
+
+export async function filePicker(extensions = null, allowDirectory = false) {
+  return new Promise(resolve => {
+    const fileInput = document.createElement('input');
+    if (extensions) fileInput.setAttribute('accept', extensions);
+
+    fileInput.type = 'file';
+    fileInput.multiple = true;
+
+    fileInput.webkitdirectory = allowDirectory;
+    fileInput.directory = allowDirectory;
+    fileInput.mozdirectory = allowDirectory;
+
+    fileInput.addEventListener('change', e => resolve(e.target.files));
+    fileInput.click();
+  });
+}
