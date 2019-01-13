@@ -1,8 +1,10 @@
 import autobind from 'utilities/autobind';
 import { store } from 'index';
 import StereoAnalyser from 'utilities/stereoAnalyser';
-import { defaultState } from 'reducers/audio'
+import { defaultState } from 'reducers/audio';
 import * as audioActions from 'actions/audio';
+import * as musicMetadataBrowser from 'music-metadata-browser';
+
 import audio from '../reducers/audio';
 
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio
@@ -15,9 +17,9 @@ export default class AudioManager {
     this.repeat = 'off';
 
     // TODO: Preloading & total track time
-    // TODO: External playlist management
-    
-    // this.audioElement.src = this.playlist[0]; // eslint-disable-line prefer-destructuring
+    // TODO: External tracks management
+
+    // this.audioElement.src = this.tracks[0]; // eslint-disable-line prefer-destructuring
     this.analyser = new StereoAnalyser(this.audioElement);
 
     this.setupEventListeners();
@@ -26,20 +28,19 @@ export default class AudioManager {
   }
 
   syncManagerWithStore() {
-    store.subscribe(() =>  {
-      this.reduxState =  store.getState().audio;
-      this.playlist = this.reduxState.playlist;
+    store.subscribe(() => {
+      this.reduxState = store.getState().audio;
+      this.tracks = this.reduxState.tracks;
     });
   }
-
 
   // Controls
   togglePlay() {
     const { audioElement } = this;
 
-    // We haven't started playing yet, so set src to first track in playlist
-    if(!audioElement.src) {
-      audioActions.setCurrentTrack(0)
+    // We haven't started playing yet, so set src to first track in tracks
+    if (!audioElement.src) {
+      audioActions.setCurrentTrack(0);
     }
     if (audioElement.paused || audioElement.ended) {
       // Delay so the song and sound effect don't overlap
@@ -48,75 +49,91 @@ export default class AudioManager {
       audioElement.pause();
     }
   }
-  
-    playAndReport() {
-      // TODO: Use mp3 meta tags for info
-      // audioActions.playing(this.getTrackNumber());
-      console.log('play&report');
-      if(!this.audioElement.src || !this.audioElement.src.includes(this.reduxState.currentTrack.src)) {
-        console.log('change src');
-        console.log(this.audioElement.src);
-        console.log(this.reduxState.currentTrack.src);
-        this.audioElement.src = this.reduxState.currentTrack.src;
+
+  playAndReport() {
+    const { tracks, playlist, currentTrack } = this.reduxState;
+    const nextSong = tracks[playlist[currentTrack]].file;
+
+    if (nextSong instanceof File) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        this.audioElement.src = e.target.result;
+        this.audioElement.play();
+      };
+      reader.readAsDataURL(nextSong);
+    } else {
+      if (!this.audioElement.src || !this.audioElement.src.includes(nextSong)) {
+        this.audioElement.src = nextSong;
       }
       this.audioElement.play();
-   }
+    }
+  }
 
+  getMediaTags(file) {
+    const options = {
+      duration: false,
+      skipPostHeaders: true,
+      skipCovers: true,
+    };
+
+    return musicMetadataBrowser.parseBlob(file, options);
+  }
 
   loadNext(auto) {
+    const nextIndex = this.reduxState.currentTrack + 1;
 
-    // Relying on trackNumber = index + 1 for now
-    const nextIndex = this.reduxState.currentTrack.trackNumber;
-
-    // If we're trying to skip past playlist length, go to first song
-    if (nextIndex >= Object.keys(this.playlist).length) {
-      audioActions.setCurrentTrack(0)
+    // If we're trying to skip past tracks length, go to first song
+    if (nextIndex >= this.reduxState.playlist.length) {
+      audioActions.setCurrentTrack(0);
       // Only auto-play track if repeat is on or user has explicitly skipped?
       if (!auto || this.repeat === 'context') {
         this.playAndReport();
       }
     } else {
-      // const nextSong = this.playlist[nextIndex];
+      // const nextSong = this.tracks[nextIndex];
       audioActions.setCurrentTrack(nextIndex);
 
-      // if (nextSong instanceof File) {
-      //   console.log('its a file!');
-      //   const reader = new FileReader();
-      //   reader.onload = e => {
-      //     this.audioElement.src = e.target.result;
-      //     this.playAndReport();
-      //   };
-      //   reader.readAsDataURL(nextSong);
-      // } else {
-        this.playAndReport();
-      // }
-      // this.audioElement.play();
+      this.playAndReport();
     }
   }
 
   loadPrevious() {
-    const currentIndex = this.reduxState.currentTrack.trackNumber - 1;
+    const currentIndex = this.reduxState.currentTrack;
     const nextIndex = currentIndex ? currentIndex - 1 : 0;
-    audioActions.setCurrentTrack(nextIndex)
+    audioActions.setCurrentTrack(nextIndex);
     this.playAndReport;
   }
 
-  addToPlaylist(files) {
+  async generateTrackInfo(file) {
+    const {
+      common: { artist, album, title },
+    } = await this.getMediaTags(file);
+
+    return {
+      file,
+      trackNumber: 3,
+      artist,
+      album,
+      title,
+    };
+  }
+
+  async addToPlaylist(files) {
     // TODO: Handle errors?
-    const filesToAdd = {};
-    for (let i = 0; i < files.length; i++) {
-      const key = files[i].name;
-      filesToAdd[key] = {
-        fileType: "File",
-        src: null,
-        file: files[i],
-        trackNumber: 3 + i + 1,
-      };
+    const filesToAdd = [];
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const file of files) {
+      filesToAdd.push(this.generateTrackInfo(file));
     }
 
-    if(Object.keys(filesToAdd).length) {
-      audioActions.addToPlaylist(filesToAdd)
-    }
+    const filesWithMetada = await Promise.all(filesToAdd);
+    const fileObject = filesWithMetada.reduce((result, file) => {
+      result[file.file.name] = file;
+      return result;
+    }, {});
+
+    audioActions.addToPlaylist(fileObject);
   }
 
   setupEventListeners() {
@@ -167,15 +184,12 @@ export default class AudioManager {
   getTrackNumber() {
     if (this.audioElement.src.indexOf(window.location.href) !== -1) {
       const [host, src] = this.audioElement.src.split(window.location.href);
-      return this.playlist.indexOf(`/${src}`) + 1;
+      return this.tracks.indexOf(`/${src}`) + 1;
     }
 
     // Humans do not count from zero
-    return this.playlist.indexOf(this.audioElement.src) + 1;
+    return this.tracks.indexOf(this.audioElement.src) + 1;
   }
-
-
-
 
   nextTrack() {
     this.loadNext();
@@ -200,7 +214,7 @@ export default class AudioManager {
   stop() {
     // TODO: Saturn behavior
     console.log('stop');
-    // const [firstSong] = this.playlist;
+    // const [firstSong] = this.tracks;
     this.audioElement.pause();
     // this.audioElement.src = firstSong;
     this.audioElement.currentTime = 0;

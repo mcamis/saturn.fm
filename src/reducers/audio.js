@@ -5,30 +5,36 @@ import NoRefuge from '../songs/No-Refuge.mp3';
 import Higher from '../songs/Higher.mp3';
 
 export const defaultState = {
-  currentTrack: {},
+  currentTrack: null,
   loading: false,
   repeat: 'off',
   currentTime: formatTime(0),
   playing: false,
   paused: false,
-  playlist: {
-    0: {
-      fileType: "URI",
-      src: Rhyme,
-      file: null,
-      trackNumber: 1,
-    },
-    1: {
-      fileType: "URI",
-      src: NoRefuge,
-      file: null,
-      trackNumber: 2,
-    },
-    2: {
-      fileType: "URI",
-      src: Higher,
-      file: null,
+  playlist: [Higher, Rhyme, NoRefuge],
+  // TODO: Bake-in metadata to avoid unnecessary parsing, only check tags on blob?
+  tracks: {
+    [Higher]: {
+      name: Higher,
+      file: Higher,
       trackNumber: 3,
+      album: 'Velocity',
+      artist: 'GRRL',
+      title: 'Higher',
+    },
+    [Rhyme]: {
+      file: Rhyme,
+      trackNumber: 1,
+      album: 'N/A',
+      artist: 'Professor Kliq',
+      title: 'Rhyme',
+    },
+    [NoRefuge]: {
+      file: NoRefuge,
+      trackNumber: 2,
+      album: 'OP-1 Outtakes',
+      artist: 'Professor Kliq',
+      title: 'NoRefuge',
     },
   },
 };
@@ -56,16 +62,17 @@ export default (state = defaultState, action) => {
     case 'SET_CURRENT_TRACK':
       return {
         ...state,
-        currentTrack: state.playlist[action.data.trackIndex],
+        currentTrack: action.data.trackIndex,
       };
 
-      case 'ADD_TO_PLAYLIST':
+    case 'ADD_TO_PLAYLIST':
       return {
         ...state,
-        playlist: {
-          ...state.playlist,
-          ...action.data.tracks
-        }
+        tracks: {
+          ...state.tracks,
+          ...action.data.tracks,
+        },
+        playlist: [...state.playlist, ...Object.keys(action.data.tracks)],
       };
     default:
       return state;

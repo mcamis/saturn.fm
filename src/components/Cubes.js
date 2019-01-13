@@ -12,9 +12,6 @@ import { PerspectiveCamera } from 'three/src/cameras/PerspectiveCamera';
 import { Scene } from 'three/src/scenes/Scene';
 import { WebGLRenderer } from 'three/src/renderers/WebGLRenderer';
 
-// Todo: Import specific tween functions as needed
-import TWEEN from '@tweenjs/tween.js';
-
 import autobind from 'utilities/autobind';
 import { sceneWidth } from 'utilities/helpers';
 import {
@@ -59,7 +56,7 @@ class Cubes extends PureComponent {
     const renderer = new WebGLRenderer({ alpha: true, antialias: false });
 
     const pixRatio = window.devicePixelRatio;
-    renderer.setPixelRatio(pixRatio == 1 ? pixRatio * 0.65 : pixRatio * 0.25);
+    renderer.setPixelRatio(pixRatio === 1 ? pixRatio * 0.65 : pixRatio * 0.25);
     renderer.setSize(width, height);
 
     this.scene = scene;

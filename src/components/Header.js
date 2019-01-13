@@ -24,7 +24,9 @@ const Header = ({ audioManager, audio }) => {
       <div className="info">
         <div className="track">
           <img src={trackSrc} alt="TODO" />
-          <div className="track-number">{audio.currentTrack.trackNumber || Object.keys(audio.playlist).length}</div>
+          <div className="track-number">
+            {audio.currentTrack + 1 || Object.keys(audio.playlist).length}
+          </div>
         </div>
         <div className="time">
           <img src={timeSrc} alt="TODO" />
