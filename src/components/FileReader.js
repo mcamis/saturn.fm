@@ -14,6 +14,7 @@ class FileReader extends Component {
 
   async addFiles() {
     const files = await filePicker('.mp3, .wav, .aac');
+    console.log(files)
     this.props.audioManager.addToPlaylist(files);
   }
 
@@ -23,13 +24,13 @@ class FileReader extends Component {
         <div className="content">
           <h2>Edit Playlist</h2>
           <div className="playlists">
-            {this.props.audioManager.playlist.map((track, i) => {
+            {/* {Object.keys(this.props.audioManager.playlist).map(key => {
               return (
                 <div key={track} onClick={() => {}}>
                   <p className="artist">{track}</p>
                 </div>
               );
-            })}
+            })} */}
 
             <div className="add-files" onClick={() => this.addFiles()}>
               Add a file{' '}

@@ -26,7 +26,23 @@ export const playing = trackNumber =>
     },
   });
 
-export const paused = () =>
+  export const paused = () =>
   store.dispatch({
     type: 'PAUSED',
   });
+  export const setCurrentTrack = trackIndex =>
+    store.dispatch({
+      type: 'SET_CURRENT_TRACK',
+      data: {
+        trackIndex,
+      },
+    });
+
+    export const addToPlaylist = tracks =>
+    store.dispatch({
+      type: 'ADD_TO_PLAYLIST',
+      data: {
+        tracks,
+      },
+    });
+

@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import AudioManager from 'utilities/audioManager';
-
 // Three.js imports
 import { AmbientLight } from 'three/src/lights/AmbientLight';
 import { BoxGeometry } from 'three/src/geometries/Geometries';
@@ -133,7 +131,7 @@ class Cubes extends PureComponent {
 }
 
 Cubes.propTypes = {
-  audioManager: PropTypes.instanceOf(AudioManager).isRequired,
+  // audioManager: PropTypes.instanceOf(AudioManager).isRequired,
   playing: PropTypes.bool.isRequired,
 };
 

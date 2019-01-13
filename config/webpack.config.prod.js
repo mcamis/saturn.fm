@@ -2,8 +2,7 @@ const webpack = require('webpack');
 
 const merge = require('webpack-merge');
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -17,7 +16,7 @@ module.exports = merge(common, {
   output: {
     path: app.dist,
     filename: 'js/[name].[chunkhash].js',
-    publicPath: '.',
+    publicPath: '',
   },
 
   externals: ['child_process'],
@@ -75,6 +74,10 @@ module.exports = merge(common, {
     ],
   },
 
+  optimization: {
+    minimizer: [new TerserPlugin()],
+  },
+
   plugins: [
     new MiniCssExtractPlugin({
       filename: 'styles/app[chunkhash].css',
@@ -85,9 +88,6 @@ module.exports = merge(common, {
     }),
     new ManifestPlugin({
       fileName: 'webpack-asset-manifest.json',
-    }),
-    new UglifyJSPlugin({
-      sourceMap: true,
     }),
   ],
 });
