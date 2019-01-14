@@ -2,7 +2,8 @@
     "name": "saturn-fm",
     "devDependencies": {
         "@babel/core": "^7.1.2",
-        "@babel/preset-env": "^7.1.0",
+        "@babel/polyfill": "^7.2.5",
+        "@babel/preset-env": "^7.2.3",
         "@babel/preset-react": "^7.0.0",
         "babel-loader": "^8.0.4",
         "babel-plugin-istanbul": "^5.1.0",
@@ -37,7 +38,7 @@
         "webpack-glsl-loader": "^1.0.1",
         "webpack-manifest-plugin": "^2.0.4",
         "webpack-merge": "^4.1.4",
-        "webpack-node-externals": "^1.6.0"
+        "webpack-node-externals": "^1.7.2"
     },
     "scripts": {
         "build": "NODE_ENV=production webpack --config config/webpack.config.prod.js",
@@ -51,14 +52,14 @@
     },
     "dependencies": {
         "@tweenjs/tween.js": "^17.2.0",
-        "babel-polyfill": "^6.26.0",
         "music-metadata-browser": "^0.7.0",
         "prop-types": "^15.6.2",
         "react": "^16.8.0-alpha.0",
         "react-dom": "^16.8.0-alpha.0",
         "react-redux": "^5.0.6",
         "redux": "^4.0.1",
-        "three": "^0.97.0"
+        "three": "^0.97.0",
+        "three-gltf-loader": "^1.100.0"
     },
     "nyc": {
         "include": [

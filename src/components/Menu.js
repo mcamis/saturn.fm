@@ -16,15 +16,6 @@ import testPng from 'images/test.png';
 
 // Todo: Import specific tween functions as needed
 import TWEEN from '@tweenjs/tween.js';
-
-// Three.js imports
-
-import { Mesh } from 'three/src/objects/Mesh';
-
-import { MeshBasicMaterial } from 'three/src/materials/Materials';
-import { PerspectiveCamera } from 'three/src/cameras/PerspectiveCamera';
-import { Scene } from 'three/src/scenes/Scene';
-import { WebGLRenderer } from 'three/src/renderers/WebGLRenderer';
 import * as THREE from 'three';
 
 import buttonSrc from 'songs/button-press.mp3';
@@ -159,14 +150,14 @@ class Menu extends PureComponent {
     const width = window.innerWidth > 1000 ? 1000 : window.innerWidth;
     const height = width * 0.75;
 
-    const scene = new Scene();
+    const scene = new THREE.Scene();
     // TODO: OrthographicCamera?
-    const camera = new PerspectiveCamera(2.5, width / height, 1, 500);
+    const camera = new THREE.PerspectiveCamera(2.5, width / height, 1, 500);
 
     camera.position.z = 360;
     camera.position.y = 0.5;
 
-    const renderer = new WebGLRenderer({ alpha: true, antialias: false });
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
     renderer.setSize(width, height);
 
     this.mouse = new THREE.Vector2();
@@ -222,7 +213,7 @@ class Menu extends PureComponent {
         animationDuration: 300,
       },
     });
-    const spinningGlobe = new Mesh(planeGeometry, globeMaterial);
+    const spinningGlobe = new THREE.Mesh(planeGeometry, globeMaterial);
     spinningGlobe.position.set(x, y, z);
 
     this.planes.push(spinningGlobe);
@@ -257,8 +248,8 @@ class Menu extends PureComponent {
 
   placeOrbitsInScene() {
     const [x, y] = [0, -2.15];
-    const pink = new Mesh(orbitGeometry, pinkMesh);
-    const purple = new Mesh(orbitGeometry, purpleMesh);
+    const pink = new THREE.Mesh(orbitGeometry, pinkMesh);
+    const purple = new THREE.Mesh(orbitGeometry, purpleMesh);
     // pink.visible = false;
     // purple.visible = false;
 
@@ -294,7 +285,7 @@ class Menu extends PureComponent {
     planeTexture.magFilter = THREE.NearestFilter;
     planeTexture.minFilter = THREE.NearestFilter;
 
-    const planeMaterial = new MeshBasicMaterial({
+    const planeMaterial = new THREE.MeshBasicMaterial({
       map: planeTexture,
       transparent: true,
       name,
@@ -306,7 +297,7 @@ class Menu extends PureComponent {
       },
       alphaMap: alphaTexture,
     });
-    const plane = new Mesh(planeGeometry, planeMaterial);
+    const plane = new THREE.Mesh(planeGeometry, planeMaterial);
     plane.position.set(x, y, z);
     // plane.rotateZ(0.75);
     this.planes.push(plane);
@@ -386,7 +377,7 @@ class Menu extends PureComponent {
     const { playing, paused, repeat } = this.props;
 
     const tooltips = {
-      disc: () => <p>Yo!</p>,
+      disc: () => <p>Choose Songs</p>,
       settings: () => <p>System Settings</p>,
       hide: () => <p>Hide</p>,
       rewind: () => <p>Rewind</p>,

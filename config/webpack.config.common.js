@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
+// const nodeExternals = require('webpack-node-externals');
 const app = require('./helpers/app.js');
 const env = require('./helpers/env.js');
 
@@ -8,25 +9,8 @@ module.exports = {
   devtool: 'cheap-module-source-map',
   // Separate vendor packages for more aggressive caching
   entry: {
-    vendor: [
-      'babel-polyfill',
-      'prop-types',
-      'react',
-      'react-dom',
-      'redux',
-      'three',
-      'three/src/lights/AmbientLight',
-      'three/src/lights/DirectionalLight',
-      'three/src/scenes/Scene',
-      'three/src/cameras/PerspectiveCamera',
-      'three/src/geometries/Geometries',
-      'three/src/materials/Materials',
-      'three/src/objects/Mesh',
-      'three/src/renderers/WebGLRenderer',
-    ],
     app: app.indexJs,
   },
-
   plugins: [
     new HtmlWebpackPlugin({
       inject: true,

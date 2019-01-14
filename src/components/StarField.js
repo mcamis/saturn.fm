@@ -1,22 +1,10 @@
 import React, { PureComponent } from 'react';
-
-import { AmbientLight } from 'three/src/lights/AmbientLight';
-import { DirectionalLight } from 'three/src/lights/DirectionalLight';
-
-import { Scene } from 'three/src/scenes/Scene';
-import { PerspectiveCamera } from 'three/src/cameras/PerspectiveCamera';
-import { BoxGeometry } from 'three/src/geometries/Geometries';
-import { MeshBasicMaterial } from 'three/src/materials/Materials';
-
-import { Mesh } from 'three/src/objects/Mesh';
-import { WebGLRenderer } from 'three/src/renderers/WebGLRenderer';
+import * as THREE from 'three';
+import GLTFLoader from 'three-gltf-loader';
 
 import autobind from 'utilities/autobind';
 import { randomSize, randomPosition, sceneWidth } from 'utilities/helpers';
 
-// import * as THREE from 'three/build/three';
-const THREE = (global.THREE = require('three'));
-require('three/examples/js/loaders/GLTFLoader');
 
 class StarField extends PureComponent {
   constructor(props) {
@@ -44,17 +32,17 @@ class StarField extends PureComponent {
     const width = sceneWidth();
     const height = window.innerHeight;
 
-    const scene = new Scene();
-    const camera = new PerspectiveCamera(100, width / height, 1, 1000);
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(100, width / height, 1, 1000);
 
-    const ambient = new AmbientLight(0xffffff, 1);
-    const directional = new DirectionalLight(0xffffff, 5);
+    const ambient = new THREE.AmbientLight(0xffffff, 1);
+    const directional = new THREE.DirectionalLight(0xffffff, 5);
     ambient.position.set(0, -5, 600);
     directional.position.set(0, -5, 600);
     scene.add(ambient, directional);
     // scene.add(directional, );
 
-    const renderer = new WebGLRenderer({ alpha: true, antialias: false });
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
     camera.position.z = 500;
 
     const pixRatio = window.devicePixelRatio;
@@ -79,7 +67,7 @@ class StarField extends PureComponent {
   }
 
   setupSpaceShip() {
-    const loader = new THREE.GLTFLoader();
+    const loader = new GLTFLoader();
 
     loader.load('/public/models/saturn_v1.gltf', gltf => {
       const { scene: shipModel } = gltf;
@@ -124,18 +112,18 @@ class StarField extends PureComponent {
   }
 
   addStars() {
-    const geometry = new BoxGeometry(0.75, 0.75, 0);
+    const geometry = new THREE.BoxGeometry(0.75, 0.75, 0);
 
     for (let z = -1000; z < 1000; z += 15) {
       let material;
       // TODO: More colors
       if (z > 0 && z < 100) {
-        material = new MeshBasicMaterial({ color: 0xff757a });
+        material = new THREE.MeshBasicMaterial({ color: 0xff757a });
       } else {
-        material = new MeshBasicMaterial({ color: 0xffffff });
+        material = new THREE.MeshBasicMaterial({ color: 0xffffff });
       }
 
-      const star = new Mesh(geometry, material);
+      const star = new THREE.Mesh(geometry, material);
 
       // TODO: Better positioning so stars don't smack the viewer in the face
       star.position.x = randomPosition();

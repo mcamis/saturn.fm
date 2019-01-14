@@ -74,6 +74,15 @@ module.exports = merge(common, {
 
   optimization: {
     minimizer: [new TerserPlugin()],
+      splitChunks: {
+        cacheGroups: {
+          commons: {
+            test: /[\\/]node_modules[\\/]/,
+            name: "vendor",
+            chunks: "initial",
+          },
+        },
+      },
   },
 
   plugins: [

@@ -3,9 +3,9 @@ import { store } from 'index';
 import StereoAnalyser from 'utilities/stereoAnalyser';
 import { defaultState } from 'reducers/audio';
 import * as audioActions from 'actions/audio';
-import * as musicMetadataBrowser from 'music-metadata-browser';
+import {parseBlob} from 'music-metadata-browser';
 
-import audio from '../reducers/audio';
+
 
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio
 export default class AudioManager {
@@ -15,11 +15,11 @@ export default class AudioManager {
     // Lowered volume so sound effects are more audible
     this.audioElement.volume = 0.75;
     this.repeat = 'off';
+    this.reduxState = defaultState;
 
     // TODO: Preloading & total track time
     // TODO: External tracks management
 
-    // this.audioElement.src = this.tracks[0]; // eslint-disable-line prefer-destructuring
     this.analyser = new StereoAnalyser(this.audioElement);
 
     this.setupEventListeners();
@@ -30,7 +30,7 @@ export default class AudioManager {
   syncManagerWithStore() {
     store.subscribe(() => {
       this.reduxState = store.getState().audio;
-      this.tracks = this.reduxState.tracks;
+      this.reduxState.tracks;
     });
   }
 
@@ -51,8 +51,9 @@ export default class AudioManager {
   }
 
   playAndReport() {
-    const { tracks, playlist, currentTrack } = this.reduxState;
-    const nextSong = tracks[playlist[currentTrack]].file;
+    const { tracks, playlist, currentTrack = 0 } = this.reduxState;
+    const trackKey = playlist[currentTrack];
+    const nextSong = tracks[trackKey].file;
 
     if (nextSong instanceof File) {
       const reader = new FileReader();
@@ -69,6 +70,7 @@ export default class AudioManager {
     }
   }
 
+  // TODO: Refactor into files util
   getMediaTags(file) {
     const options = {
       duration: false,
@@ -76,7 +78,7 @@ export default class AudioManager {
       skipCovers: true,
     };
 
-    return musicMetadataBrowser.parseBlob(file, options);
+    return parseBlob(file, options);
   }
 
   loadNext(auto) {
@@ -86,11 +88,10 @@ export default class AudioManager {
     if (nextIndex >= this.reduxState.playlist.length) {
       audioActions.setCurrentTrack(0);
       // Only auto-play track if repeat is on or user has explicitly skipped?
-      if (!auto || this.repeat === 'context') {
+      if (!auto || this.reduxState.repeat === 'context') {
         this.playAndReport();
       }
     } else {
-      // const nextSong = this.tracks[nextIndex];
       audioActions.setCurrentTrack(nextIndex);
 
       this.playAndReport();
@@ -105,9 +106,14 @@ export default class AudioManager {
   }
 
   async generateTrackInfo(file) {
-    const {
-      common: { artist, album, title },
-    } = await this.getMediaTags(file);
+    const metadata = await this.getMediaTags(file);
+    console.log(metadata);
+
+
+      const {
+      common: { artist = "", album = "", title = file.name },
+    } = metadata;
+
 
     return {
       file,
@@ -119,21 +125,19 @@ export default class AudioManager {
   }
 
   async addToPlaylist(files) {
-    // TODO: Handle errors?
     const filesToAdd = [];
-
     // eslint-disable-next-line no-restricted-syntax
     for (const file of files) {
       filesToAdd.push(this.generateTrackInfo(file));
     }
 
-    const filesWithMetada = await Promise.all(filesToAdd);
-    const fileObject = filesWithMetada.reduce((result, file) => {
+    const withMetadata = await Promise.all(filesToAdd);
+    const flattened = withMetadata.reduce((result, file) => {
       result[file.file.name] = file;
       return result;
     }, {});
 
-    audioActions.addToPlaylist(fileObject);
+    audioActions.addToPlaylist(flattened);
   }
 
   setupEventListeners() {
@@ -148,18 +152,19 @@ export default class AudioManager {
     );
 
     this.audioElement.addEventListener('play', () => {
-      // audioActions.playing(this.getTrackNumber());
+      console.log('play event?');
+      audioActions.playing();
       this.analyser.start();
     });
 
     this.audioElement.addEventListener('pause', () => {
       // TODO: Manually set pause state to fix stop
-      // audioActions.paused();
+      audioActions.paused();
       this.analyser.pause();
     });
 
     this.audioElement.addEventListener('ended', () => {
-      if (this.repeat === 'track') {
+      if (this.reduxState.repeat === 'track') {
         this.togglePlay();
       } else {
         this.loadNext(true);
@@ -181,23 +186,10 @@ export default class AudioManager {
     */
   }
 
-  getTrackNumber() {
-    if (this.audioElement.src.indexOf(window.location.href) !== -1) {
-      const [host, src] = this.audioElement.src.split(window.location.href);
-      return this.tracks.indexOf(`/${src}`) + 1;
-    }
-
-    // Humans do not count from zero
-    return this.tracks.indexOf(this.audioElement.src) + 1;
-  }
-
   nextTrack() {
     this.loadNext();
   }
 
-  /**
-   *
-   */
   previousTrack() {
     // TODO: Figure out saturn offset for skip back
     if (this.audioElement.currentTime >= 3) {
@@ -221,18 +213,19 @@ export default class AudioManager {
   }
 
   toggleRepeat() {
-    switch (this.repeat) {
+    let newState;
+    switch (this.reduxState.repeat) {
       case 'off':
-        this.repeat = 'track';
+      newState = 'track';
         break;
       case 'track':
-        this.repeat = 'context';
+      newState= 'context';
         break;
       default:
-        this.repeat = 'off';
+      newState = 'off';
         break;
     }
-    audioActions.toggleRepeat(this.repeat);
+    audioActions.toggleRepeat(newState);
   }
 
   get analyserFFT() {

@@ -13,18 +13,12 @@ import pinkSrc from 'images/pink.gif';
 
 import orbAlpha from 'images/orb-alpha.png';
 
-import {
-  CylinderGeometry,
-  PlaneGeometry,
-} from 'three/src/geometries/Geometries';
-import { MeshBasicMaterial } from 'three/src/materials/Materials';
-
 import * as THREE from 'three';
 
 // Todo: Import specific tween functions as needed
 import TWEEN from '@tweenjs/tween.js';
 
-export const orbitGeometry = new CylinderGeometry(
+export const orbitGeometry = new THREE.CylinderGeometry(
   1.45,
   1.45,
   0.35,
@@ -39,7 +33,7 @@ const pinkTexture = new THREE.TextureLoader().load(pinkSrc);
 orbitTexture.magFilter = THREE.NearestFilter;
 pinkTexture.magFilter = THREE.NearestFilter;
 
-export const purpleMesh = new MeshBasicMaterial({
+export const purpleMesh = new THREE.MeshBasicMaterial({
   lights: false,
   side: THREE.DoubleSide,
   transparent: true,
@@ -49,14 +43,14 @@ export const purpleMesh = new MeshBasicMaterial({
 export const alphaTexture = new THREE.TextureLoader().load(orbAlpha);
 alphaTexture.magFilter = THREE.NearestFilter;
 
-export const pinkMesh = new MeshBasicMaterial({
+export const pinkMesh = new THREE.MeshBasicMaterial({
   lights: false,
   side: THREE.DoubleSide,
   transparent: true,
   map: pinkTexture,
 });
 
-export const planeGeometry = new PlaneGeometry(2, 2, 1, 1);
+export const planeGeometry = new THREE.PlaneGeometry(2, 2, 1, 1);
 
 export const createButtons = (audioManager, hideMenu, toggleMenu) => {
   return [

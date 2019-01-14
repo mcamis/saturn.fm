@@ -18,12 +18,9 @@ export const toggleRepeat = repeat =>
     data: { repeat },
   });
 
-export const playing = trackNumber =>
+export const playing = () =>
   store.dispatch({
     type: 'PLAYING',
-    data: {
-      trackNumber,
-    },
   });
 
 export const paused = () =>

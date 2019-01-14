@@ -1,5 +1,5 @@
 import { Tween, Easing } from '@tweenjs/tween.js';
-import { Color } from 'three/src/math/Color';
+import * as THREE from 'three';
 
 import { logarithmic } from 'utilities/helpers';
 
@@ -12,10 +12,10 @@ const colorTween = (target, channelFFT) => {
   const logVal = logarithmic(channelFFT * COLOR_TWEENING_SCALE);
   const hue = 142.5 - logVal;
 
-  const initial = new Color(target.material.color.getHex());
+  const initial = new THREE.Color(target.material.color.getHex());
 
   // TODO: This HSL change is quick but doesn't exactly match the original behavior
-  const newColor = new Color(`hsl(${hue > 0 ? hue : 0}, 100%, 48%)`);
+  const newColor = new THREE.Color(`hsl(${hue > 0 ? hue : 0}, 100%, 48%)`);
 
   return new Tween(initial)
     .to(newColor, 250)

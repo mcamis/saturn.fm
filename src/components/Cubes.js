@@ -1,17 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-
-// Three.js imports
-import { AmbientLight } from 'three/src/lights/AmbientLight';
-import { BoxGeometry } from 'three/src/geometries/Geometries';
-import { Color } from 'three/src/math/Color';
-import { DirectionalLight } from 'three/src/lights/DirectionalLight';
-import { Mesh } from 'three/src/objects/Mesh';
-import { MeshLambertMaterial } from 'three/src/materials/Materials';
-import { PerspectiveCamera } from 'three/src/cameras/PerspectiveCamera';
-import { Scene } from 'three/src/scenes/Scene';
-import { WebGLRenderer } from 'three/src/renderers/WebGLRenderer';
-
+import * as THREE from 'three';
 import autobind from 'utilities/autobind';
 import { sceneWidth } from 'utilities/helpers';
 import {
@@ -43,17 +32,17 @@ class Cubes extends PureComponent {
     const width = sceneWidth();
     const height = width * 0.75;
 
-    const scene = new Scene();
-    const camera = new PerspectiveCamera(20, width / height, 1, 1000);
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(20, width / height, 1, 1000);
     camera.position.z = 45;
     camera.position.y = -27;
 
-    const ambient = new AmbientLight(0xffffff, 0.35);
-    const directional = new DirectionalLight(0xffffff, 0.7);
+    const ambient = new THREE.AmbientLight(0xffffff, 0.35);
+    const directional = new THREE.DirectionalLight(0xffffff, 0.7);
     directional.position.set(0, 0, 900);
     scene.add(ambient, directional);
 
-    const renderer = new WebGLRenderer({ alpha: true, antialias: false });
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
 
     const pixRatio = window.devicePixelRatio;
     renderer.setPixelRatio(pixRatio === 1 ? pixRatio * 0.65 : pixRatio * 0.25);
@@ -72,15 +61,15 @@ class Cubes extends PureComponent {
   }
 
   addCubes() {
-    const geometry = new BoxGeometry(1, 1, 1, 1, 1, 1);
-    const leftMaterial = new MeshLambertMaterial({
-      color: new Color('hsl(143, 100%, 48%)'),
+    const geometry = new THREE.BoxGeometry(1, 1, 1, 1, 1, 1);
+    const leftMaterial = new THREE.MeshLambertMaterial({
+      color: new THREE.Color('hsl(143, 100%, 48%)'),
     });
-    const rightMaterial = new MeshLambertMaterial({
-      color: new Color('hsl(143, 100%, 48%)'),
+    const rightMaterial = new THREE.MeshLambertMaterial({
+      color: new THREE.Color('hsl(143, 100%, 48%)'),
     });
-    const leftCube = new Mesh(geometry, leftMaterial);
-    const rightCube = new Mesh(geometry, rightMaterial);
+    const leftCube = new THREE.Mesh(geometry, leftMaterial);
+    const rightCube = new THREE.Mesh(geometry, rightMaterial);
 
     leftCube.position.set(-Math.abs(7), -30, 0);
     rightCube.position.set(7, -30, 0);
@@ -96,11 +85,12 @@ class Cubes extends PureComponent {
   }
 
   animate() {
-    const { leftChannel, rightChannel } = this.props.audioManager.analyserFFT;
-
+    
     // TWEEN.update();
     // Only animated the cubes when audio is playing
     if (this.props.playing) {
+      const { leftChannel, rightChannel } = this.props.audioManager.analyserFFT;
+
       updateScaleAndColor(this.leftCube, leftChannel);
       updateScaleAndColor(this.rightCube, rightChannel);
       activeRotation(this.leftCube);

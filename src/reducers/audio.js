@@ -12,7 +12,6 @@ export const defaultState = {
   playing: false,
   paused: false,
   playlist: [Higher, Rhyme, NoRefuge],
-  // TODO: Bake-in metadata to avoid unnecessary parsing, only check tags on blob?
   tracks: {
     [Higher]: {
       name: Higher,

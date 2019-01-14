@@ -10,7 +10,8 @@ module.exports = {
     camelcase: 0,
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'react/destructuring-assignment': 0,
-    'no-unused-expressions': 0,
+    'react/jsx-filename-extension': 0,
+    'react/jsx-one-expression-per-line': 0,
     'jsx-a11y/anchor-is-valid': [
       'error',
       {
