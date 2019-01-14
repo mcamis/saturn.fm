@@ -5,12 +5,8 @@ import { playlists, filePicker } from 'utilities/helpers';
 class FileReader extends Component {
   constructor(props) {
     super(props);
-    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange() {
-    console.log(this.fileInput.files); // eslint-disable-line no-console
-  }
 
   async addFiles() {
     const files = await filePicker('.mp3, .wav, .aac');

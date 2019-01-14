@@ -3,7 +3,9 @@ import { store } from 'index';
 import StereoAnalyser from 'utilities/stereoAnalyser';
 import { defaultState } from 'reducers/audio';
 import * as audioActions from 'actions/audio';
-import {parseBlob} from 'music-metadata-browser';
+// import {parseBlob} from 'music-metadata-browser';
+import jsmediatags from "jsmediatags";
+
 
 
 
@@ -78,7 +80,22 @@ export default class AudioManager {
       skipCovers: true,
     };
 
-    return parseBlob(file, options);
+    // return parseBlob(file, options);
+
+    return new Promise((resolve, reject) => {
+      jsmediatags.read(file, {
+        onSuccess: tag => {
+          console.log('Success!');
+          resolve(tag);
+        },
+        onError: error => {
+          console.log('Error');
+          reject(error);
+        }
+      });
+    })
+    
+    
   }
 
   loadNext(auto) {
@@ -102,18 +119,13 @@ export default class AudioManager {
     const currentIndex = this.reduxState.currentTrack;
     const nextIndex = currentIndex ? currentIndex - 1 : 0;
     audioActions.setCurrentTrack(nextIndex);
-    this.playAndReport;
+    this.playAndReport();
   }
 
   async generateTrackInfo(file) {
-    const metadata = await this.getMediaTags(file);
-    console.log(metadata);
-
-
-      const {
-      common: { artist = "", album = "", title = file.name },
-    } = metadata;
-
+    const {
+      tags: { artist = "", album = "", title = file.name },
+  } = await this.getMediaTags(file);
 
     return {
       file,
@@ -152,7 +164,6 @@ export default class AudioManager {
     );
 
     this.audioElement.addEventListener('play', () => {
-      console.log('play event?');
       audioActions.playing();
       this.analyser.start();
     });

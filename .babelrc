@@ -1,5 +1,20 @@
 {
-  "presets": ["@babel/env", "@babel/react", "airbnb"],
+  "presets": [   [
+    "@babel/preset-env",
+    {
+      "useBuiltIns": "entry",
+      "targets": {
+        "browsers": [
+          "last 2 Chrome versions",
+          "last 2 ChromeAndroid versions",
+          "last 2 Safari versions",
+          "last 2 Firefox versions",
+          "last 2 Edge versions",
+          "last 2 iOS versions",
+        ]
+      }
+    }
+  ], "@babel/react", "airbnb"],
   "plugins": [
     ["module-resolver", {
       "root": ["./src"]

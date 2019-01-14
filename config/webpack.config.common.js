@@ -46,13 +46,13 @@ module.exports = {
         test: /\.js$/,
         include: app.src,
         use: ['babel-loader'],
-      },
-      {
-        test: /\.glsl$/,
-        loader: 'webpack-glsl-loader',
-      },
+      }
     ],
   },
+
+  node: {
+    fs: "empty"
+    },
 
   resolve: {
     extensions: ['.js', '.jsx'],

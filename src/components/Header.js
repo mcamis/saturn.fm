@@ -4,12 +4,14 @@ import { formatTime } from 'utilities/helpers';
 import timeSrc from 'images/time.png';
 import trackSrc from 'images/track.png';
 
-const Header = ({ audioManager, audio }) => {
+const Header = ({ audioManager, currentTrack }) => {
   const [componentTime, setComponentTime] = useState(0);
   const intervalRef = useRef();
+  
 
   useEffect(() => {
     const id = setInterval(() => {
+      console.log('what?', audioManager.currentTime);
       setComponentTime(audioManager.currentTime);
     }, 1000);
 
@@ -19,13 +21,14 @@ const Header = ({ audioManager, audio }) => {
     };
   });
 
+  // TODO: Fix Safari missing prop changes / renders
   return (
     <header>
       <div className="info">
         <div className="track">
           <img src={trackSrc} alt="TODO" />
           <div className="track-number">
-            {audio.currentTrack + 1 || Object.keys(audio.playlist).length}
+            {`${currentTrack + 1}`}
           </div>
         </div>
         <div className="time">

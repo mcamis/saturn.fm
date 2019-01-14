@@ -59,7 +59,7 @@ class App extends Component {
 
     return (
       <div className={this.getClassNames()}>
-        <Header audio={this.props.audio} audioManager={this.audioManager} />
+        <Header currentTrack={this.props.audio.currentTrack} audioManager={this.audioManager} />
         {paused && <img src={playPauseIcon} className="toast blink" />}
         <Menu
           audioManager={this.audioManager}

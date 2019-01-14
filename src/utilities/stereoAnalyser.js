@@ -133,7 +133,6 @@ export default class StereoAnalyser {
     if (this.audioContext.state === 'suspended') {
       this.audioContext.resume();
     }
-    console.log('starting!');
     this.startAnalyser();
   }
 
