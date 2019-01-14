@@ -1,19 +1,13 @@
 # Saturn.fm
->A javascript audio visualizer powered by three.js and nostalgia.
-
 ![](saturn-fm.gif)
+
+A recreation of the Sega Saturn CD Player UI in Javascript using three.js, React & Redux.
 
 ## Getting Started
 
-1. `$ npm install` to install dependencies
-2. `$ npm start` to start webpack-dev-server
+1. `npm install` to install dependencies
+2. `npm start` to start webpack-dev-server
 3. Start jammin' out at `localhost:3000`
-
-
-## Built With
-
-* [React](https://www.reactjs.org/) - UI
-* [Three.js](https://threejs.org/) - Visualization
 
 
 ## License
