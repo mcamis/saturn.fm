@@ -46,13 +46,13 @@ module.exports = {
         test: /\.js$/,
         include: app.src,
         use: ['babel-loader'],
-      }
+      },
     ],
   },
 
   node: {
-    fs: "empty"
-    },
+    fs: 'empty',
+  },
 
   resolve: {
     extensions: ['.js', '.jsx'],

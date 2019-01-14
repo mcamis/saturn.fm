@@ -85,7 +85,6 @@ class Cubes extends PureComponent {
   }
 
   animate() {
-    
     // TWEEN.update();
     // Only animated the cubes when audio is playing
     if (this.props.playing) {

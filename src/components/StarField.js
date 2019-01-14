@@ -5,7 +5,6 @@ import GLTFLoader from 'three-gltf-loader';
 import autobind from 'utilities/autobind';
 import { randomSize, randomPosition, sceneWidth } from 'utilities/helpers';
 
-
 class StarField extends PureComponent {
   constructor(props) {
     super(props);

@@ -3,11 +3,6 @@ import { store } from 'index';
 import StereoAnalyser from 'utilities/stereoAnalyser';
 import { defaultState } from 'reducers/audio';
 import * as audioActions from 'actions/audio';
-// import {parseBlob} from 'music-metadata-browser';
-import jsmediatags from "jsmediatags";
-
-
-
 
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio
 export default class AudioManager {
@@ -18,6 +13,7 @@ export default class AudioManager {
     this.audioElement.volume = 0.75;
     this.repeat = 'off';
     this.reduxState = defaultState;
+    this.changeSrc = true;
 
     // TODO: Preloading & total track time
     // TODO: External tracks management
@@ -32,7 +28,12 @@ export default class AudioManager {
   syncManagerWithStore() {
     store.subscribe(() => {
       this.reduxState = store.getState().audio;
-      this.reduxState.tracks;
+      if(this.reduxState.currentTrack !== this.currentTrack) {
+        this.currentTrack = this.reduxState.currentTrack;
+        this.changeTrack = true;
+      } else {
+        this.changeTrack = false;
+      }
     });
   }
 
@@ -72,32 +73,6 @@ export default class AudioManager {
     }
   }
 
-  // TODO: Refactor into files util
-  getMediaTags(file) {
-    const options = {
-      duration: false,
-      skipPostHeaders: true,
-      skipCovers: true,
-    };
-
-    // return parseBlob(file, options);
-
-    return new Promise((resolve, reject) => {
-      jsmediatags.read(file, {
-        onSuccess: tag => {
-          console.log('Success!');
-          resolve(tag);
-        },
-        onError: error => {
-          console.log('Error');
-          reject(error);
-        }
-      });
-    })
-    
-    
-  }
-
   loadNext(auto) {
     const nextIndex = this.reduxState.currentTrack + 1;
 
@@ -120,36 +95,6 @@ export default class AudioManager {
     const nextIndex = currentIndex ? currentIndex - 1 : 0;
     audioActions.setCurrentTrack(nextIndex);
     this.playAndReport();
-  }
-
-  async generateTrackInfo(file) {
-    const {
-      tags: { artist = "", album = "", title = file.name },
-  } = await this.getMediaTags(file);
-
-    return {
-      file,
-      trackNumber: 3,
-      artist,
-      album,
-      title,
-    };
-  }
-
-  async addToPlaylist(files) {
-    const filesToAdd = [];
-    // eslint-disable-next-line no-restricted-syntax
-    for (const file of files) {
-      filesToAdd.push(this.generateTrackInfo(file));
-    }
-
-    const withMetadata = await Promise.all(filesToAdd);
-    const flattened = withMetadata.reduce((result, file) => {
-      result[file.file.name] = file;
-      return result;
-    }, {});
-
-    audioActions.addToPlaylist(flattened);
   }
 
   setupEventListeners() {
@@ -227,13 +172,13 @@ export default class AudioManager {
     let newState;
     switch (this.reduxState.repeat) {
       case 'off':
-      newState = 'track';
+        newState = 'track';
         break;
       case 'track':
-      newState= 'context';
+        newState = 'context';
         break;
       default:
-      newState = 'off';
+        newState = 'off';
         break;
     }
     audioActions.toggleRepeat(newState);

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import autobind from 'utilities/autobind';
+import * as audioActions from 'actions/audio';
 import AudioManager from 'utilities/audioManager';
 
 import Cubes from 'components/Cubes';
@@ -59,7 +60,10 @@ class App extends Component {
 
     return (
       <div className={this.getClassNames()}>
-        <Header currentTrack={this.props.audio.currentTrack} audioManager={this.audioManager} />
+        <Header
+          currentTrack={this.props.audio.currentTrack}
+          audioManager={this.audioManager}
+        />
         {paused && <img src={playPauseIcon} className="toast blink" />}
         <Menu
           audioManager={this.audioManager}
@@ -83,8 +87,8 @@ class App extends Component {
         {this.state.menuVisible && (
           <div className="overlay">
             <FileReader
-              audioManager={this.audioManager}
               audio={this.props.audio}
+              addTracks={audioActions.addTracks}
               toggleMenu={() =>
                 this.setState(state => ({ menuVisible: !state.menuVisible }))
               }
@@ -108,6 +112,5 @@ function mapStateToProps(state) {
     audio: state.audio,
   };
 }
-
 export const AppContainer = App;
 export default connect(mapStateToProps)(App);

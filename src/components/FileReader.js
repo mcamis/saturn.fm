@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
-
-import { playlists, filePicker } from 'utilities/helpers';
+import { getFilesWithTags } from 'utilities/files';
 
 class FileReader extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-
-  async addFiles() {
-    const files = await filePicker('.mp3, .wav, .aac');
-    this.props.audioManager.addToPlaylist(files);
+  async getTracks() {
+    const tracks = await getFilesWithTags({extensions: '.mp3, .wav, .aac'});
+    this.props.addTracks(tracks);
   }
 
   render() {
@@ -28,7 +22,7 @@ class FileReader extends Component {
               );
             })}
 
-            <div className="add-files" onClick={() => this.addFiles()}>
+            <div className="add-files" onClick={() => this.getTracks()}>
               Add a file
             </div>
             <button onClick={this.props.toggleMenu}>Close</button>

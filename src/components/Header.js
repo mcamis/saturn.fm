@@ -7,11 +7,9 @@ import trackSrc from 'images/track.png';
 const Header = ({ audioManager, currentTrack }) => {
   const [componentTime, setComponentTime] = useState(0);
   const intervalRef = useRef();
-  
 
   useEffect(() => {
     const id = setInterval(() => {
-      console.log('what?', audioManager.currentTime);
       setComponentTime(audioManager.currentTime);
     }, 1000);
 
@@ -27,9 +25,7 @@ const Header = ({ audioManager, currentTrack }) => {
       <div className="info">
         <div className="track">
           <img src={trackSrc} alt="TODO" />
-          <div className="track-number">
-            {`${currentTrack + 1}`}
-          </div>
+          <div className="track-number">{`${currentTrack + 1}`}</div>
         </div>
         <div className="time">
           <img src={timeSrc} alt="TODO" />

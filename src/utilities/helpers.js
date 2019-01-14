@@ -59,20 +59,3 @@ export const playlists = [
     coverArt: YMO,
   },
 ];
-
-export async function filePicker(extensions = null, allowDirectory = false) {
-  return new Promise(resolve => {
-    const fileInput = document.createElement('input');
-    if (extensions) fileInput.setAttribute('accept', extensions);
-
-    fileInput.type = 'file';
-    fileInput.multiple = true;
-
-    fileInput.webkitdirectory = allowDirectory;
-    fileInput.directory = allowDirectory;
-    fileInput.mozdirectory = allowDirectory;
-
-    fileInput.addEventListener('change', e => resolve(e.target.files));
-    fileInput.click();
-  });
-}

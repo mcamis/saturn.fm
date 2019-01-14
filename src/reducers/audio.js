@@ -64,7 +64,7 @@ export default (state = defaultState, action) => {
         currentTrack: action.data.trackIndex,
       };
 
-    case 'ADD_TO_PLAYLIST':
+    case 'ADD_TRACKS':
       return {
         ...state,
         tracks: {
