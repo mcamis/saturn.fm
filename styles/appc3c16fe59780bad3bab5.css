@@ -114,7 +114,7 @@ canvas {
   position: absolute; }
   .StarField:after {
     content: "";
-    background: url(/images/galaxy.png) no-repeat;
+    background: url(./images/galaxy.png) no-repeat;
     background-size: cover;
     background-color: black;
     position: absolute;
@@ -144,7 +144,7 @@ canvas {
 .dashboard,
 .dashboard:after {
   content: "";
-  background: url(/images/dashboard.png) no-repeat;
+  background: url(./images/dashboard.png) no-repeat;
   background-size: 100% 50%;
   background-position: 0 100%;
   position: absolute;
@@ -172,7 +172,7 @@ canvas {
 header {
   position: relative; }
   header .info {
-    background: url(/images/header.png) top center/cover no-repeat;
+    background: url(./images/header.png) top center/cover no-repeat;
     width: 80%;
     height: 0;
     padding-top: calc(36 / 254 * 80%);
@@ -221,7 +221,7 @@ header {
     image-rendering: -webkit-optimize-contrast;
     image-rendering: -moz-crisp-edges;
     image-rendering: pixelated;
-    background: url(/images/menuBg.png) repeat-y;
+    background: url(./images/menuBg.png) repeat-y;
     background-position: center;
     background-size: contain;
     z-index: -1;
@@ -255,7 +255,7 @@ header {
   to {
     opacity: 1; } }
   .FileReader h2 {
-    background: url(/images/header_bg.png);
+    background: url(./images/header_bg.png);
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 10px;
     line-height: 53px;
@@ -420,7 +420,7 @@ header {
 .knight-rider {
   display: none;
   content: "";
-  background: url(/images/knight-rider.png) no-repeat;
+  background: url(./images/knight-rider.png) no-repeat;
   background-position: center center;
   background-size: 100% 100%;
   height: 12%;
@@ -501,4 +501,4 @@ blink {
   animation-timing-function: linear; }
 
 
-/*# sourceMappingURL=app00456f85012e8fec2519.css.map*/
+/*# sourceMappingURL=appc3c16fe59780bad3bab5.css.map*/
