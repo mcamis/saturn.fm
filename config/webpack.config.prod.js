@@ -14,7 +14,7 @@ module.exports = merge(common, {
   output: {
     path: app.dist,
     filename: 'js/[name].[chunkhash].js',
-    publicPath: '',
+    publicPath: './',
   },
 
   externals: ['child_process'],
