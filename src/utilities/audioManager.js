@@ -28,7 +28,7 @@ export default class AudioManager {
   syncManagerWithStore() {
     store.subscribe(() => {
       this.reduxState = store.getState().audio;
-      if(this.reduxState.currentTrack !== this.currentTrack) {
+      if (this.reduxState.currentTrack !== this.currentTrack) {
         this.currentTrack = this.reduxState.currentTrack;
         this.changeTrack = true;
       } else {

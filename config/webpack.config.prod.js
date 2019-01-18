@@ -34,7 +34,7 @@ module.exports = merge(common, {
             loader: 'file-loader',
             options: {
               name: '[name].[ext]',
-              outputPath: '/images/',
+              outputPath: 'images/',
             },
           },
         ],
@@ -47,7 +47,7 @@ module.exports = merge(common, {
             loader: 'file-loader',
             options: {
               name: '[name].[ext]',
-              outputPath: '/songs/',
+              outputPath: 'songs/',
             },
           },
         ],
@@ -67,7 +67,18 @@ module.exports = merge(common, {
       },
       {
         test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'resolve-url-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+              sourceMapContents: false,
+            },
+          },
+        ],
       },
     ],
   },

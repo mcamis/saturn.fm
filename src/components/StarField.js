@@ -77,7 +77,6 @@ class StarField extends PureComponent {
 
       // Disable texture filtering for the authenitc chunky Saturn gfx
       const shipMap = shipModel.children[1].material.map;
-      1;
       shipMap.magFilter = THREE.LinearFilter;
       shipMap.minFilter = THREE.LinearFilter;
       shipMap.generateMipmaps = false;

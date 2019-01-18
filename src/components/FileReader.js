@@ -3,7 +3,7 @@ import { getFilesWithTags } from 'utilities/files';
 
 class FileReader extends Component {
   async getTracks() {
-    const tracks = await getFilesWithTags({extensions: '.mp3, .wav, .aac'});
+    const tracks = await getFilesWithTags({ extensions: '.mp3, .wav, .aac' });
     this.props.addTracks(tracks);
   }
 
