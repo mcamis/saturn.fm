@@ -51,3 +51,11 @@ export const arrangeTracks = playlist =>
       playlist,
     },
   });
+
+export const removeTrack = trackIndex =>
+  store.dispatch({
+    type: 'REMOVE_TRACK',
+    data: {
+      trackIndex,
+    },
+  });

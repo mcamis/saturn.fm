@@ -78,7 +78,16 @@ class FileReader extends Component {
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
                               >
-                                <p className="artist">{`${artist} - ${title} -${album}`}</p>
+                                <p className="artist">
+                                  {`${artist} - ${title} -${album}`}
+                                  <button
+                                    onClick={() =>
+                                      this.props.removeTrack(index)
+                                    }
+                                  >
+                                    Remove
+                                  </button>
+                                </p>
                               </div>
                             );
                           }}
@@ -90,10 +99,16 @@ class FileReader extends Component {
                 )}
               </Droppable>
             </DragDropContext>
-            <button className="add-files" type="button" onClick={() => this.getTracks()}>
+            <button
+              className="add-files"
+              type="button"
+              onClick={() => this.getTracks()}
+            >
               Add a file
             </button>
-            <button type="button" onClick={this.props.toggleMenu}>Close</button>
+            <button type="button" onClick={this.props.toggleMenu}>
+              Close
+            </button>
           </div>
         </div>
       </div>

@@ -79,6 +79,27 @@ export default (state = defaultState, action) => {
         ...state,
         playlist: action.data.playlist,
       };
+
+    //       // a little function to help us with reordering the result
+    // export const reorder = (list, startIndex, endIndex) => {
+    //   const result = Array.from(list);
+    //   const [removed] = result.splice(startIndex, 1);
+    //   result.splice(endIndex, 0, removed);
+
+    //   return result;
+    case 'REMOVE_TRACK':
+      const trackKey = state.playlist[action.datatrackIndex];
+      const { [trackKey]: removedTrack, ...cleanTracks } = state.tracks;
+      return {
+        ...state,
+        playlist: [
+          ...state.playlist.slice(0, action.data.trackIndex),
+          ...state.playlist.slice(action.data.trackIndex + 1),
+        ],
+        tracks: {
+          ...cleanTracks,
+        },
+      };
     default:
       return state;
   }

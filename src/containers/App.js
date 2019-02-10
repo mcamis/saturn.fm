@@ -88,8 +88,7 @@ class App extends Component {
           <div className="overlay">
             <FileReader
               audio={this.props.audio}
-              arrangeTracks={audioActions.arrangeTracks}
-              addTracks={audioActions.addTracks}
+              {...audioActions}
               toggleMenu={() =>
                 this.setState(state => ({ menuVisible: !state.menuVisible }))
               }
