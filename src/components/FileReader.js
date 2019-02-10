@@ -34,7 +34,11 @@ class FileReader extends Component {
   }
 
   async getDirectory() {
-    const tracks = await getFilesWithTags({ extensions: '.mp3, .wav, .aac', allowDirectory: true});
+    const tracks = await getFilesWithTags({
+      extensions: '.mp3, .wav, .aac',
+      allowDirectory: true,
+    });
+
     this.props.addTracks(tracks);
   }
 
@@ -62,7 +66,13 @@ class FileReader extends Component {
                             const className = `draggable ${
                               snapshot.isDragging ? 'isDragging' : ''
                             } ${
-                              this.props.audio.playing && item === this.props.audio.playlist[this.props.audio.currentTrack] ? 'currentTrack' : ''
+                              this.props.audio.playing &&
+                              item ===
+                                this.props.audio.playlist[
+                                  this.props.audio.currentTrack
+                                ]
+                                ? 'currentTrack'
+                                : ''
                             }`;
                             return (
                               <div

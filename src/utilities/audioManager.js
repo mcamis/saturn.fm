@@ -161,7 +161,6 @@ export default class AudioManager {
 
   stop() {
     // TODO: Saturn behavior
-    console.log('stop');
     // const [firstSong] = this.tracks;
     this.audioElement.pause();
     // this.audioElement.src = firstSong;

@@ -36,12 +36,12 @@ function getMediaTags(file) {
 
 async function generateTrackInfo(file) {
   const {
-    tags: { artist = '', album = '', title = file.name },
+    tags: { artist = '', album = '', title = '', track },
   } = await getMediaTags(file);
 
   return {
     file,
-    trackNumber: 3,
+    track,
     artist,
     album,
     title,
@@ -67,7 +67,6 @@ async function createTracklist(files) {
 
 export async function getFilesWithTags(options) {
   const fileList = await filePicker(options);
-  console.log(fileList);
   const trackList = await createTracklist(fileList);
   return trackList;
 }

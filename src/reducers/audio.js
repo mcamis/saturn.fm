@@ -16,21 +16,21 @@ export const defaultState = {
     [Higher]: {
       name: Higher,
       file: Higher,
-      trackNumber: 3,
+      track: 3,
       album: 'Velocity',
       artist: 'GRRL',
       title: 'Higher',
     },
     [Rhyme]: {
       file: Rhyme,
-      trackNumber: 1,
+      track: 1,
       album: 'N/A',
       artist: 'Professor Kliq',
       title: 'Rhyme',
     },
     [NoRefuge]: {
       file: NoRefuge,
-      trackNumber: 2,
+      track: 2,
       album: 'OP-1 Outtakes',
       artist: 'Professor Kliq',
       title: 'NoRefuge',
@@ -71,7 +71,13 @@ export default (state = defaultState, action) => {
           ...state.tracks,
           ...action.data.tracks,
         },
-        playlist: [...state.playlist, ...Object.keys(action.data.tracks)],
+        playlist: [
+          ...state.playlist,
+          // sort new tracks before adding them
+          ...Object.keys(action.data.tracks).sort(
+            (a, b) => action.data.tracks[a].track - action.data.tracks[b].track
+          ),
+        ],
       };
 
     case 'ARRANGE_TRACKS':
