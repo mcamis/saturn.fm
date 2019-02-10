@@ -11,6 +11,10 @@ class StarField extends PureComponent {
     this.timeOut = null;
     // this.Zspeed = Math.random() * (0.025 - 0.10) + 0.10;
     autobind(this);
+    window.addEventListener('resize', () => {
+      clearTimeout(this.timeOut);
+      this.timeOut = setTimeout(this.onResize, 250);
+    });
   }
 
   componentDidMount() {
@@ -58,11 +62,6 @@ class StarField extends PureComponent {
     this.addStars();
 
     requestAnimationFrame(this.animate);
-
-    window.addEventListener('resize', () => {
-      clearTimeout(this.timeOut);
-      this.timeOut = setTimeout(this.onResize, 250);
-    });
   }
 
   setupSpaceShip() {

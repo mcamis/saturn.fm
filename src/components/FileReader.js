@@ -16,7 +16,7 @@ class FileReader extends Component {
             {this.props.audio.playlist.map(key => {
               const { artist, album, title } = this.props.audio.tracks[key];
               return (
-                <div key={key}>
+                <div>
                   <p className="artist">{`${artist} - ${title} -${album}`}</p>
                 </div>
               );

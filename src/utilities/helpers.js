@@ -5,7 +5,7 @@ import YMO from '../images/ymo.jpg';
 export const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
 
 export const sceneWidth = () =>
-  window.innerWidth > 1000 ? 1000 : window.innerWidth;
+  window.innerWidth > 1200 ? 1200 : window.innerWidth;
 
 export const formatTime = time => {
   const MM = Math.trunc(time / 60)

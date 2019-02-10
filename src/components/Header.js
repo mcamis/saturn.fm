@@ -4,20 +4,36 @@ import { formatTime } from 'utilities/helpers';
 import timeSrc from 'images/time.png';
 import trackSrc from 'images/track.png';
 
+// https://overreacted.io/making-setinterval-declarative-with-react-hooks/
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  });
+
+  // Set up the interval.
+  useEffect(
+    () => {
+      function tick() {
+        savedCallback.current();
+      }
+      if (delay !== null) {
+        let id = setInterval(tick, delay);
+        return () => clearInterval(id);
+      }
+    },
+    [delay]
+  );
+}
+
 const Header = ({ audioManager, currentTrack }) => {
   const [componentTime, setComponentTime] = useState(0);
-  const intervalRef = useRef();
 
-  useEffect(() => {
-    const id = setInterval(() => {
-      setComponentTime(audioManager.currentTime);
-    }, 1000);
-
-    intervalRef.current = id;
-    return () => {
-      clearInterval(intervalRef.current);
-    };
-  });
+  useInterval(() => {
+    setComponentTime(audioManager.currentTime);
+  }, 1000);
 
   // TODO: Fix Safari missing prop changes / renders
   return (

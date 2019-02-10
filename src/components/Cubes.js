@@ -14,6 +14,10 @@ class Cubes extends PureComponent {
     super(props);
     this.debouncedResize = null;
     autobind(this);
+    window.addEventListener('resize', () => {
+      clearTimeout(this.debouncedResize);
+      this.debouncedResize = setTimeout(this.onResize, 250);
+    });
   }
 
   componentDidMount() {
@@ -33,7 +37,7 @@ class Cubes extends PureComponent {
     const height = width * 0.75;
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(20, width / height, 1, 1000);
+    const camera = new THREE.PerspectiveCamera(20, width / height, 1, 1200);
     camera.position.z = 45;
     camera.position.y = -27;
 
@@ -54,10 +58,6 @@ class Cubes extends PureComponent {
     this.mount.appendChild(this.renderer.domElement);
     this.addCubes();
     requestAnimationFrame(this.animate);
-    window.addEventListener('resize', () => {
-      clearTimeout(this.debouncedResize);
-      this.debouncedResize = setTimeout(this.onResize, 250);
-    });
   }
 
   addCubes() {

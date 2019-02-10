@@ -71,7 +71,7 @@ class Menu extends PureComponent {
   }
 
   onResize() {
-    const width = window.innerWidth > 1000 ? 1000 : window.innerWidth;
+    const width = window.innerWidth > 1200 ? 1200 : window.innerWidth;
     const height = width * 0.75;
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
@@ -147,7 +147,7 @@ class Menu extends PureComponent {
   }
 
   setupScene() {
-    const width = window.innerWidth > 1000 ? 1000 : window.innerWidth;
+    const width = window.innerWidth > 1200 ? 1200 : window.innerWidth;
     const height = width * 0.75;
 
     const scene = new THREE.Scene();
