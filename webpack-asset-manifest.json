@@ -1,25 +1,6 @@
 {
   "app.js": "./js/app.90133f17faa513dd45a5.js",
   "vendor.js": "./js/vendor.124da5f3f9dbe2c4f9a2.js",
-  "dist/public/.DS_Store": "./dist/public/.DS_Store",
-  "dist/public/CNAME": "./dist/public/CNAME",
-  "dist/public/android-chrome-192x192.png": "./dist/public/android-chrome-192x192.png",
-  "dist/public/android-chrome-512x512.png": "./dist/public/android-chrome-512x512.png",
-  "dist/public/apple-touch-icon.png": "./dist/public/apple-touch-icon.png",
-  "dist/public/browserconfig.xml": "./dist/public/browserconfig.xml",
-  "dist/public/favicon-16x16.png": "./dist/public/favicon-16x16.png",
-  "dist/public/favicon-32x32.png": "./dist/public/favicon-32x32.png",
-  "dist/public/favicon.ico": "./dist/public/favicon.ico",
-  "dist/public/index.html": "./dist/public/index.html",
-  "dist/public/models/.DS_Store": "./dist/public/models/.DS_Store",
-  "dist/public/models/cube.gltf": "./dist/public/models/cube.gltf",
-  "dist/public/models/cubeBigger.gltf": "./dist/public/models/cubeBigger.gltf",
-  "dist/public/models/saturn_v1.bin": "./dist/public/models/saturn_v1.bin",
-  "dist/public/models/saturn_v1.gltf": "./dist/public/models/saturn_v1.gltf",
-  "dist/public/models/texture.png.png": "./dist/public/models/texture.png.png",
-  "dist/public/mstile-150x150.png": "./dist/public/mstile-150x150.png",
-  "dist/public/safari-pinned-tab.svg": "./dist/public/safari-pinned-tab.svg",
-  "dist/public/site.webmanifest": "./dist/public/site.webmanifest",
   "favicon.ico": "./favicon.ico",
   "images/dashboard.png": "./images/dashboard.png",
   "images/disc.png": "./images/disc.png",
@@ -48,5 +29,6 @@
   "songs/No-Refuge.mp3": "./songs/No-Refuge.mp3",
   "songs/Rhyme.mp3": "./songs/Rhyme.mp3",
   "songs/button-highlight.mp3": "./songs/button-highlight.mp3",
-  "songs/button-press.mp3": "./songs/button-press.mp3"
+  "songs/button-press.mp3": "./songs/button-press.mp3",
+  "undefined": "./undefined"
 }
