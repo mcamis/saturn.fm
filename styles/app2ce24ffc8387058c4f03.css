@@ -151,23 +151,19 @@ canvas {
   left: 0;
   bottom: 0;
   width: 50%;
-  height: 75vw;
-  z-index: 20; }
+  z-index: 20;
+  padding-bottom: 85%; }
 
 .dashboard:after {
   left: 100%;
   right: 0;
   transform: scaleX(-1);
-  width: 100%; }
+  width: 100%;
+  background-size: 100% 100%; }
 
 .cubes {
   z-index: 70;
   position: relative; }
-
-@media (min-width: 1200px) {
-  .dashboard,
-  .dashboard:after {
-    height: 900px; } }
 
 header {
   position: relative; }
@@ -501,4 +497,4 @@ blink {
   animation-timing-function: linear; }
 
 
-/*# sourceMappingURL=app381cb242b5514ae72fb1.css.map*/
+/*# sourceMappingURL=app2ce24ffc8387058c4f03.css.map*/
