@@ -52,7 +52,9 @@ async function createTracklist(files) {
   const filesToAdd = [];
   // eslint-disable-next-line no-restricted-syntax
   for (const file of files) {
-    filesToAdd.push(generateTrackInfo(file));
+    if (file.type.includes('audio')) {
+      filesToAdd.push(generateTrackInfo(file));
+    }
   }
 
   const withMetadata = await Promise.all(filesToAdd);
@@ -65,6 +67,7 @@ async function createTracklist(files) {
 
 export async function getFilesWithTags(options) {
   const fileList = await filePicker(options);
+  console.log(fileList);
   const trackList = await createTracklist(fileList);
   return trackList;
 }

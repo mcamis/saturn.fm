@@ -32,21 +32,12 @@ class FileReader extends Component {
     this.props.addTracks(tracks);
   }
 
+  async getDirectory() {
+    const tracks = await getFilesWithTags({ extensions: '.mp3, .wav, .aac', allowDirectory: true});
+    this.props.addTracks(tracks);
+  }
+
   render() {
-    // return (
-
-    //         {this.props.audio.playlist.map(key => {
-    //           return (
-    //             <div>
-    //             </div>
-    //           );
-    //         })}
-
-    //       </div>
-    //     </div>
-    //   </div>
-    // );
-
     return (
       <div className="FileReader">
         <div className="content">
@@ -102,9 +93,16 @@ class FileReader extends Component {
             <button
               className="add-files"
               type="button"
+              onClick={() => this.getDirectory()}
+            >
+              Add a directory
+            </button>
+            <button
+              className="add-files"
+              type="button"
               onClick={() => this.getTracks()}
             >
-              Add a file
+              Add file(s)
             </button>
             <button type="button" onClick={this.props.toggleMenu}>
               Close
