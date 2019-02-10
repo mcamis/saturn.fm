@@ -20,7 +20,9 @@ export async function filePicker({
     fileInput.directory = allowDirectory;
     fileInput.mozdirectory = allowDirectory;
 
-    fileInput.addEventListener('change', e => resolve(e.target.files));
+    fileInput.addEventListener('change', e => {
+      resolve(e.target.files);
+    });
     fileInput.click();
   });
 }

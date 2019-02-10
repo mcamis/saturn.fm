@@ -53,13 +53,23 @@ class App extends Component {
     return `${hiddenClass} ${pausedClass} ${playingClass} ${showClass}`;
   }
 
+  appeaseSafari() {
+    // ugh
+    if (this.audioManager.analyser.audioContext.state === 'suspended') {
+      this.audioManager.analyser.audioContext.resume();
+    }
+  }
+
   render() {
     const {
       audio: { playing, paused, repeat },
     } = this.props;
 
     return (
-      <div className={this.getClassNames()}>
+      <div
+        className={this.getClassNames()}
+        onClick={() => this.appeaseSafari()}
+      >
         <Header
           currentTrack={this.props.audio.currentTrack}
           audioManager={this.audioManager}

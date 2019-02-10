@@ -10,7 +10,7 @@ export default class AudioManager {
     this.audioElement = new Audio();
     this.audioElement.crossOrigin = 'anonymous';
     // Lowered volume so sound effects are more audible
-    this.audioElement.volume = 0.75;
+    // this.audioElement.volume = 0.75;
     this.repeat = 'off';
     this.reduxState = defaultState;
     this.changeSrc = true;
@@ -59,12 +59,9 @@ export default class AudioManager {
     const nextSong = tracks[trackKey].file;
 
     if (nextSong instanceof File) {
-      const reader = new FileReader();
-      reader.onload = e => {
-        this.audioElement.src = e.target.result;
-        this.audioElement.play();
-      };
-      reader.readAsDataURL(nextSong);
+      const objectUrl = URL.createObjectURL(nextSong);
+      this.audioElement.src = objectUrl;
+      this.audioElement.play();
     } else {
       if (!this.audioElement.src || !this.audioElement.src.includes(nextSong)) {
         this.audioElement.src = nextSong;
@@ -73,7 +70,18 @@ export default class AudioManager {
     }
   }
 
+  // Prevent memory leaks and revoke ObjectURL if one exists
+  revokeSongUrl() {
+    const { tracks, playlist, currentTrack = 0 } = this.reduxState;
+    const trackKey = playlist[currentTrack];
+    const currentSong = tracks[trackKey].file;
+    if (currentSong instanceof File) {
+      URL.revokeObjectURL(currentSong);
+    }
+  }
+
   loadNext(auto) {
+    this.revokeSongUrl();
     const nextIndex = this.reduxState.currentTrack + 1;
 
     // If we're trying to skip past tracks length, go to first song
@@ -91,6 +99,8 @@ export default class AudioManager {
   }
 
   loadPrevious() {
+    this.revokeSongUrl();
+
     const currentIndex = this.reduxState.currentTrack;
     const nextIndex = currentIndex ? currentIndex - 1 : 0;
     audioActions.setCurrentTrack(nextIndex);

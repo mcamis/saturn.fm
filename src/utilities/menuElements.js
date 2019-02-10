@@ -65,7 +65,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => {
     {
       name: 'settings',
       position: [0, 0, 1],
-      onClick: audioManager.previousTrack,
+      onClick: () => {},
       animationDelay: 100,
       animationDuration: 400,
       mapSrc: moreSrc,

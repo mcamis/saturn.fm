@@ -41,10 +41,11 @@
 @import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
 
 @mixin pixelated {
-    -ms-interpolation-mode: nearest-neighbor;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: pixelated;
+  -ms-interpolation-mode: nearest-neighbor;
 }
 
 /* Typography & Base Styling */
@@ -109,6 +110,7 @@ p {
 canvas {
     position: fixed;
     bottom: 0;
+    @include pixelated;
 }
 
 .Cubes canvas {

@@ -96,8 +96,8 @@ class Menu extends PureComponent {
 
       // TODO: Scale up onClick
 
-      this.buttonEffect.currentTime = 0;
-      this.buttonEffect.play();
+      // this.buttonEffect.currentTime = 0;
+      // this.buttonEffect.play();
       onClick();
     }
   }
@@ -353,6 +353,7 @@ class Menu extends PureComponent {
     // TODO: Move tween.update to a central location?
     TWEEN.update();
     this.orbitButton();
+
     this.renderer.render(this.scene, this.camera);
 
     const delta = this.clock.getDelta();

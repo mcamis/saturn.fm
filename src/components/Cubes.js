@@ -51,8 +51,17 @@ class Cubes extends PureComponent {
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
 
+    let isSsfari = false;
+    if (
+      navigator.userAgent.indexOf('Safari') !== -1 &&
+      navigator.userAgent.indexOf('Chrome') === -1
+    ) {
+      isSsfari = true;
+    }
     const pixRatio = window.devicePixelRatio;
-    renderer.setPixelRatio(pixRatio === 1 ? pixRatio * 0.65 : pixRatio * 0.18);
+    renderer.setPixelRatio(
+      pixRatio === 1 || isSsfari ? pixRatio * 0.25 : pixRatio * 0.18
+    );
     renderer.setSize(width, height);
 
     this.scene = scene;
