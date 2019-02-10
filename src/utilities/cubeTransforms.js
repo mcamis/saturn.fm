@@ -12,28 +12,35 @@ const colorTween = (target, channelFFT) => {
   const logVal = logarithmic(channelFFT * COLOR_TWEENING_SCALE);
   const hue = 142.5 - logVal;
 
-  const initial = new THREE.Color(target.material.color.getHex());
-
+  // const initial = new THREE.Color(target.material.color.getHex());
   // TODO: This HSL change is quick but doesn't exactly match the original behavior
   const newColor = new THREE.Color(`hsl(${hue > 0 ? hue : 0}, 100%, 48%)`);
 
-  return new Tween(initial)
-    .to(newColor, 250)
-    .easing(Easing.Quadratic.Out)
-    .onUpdate(() => {
-      target.material.color.set(initial);
-    })
-    .start();
+  target.material.color.set(newColor);
+  // return new Tween(initial)
+  //   .to(newColor, 150)
+  //   .easing(Easing.Quadratic.Out)
+  //   .onUpdate(() => {
+  //     target.material.color.set(initial);
+  //   })
+  //   .start();
 };
 
-export const updateScaleAndColor = (cube, averageFFT, rawFFT) => {
+
+
+export const updateScaleAndColor = (cube, averageFFT) => {
   colorTween(cube, averageFFT);
 
   // TODO: Tween scale?
-  const derivedSize = averageFFT * 0.01 + .35;
-  cube.morphTargetInfluences[0] = averageFFT * 0.0075 ;
+  const derivedSize = (averageFFT * 0.008) + .5;
+  const m = derivedSize < 1.65 ? derivedSize : 1.65;
+  cube.morphTargetInfluences[0] = averageFFT * 0.007 > 1 ? 1 : averageFFT * 0.007 ;
+  // cube.scale.set(derivedMax, derivedMax, derivedMax);
 
-  cube.scale.set(derivedSize, derivedSize, derivedSize);
+    return new Tween(cube.scale)
+    .to(({x: m, y: m, z:m}), 50)
+    .easing(Easing.Quadratic.Out)
+    .start();
 };
 
 const randomRange = (max, min) => Math.random() * (max - min) + min;

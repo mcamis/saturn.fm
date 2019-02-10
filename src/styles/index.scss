@@ -184,8 +184,10 @@ canvas {
     left: 0;
     bottom: 0;
     width: 50%;
-    height: 75vw;
+    // height: 900px;
+
     z-index: 20;
+    padding-bottom: 85%;
 }
 
 .dashboard:after {
@@ -193,18 +195,13 @@ canvas {
     right: 0;
     transform: scaleX(-1);
     width: 100%;
+    background-size: 100% 100%;
+
 }
 
 .cubes {
     z-index: 70;
     position: relative;
-}
-
-@media (min-width: 1200px) {
-    .dashboard,
-    .dashboard:after {
-        height: 750px;
-    }
 }
 
 header {
