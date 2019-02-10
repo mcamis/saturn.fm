@@ -58,11 +58,10 @@ body {
   color: #444;
   margin: 0;
   background: black;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: -o-crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
   image-rendering: -webkit-optimize-contrast;
-  image-rendering: pixelated;
-  -ms-interpolation-mode: nearest-neighbor; }
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated; }
 
 p {
   margin-top: 0; }
@@ -82,7 +81,7 @@ p {
 #root {
   width: 100%;
   height: 100%;
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
   overflow: hidden; }
   #root > div {
@@ -92,12 +91,7 @@ p {
 
 canvas {
   position: fixed;
-  bottom: 0;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: -o-crisp-edges;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: pixelated;
-  -ms-interpolation-mode: nearest-neighbor; }
+  bottom: 0; }
 
 .Cubes canvas {
   left: 0;
@@ -157,19 +151,23 @@ canvas {
   left: 0;
   bottom: 0;
   width: 50%;
-  z-index: 20;
-  padding-bottom: 85%; }
+  height: 75vw;
+  z-index: 20; }
 
 .dashboard:after {
   left: 100%;
   right: 0;
   transform: scaleX(-1);
-  width: 100%;
-  background-size: 100% 100%; }
+  width: 100%; }
 
 .cubes {
   z-index: 70;
   position: relative; }
+
+@media (min-width: 1000px) {
+  .dashboard,
+  .dashboard:after {
+    height: 750px; } }
 
 header {
   position: relative; }
@@ -219,11 +217,10 @@ header {
     content: " ";
     display: block;
     filter: brightness(0);
-    image-rendering: -moz-crisp-edges;
-    image-rendering: -o-crisp-edges;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: pixelated;
     -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: pixelated;
     background: url(./images/menuBg.png) repeat-y;
     background-position: center;
     background-size: contain;
@@ -264,11 +261,10 @@ header {
     line-height: 53px;
     padding: 0 1.5em;
     background-size: cover;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: -o-crisp-edges;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: pixelated;
     -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: pixelated;
     color: white;
     text-transform: capitalize;
     margin: 0 auto;
@@ -285,22 +281,14 @@ header {
     font-weight: 400;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     margin: 0 0 2em; }
-    .FileReader .playlists .draggable {
+    .FileReader .playlists div {
       padding: 10px 0;
       margin: 0 0 10px; }
-      .FileReader .playlists .draggable p {
+      .FileReader .playlists div p {
         margin: 0;
         padding: 0; }
-      .FileReader .playlists .draggable:hover {
+      .FileReader .playlists div:hover {
         background: rgba(255, 255, 255, 0.25); }
-      .FileReader .playlists .draggable:active {
-        cursor: grabbing !important; }
-      .FileReader .playlists .draggable.isDragging {
-        border: 1px white;
-        background: rgba(255, 255, 255, 0.5);
-        border-radius: 2px; }
-      .FileReader .playlists .draggable.currentTrack {
-        border-left: 10px solid red; }
 
 .track-number {
   position: absolute;
@@ -513,4 +501,4 @@ blink {
   animation-timing-function: linear; }
 
 
-/*# sourceMappingURL=app2c1ef5aa1ed88a270070.css.map*/
+/*# sourceMappingURL=appc3c16fe59780bad3bab5.css.map*/
