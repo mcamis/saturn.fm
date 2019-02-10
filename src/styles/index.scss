@@ -367,6 +367,9 @@ header {
                 background: rgba(255,255,255,.5);
                 border-radius: 2px;
             }
+            &.currentTrack{
+                border-left: 10px solid red;
+            }
 
         }
     }

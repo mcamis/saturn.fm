@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { getFilesWithTags, reorder } from 'utilities/files';
+import { setCurrentTrack } from '../actions/audio';
 
 const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? '' : '',
@@ -51,7 +52,6 @@ class FileReader extends Component {
                     style={getListStyle(snapshot.isDraggingOver)}
                   >
                     {this.props.audio.playlist.map((item, index) => {
-                      console.log(item);
                       const { artist, album, title } = this.props.audio.tracks[
                         item
                       ];
@@ -61,6 +61,8 @@ class FileReader extends Component {
                           {(provided, snapshot) => {
                             const className = `draggable ${
                               snapshot.isDragging ? 'isDragging' : ''
+                            } ${
+                              this.props.audio.playing && item === this.props.audio.playlist[this.props.audio.currentTrack] ? 'currentTrack' : ''
                             }`;
                             return (
                               <div
