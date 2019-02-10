@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import * as THREE from 'three';
 import autobind from 'utilities/autobind';
+import GLTFLoader from 'three-gltf-loader';
+
 import { sceneWidth } from 'utilities/helpers';
 import {
   activeRotation,
@@ -22,6 +24,8 @@ class Cubes extends PureComponent {
 
   componentDidMount() {
     this.setupScene();
+    this.clock = new THREE.Clock();
+
   }
 
   onResize() {
@@ -55,9 +59,34 @@ class Cubes extends PureComponent {
     this.scene = scene;
     this.camera = camera;
     this.renderer = renderer;
+    this.setupCubes();
+
     this.mount.appendChild(this.renderer.domElement);
-    this.addCubes();
-    requestAnimationFrame(this.animate);
+    // this.addCubes();
+  }
+
+
+  setupCubes() {
+    const loader = new GLTFLoader();
+
+    loader.load('/public/models/cube.gltf', gltf => {
+      console.log(gltf);
+      const { scene: {children: [,,cubeModel]} } = gltf;
+      cubeModel.material.color =  
+      new THREE.Color('hsl(143, 100%, 48%)');
+      cubeModel.material.shading =  THREE.SmoothShading;
+      cubeModel.position.set(-Math.abs(7), -30, 0);
+      // cubeModel.geometry.computeVertexNormals();
+      // cubeModel.scale.set(.75, .75,);
+      this.cubeModel = cubeModel;
+      console.log(cubeModel);
+      this.scene.add(cubeModel);
+
+      // this.mixer = new THREE.AnimationMixer(cubeModel);
+      // this.mixer.clipAction(gltf.animations[0]).play();
+      requestAnimationFrame(this.animate);
+
+    });
   }
 
   addCubes() {
@@ -88,16 +117,19 @@ class Cubes extends PureComponent {
     // TWEEN.update();
     // Only animated the cubes when audio is playing
     if (this.props.playing) {
-      const { leftChannel, rightChannel } = this.props.audioManager.analyserFFT;
+      const [leftChannel, rightChannel] = this.props.audioManager.analyserFFT;
+      const [leftRaw, rightRaw] = this.props.audioManager.rawFFT;
 
-      updateScaleAndColor(this.leftCube, leftChannel);
-      updateScaleAndColor(this.rightCube, rightChannel);
-      activeRotation(this.leftCube);
-      activeRotation(this.rightCube, -1);
+      updateScaleAndColor(this.cubeModel, leftChannel, leftRaw);
+      // updateScaleAndColor(this.rightCube, rightChannel, rightRaw);
+      activeRotation(this.cubeModel);
+      // activeRotation(this.rightCube, -1);
     } else {
-      idleRotation(this.leftCube);
-      idleRotation(this.rightCube, -1);
+      idleRotation(this.cubeModel);
+      // idleRotation(this.rightCube, -1);
     }
+    // const delta = this.clock.getDelta();
+    // this.mixer.update(delta);
 
     this.renderer.render(this.scene, this.camera);
 

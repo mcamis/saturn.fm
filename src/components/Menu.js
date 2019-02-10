@@ -62,8 +62,8 @@ class Menu extends PureComponent {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.activeButton !== prevState.activeButton) {
-      this.highlightEffect.currentTime = 0;
-      this.highlightEffect.play();
+      // this.highlightEffect.currentTime = 0;
+      // this.highlightEffect.play();
       const [x, y] = this.menuElements[this.state.activeButton].position;
       this.orbits.pink.position.set(x, y, 2);
       this.orbits.purple.position.set(x, y, 2.03);

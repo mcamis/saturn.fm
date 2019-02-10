@@ -147,16 +147,10 @@ export default class StereoAnalyser {
   }
 
   get averageFFT() {
-    return {
-      leftChannel: average(this.leftChannel),
-      rightChannel: average(this.rightChannel),
-    };
+    return [average(this.leftChannel), average(this.rightChannel)];
   }
 
   get rawFFT() {
-    return {
-      leftChannel: this.leftChannel,
-      rightChannel: this.rightChannel,
-    };
+    return [this.leftChannel, this.rightChannel];
   }
 }

@@ -188,6 +188,10 @@ export default class AudioManager {
     return this.analyser.averageFFT;
   }
 
+  get rawFFT() {
+    return this.analyser.rawFFT;
+  }
+
   get currentTime() {
     return this.audioElement.currentTime;
   }

@@ -1,7 +1,7 @@
 import { Tween, Easing } from '@tweenjs/tween.js';
 import * as THREE from 'three';
 
-import { logarithmic } from 'utilities/helpers';
+import { average, logarithmic } from 'utilities/helpers';
 
 const COLOR_TWEENING_SCALE = 0.75;
 const MAX_ACTIVE_ROTATION = 0.03;
@@ -26,11 +26,13 @@ const colorTween = (target, channelFFT) => {
     .start();
 };
 
-export const updateScaleAndColor = (cube, channelFFT) => {
-  colorTween(cube, channelFFT);
+export const updateScaleAndColor = (cube, averageFFT, rawFFT) => {
+  colorTween(cube, averageFFT);
 
   // TODO: Tween scale?
-  const derivedSize = channelFFT * 0.01 + 1;
+  const derivedSize = averageFFT * 0.01 + .35;
+  cube.morphTargetInfluences[0] = averageFFT * 0.0075 ;
+
   cube.scale.set(derivedSize, derivedSize, derivedSize);
 };
 
