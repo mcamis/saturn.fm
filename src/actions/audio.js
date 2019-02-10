@@ -43,3 +43,11 @@ export const addTracks = tracks =>
       tracks,
     },
   });
+
+export const arrangeTracks = playlist =>
+  store.dispatch({
+    type: 'ARRANGE_TRACKS',
+    data: {
+      playlist,
+    },
+  });

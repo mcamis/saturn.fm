@@ -66,6 +66,14 @@ async function createTracklist(files) {
 export async function getFilesWithTags(options) {
   const fileList = await filePicker(options);
   const trackList = await createTracklist(fileList);
-  console.log(trackList);
   return trackList;
 }
+
+// a little function to help us with reordering the result
+export const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+};

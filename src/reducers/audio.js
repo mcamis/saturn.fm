@@ -73,6 +73,12 @@ export default (state = defaultState, action) => {
         },
         playlist: [...state.playlist, ...Object.keys(action.data.tracks)],
       };
+
+    case 'ARRANGE_TRACKS':
+      return {
+        ...state,
+        playlist: action.data.playlist,
+      };
     default:
       return state;
   }

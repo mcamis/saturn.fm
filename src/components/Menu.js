@@ -331,9 +331,9 @@ class Menu extends PureComponent {
       if (name && name !== this.state.activeButton) {
         this.setState({ activeButton: name });
       }
-      document.body.classList.add('pointer');
+      // document.body.classList.add('pointer');
     } else {
-      document.body.classList.remove('pointer');
+      // document.body.classList.remove('pointer');
     }
   }
 

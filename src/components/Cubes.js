@@ -64,17 +64,22 @@ class Cubes extends PureComponent {
     this.mount.appendChild(this.renderer.domElement);
   }
 
+  setupCube(slot, [x, y, z]) {
+    this.loader.load(
+      '/public/models/cubeBigger.gltf',
+      ({
+        scene: {
+          children: [, , cubeModel],
+        },
+      }) => {
+        cubeModel.material.color = new THREE.Color('hsl(143, 100%, 48%)');
+        cubeModel.position.set(x, y, z);
 
-  setupCube(slot, [x,y,z]) {
-    this.loader.load('/public/models/cubeBigger.gltf', ({ scene: {children: [,,cubeModel]} }) => {
-      cubeModel.material.color =  
-        new THREE.Color('hsl(143, 100%, 48%)');
-      cubeModel.position.set(x,y,z);
-
-      this[slot] = cubeModel;
-      this.scene.add(cubeModel);
-      if(slot === 'rightCube') requestAnimationFrame(this.animate);
-    });
+        this[slot] = cubeModel;
+        this.scene.add(cubeModel);
+        if (slot === 'rightCube') requestAnimationFrame(this.animate);
+      }
+    );
   }
 
   animate() {

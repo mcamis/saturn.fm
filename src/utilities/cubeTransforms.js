@@ -26,19 +26,18 @@ const colorTween = (target, channelFFT) => {
   //   .start();
 };
 
-
-
 export const updateScaleAndColor = (cube, averageFFT) => {
   colorTween(cube, averageFFT);
 
   // TODO: Tween scale?
-  const derivedSize = (averageFFT * 0.008) + .5;
+  const derivedSize = averageFFT * 0.008 + 0.5;
   const m = derivedSize < 1.65 ? derivedSize : 1.65;
-  cube.morphTargetInfluences[0] = averageFFT * 0.007 > 1 ? 1 : averageFFT * 0.007 ;
+  cube.morphTargetInfluences[0] =
+    averageFFT * 0.007 > 1 ? 1 : averageFFT * 0.007;
   // cube.scale.set(derivedMax, derivedMax, derivedMax);
 
-    return new Tween(cube.scale)
-    .to(({x: m, y: m, z:m}), 50)
+  return new Tween(cube.scale)
+    .to({ x: m, y: m, z: m }, 50)
     .easing(Easing.Quadratic.Out)
     .start();
 };
