@@ -34,6 +34,7 @@ module.exports = merge(common, {
             loader: 'file-loader',
             options: {
               name: '[name].[ext]',
+              exclude: /gltf/,
               outputPath: 'images/',
             },
           },
@@ -68,15 +69,14 @@ module.exports = merge(common, {
       {
         test: /\.scss$/,
         use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'resolve-url-loader',
           {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: true,
-              sourceMapContents: false,
-            },
+            loader: 'style-loader', // creates style nodes from JS strings
+          },
+          {
+            loader: 'css-loader', // translates CSS into CommonJS
+          },
+          {
+            loader: 'sass-loader', // compiles Sass to CSS
           },
         ],
       },

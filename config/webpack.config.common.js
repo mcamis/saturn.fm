@@ -31,7 +31,6 @@ module.exports = {
       {
         from: app.public,
         to: app.dist,
-        ignore: ['.**'],
       },
     ]),
     new webpack.DefinePlugin({

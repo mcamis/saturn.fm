@@ -75,7 +75,7 @@ class Cubes extends PureComponent {
 
   setupCube(slot, [x, y, z]) {
     this.loader.load(
-      '/public/models/cubeBigger.gltf',
+      './models/cubeBigger.gltf',
       ({
         scene: {
           children: [, , cubeModel],
