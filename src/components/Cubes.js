@@ -29,7 +29,7 @@ class Cubes extends PureComponent {
 
   onResize() {
     const width = sceneWidth();
-    const height = width * 0.75;
+    const height = width * .75;
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);
@@ -37,7 +37,7 @@ class Cubes extends PureComponent {
 
   setupScene() {
     const width = sceneWidth();
-    const height = width * 0.75;
+    const height = width * .75;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(20, width / height, 1, 1200);
@@ -60,7 +60,7 @@ class Cubes extends PureComponent {
     }
     const pixRatio = window.devicePixelRatio;
     renderer.setPixelRatio(
-      pixRatio === 1 || isSsfari ? pixRatio * 0.25 : pixRatio * 0.18
+      pixRatio === 1 ? pixRatio * 0.5 : pixRatio * 0.18
     );
     renderer.setSize(width, height);
 

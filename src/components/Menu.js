@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import { sceneWidth } from 'utilities/helpers';
+
 import AudioManager from 'utilities/audioManager';
 import {
   animateButtonPosition,
@@ -71,8 +73,8 @@ class Menu extends PureComponent {
   }
 
   onResize() {
-    const width = window.innerWidth > 1200 ? 1200 : window.innerWidth;
-    const height = width * 0.75;
+    const width = sceneWidth();
+    const height = window.innerHeight * 0.75;
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);
@@ -151,7 +153,7 @@ class Menu extends PureComponent {
   }
 
   setupScene() {
-    const width = window.innerWidth > 1200 ? 1200 : window.innerWidth;
+    const width = sceneWidth();
     const height = width * 0.75;
 
     const scene = new THREE.Scene();
