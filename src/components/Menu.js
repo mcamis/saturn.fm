@@ -203,10 +203,9 @@ class Menu extends PureComponent {
     this.textureAnimator = new this.TextureAnimator(
       globeTexture,
       461,
-      1,
-      461,
       40
-    ); // texture, #horiz, #vert, #total, duration.
+    );
+
     const globeMaterial = new THREE.MeshBasicMaterial({
       map: globeTexture,
       transparent: true,
@@ -216,6 +215,7 @@ class Menu extends PureComponent {
         animationDuration: 300,
       },
     });
+
     const spinningGlobe = new THREE.Mesh(planeGeometry, globeMaterial);
     spinningGlobe.position.set(x, y, z);
 
@@ -224,27 +224,25 @@ class Menu extends PureComponent {
   }
 
   // TODO: Move to utility class
-  TextureAnimator(texture, tilesHoriz, tilesVert, numTiles, tileDispDuration) {
+  TextureAnimator(texture, tilesHoriz, tileDispDuration) {
     this.tilesHorizontal = tilesHoriz;
-    this.tilesVertical = tilesVert;
-    this.numberOfTiles = numTiles;
-    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-    texture.repeat.set(1 / this.tilesHorizontal, 1 / this.tilesVertical);
+    this.numberOfTiles = tilesHoriz;
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(1 / this.tilesHorizontal, 1);
 
     this.tileDisplayDuration = tileDispDuration;
     this.currentDisplayTime = 0;
     this.currentTile = 0;
 
-    this.update = function(milliSec) {
+    this.update = (milliSec) => {
       this.currentDisplayTime += milliSec;
       while (this.currentDisplayTime > this.tileDisplayDuration) {
         this.currentDisplayTime -= this.tileDisplayDuration;
-        this.currentTile++;
+        this.currentTile+=1;
         if (this.currentTile === this.numberOfTiles) this.currentTile = 0;
         const currentColumn = this.currentTile % this.tilesHorizontal;
         texture.offset.x = currentColumn / this.tilesHorizontal;
-        const currentRow = Math.floor(this.currentTile / this.tilesHorizontal);
-        texture.offset.y = currentRow / this.tilesVertical;
       }
     };
   }
@@ -253,8 +251,6 @@ class Menu extends PureComponent {
     const [x, y] = [0, -2.15];
     const pink = new THREE.Mesh(orbitGeometry, pinkMesh);
     const purple = new THREE.Mesh(orbitGeometry, purpleMesh);
-    // pink.visible = false;
-    // purple.visible = false;
 
     // Push the orbits slight ahead in Z so they hit the plane at the eges of the sphere
     pink.position.set(x, y, 2);
@@ -334,9 +330,9 @@ class Menu extends PureComponent {
       if (name && name !== this.state.activeButton) {
         this.setState({ activeButton: name });
       }
-      // document.body.classList.add('pointer');
+      document.body.classList.add('pointer');
     } else {
-      // document.body.classList.remove('pointer');
+      document.body.classList.remove('pointer');
     }
   }
 
@@ -357,10 +353,8 @@ class Menu extends PureComponent {
     TWEEN.update();
     this.orbitButton();
 
-    this.renderer.render(this.scene, this.camera);
-
     const delta = this.clock.getDelta();
-
+    this.renderer.render(this.scene, this.camera);
     this.textureAnimator.update(1000 * delta);
 
     requestAnimationFrame(this.animate);
