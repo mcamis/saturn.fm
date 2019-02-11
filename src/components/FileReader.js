@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { getFilesWithTags, reorder } from 'utilities/files';
-import { setCurrentTrack } from '../actions/audio';
 
 const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? '' : '',
@@ -33,7 +32,7 @@ class FileReader extends Component {
     this.props.addTracks(tracks);
   }
 
-  async getDirectory() {
+  async gedivirectory() {
     const tracks = await getFilesWithTags({
       extensions: '.mp3, .wav, .aac',
       allowDirectory: true,
@@ -81,16 +80,14 @@ class FileReader extends Component {
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
                               >
-                                <p className="artist">
-                                  {`${artist} - ${title} -${album}`}
-                                  <button
-                                    onClick={() =>
-                                      this.props.removeTrack(index)
-                                    }
-                                  >
-                                    Remove
-                                  </button>
-                                </p>
+                                <div>{title}</div>
+                                <div>{artist}</div>
+                                <div>{album}</div>
+                                <button
+                                  onClick={() => this.props.removeTrack(index)}
+                                >
+                                  Remove
+                                </button>
                               </div>
                             );
                           }}
@@ -102,24 +99,24 @@ class FileReader extends Component {
                 )}
               </Droppable>
             </DragDropContext>
-            <button
-              className="add-files"
-              type="button"
-              onClick={() => this.getDirectory()}
-            >
-              Add a directory
-            </button>
-            <button
-              className="add-files"
-              type="button"
-              onClick={() => this.getTracks()}
-            >
-              Add file(s)
-            </button>
-            <button type="button" onClick={this.props.toggleMenu}>
-              Close
-            </button>
           </div>
+          <button
+            className="add-files"
+            type="button"
+            onClick={() => this.gedivirectory()}
+          >
+            Add a directory
+          </button>
+          <button
+            className="add-files"
+            type="button"
+            onClick={() => this.getTracks()}
+          >
+            Add file(s)
+          </button>
+          <button type="button" onClick={this.props.toggleMenu}>
+            Close
+          </button>
         </div>
       </div>
     );

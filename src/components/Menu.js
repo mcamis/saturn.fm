@@ -62,8 +62,8 @@ class Menu extends PureComponent {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.activeButton !== prevState.activeButton) {
-      // this.highlightEffect.currentTime = 0;
-      // this.highlightEffect.play();
+      this.highlightEffect.currentTime = 0;
+      this.highlightEffect.play();
       const [x, y] = this.menuElements[this.state.activeButton].position;
       this.orbits.pink.position.set(x, y, 2);
       this.orbits.purple.position.set(x, y, 2.03);
@@ -95,11 +95,14 @@ class Menu extends PureComponent {
       } = intersects[0];
 
       // TODO: Scale up onClick
-
-      // this.buttonEffect.currentTime = 0;
-      // this.buttonEffect.play();
+      this.triggerButtonSE();
       onClick();
     }
+  }
+
+  triggerButtonSE() {
+    this.buttonEffect.currentTime = 0;
+    this.buttonEffect.play();
   }
 
   onMouseMove(e) {
@@ -134,6 +137,7 @@ class Menu extends PureComponent {
           nextIndex += 3;
           break;
         case 'Enter':
+          this.triggerButtonSE();
           this.menuElements[this.buttons[nextIndex]].onClick();
           break;
         default:
@@ -185,7 +189,6 @@ class Menu extends PureComponent {
     });
 
     domElement.addEventListener('mousedown', e => this.onMouseDown(e), false);
-
     domElement.addEventListener('mousemove', e => this.onMouseMove(e), false);
   }
 

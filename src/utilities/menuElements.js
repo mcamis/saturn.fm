@@ -6,8 +6,6 @@ import playSrc from 'images/play-pause.png';
 import ffwdSrc from 'images/ffwd.png';
 import stopSrc from 'images/stop.png';
 import repeatSrc from 'images/repeat.png';
-import advancedSrc from 'images/globe.gif';
-
 import textureSrc from 'images/texture.gif';
 import pinkSrc from 'images/pink.gif';
 
@@ -16,7 +14,7 @@ import orbAlpha from 'images/orb-alpha.png';
 import * as THREE from 'three';
 
 // Todo: Import specific tween functions as needed
-import TWEEN from '@tweenjs/tween.js';
+import { Tween, Easing } from '@tweenjs/tween.js';
 
 export const orbitGeometry = new THREE.CylinderGeometry(
   1.45,
@@ -52,92 +50,90 @@ export const pinkMesh = new THREE.MeshBasicMaterial({
 
 export const planeGeometry = new THREE.PlaneGeometry(2, 2, 1, 1);
 
-export const createButtons = (audioManager, hideMenu, toggleMenu) => {
-  return [
-    {
-      name: 'disc',
-      position: [-2.25, 0, 1],
-      onClick: toggleMenu,
-      animationDuration: 400,
-      animationDelay: 220,
-      mapSrc: discSrc,
-    },
-    {
-      name: 'settings',
-      position: [0, 0, 1],
-      onClick: () => {},
-      animationDelay: 100,
-      animationDuration: 400,
-      mapSrc: moreSrc,
-    },
-    {
-      name: 'hide',
-      position: [2.25, 0, 1],
-      onClick: hideMenu,
-      animationDelay: 180,
-      animationDuration: 400,
-      mapSrc: hideSrc,
-    },
-    {
-      name: 'rewind',
-      position: [-2.25, -2.15, 1],
-      onClick: audioManager.previousTrack,
-      animationDelay: 500,
-      animationDuration: 350,
-      mapSrc: rwdSrc,
-    },
-    {
-      name: 'play',
-      position: [0, -2.15, 1],
-      onClick: audioManager.togglePlay,
-      animationDelay: 300,
-      animationDuration: 350,
-      mapSrc: playSrc,
-    },
-    {
-      name: 'fastforward',
-      position: [2.25, -2.15, 1],
-      onClick: audioManager.nextTrack,
-      animationDelay: 280,
-      animationDuration: 350,
-      mapSrc: ffwdSrc,
-    },
-    {
-      name: 'repeat',
-      position: [-2.25, -4.3, 1],
-      onClick: audioManager.toggleRepeat,
-      animationDelay: 600,
-      animationDuration: 300,
-      mapSrc: repeatSrc,
-    },
-    {
-      name: 'stop',
-      position: [0, -4.3, 1],
-      onClick: audioManager.stop,
-      animationDelay: 700,
-      animationDuration: 300,
-      mapSrc: stopSrc,
-    },
+export const createButtons = (audioManager, hideMenu, toggleMenu) => [
+  {
+    name: 'disc',
+    position: [-2.25, 0, 1],
+    onClick: toggleMenu,
+    animationDuration: 400,
+    animationDelay: 220,
+    mapSrc: discSrc,
+  },
+  {
+    name: 'settings',
+    position: [0, 0, 1],
+    onClick: () => {},
+    animationDelay: 100,
+    animationDuration: 400,
+    mapSrc: moreSrc,
+  },
+  {
+    name: 'hide',
+    position: [2.25, 0, 1],
+    onClick: hideMenu,
+    animationDelay: 180,
+    animationDuration: 400,
+    mapSrc: hideSrc,
+  },
+  {
+    name: 'rewind',
+    position: [-2.25, -2.15, 1],
+    onClick: audioManager.previousTrack,
+    animationDelay: 500,
+    animationDuration: 350,
+    mapSrc: rwdSrc,
+  },
+  {
+    name: 'play',
+    position: [0, -2.15, 1],
+    onClick: audioManager.togglePlay,
+    animationDelay: 300,
+    animationDuration: 350,
+    mapSrc: playSrc,
+  },
+  {
+    name: 'fastforward',
+    position: [2.25, -2.15, 1],
+    onClick: audioManager.nextTrack,
+    animationDelay: 280,
+    animationDuration: 350,
+    mapSrc: ffwdSrc,
+  },
+  {
+    name: 'repeat',
+    position: [-2.25, -4.3, 1],
+    onClick: audioManager.toggleRepeat,
+    animationDelay: 600,
+    animationDuration: 300,
+    mapSrc: repeatSrc,
+  },
+  {
+    name: 'stop',
+    position: [0, -4.3, 1],
+    onClick: audioManager.stop,
+    animationDelay: 700,
+    animationDuration: 300,
+    mapSrc: stopSrc,
+  },
 
-    // {
-    //   name: 'advanced',
-    //   position: [2.25, -4.3, 1],
-    //   onClick: hideDash,
-    //   animationDelay: 900,
-    //   animationDuration: 300,
-    //   mapSrc: advancedSrc,
-    // },
-  ];
-};
+  // {
+  //   name: 'advanced',
+  //   position: [2.25, -4.3, 1],
+  //   onClick: hideDash,
+  //   animationDelay: 900,
+  //   animationDuration: 300,
+  //   mapSrc: advancedSrc,
+  // },
+];
 
 /* Animates a Vector3 to the target */
 export function slideDown(
   vectorToAnimate,
   { x, y, z },
-  { easing = TWEEN.Easing.Quadratic.In, delay, duration = 2000 }
+  { easing = Easing.Quadratic.In, delay, duration = 2000 }
 ) {
   // create the tween
-  const tweenVector3 = new TWEEN.Tween(vectorToAnimate)
+  const tweenVector3 = new Tween(vectorToAnimate)
     .to({ x, y, z }, duration)
     .easing(easing)
     // .onUpdate(d => {
@@ -160,6 +156,6 @@ export function animateButtonPosition(plane, target) {
   slideDown(plane.position, target, {
     duration: plane.material.userData.animationDuration,
     delay: plane.material.userData.animationDelay,
-    easing: TWEEN.Easing.Quadratic.InOut,
+    easing: Easing.Quadratic.InOut,
   });
 }

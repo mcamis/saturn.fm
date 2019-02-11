@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import autobind from 'utilities/autobind';
-import * as audioActions from 'actions/audio';
 import AudioManager from 'utilities/audioManager';
+import * as audioActions from 'actions/audio';
 
 import Cubes from 'components/Cubes';
 import Menu from 'components/Menu';
@@ -30,16 +30,6 @@ class App extends Component {
     };
   }
 
-  hideDash() {
-    this.setState(prevState => ({ hidden: !prevState.hidden, show: false }));
-  }
-
-  showIfHidden() {
-    if (this.state.hidden) {
-      this.setState({ hidden: false, show: true });
-    }
-  }
-
   getClassNames() {
     const {
       audio: { playing, paused, repeat },
@@ -51,6 +41,16 @@ class App extends Component {
     const showClass = this.state.show ? 'show' : '';
 
     return `${hiddenClass} ${pausedClass} ${playingClass} ${showClass}`;
+  }
+
+  hideDash() {
+    this.setState(prevState => ({ hidden: !prevState.hidden, show: false }));
+  }
+
+  showIfHidden() {
+    if (this.state.hidden) {
+      this.setState({ hidden: false, show: true });
+    }
   }
 
   appeaseSafari() {

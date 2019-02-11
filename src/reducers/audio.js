@@ -11,16 +11,17 @@ export const defaultState = {
   currentTime: formatTime(0),
   playing: false,
   paused: false,
-  playlist: [Higher, Rhyme, NoRefuge],
+  // playlist: [Higher, Rhyme, NoRefuge],
+  playlist: [Rhyme, NoRefuge],
   tracks: {
-    [Higher]: {
-      name: Higher,
-      file: Higher,
-      track: 3,
-      album: 'Velocity',
-      artist: 'GRRL',
-      title: 'Higher',
-    },
+    // [Higher]: {
+    //   name: Higher,
+    //   file: Higher,
+    //   track: 3,
+    //   album: 'Velocity',
+    //   artist: 'GRRL',
+    //   title: 'Higher',
+    // },
     [Rhyme]: {
       file: Rhyme,
       track: 1,
@@ -74,9 +75,17 @@ export default (state = defaultState, action) => {
         playlist: [
           ...state.playlist,
           // sort new tracks before adding them
-          ...Object.keys(action.data.tracks).sort(
-            (a, b) => action.data.tracks[a].track - action.data.tracks[b].track
-          ),
+          ...Object.keys(action.data.tracks)
+            .sort(
+              (a, b) => {
+                const A = action.data.tracks[a];
+                const B = action.data.tracks[b];
+                if (A.album > B.album) return 1;
+                if (A.album < B.album) return -1;
+                if (A.track > B.track) return 1;
+                if (A.track < B.track) return -1;
+              }
+            )
         ],
       };
 
@@ -85,14 +94,7 @@ export default (state = defaultState, action) => {
         ...state,
         playlist: action.data.playlist,
       };
-
-    //       // a little function to help us with reordering the result
-    // export const reorder = (list, startIndex, endIndex) => {
-    //   const result = Array.from(list);
-    //   const [removed] = result.splice(startIndex, 1);
-    //   result.splice(endIndex, 0, removed);
-
-    //   return result;
+      
     case 'REMOVE_TRACK':
       const trackKey = state.playlist[action.datatrackIndex];
       const { [trackKey]: removedTrack, ...cleanTracks } = state.tracks;
