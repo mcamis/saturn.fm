@@ -1,6 +1,6 @@
 {
-  "app.js": "./js/app.2de49878f745ddcdf9a2.js",
-  "vendor.js": "./js/vendor.500fb13cfe54f063ae86.js",
+  "app.js": "./js/app.c51b1298fb7512e50404.js",
+  "vendor.js": "./js/vendor.4baf8bbca3040014ae11.js",
   ".DS_Store": "./.DS_Store",
   "CNAME": "./CNAME",
   "android-chrome-192x192.png": "./android-chrome-192x192.png",
@@ -14,7 +14,6 @@
   "images/disc.png": "./images/disc.png",
   "images/ffwd.png": "./images/ffwd.png",
   "images/galaxy.png": "./images/galaxy.png",
-  "images/globe.gif": "./images/globe.gif",
   "images/header.png": "./images/header.png",
   "images/header_bg.png": "./images/header_bg.png",
   "images/hide.png": "./images/hide.png",
