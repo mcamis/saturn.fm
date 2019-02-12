@@ -257,6 +257,7 @@ header {
 .FileReader {
     padding: 2em;
     height: 100%;
+    cursor: default;
 
     // z-index: 9999;
     font-size: 14px;
@@ -333,13 +334,16 @@ header {
 
         line-height: 53px;
         padding: 0 1.5em;
-        background-size: cover;
+        background-size: 100% 100%;
         @include pixelated;
         color: white;
         text-transform: capitalize;
         margin: 0 auto;
         margin-bottom: 2em;
         display: inline-block;
+    }
+    button {
+        cursor: pointer;
     }
 
     .playlists {
@@ -360,6 +364,7 @@ header {
             
         }
             .draggable {
+                cursor: grab;
             padding: 8px 10px;
             border-radius: 2px;
             margin: 0 0 2px;
@@ -378,6 +383,7 @@ header {
                 cursor: grabbing !important
             }
             &.isDragging {
+                cursor: grabbing;
                 border: 1px white;
                 background: rgba(255,255,255,.5);
                 border-radius: 2px;
