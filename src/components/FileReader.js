@@ -34,7 +34,7 @@ class FileReader extends Component {
   }
 
   async getTracks() {
-    const tracks = await getFilesWithTags({ extensions: '.mp3, .wav, .aac' });
+    const tracks = await getFilesWithTags({ extensions: '.mp3, .m4a, .flac, .wav, .aac' });
     this.props.addTracks(tracks);
   }
 
