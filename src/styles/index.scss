@@ -382,18 +382,18 @@ header {
                 background: rgba(255,255,255,.5);
                 border-radius: 2px;
             }
-            &.currentTrack{
-                border-left: 10px solid red;
-            }
             div:nth-child(1){
+                width: 40px;
+            }
+            div:nth-child(2){
                 width: 40%;
                 max-width: 400px;
             }
-            div:nth-child(2){
+            div:nth-child(3){
                 width: 25%;
                 max-width: 200px;
             }
-            div:nth-child(3){
+            div:nth-child(4){
                 width: 25%;
                 max-width: 200px;
             }

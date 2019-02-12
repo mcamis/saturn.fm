@@ -40,11 +40,11 @@ async function generateTrackInfo(file) {
   let metadata;
   try {
     metadata = await getMediaTags(file);
-  } catch(err) {
+  } catch (err) {
     console.log('Fetching Tags Error', err);
   }
   const {
-    tags: { artist = '', album = '', title = file.name, track = 0 } = {}
+    tags: { artist = '', album = '', title = file.name, track = 0 } = {},
   } = metadata;
 
   return {
@@ -74,10 +74,10 @@ async function createTracklist(files) {
 }
 
 export async function getFilesWithTags(options) {
-  let fileList
+  let fileList;
   try {
     fileList = await filePicker(options);
-  } catch(err) {
+  } catch (err) {
     console.log(err);
     // this.queueToast('Oops, something went wrong fetching your files. Please try again')
   }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import SpeakerIcon from "./SpeakerIcon";
 import { getFilesWithTags, reorder } from 'utilities/files';
 
 const getDraggableClasses = ({ isDragging, currentPlaying }) => {
@@ -77,6 +78,7 @@ class FileReader extends Component {
                                 {...draggableProvided.draggableProps}
                                 {...draggableProvided.dragHandleProps}
                               >
+                                  <div>{currentPlaying && <SpeakerIcon />}</div>
                                 <div>{title}</div>
                                 <div>{artist}</div>
                                 <div>{album}</div>
