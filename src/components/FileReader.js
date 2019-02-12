@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { getFilesWithTags, reorder } from 'utilities/files';
 
-const getDraggableStyle = ({ isDragging, currentPlaying }) => ({
-  border: isDragging ? '1px white' : '',
-  background: isDragging ? 'rgba(255,255,255,.5)' : '',
-  borderLeft: currentPlaying ? '10px solid red' : '',
-});
+const getDraggableClasses = ({ isDragging, currentPlaying }) => {
+  return `draggable ${isDragging ? 'isDragging' : ''} ${
+    currentPlaying ? 'currentTrack' : ''
+  }`;
+};
 
 class FileReader extends Component {
   constructor(props) {
@@ -69,7 +69,7 @@ class FileReader extends Component {
                             return (
                               <div
                                 className="draggable"
-                                style={getDraggableStyle({
+                                className={getDraggableClasses({
                                   isDragging,
                                   currentPlaying,
                                 })}

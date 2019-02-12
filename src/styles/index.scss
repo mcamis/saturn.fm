@@ -377,6 +377,14 @@ header {
             &:active{
                 cursor: grabbing !important
             }
+            &.isDragging {
+                border: 1px white;
+                background: rgba(255,255,255,.5);
+                border-radius: 2px;
+            }
+            &.currentTrack{
+                border-left: 10px solid red;
+            }
             div:nth-child(1){
                 width: 40%;
                 max-width: 400px;
