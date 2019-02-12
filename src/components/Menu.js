@@ -202,11 +202,7 @@ class Menu extends PureComponent {
     globeTexture.minFilter = THREE.NearestFilter;
 
     // https://stemkoski.github.io/Three.js/Texture-Animation.html
-    this.textureAnimator = new this.TextureAnimator(
-      globeTexture,
-      461,
-      40
-    );
+    this.textureAnimator = new this.TextureAnimator(globeTexture, 461, 40);
 
     const globeMaterial = new THREE.MeshBasicMaterial({
       map: globeTexture,
@@ -237,11 +233,11 @@ class Menu extends PureComponent {
     this.currentDisplayTime = 0;
     this.currentTile = 0;
 
-    this.update = (milliSec) => {
+    this.update = milliSec => {
       this.currentDisplayTime += milliSec;
       while (this.currentDisplayTime > this.tileDisplayDuration) {
         this.currentDisplayTime -= this.tileDisplayDuration;
-        this.currentTile+=1;
+        this.currentTile += 1;
         if (this.currentTile === this.numberOfTiles) this.currentTile = 0;
         const currentColumn = this.currentTile % this.tilesHorizontal;
         texture.offset.x = currentColumn / this.tilesHorizontal;

@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { getFilesWithTags, reorder } from 'utilities/files';
 
-const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? '' : '',
+const getDraggableStyle = ({ isDragging, currentPlaying }) => ({
+  border: isDragging ? '1px white' : '',
+  background: isDragging ? 'rgba(255,255,255,.5)' : '',
+  borderLeft: currentPlaying ? '10px solid red' : '',
 });
 
 class FileReader extends Component {
@@ -32,7 +35,7 @@ class FileReader extends Component {
     this.props.addTracks(tracks);
   }
 
-  async gedivirectory() {
+  async getDirectory() {
     const tracks = await getFilesWithTags({
       extensions: '.mp3, .wav, .aac',
       allowDirectory: true,
@@ -42,6 +45,10 @@ class FileReader extends Component {
   }
 
   render() {
+    const {
+      audio: { currentTrack, playing, playlist, tracks },
+    } = this.props;
+
     return (
       <div className="FileReader">
         <div className="content">
@@ -49,42 +56,33 @@ class FileReader extends Component {
           <div className="playlists">
             <DragDropContext onDragEnd={this.onDragEnd}>
               <Droppable droppableId="droppable">
-                {(provided, snapshot) => (
-                  <div
-                    ref={provided.innerRef}
-                    style={getListStyle(snapshot.isDraggingOver)}
-                  >
-                    {this.props.audio.playlist.map((item, index) => {
-                      const { artist, album, title } = this.props.audio.tracks[
-                        item
-                      ];
+                {provided => (
+                  <div ref={provided.innerRef}>
+                    {playlist.map((item, index) => {
+                      const { artist, album, title } = tracks[item];
+                      const currentPlaying =
+                        playing && item === playlist[currentTrack];
 
                       return (
                         <Draggable key={item} draggableId={item} index={index}>
-                          {(provided, snapshot) => {
-                            const className = `draggable ${
-                              snapshot.isDragging ? 'isDragging' : ''
-                            } ${
-                              this.props.audio.playing &&
-                              item ===
-                                this.props.audio.playlist[
-                                  this.props.audio.currentTrack
-                                ]
-                                ? 'currentTrack'
-                                : ''
-                            }`;
+                          {(draggableProvided, { isDragging }) => {
                             return (
                               <div
-                                className={className}
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
+                                className="draggable"
+                                style={getDraggableStyle({
+                                  isDragging,
+                                  currentPlaying,
+                                })}
+                                ref={draggableProvided.innerRef}
+                                {...draggableProvided.draggableProps}
+                                {...draggableProvided.dragHandleProps}
                               >
                                 <div>{title}</div>
                                 <div>{artist}</div>
                                 <div>{album}</div>
                                 <button
                                   onClick={() => this.props.removeTrack(index)}
+                                  type="button"
                                 >
                                   Remove
                                 </button>
@@ -103,7 +101,7 @@ class FileReader extends Component {
           <button
             className="add-files"
             type="button"
-            onClick={() => this.gedivirectory()}
+            onClick={() => this.getDirectory()}
           >
             Add a directory
           </button>
@@ -122,4 +120,15 @@ class FileReader extends Component {
     );
   }
 }
+
+FileReader.propTypes = {
+  audio: PropTypes.shape({
+    tracks: PropTypes.object.isRequired,
+    playlist: PropTypes.array.isRequired,
+  }).isRequired,
+  arrangeTracks: PropTypes.func.isRequired,
+  addTracks: PropTypes.func.isRequired,
+  removeTrack: PropTypes.func.isRequired,
+  toggleMenu: PropTypes.func.isRequired,
+};
 export default FileReader;

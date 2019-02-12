@@ -75,17 +75,14 @@ export default (state = defaultState, action) => {
         playlist: [
           ...state.playlist,
           // sort new tracks before adding them
-          ...Object.keys(action.data.tracks)
-            .sort(
-              (a, b) => {
-                const A = action.data.tracks[a];
-                const B = action.data.tracks[b];
-                if (A.album > B.album) return 1;
-                if (A.album < B.album) return -1;
-                if (A.track > B.track) return 1;
-                if (A.track < B.track) return -1;
-              }
-            )
+          ...Object.keys(action.data.tracks).sort((a, b) => {
+            const A = action.data.tracks[a];
+            const B = action.data.tracks[b];
+            if (A.album > B.album) return 1;
+            if (A.album < B.album) return -1;
+            if (A.track > B.track) return 1;
+            if (A.track < B.track) return -1;
+          }),
         ],
       };
 
@@ -94,7 +91,7 @@ export default (state = defaultState, action) => {
         ...state,
         playlist: action.data.playlist,
       };
-      
+
     case 'REMOVE_TRACK':
       const trackKey = state.playlist[action.datatrackIndex];
       const { [trackKey]: removedTrack, ...cleanTracks } = state.tracks;

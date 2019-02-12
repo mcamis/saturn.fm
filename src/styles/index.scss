@@ -41,11 +41,11 @@
 @import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
 
 @mixin pixelated {
-  image-rendering: -moz-crisp-edges;
-  image-rendering: -o-crisp-edges;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: pixelated;
-  -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: optimizeSpeed;             /* Older versions of FF          */
+    image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
+    image-rendering: -webkit-optimize-contrast; /* Safari                        */
+    image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
+    image-rendering: pixelated;                 /* Awesome future-browsers       */
 }
 
 /* Typography & Base Styling */
@@ -376,14 +376,6 @@ header {
             }
             &:active{
                 cursor: grabbing !important
-            }
-            &.isDragging {
-                border: 1px white;
-                background: rgba(255,255,255,.5);
-                border-radius: 2px;
-            }
-            &.currentTrack{
-                border-left: 10px solid red;
             }
             div:nth-child(1){
                 width: 40%;
