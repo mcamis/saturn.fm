@@ -372,7 +372,7 @@ header {
                 padding: 0;
             }
             &:hover {
-                background: rgba(255,255,255,.25);
+                animation: selectedItem 3s infinite;
             }
             &:active{
                 cursor: grabbing !important
@@ -398,7 +398,26 @@ header {
                 max-width: 200px;
             }
             button {
+                transition: all 200ms ease;
                 margin-left: auto;
+                width: 10px;
+                appearance: none;
+                border: none;
+                outline:  none;
+                background: none;
+                color: rgba(255,255,255,.6);
+                cursor: pointer;
+                border-radius: 2px;
+                width: 30px;
+                border: 1px solid rgba(255,255,255,.25);
+                text-align: center;
+                &:hover{
+                    background: darkslategrey;
+                    border: 1px solid darkslategrey;
+
+                    color: white;
+                
+                }
             }
 
         }
@@ -456,6 +475,21 @@ header {
 
     50% {
         opacity: 1;
+    }
+}
+
+
+@keyframes selectedItem {
+    0% {
+        background: rgba(255,255,255, .7);
+    }
+
+    50% {
+        background: pink;
+    }
+
+    100% {
+        background: rgba(255,255,255, .7);
     }
 }
 
