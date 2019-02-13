@@ -95,11 +95,11 @@ class StarField extends PureComponent {
       if (this.props.hidden) {
         this.spaceShip.visible = true;
         this.animateSpaceshipZ();
-        this.spaceShip.rotateZ(.001);
-        this.spaceShip.position.z -= .01;
-        if(this.spaceShip.position.z > 1000){
-
-          this.spaceShip.position.z > 0
+        this.spaceShip.rotateZ(.025);
+        // console.log( this.spaceShip.position.z );
+        this.spaceShip.position.z -= .25;
+        if(this.spaceShip.position.z < 100){
+          this.spaceShip.position.z = 500
         }
       } else {
         this.spaceShip.visible = false;
