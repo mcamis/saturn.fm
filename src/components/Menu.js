@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import { sceneWidth } from 'utilities/helpers';
 
-import AudioManager from 'utilities/audioManager';
 import {
   animateButtonPosition,
   createButtons,
@@ -65,7 +64,7 @@ class Menu extends PureComponent {
   componentDidUpdate(prevProps, prevState) {
     if (this.state.activeButton !== prevState.activeButton) {
       this.highlightEffect.currentTime = 0;
-      this.highlightEffect.play();
+      // this.highlightEffect.play();
       const [x, y] = this.menuElements[this.state.activeButton].position;
       this.orbits.pink.position.set(x, y, 2);
       this.orbits.purple.position.set(x, y, 2.03);
@@ -96,15 +95,10 @@ class Menu extends PureComponent {
         },
       } = intersects[0];
 
-      // TODO: Scale up onClick
-      this.triggerButtonSE();
-      onClick();
-    }
-  }
+      const { object } = intersects[0];
 
-  triggerButtonSE() {
-    this.buttonEffect.currentTime = 0;
-    this.buttonEffect.play();
+      this.triggerButtonCallback(object, onClick);
+    }
   }
 
   onMouseMove(e) {
@@ -139,8 +133,10 @@ class Menu extends PureComponent {
           nextIndex += 3;
           break;
         case 'Enter':
-          this.triggerButtonSE();
-          this.menuElements[this.buttons[nextIndex]].onClick();
+          this.triggerButtonCallback(
+            this.menuElements[this.buttons[nextIndex]],
+            this.menuElements[this.buttons[nextIndex]].onClick
+          );
           break;
         default:
           nextIndex = -1;
@@ -369,6 +365,25 @@ class Menu extends PureComponent {
     }
   }
 
+  triggerButtonCallback(object, onClick) {
+    new TWEEN.Tween(object.scale)
+      .to({ x: 1.5, y: 1.5, z: 1.5 }, 100)
+      .easing(TWEEN.Easing.Quadratic.Out)
+      .start();
+
+    setTimeout(() => {
+      new TWEEN.Tween(object.scale)
+        .to({ x: 1, y: 1, z: 1 }, 100)
+        .easing(TWEEN.Easing.Quadratic.In)
+        .start();
+    }, 250);
+
+    // TODO: Scale up onClick
+    this.buttonEffect.currentTime = 0;
+    this.buttonEffect.play();
+    onClick();
+  }
+
   getToolTip() {
     const { playing, paused, repeat } = this.props;
 
@@ -466,7 +481,6 @@ class Menu extends PureComponent {
 
 Menu.propTypes = {
   toggleMenu: PropTypes.func.isRequired,
-  audioManager: PropTypes.instanceOf(AudioManager).isRequired,
   repeat: PropTypes.oneOf(['off', 'context', 'track']).isRequired,
   hideDash: PropTypes.func.isRequired,
   hidden: PropTypes.bool.isRequired,

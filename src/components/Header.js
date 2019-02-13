@@ -13,7 +13,7 @@ function useInterval(callback, delay) {
     savedCallback.current = callback;
   });
 
-  // Set up the interval.
+  // TODO: move this to redux!
   useEffect(
     () => {
       function tick() {

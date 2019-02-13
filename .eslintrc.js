@@ -10,8 +10,8 @@ module.exports = {
     camelcase: 0,
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'react/destructuring-assignment': 0,
-    'react/jsx-filename-extension': 0,
     'react/jsx-one-expression-per-line': 0,
+    'react/prop-types': [1, { ignore: ['audio'] }],
     'jsx-a11y/anchor-is-valid': [
       'error',
       {

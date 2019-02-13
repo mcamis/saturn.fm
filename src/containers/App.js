@@ -12,8 +12,6 @@ import FileReader from 'components/FileReader';
 import Header from 'components/Header';
 import StarField from 'components/StarField';
 
-import playPauseIcon from 'images/play-pause.png';
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -25,14 +23,12 @@ class App extends Component {
       show: false,
       hidden: false,
       menuVisible: false,
-      isDriveDoorOpen: false,
-      isCheckingDisc: true,
     };
   }
 
   getClassNames() {
     const {
-      audio: { playing, paused, repeat },
+      audio: { playing, paused },
     } = this.props;
 
     const hiddenClass = this.state.hidden ? 'hidden' : '';
@@ -74,7 +70,6 @@ class App extends Component {
           currentTrack={this.props.audio.currentTrack}
           audioManager={this.audioManager}
         />
-        {paused && <img src={playPauseIcon} className="toast blink" />}
         <Menu
           audioManager={this.audioManager}
           hidden={this.state.hidden}
@@ -92,8 +87,6 @@ class App extends Component {
           playing={playing}
         />
         <StarField hidden={this.state.hidden} />
-
-        {/* <div className="overlay"><FileReader /></div> */}
         {this.state.menuVisible && (
           <div className="overlay">
             <FileReader
@@ -112,7 +105,9 @@ class App extends Component {
 
 App.propTypes = {
   audio: PropTypes.shape({
-    trackNumber: PropTypes.number,
+    currentTrack: PropTypes.number.isRequired,
+    playing: PropTypes.bool.isRequired,
+    paused: PropTypes.bool.isRequired,
     repeat: PropTypes.oneOf(['off', 'context', 'track']).isRequired,
   }).isRequired,
 };
