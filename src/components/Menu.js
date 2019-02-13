@@ -29,6 +29,7 @@ class Menu extends PureComponent {
     super(props);
     this.timeOut = null;
     this.planes = [];
+    this.shadowPlanes = [];
 
     this.buttonEffect = new Audio();
     this.buttonEffect.src = buttonSrc;
@@ -198,7 +199,7 @@ class Menu extends PureComponent {
     globeTexture.minFilter = THREE.NearestFilter;
 
     // https://stemkoski.github.io/Three.js/Texture-Animation.html
-    this.textureAnimator = new this.TextureAnimator(globeTexture, 455 , 40);
+    this.textureAnimator = new this.TextureAnimator(globeTexture, 455, 40);
 
     const globeMaterial = new THREE.MeshBasicMaterial({
       map: globeTexture,
@@ -207,6 +208,7 @@ class Menu extends PureComponent {
       userData: {
         animationDelay: 900,
         animationDuration: 300,
+        showShadow: true,
       },
     });
 
@@ -271,6 +273,7 @@ class Menu extends PureComponent {
     mapSrc,
     animationDelay,
     animationDuration,
+    showShadow,
   }) {
     const [x, y, z] = position;
 
@@ -292,6 +295,13 @@ class Menu extends PureComponent {
     });
     const plane = new THREE.Mesh(planeGeometry, planeMaterial);
     plane.position.set(x, y, z);
+    if (showShadow) {
+      console.log(showShadow);
+      const shadowPlane = new THREE.Mesh(planeGeometry, planeMaterial);
+      shadowPlane.position.set(x, y + 0.3, z);
+      this.shadowPlanes.push(shadowPlane);
+      this.scene.add(shadowPlane);
+    }
     // plane.rotateZ(0.75);
     this.planes.push(plane);
     this.scene.add(plane);
@@ -338,6 +348,10 @@ class Menu extends PureComponent {
       const { x, y, z } = plane.position;
       animateButtonPosition(plane, new THREE.Vector3(x, y - 10, z));
     });
+
+    this.shadowPlanes.forEach(shadow => {
+      shadow.visible = false;
+    });
     this.props.hideDash();
     setTimeout(() => this.setState({ allowToggle: true }), 1400);
   }
@@ -362,6 +376,11 @@ class Menu extends PureComponent {
         const { x, y, z } = plane.position;
         animateButtonPosition(plane, new THREE.Vector3(x, y + 10, z));
       });
+      setTimeout(() => {
+        this.shadowPlanes.forEach(shadow => {
+          shadow.visible = true;
+        });
+      }, 1000);
     }
   }
 

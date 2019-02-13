@@ -55,11 +55,12 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
     name: 'disc',
     position: [-2.25, 0, 1],
     onClick: () => {
-      setTimeout(() => toggleMenu(), 500)
+      setTimeout(() => toggleMenu(), 500);
     },
     animationDuration: 400,
     animationDelay: 220,
     mapSrc: discSrc,
+    showShadow: false,
   },
   {
     name: 'settings',
@@ -68,6 +69,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
     animationDelay: 100,
     animationDuration: 400,
     mapSrc: moreSrc,
+    showShadow: false,
   },
   {
     name: 'hide',
@@ -76,6 +78,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
     animationDelay: 180,
     animationDuration: 400,
     mapSrc: hideSrc,
+    showShadow: false,
   },
   {
     name: 'rewind',
@@ -84,6 +87,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
     animationDelay: 500,
     animationDuration: 350,
     mapSrc: rwdSrc,
+    showShadow: false,
   },
   {
     name: 'play',
@@ -92,6 +96,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
     animationDelay: 300,
     animationDuration: 350,
     mapSrc: playSrc,
+    showShadow: false,
   },
   {
     name: 'fastforward',
@@ -108,6 +113,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
     animationDelay: 600,
     animationDuration: 300,
     mapSrc: repeatSrc,
+    showShadow: true,
   },
   {
     name: 'stop',
@@ -116,6 +122,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
     animationDelay: 700,
     animationDuration: 300,
     mapSrc: stopSrc,
+    showShadow: true,
   },
 
   // {
