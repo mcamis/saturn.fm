@@ -54,7 +54,9 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
   {
     name: 'disc',
     position: [-2.25, 0, 1],
-    onClick: toggleMenu,
+    onClick: () => {
+      setTimeout(() => toggleMenu(), 500)
+    },
     animationDuration: 400,
     animationDelay: 220,
     mapSrc: discSrc,
