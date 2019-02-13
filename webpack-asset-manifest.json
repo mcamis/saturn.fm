@@ -1,6 +1,6 @@
 {
-  "app.js": "./js/app.e6c6e39fdbffed8a5a7a.js",
-  "vendor.js": "./js/vendor.ef165bcfec908e5f5442.js",
+  "app.js": "./js/app.ad77968f4fec842d35ee.js",
+  "vendor.js": "./js/vendor.023f0fc1a9de1ac4bf53.js",
   ".DS_Store": "./.DS_Store",
   "CNAME": "./CNAME",
   "android-chrome-192x192.png": "./android-chrome-192x192.png",
@@ -30,7 +30,6 @@
   "images/texture.gif": "./images/texture.gif",
   "images/time.png": "./images/time.png",
   "images/track.png": "./images/track.png",
-  "images/ymo.jpg": "./images/ymo.jpg",
   "index.html": "./index.html",
   "models/cube.gltf": "./models/cube.gltf",
   "models/cubeBigger.gltf": "./models/cubeBigger.gltf",
