@@ -37,7 +37,7 @@ class App extends Component {
     const showClass = this.state.show ? 'show' : '';
 
     return `${hiddenClass} ${pausedClass} ${playingClass} ${showClass}`;
-  } 
+  }
 
   hideDash() {
     this.setState(prevState => ({ hidden: !prevState.hidden, show: false }));
@@ -86,7 +86,7 @@ class App extends Component {
           paused={paused}
           playing={playing}
         />
-        {this.props.toast && <p>{this.props.toast}</p> }
+        {this.props.toast && <p>{this.props.toast}</p>}
         <StarField hidden={this.state.hidden} />
         {this.state.menuVisible && (
           <div className="overlay">
