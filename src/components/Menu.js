@@ -296,9 +296,8 @@ class Menu extends PureComponent {
     const plane = new THREE.Mesh(planeGeometry, planeMaterial);
     plane.position.set(x, y, z);
     if (showShadow) {
-      console.log(showShadow);
       const shadowPlane = new THREE.Mesh(planeGeometry, planeMaterial);
-      shadowPlane.position.set(x, y + 0.3, z);
+      shadowPlane.position.set(x, y - .25, z-.5);
       this.shadowPlanes.push(shadowPlane);
       this.scene.add(shadowPlane);
     }

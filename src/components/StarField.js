@@ -38,10 +38,10 @@ class StarField extends PureComponent {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(100, width / height, 1, 1000);
 
-    const ambient = new THREE.AmbientLight(0xffffff, 1);
-    const directional = new THREE.DirectionalLight(0xffffff, 5);
+    const ambient = new THREE.AmbientLight(0xffffff, 5);
+    const directional = new THREE.DirectionalLight(0xffffff, 8);
     ambient.position.set(0, -5, 600);
-    directional.position.set(0, -5, 600);
+    directional.position.set(-10, 46, 600);
     scene.add(ambient, directional);
     // scene.add(directional, );
 
@@ -84,7 +84,7 @@ class StarField extends PureComponent {
       this.scene.add(shipModel);
 
       this.mixer = new THREE.AnimationMixer(shipModel);
-      this.mixer.clipAction(gltf.animations[0]).play();
+      // this.mixer.clipAction(gltf.animations[0]).play();
     });
   }
 
@@ -95,6 +95,12 @@ class StarField extends PureComponent {
       if (this.props.hidden) {
         this.spaceShip.visible = true;
         this.animateSpaceshipZ();
+        this.spaceShip.rotateZ(.001);
+        this.spaceShip.position.z -= .01;
+        if(this.spaceShip.position.z > 1000){
+
+          this.spaceShip.position.z > 0
+        }
       } else {
         this.spaceShip.visible = false;
       }
