@@ -105,7 +105,7 @@ class App extends Component {
 
 App.propTypes = {
   audio: PropTypes.shape({
-    currentTrack: PropTypes.number.isRequired,
+    currentTrack: PropTypes.number,
     playing: PropTypes.bool.isRequired,
     paused: PropTypes.bool.isRequired,
     repeat: PropTypes.oneOf(['off', 'context', 'track']).isRequired,

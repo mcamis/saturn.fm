@@ -1,7 +1,5 @@
 import Rhyme from '../songs/Rhyme.mp3';
 import NoRefuge from '../songs/No-Refuge.mp3';
-import YMO from '../images/ymo.jpg';
-
 export const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
 
 export const sceneWidth = () => window.innerHeight * 1.25;
@@ -30,31 +28,3 @@ export const logarithmic = position => {
   const scale = (maxv - minv) / (maxp - minp);
   return Math.exp(minv + scale * (position - minp));
 };
-
-export const playlists = [
-  {
-    artist: 'Professor Kliq',
-    name: 'Rhyme',
-    tracks: [Rhyme, NoRefuge],
-    coverArt: YMO,
-  },
-  {
-    artist: 'Haruomi Hosono',
-    name: 'Paraiso',
-
-    tracks: [NoRefuge, Rhyme],
-    coverArt: YMO,
-  },
-  {
-    artist: 'Big Time Fun',
-    name: 'Wetness',
-    tracks: [NoRefuge, Rhyme],
-    coverArt: YMO,
-  },
-  {
-    artist: 'Polish Bride ',
-    name: 'Butt Dimples',
-    tracks: [NoRefuge, Rhyme],
-    coverArt: YMO,
-  },
-];

@@ -198,7 +198,7 @@ class Menu extends PureComponent {
     globeTexture.minFilter = THREE.NearestFilter;
 
     // https://stemkoski.github.io/Three.js/Texture-Animation.html
-    this.textureAnimator = new this.TextureAnimator(globeTexture, 461, 40);
+    this.textureAnimator = new this.TextureAnimator(globeTexture, 455 , 40);
 
     const globeMaterial = new THREE.MeshBasicMaterial({
       map: globeTexture,
