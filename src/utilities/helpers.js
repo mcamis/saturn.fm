@@ -16,7 +16,7 @@ export const formatTime = time => {
 };
 
 export const randomSize = () => Math.random() * (6 - 4) + 4;
-export const randomPosition = () => Math.random() * 1000 - 500;
+export const randomPosition = max => Math.random() * max - (max*.5);
 
 // I am very bad at maths
 // https://stackoverflow.com/a/846249

@@ -16,6 +16,12 @@ class StarField extends PureComponent {
     this.yellowMaterial = new THREE.MeshBasicMaterial({ color: 0xede13b });
     this.whiteMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
     this.starGeometry = new THREE.BoxGeometry(0.75, 0.75, 0);
+
+    const width = sceneWidth();
+    const height = window.innerHeight;
+    this.width = width * 1.75;
+    this.height = height * 1.75;
+
     window.addEventListener('resize', () => {
       clearTimeout(this.timeOut);
       this.timeOut = setTimeout(this.onResize, 250);
@@ -30,11 +36,14 @@ class StarField extends PureComponent {
   onResize() {
     const width = sceneWidth();
     const height = window.innerHeight;
+    this.width = width * 1.75;
+    this.height = height * 1.75;
     this.camera.aspect = width / height;
 
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);
   }
+  
 
   setupScene() {
     const width = sceneWidth();
@@ -133,8 +142,8 @@ class StarField extends PureComponent {
         const star = new THREE.Mesh(this.starGeometry, material);
 
       // TODO: Better positioning so stars don't smack the viewer in the face
-      star.position.x = randomPosition();
-      star.position.y = randomPosition();
+      star.position.x = randomPosition(this.width);
+      star.position.y = randomPosition(this.height);
       star.position.z = z;
 
       star.scale.set(randomSize(), randomSize(), 1);
@@ -153,8 +162,8 @@ class StarField extends PureComponent {
       // if the particle is too close move it to the back
       if (animatedStar.position.z > 1000) {
         animatedStar.position.z -= 1100;
-        animatedStar.position.x = randomPosition();
-        animatedStar.position.y = randomPosition();
+        animatedStar.position.x = randomPosition(this.width);
+        animatedStar.position.y = randomPosition(this.height);
       }
     });
   }
