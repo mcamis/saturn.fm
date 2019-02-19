@@ -11,6 +11,11 @@ class StarField extends PureComponent {
     this.timeOut = null;
     // this.Zspeed = Math.random() * (0.025 - 0.10) + 0.10;
     autobind(this);
+    this.blueMaterial = new THREE.MeshBasicMaterial({ color: 0x759cff });
+    this.redMaterial = new THREE.MeshBasicMaterial({ color: 0xff757a });
+    this.yellowMaterial = new THREE.MeshBasicMaterial({ color: 0xede13b });
+    this.whiteMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    this.starGeometry = new THREE.BoxGeometry(0.75, 0.75, 0);
     window.addEventListener('resize', () => {
       clearTimeout(this.timeOut);
       this.timeOut = setTimeout(this.onResize, 250);
@@ -115,18 +120,17 @@ class StarField extends PureComponent {
   }
 
   addStars() {
-    const geometry = new THREE.BoxGeometry(0.75, 0.75, 0);
-
     for (let z = -1000; z < 1000; z += 15) {
-      let material;
-      // TODO: More colors
-      if (z > 0 && z < 100) {
-        material = new THREE.MeshBasicMaterial({ color: 0xff757a });
-      } else {
-        material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+      let material = this.whiteMaterial;
+        if (z > 0 && z < 100) {
+          material = this.redMaterial;
+        } else if (z > 100 && z < 200) {
+          material = this.yellowMaterial;
+        } else if (z > 100 && z < 200) {
+        material = this.blueMaterial;
       }
-
-      const star = new THREE.Mesh(geometry, material);
+  
+        const star = new THREE.Mesh(this.starGeometry, material);
 
       // TODO: Better positioning so stars don't smack the viewer in the face
       star.position.x = randomPosition();
