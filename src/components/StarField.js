@@ -43,7 +43,6 @@ class StarField extends PureComponent {
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);
   }
-  
 
   setupScene() {
     const width = sceneWidth();
@@ -131,15 +130,15 @@ class StarField extends PureComponent {
   addStars() {
     for (let z = -1000; z < 1000; z += 15) {
       let material = this.whiteMaterial;
-        if (z > 0 && z < 100) {
-          material = this.redMaterial;
-        } else if (z > 100 && z < 200) {
-          material = this.yellowMaterial;
-        } else if (z > 100 && z < 200) {
+      if (z > 0 && z < 100) {
+        material = this.redMaterial;
+      } else if (z > 100 && z < 200) {
+        material = this.yellowMaterial;
+      } else if (z > 100 && z < 200) {
         material = this.blueMaterial;
       }
-  
-        const star = new THREE.Mesh(this.starGeometry, material);
+
+      const star = new THREE.Mesh(this.starGeometry, material);
 
       // TODO: Better positioning so stars don't smack the viewer in the face
       star.position.x = randomPosition(this.width);

@@ -16,8 +16,10 @@ class Cubes extends PureComponent {
     super(props);
     this.debouncedResize = null;
     this.loader = new GLTFLoader();
-    this.down = true;
-    this.up = false;
+    this.animateDownL = true;
+    this.animateUpL = false;
+    this.animateDownR = true;
+    this.animateUpR = false;
 
     autobind(this);
     window.addEventListener('resize', () => {
@@ -68,8 +70,8 @@ class Cubes extends PureComponent {
     this.scene = scene;
     this.camera = camera;
     this.renderer = renderer;
-    this.setupCube('leftCube', [-6.75, -29.35, 0]);
-    this.setupCube('rightCube', [6.75, -29.65, 0]);
+    this.setupCube('leftCube', [-6.75, -29.3, 0]);
+    this.setupCube('rightCube', [6.75, -29.7, 0]);
 
     this.mount.appendChild(this.renderer.domElement);
   }
@@ -85,7 +87,6 @@ class Cubes extends PureComponent {
         cubeModel.material.color = new THREE.Color('hsl(143, 100%, 48%)');
         cubeModel.position.set(x, y, z);
 
-        
         this[slot] = cubeModel;
         this.scene.add(cubeModel);
         if (slot === 'rightCube') requestAnimationFrame(this.animate);
@@ -98,24 +99,36 @@ class Cubes extends PureComponent {
     if (this.props.playing) {
       const [leftChannel, rightChannel] = this.props.audioManager.analyserFFT;
 
+      // Reset to middle after idle
+      this.leftCube.position.y = -29.5;
+      this.rightCube.position.y = -29.5;
       updateScaleAndColor(this.leftCube, leftChannel);
       updateScaleAndColor(this.rightCube, rightChannel);
       activeRotation(this.leftCube);
       activeRotation(this.rightCube, -1);
     } else {
-      const {y} = this.leftCube.position;
-      if(y >= -28.25000000 && !this.down){
-        this.down = true;
-        this.up = false;
+      const { y: leftY } = this.leftCube.position;
+      if (leftY >= -28.25 && !this.animateDownL) {
+        this.animateDownL = true;
+        this.animateUpL = false;
       }
-      if(y <= -30.25000000 && !this.up){
-        this.up = true;
-        this.down = false;
+      if (leftY <= -30.25 && !this.animateUpL) {
+        this.animateUpL = true;
+        this.animateDownL = false;
       }
-      
+      const { y: rightY } = this.rightCube.position;
+      if (rightY >= -28.25 && !this.animateDownR) {
+        this.animateDownR = true;
+        this.animateUpR = false;
+      }
+      if (rightY <= -30.25 && !this.animateUpR) {
+        this.animateUpR = true;
+        this.animateDownR = false;
+      }
+
       // TODO: Idle color
-      idleRotation(this.leftCube, 1, this.down, this.up);
-      idleRotation(this.rightCube, -1, this.down, this.up);
+      idleRotation(this.leftCube, 1, this.animateDownL, this.animateUpL);
+      idleRotation(this.rightCube, -1, this.animateDownR, this.animateUpR);
     }
 
     this.renderer.render(this.scene, this.camera);
