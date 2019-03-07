@@ -58,7 +58,13 @@ export const activeRotation = (cube, modifier) => {
   cube.rotateY(randomRange(derivedMax, derivedMin));
 };
 
-export const idleRotation = (cube, modifier = 1) => {
+export const idleRotation = (cube, modifier = 1, down, up) => {
+
+  if(up){
+    cube.position.y+=.0045;
+  } else if(down){
+    cube.position.y-=.0045;
+  }
   cube.rotateX(IDLE_ROTATION * modifier);
   cube.rotateY(IDLE_ROTATION * modifier);
 };

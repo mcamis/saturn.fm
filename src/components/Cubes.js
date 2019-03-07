@@ -16,6 +16,9 @@ class Cubes extends PureComponent {
     super(props);
     this.debouncedResize = null;
     this.loader = new GLTFLoader();
+    this.down = true;
+    this.up = false;
+
     autobind(this);
     window.addEventListener('resize', () => {
       clearTimeout(this.debouncedResize);
@@ -65,8 +68,8 @@ class Cubes extends PureComponent {
     this.scene = scene;
     this.camera = camera;
     this.renderer = renderer;
-    this.setupCube('leftCube', [-6.75, -29.5, 0]);
-    this.setupCube('rightCube', [6.75, -29.5, 0]);
+    this.setupCube('leftCube', [-6.75, -29.35, 0]);
+    this.setupCube('rightCube', [6.75, -29.65, 0]);
 
     this.mount.appendChild(this.renderer.domElement);
   }
@@ -82,6 +85,7 @@ class Cubes extends PureComponent {
         cubeModel.material.color = new THREE.Color('hsl(143, 100%, 48%)');
         cubeModel.position.set(x, y, z);
 
+        
         this[slot] = cubeModel;
         this.scene.add(cubeModel);
         if (slot === 'rightCube') requestAnimationFrame(this.animate);
@@ -99,8 +103,19 @@ class Cubes extends PureComponent {
       activeRotation(this.leftCube);
       activeRotation(this.rightCube, -1);
     } else {
-      idleRotation(this.leftCube);
-      idleRotation(this.rightCube, -1);
+      const {y} = this.leftCube.position;
+      if(y >= -28.25000000 && !this.down){
+        this.down = true;
+        this.up = false;
+      }
+      if(y <= -30.25000000 && !this.up){
+        this.up = true;
+        this.down = false;
+      }
+      
+      // TODO: Idle color
+      idleRotation(this.leftCube, 1, this.down, this.up);
+      idleRotation(this.rightCube, -1, this.down, this.up);
     }
 
     this.renderer.render(this.scene, this.camera);
