@@ -3,7 +3,7 @@ import { formatTime } from 'utilities/helpers';
 import Rhyme from '../songs/Rhyme.mp3';
 import NoRefuge from '../songs/No-Refuge.mp3';
 import Higher from '../songs/Higher.mp3';
-
+import GoBack from '../songs/GoBack.mp3';
 export const defaultState = {
   currentTrack: null,
   loading: false,
@@ -12,7 +12,7 @@ export const defaultState = {
   playing: false,
   paused: false,
   // playlist: [Higher, Rhyme, NoRefuge],
-  playlist: [Rhyme, NoRefuge],
+  playlist: [GoBack, Rhyme, NoRefuge],
   tracks: {
     // [Higher]: {
     //   name: Higher,
@@ -22,16 +22,23 @@ export const defaultState = {
     //   artist: 'GRRL',
     //   title: 'Higher',
     // },
+    [GoBack]: {
+      file: GoBack,
+      track: 1,
+      album: 'Music For Touching',
+      artist: 'Cookies',
+      title: 'Go Back',
+    },
     [Rhyme]: {
       file: Rhyme,
-      track: 1,
+      track: 2,
       album: 'N/A',
       artist: 'Professor Kliq',
       title: 'Rhyme',
     },
     [NoRefuge]: {
       file: NoRefuge,
-      track: 2,
+      track: 3,
       album: 'OP-1 Outtakes',
       artist: 'Professor Kliq',
       title: 'NoRefuge',
