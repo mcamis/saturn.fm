@@ -8,8 +8,7 @@ import stopSrc from 'images/stop.png';
 import repeatSrc from 'images/repeat.png';
 import textureSrc from 'images/texture.gif';
 import pinkSrc from 'images/pink.gif';
-
-import orbAlpha from 'images/orb-alpha.png';
+import orbShadow from 'images/orb-shadow.png';
 
 import * as THREE from 'three';
 
@@ -38,9 +37,6 @@ export const purpleMesh = new THREE.MeshBasicMaterial({
   map: orbitTexture,
 });
 
-export const alphaTexture = new THREE.TextureLoader().load(orbAlpha);
-alphaTexture.magFilter = THREE.NearestFilter;
-
 export const pinkMesh = new THREE.MeshBasicMaterial({
   lights: false,
   side: THREE.DoubleSide,
@@ -49,6 +45,8 @@ export const pinkMesh = new THREE.MeshBasicMaterial({
 });
 
 export const planeGeometry = new THREE.PlaneGeometry(2, 2, 1, 1);
+export const shadowGeometry = new THREE.PlaneGeometry(2, 1, 1, 1);
+export const shadowTexture = new THREE.TextureLoader().load(orbShadow);
 
 export const createButtons = (audioManager, hideMenu, toggleMenu) => [
   {

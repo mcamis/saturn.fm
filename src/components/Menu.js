@@ -8,9 +8,10 @@ import {
   createButtons,
   orbitGeometry,
   purpleMesh,
-  alphaTexture,
   pinkMesh,
   planeGeometry,
+  shadowGeometry,
+  shadowTexture
 } from 'utilities/menuElements';
 
 import testPng from 'images/test.png';
@@ -23,6 +24,9 @@ import buttonSrc from 'songs/button-press.mp3';
 import highlightSrc from 'songs/button-highlight.mp3';
 
 import autobind from 'utilities/autobind';
+
+// TODO: Set more magic numbers to constants
+const SHADOW_OFFSET = 0.9;
 
 class Menu extends PureComponent {
   constructor(props) {
@@ -209,11 +213,31 @@ class Menu extends PureComponent {
         animationDelay: 900,
         animationDuration: 300,
         showShadow: true,
+        onClick: () => console.log("Hey kid, I'm a computer")
       },
     });
 
     const spinningGlobe = new THREE.Mesh(planeGeometry, globeMaterial);
     spinningGlobe.position.set(x, y, z);
+
+
+    shadowTexture.magFilter = THREE.NearestFilter;
+    shadowTexture.minFilter = THREE.NearestFilter;
+
+    const shadowMaterial = new THREE.MeshBasicMaterial({
+      map: shadowTexture,
+      transparent: true,
+      name,
+      userData: {
+        animationDelay: 900,
+        animationDuration: 300,
+      },
+    });
+    const shadowPlane = new THREE.Mesh(shadowGeometry, shadowMaterial);
+    shadowPlane.position.set(x, y - SHADOW_OFFSET, z - 0.5);
+    this.shadowPlanes.push(shadowPlane);
+    this.scene.add(shadowPlane);
+  
 
     this.planes.push(spinningGlobe);
     this.scene.add(spinningGlobe);
@@ -288,16 +312,28 @@ class Menu extends PureComponent {
       userData: {
         onClick,
         animationDelay,
-        originalPosition: position,
         animationDuration,
       },
-      alphaMap: alphaTexture,
     });
+
+
     const plane = new THREE.Mesh(planeGeometry, planeMaterial);
     plane.position.set(x, y, z);
     if (showShadow) {
-      const shadowPlane = new THREE.Mesh(planeGeometry, planeMaterial);
-      shadowPlane.position.set(x, y - 0.25, z - 0.5);
+      shadowTexture.magFilter = THREE.NearestFilter;
+      shadowTexture.minFilter = THREE.NearestFilter;
+  
+      const shadowMaterial = new THREE.MeshBasicMaterial({
+        map: shadowTexture,
+        transparent: true,
+        name,
+        userData: {
+          animationDelay,
+          animationDuration,
+        },
+      });
+      const shadowPlane = new THREE.Mesh(shadowGeometry, shadowMaterial);
+      shadowPlane.position.set(x, y - SHADOW_OFFSET, z - 0.5);
       this.shadowPlanes.push(shadowPlane);
       this.scene.add(shadowPlane);
     }
