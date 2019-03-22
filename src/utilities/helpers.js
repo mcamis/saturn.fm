@@ -2,7 +2,16 @@ import Rhyme from '../songs/Rhyme.mp3';
 import NoRefuge from '../songs/No-Refuge.mp3';
 export const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
 
-export const sceneWidth = () => window.innerHeight * 1.25;
+export const sceneWidth = () => {
+  const actualWidth = window.innerWidth;
+  const idealWidth = window.innerHeight * 1.25;
+
+  if(idealWidth > actualWidth){
+    return actualWidth;
+  } else{
+    return idealWidth
+  }
+}
 
 export const formatTime = time => {
   const MM = Math.trunc(time / 60)
