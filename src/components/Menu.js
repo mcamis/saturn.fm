@@ -26,7 +26,7 @@ import highlightSrc from 'songs/button-highlight.mp3';
 import autobind from 'utilities/autobind';
 
 // TODO: Set more magic numbers to constants
-const SHADOW_OFFSET = 0.9;
+const SHADOW_OFFSET = 1;
 
 class Menu extends PureComponent {
   constructor(props) {

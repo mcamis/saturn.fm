@@ -45,7 +45,7 @@ export const pinkMesh = new THREE.MeshBasicMaterial({
 });
 
 export const planeGeometry = new THREE.PlaneGeometry(2, 2, 1, 1);
-export const shadowGeometry = new THREE.PlaneGeometry(2, 1, 1, 1);
+export const shadowGeometry = new THREE.PlaneGeometry(1.5, .75, 1, 1);
 export const shadowTexture = new THREE.TextureLoader().load(orbShadow);
 
 export const createButtons = (audioManager, hideMenu, toggleMenu) => [

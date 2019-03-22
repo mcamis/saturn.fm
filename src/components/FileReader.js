@@ -12,6 +12,7 @@ const getDraggableClasses = ({ isDragging, currentPlaying }) => {
   }`;
 };
 
+// TODO: Fix event listener leak here
 class FileReader extends Component {
   constructor(props) {
     super(props);
