@@ -1,5 +1,6 @@
 # Saturn.fm
-![](saturn-fm.png =677x634)
+<img src="https://github.com/mcamis/saturn.fm/blob/master/saturn-fm.png" width="677" height="634">
+
 
 A recreation of the Sega Saturn CD Player UI in Javascript using three.js, React & Redux.
 
