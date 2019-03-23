@@ -1,5 +1,5 @@
 # Saturn.fm
-![](saturn-fm.gif)
+![](saturn-fm.png)
 
 A recreation of the Sega Saturn CD Player UI in Javascript using three.js, React & Redux.
 
