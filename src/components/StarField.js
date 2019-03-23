@@ -51,14 +51,20 @@ class StarField extends PureComponent {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(100, width / height, 1, 1000);
 
-    const ambient = new THREE.AmbientLight(0xffffff, 5);
-    const directional = new THREE.DirectionalLight(0xffffff, 8);
-    ambient.position.set(0, -5, 600);
-    directional.position.set(-10, 46, 600);
-    scene.add(ambient, directional);
+    const mainLight = new THREE.DirectionalLight(0xffffff, 3);
+    const leftLight = new THREE.DirectionalLight(0xffffff, 2);
+    const rightLight = new THREE.DirectionalLight(0xffffff, 2);
+    mainLight.position.set(-10, 46, 600);
+    leftLight.position.set(-200, 46, 500);
+    rightLight.position.set(200, 46, 500);
+
+    // scene.add(ambient, directional);
+    scene.add(mainLight, leftLight, rightLight);
+
     // scene.add(directional, );
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
+    renderer.setClearColor(0xffffff);
     camera.position.z = 500;
     const isSafari = navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Chrome') === -1;
 
@@ -83,10 +89,10 @@ class StarField extends PureComponent {
 
     loader.load('./models/saturn_v1.gltf', gltf => {
       const { scene: shipModel } = gltf;
-      shipModel.position.set(2, -2, 505);
-      // shipModel.rotateY(9.5);
+      shipModel.position.set(2.5, -3.5, 520);
+      shipModel.rotateZ(3.5);
       shipModel.rotateY(Math.PI);
-      // shipModel.visible = false;
+      shipModel.visible = false;
 
       // Disable texture filtering for the authenitc chunky Saturn gfx
       const shipMap = shipModel.children[1].material.map;
@@ -95,6 +101,7 @@ class StarField extends PureComponent {
       shipMap.generateMipmaps = false;
 
       this.spaceShip = shipModel;
+      window.ship = shipModel;
       this.scene.add(shipModel);
 
       this.mixer = new THREE.AnimationMixer(shipModel);
@@ -109,11 +116,10 @@ class StarField extends PureComponent {
       if (this.props.hidden) {
         this.spaceShip.visible = true;
         this.animateSpaceshipZ();
-        this.spaceShip.rotateZ(0.025);
-        // console.log( this.spaceShip.position.z );
-        this.spaceShip.position.z -= 0.25;
-        if (this.spaceShip.position.z < -100) {
-          this.spaceShip.position.z = 500;
+        this.spaceShip.rotateZ(0.01);
+        this.spaceShip.position.z -= 0.075;
+        if (this.spaceShip.position.z < 260) {
+          this.spaceShip.position.z = 600;
         }
       } else {
         this.spaceShip.visible = false;

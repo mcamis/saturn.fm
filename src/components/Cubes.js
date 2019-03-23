@@ -59,7 +59,6 @@ class Cubes extends PureComponent {
 
     const isSafari = navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Chrome') === -1;
 
-    console.log(isSafari)
     const pixRatio = window.devicePixelRatio;
     renderer.setPixelRatio(pixRatio === 1 ? pixRatio * 0.5 : pixRatio * 0.25);
     renderer.setSize(width, height);
