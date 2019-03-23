@@ -83,7 +83,7 @@ class StarField extends PureComponent {
 
     loader.load('./models/saturn_v1.gltf', gltf => {
       const { scene: shipModel } = gltf;
-      shipModel.position.set(2, -2, 495);
+      shipModel.position.set(2, -2, 505);
       // shipModel.rotateY(9.5);
       shipModel.rotateY(Math.PI);
       // shipModel.visible = false;
