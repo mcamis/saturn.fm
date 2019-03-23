@@ -78,10 +78,16 @@ class Menu extends PureComponent {
 
   onResize() {
     const width = sceneWidth();
-    const height = window.innerHeight * 0.75;
+    const height = width * 0.75;
     this.camera.aspect = width / height;
+
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);
+    // if(window.innerWidth < 400) {
+    //   this.shadowPlanes.forEach(shadow => shadow.visible = false);
+    // } else {
+    //   this.shadowPlanes.forEach(shadow => shadow.visible = true);
+    // }
   }
 
   onMouseDown(e) {
@@ -156,13 +162,14 @@ class Menu extends PureComponent {
   setupScene() {
     const width = sceneWidth();
     const height = width * 0.75;
-
     const scene = new THREE.Scene();
     // TODO: OrthographicCamera?
     const camera = new THREE.PerspectiveCamera(2.5, width / height, 1, 500);
+    camera.aspect = width / height;
 
     camera.position.z = 360;
     camera.position.y = 0.5;
+    camera.updateProjectionMatrix();
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
     renderer.setSize(width, height);
@@ -171,6 +178,7 @@ class Menu extends PureComponent {
     this.raycaster = new THREE.Raycaster();
     this.scene = scene;
     this.camera = camera;
+  
     this.renderer = renderer;
     this.mount.appendChild(this.renderer.domElement);
 
@@ -233,8 +241,10 @@ class Menu extends PureComponent {
         animationDuration: 300,
       },
     });
+    
     const shadowPlane = new THREE.Mesh(shadowGeometry, shadowMaterial);
     shadowPlane.position.set(x, y - SHADOW_OFFSET, z - 0.5);
+    // shadowPlane.visible = window.innerWidth >= 400;
     this.shadowPlanes.push(shadowPlane);
     this.scene.add(shadowPlane);
   
@@ -334,6 +344,7 @@ class Menu extends PureComponent {
       });
       const shadowPlane = new THREE.Mesh(shadowGeometry, shadowMaterial);
       shadowPlane.position.set(x, y - SHADOW_OFFSET, z - 0.5);
+      // shadowPlane.visible = window.innerWidth >= 400;
       this.shadowPlanes.push(shadowPlane);
       this.scene.add(shadowPlane);
     }

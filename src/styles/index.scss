@@ -118,8 +118,15 @@ canvas {
     right: 0;
 }
 
-.menu canvas {
-    z-index: 90;
+.menu{
+  
+    canvas {
+        z-index: 90;
+        @media screen and (max-width: 400px) {
+            margin-bottom: 10vh;
+            
+        }
+    }
 }
 
 @keyframes spin {

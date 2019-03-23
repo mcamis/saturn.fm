@@ -60,9 +60,10 @@ class StarField extends PureComponent {
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
     camera.position.z = 500;
+    const isSafari = navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Chrome') === -1;
 
     const pixRatio = window.devicePixelRatio;
-    renderer.setPixelRatio(pixRatio === 1 ? pixRatio * 0.65 : pixRatio * 0.25);
+    renderer.setPixelRatio(pixRatio === 1 || isSafari ? pixRatio * 0.65 : pixRatio * 0.25);
     renderer.setSize(width, height);
     renderer.setClearColor(0x000000, 0); // the default
 
