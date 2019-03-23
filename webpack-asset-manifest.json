@@ -1,6 +1,7 @@
 {
-  "app.js": "./js/app.60ce67c6e6f7948784ac.js",
+  "app.js": "./js/app.dd12284de404f5acfbed.js",
   "vendor.js": "./js/vendor.72184bf0b4eea1540c62.js",
+  ".DS_Store": "./.DS_Store",
   "CNAME": "./CNAME",
   "android-chrome-192x192.png": "./android-chrome-192x192.png",
   "android-chrome-512x512.png": "./android-chrome-512x512.png",
@@ -30,6 +31,7 @@
   "images/time.png": "./images/time.png",
   "images/track.png": "./images/track.png",
   "index.html": "./index.html",
+  "models/.DS_Store": "./models/.DS_Store",
   "models/cube.gltf": "./models/cube.gltf",
   "models/cubeBigger.gltf": "./models/cubeBigger.gltf",
   "models/saturn_v1.bin": "./models/saturn_v1.bin",
