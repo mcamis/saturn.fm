@@ -30,7 +30,7 @@ class StarField extends PureComponent {
 
   componentDidMount() {
     this.setupScene();
-    this.clock = new THREE.Clock();
+    // this.clock = new THREE.Clock();
   }
 
   onResize() {
@@ -81,7 +81,7 @@ class StarField extends PureComponent {
     this.setupSpaceShip();
     this.addStars();
 
-    requestAnimationFrame(this.animate);
+    this.props.setAnimationCallback(this.animate);
   }
 
   setupSpaceShip() {
@@ -104,7 +104,7 @@ class StarField extends PureComponent {
       window.ship = shipModel;
       this.scene.add(shipModel);
 
-      this.mixer = new THREE.AnimationMixer(shipModel);
+      // this.mixer = new THREE.AnimationMixer(shipModel);
       // this.mixer.clipAction(gltf.animations[0]).play();
     });
   }
@@ -115,7 +115,7 @@ class StarField extends PureComponent {
     if (this.spaceShip) {
       if (this.props.hidden) {
         this.spaceShip.visible = true;
-        this.animateSpaceshipZ();
+        // this.animateSpaceshipZ();
         this.spaceShip.rotateZ(0.01);
         this.spaceShip.position.z -= 0.075;
         if (this.spaceShip.position.z < 260) {
@@ -125,14 +125,12 @@ class StarField extends PureComponent {
         this.spaceShip.visible = false;
       }
     }
-
-    requestAnimationFrame(this.animate);
   }
 
-  animateSpaceshipZ() {
-    const delta = this.clock.getDelta();
-    this.mixer.update(delta);
-  }
+  // animateSpaceshipZ() {
+  //   // const delta = this.clock.getDelta();
+  //   // this.mixer.update(delta);
+  // }
 
   addStars() {
     for (let z = -1000; z < 1000; z += 15) {

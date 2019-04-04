@@ -85,7 +85,7 @@ class Cubes extends PureComponent {
 
         this[slot] = cubeModel;
         this.scene.add(cubeModel);
-        if (slot === 'rightCube') requestAnimationFrame(this.animate);
+        if (slot === 'rightCube') this.props.setAnimationCallback(this.animate);
       }
     );
   }
@@ -129,7 +129,6 @@ class Cubes extends PureComponent {
 
     this.renderer.render(this.scene, this.camera);
 
-    requestAnimationFrame(this.animate);
   }
 
   render() {

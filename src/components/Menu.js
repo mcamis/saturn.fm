@@ -186,7 +186,7 @@ class Menu extends PureComponent {
     this.setupOrbAnimation();
     this.setupEventListeners();
 
-    requestAnimationFrame(this.animate);
+    this.props.setAnimationCallback(this.animate);
   }
 
   setupEventListeners() {
@@ -410,8 +410,6 @@ class Menu extends PureComponent {
     const delta = this.clock.getDelta();
     this.renderer.render(this.scene, this.camera);
     this.textureAnimator.update(1000 * delta);
-
-    requestAnimationFrame(this.animate);
   }
 
   showIfHidden() {
