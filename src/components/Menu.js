@@ -449,7 +449,7 @@ class Menu extends PureComponent {
 
     const tooltips = {
       disc: () => <p>Choose Songs</p>,
-      settings: () => <p>System Settings</p>,
+      settings: () => <p>About</p>,
       hide: () => <p>Hide</p>,
       rewind: () => <p>Rewind</p>,
       fastforward: () => <p>Fast Forward</p>,
@@ -492,7 +492,7 @@ class Menu extends PureComponent {
         return repeatElement;
       },
       stop: () => <p>Stop</p>,
-      advanced: () => <p>Advanced</p>,
+      advanced: () => <p>🚧 Coming Soon 🚧</p>,
     };
 
     return tooltips[this.state.activeButton]();
