@@ -25,10 +25,11 @@ class App extends Component {
       menuVisible: false,
       frameCallbacks: [],
     };
+    this.frameId = null;
   }
 
   componentDidMount() {
-    requestAnimationFrame(this.animate);
+    this.frameId = requestAnimationFrame(this.animate);
   }
 
   getClassNames() {
@@ -50,6 +51,7 @@ class App extends Component {
 
   showIfHidden() {
     if (this.state.hidden) {
+      this.frameId = this.frameId || requestAnimationFrame(this.animate);
       this.setState({ hidden: false, show: true });
     }
   }
@@ -69,7 +71,18 @@ class App extends Component {
 
   animate() {
     this.state.frameCallbacks.forEach(callback => callback());
-    requestAnimationFrame(this.animate);
+    this.frameId = requestAnimationFrame(this.animate);
+  }
+
+  toggleMenu() {
+    if (this.frameId) {
+      cancelAnimationFrame(this.frameId);
+      this.frameId = undefined;
+    } else {
+      requestAnimationFrame(this.animate);
+    }
+
+    this.setState(state => ({ menuVisible: !state.menuVisible }));
   }
 
   render() {
@@ -90,7 +103,7 @@ class App extends Component {
           audioManager={this.audioManager}
           hidden={this.state.hidden}
           showIfHidden={this.showIfHidden}
-          toggleMenu={() => this.setState({ menuVisible: true })}
+          toggleMenu={this.toggleMenu}
           hideDash={this.hideDash}
           repeat={repeat}
           paused={paused}
@@ -114,9 +127,7 @@ class App extends Component {
             <FileReader
               audio={this.props.audio}
               {...audioActions}
-              toggleMenu={() =>
-                this.setState(state => ({ menuVisible: !state.menuVisible }))
-              }
+              toggleMenu={this.toggleMenu}
             />
           </div>
         )}
