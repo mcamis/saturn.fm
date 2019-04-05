@@ -11,11 +11,24 @@ class StarField extends PureComponent {
     this.timeOut = null;
     // this.Zspeed = Math.random() * (0.025 - 0.10) + 0.10;
     autobind(this);
+
+    const bufferGeometry = new THREE.BufferGeometry();
+    const bufferVerticies = new Float32Array( [
+      -1.0, -1.0,  1.0,
+      1.0, -1.0,  1.0,
+      1.0,  1.0,  1.0,
+
+      1.0,  1.0,  1.0,
+      -1.0,  1.0,  1.0,
+      -1.0, -1.0,  1.0
+      ] );
+
+      bufferGeometry.addAttribute( 'position', new THREE.BufferAttribute( bufferVerticies, 3 ) );
     this.blueMaterial = new THREE.MeshBasicMaterial({ color: 0x759cff });
     this.redMaterial = new THREE.MeshBasicMaterial({ color: 0xff757a });
     this.yellowMaterial = new THREE.MeshBasicMaterial({ color: 0xede13b });
     this.whiteMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-    this.starGeometry = new THREE.BoxGeometry(0.75, 0.75, 0);
+    this.starGeometry = bufferGeometry;
 
     const width = sceneWidth();
     const height = window.innerHeight;
@@ -127,13 +140,8 @@ class StarField extends PureComponent {
     }
   }
 
-  // animateSpaceshipZ() {
-  //   // const delta = this.clock.getDelta();
-  //   // this.mixer.update(delta);
-  // }
-
   addStars() {
-    for (let z = -1000; z < 1000; z += 15) {
+    for (let z = -500; z < 500; z += 15) {
       let material = this.whiteMaterial;
       if (z > 0 && z < 100) {
         material = this.redMaterial;
@@ -164,8 +172,8 @@ class StarField extends PureComponent {
       animatedStar.position.z += Math.random() * (12 - 8) + 8;
 
       // if the particle is too close move it to the back
-      if (animatedStar.position.z > 1000) {
-        animatedStar.position.z -= 1100;
+      if (animatedStar.position.z > 550) {
+        animatedStar.position.z -= 800;
         animatedStar.position.x = randomPosition(this.width);
         animatedStar.position.y = randomPosition(this.height);
       }
