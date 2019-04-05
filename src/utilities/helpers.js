@@ -6,12 +6,12 @@ export const sceneWidth = () => {
   const actualWidth = window.innerWidth;
   const idealWidth = window.innerHeight * 1.25;
 
-  if(idealWidth > actualWidth){
+  if (idealWidth > actualWidth) {
     return actualWidth;
-  } else{
-    return idealWidth
+  } else {
+    return idealWidth;
   }
-}
+};
 
 export const formatTime = time => {
   const MM = Math.trunc(time / 60)
@@ -24,7 +24,7 @@ export const formatTime = time => {
   return `${MM}:${SS}`;
 };
 
-export const randomSize = () =>  Math.floor(Math.random() * Math.floor(2)) + 2;
+export const randomSize = () => Math.floor(Math.random() * Math.floor(2)) + 2;
 export const randomPosition = max => Math.random() * max - max * 0.5;
 
 // I am very bad at maths

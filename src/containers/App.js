@@ -62,11 +62,9 @@ class App extends Component {
   }
 
   setAnimationCallback(callback) {
-    this.setState(prevState => ({ frameCallbacks: [
-      ...prevState.frameCallbacks,
-      callback
-    ]}))
-
+    this.setState(prevState => ({
+      frameCallbacks: [...prevState.frameCallbacks, callback],
+    }));
   }
 
   animate() {
@@ -97,17 +95,20 @@ class App extends Component {
           repeat={repeat}
           paused={paused}
           playing={playing}
-          setAnimationCallback={this.setAnimationCallback} 
+          setAnimationCallback={this.setAnimationCallback}
         />
         <div className="dashboard" />
         <Cubes
           audioManager={this.audioManager}
           paused={paused}
           playing={playing}
-          setAnimationCallback={this.setAnimationCallback} 
+          setAnimationCallback={this.setAnimationCallback}
         />
         {this.props.toast && <p>{this.props.toast}</p>}
-        <StarField hidden={this.state.hidden} setAnimationCallback={this.setAnimationCallback} />
+        <StarField
+          hidden={this.state.hidden}
+          setAnimationCallback={this.setAnimationCallback}
+        />
         {this.state.menuVisible && (
           <div className="overlay">
             <FileReader

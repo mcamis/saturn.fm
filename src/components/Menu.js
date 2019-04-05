@@ -11,7 +11,7 @@ import {
   pinkMesh,
   planeGeometry,
   shadowGeometry,
-  shadowTexture
+  shadowTexture,
 } from 'utilities/menuElements';
 
 import testPng from 'images/test.png';
@@ -178,7 +178,7 @@ class Menu extends PureComponent {
     this.raycaster = new THREE.Raycaster();
     this.scene = scene;
     this.camera = camera;
-  
+
     this.renderer = renderer;
     this.mount.appendChild(this.renderer.domElement);
 
@@ -221,13 +221,12 @@ class Menu extends PureComponent {
         animationDelay: 900,
         animationDuration: 300,
         showShadow: true,
-        onClick: () => console.log("Hey kid, I'm a computer")
+        onClick: () => console.log("Hey kid, I'm a computer"),
       },
     });
 
     const spinningGlobe = new THREE.Mesh(planeGeometry, globeMaterial);
     spinningGlobe.position.set(x, y, z);
-
 
     shadowTexture.magFilter = THREE.NearestFilter;
     shadowTexture.minFilter = THREE.NearestFilter;
@@ -241,13 +240,12 @@ class Menu extends PureComponent {
         animationDuration: 300,
       },
     });
-    
+
     const shadowPlane = new THREE.Mesh(shadowGeometry, shadowMaterial);
     shadowPlane.position.set(x, y - SHADOW_OFFSET, z - 0.5);
     // shadowPlane.visible = window.innerWidth >= 400;
     this.shadowPlanes.push(shadowPlane);
     this.scene.add(shadowPlane);
-  
 
     this.planes.push(spinningGlobe);
     this.scene.add(spinningGlobe);
@@ -326,13 +324,12 @@ class Menu extends PureComponent {
       },
     });
 
-
     const plane = new THREE.Mesh(planeGeometry, planeMaterial);
     plane.position.set(x, y, z);
     if (showShadow) {
       shadowTexture.magFilter = THREE.NearestFilter;
       shadowTexture.minFilter = THREE.NearestFilter;
-  
+
       const shadowMaterial = new THREE.MeshBasicMaterial({
         map: shadowTexture,
         transparent: true,
