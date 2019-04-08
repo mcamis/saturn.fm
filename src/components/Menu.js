@@ -28,7 +28,7 @@ import autobind from 'utilities/autobind';
 // TODO: Set more magic numbers to constants
 const SHADOW_OFFSET = 1;
 
-class Menu extends PureComponent {
+class Menu extends React.Component {
   constructor(props) {
     super(props);
     this.timeOut = null;
@@ -64,6 +64,21 @@ class Menu extends PureComponent {
     this.setupScene();
 
     this.setupKeyboardListeners();
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.activeButton !== nextState.activeButton) {
+      return true;
+    }
+    if(
+      this.props.hidden !== nextProps.hidden ||
+      this.props.paused !== nextProps.paused ||
+      this.props.repeat !== nextProps.repeat ||
+      this.props.playing !== nextProps.playing
+      ) {
+      return true;
+    }
+    return false;
   }
 
   componentDidUpdate(prevProps, prevState) {

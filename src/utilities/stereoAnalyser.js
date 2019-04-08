@@ -100,7 +100,7 @@ export default class StereoAnalyser {
    * Syncs analysis data to `leftChannel` & `rightChannel` on display refresh rate
    * @private
    */
-  startAnalysis() {
+  runAnalysis() {
     const { analyserLeft, analyserRight, dataArrayLeft, dataArrayRight } = this;
     // getByteFrequencyData mutates the arrays
     analyserLeft.getByteFrequencyData(dataArrayLeft);
@@ -109,14 +109,14 @@ export default class StereoAnalyser {
     this.rightChannel = dataArrayRight;
 
     // Set to frameId so we can cancel later
-    this.frameId = requestAnimationFrame(this.startAnalysis);
+    this.frameId = requestAnimationFrame(this.runAnalysis);
   }
 
   /**
    * @private
    */
   startAnalyser() {
-    this.frameId = this.frameId || requestAnimationFrame(this.startAnalysis);
+    this.frameId = this.frameId || requestAnimationFrame(this.runAnalysis);
   }
 
   /**

@@ -1,11 +1,11 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import * as THREE from 'three';
 import GLTFLoader from 'three-gltf-loader';
 
 import autobind from 'utilities/autobind';
 import { randomSize, randomPosition, sceneWidth } from 'utilities/helpers';
 
-class StarField extends PureComponent {
+class StarField extends React.Component {
   constructor(props) {
     super(props);
     this.timeOut = null;
@@ -60,6 +60,14 @@ class StarField extends PureComponent {
     this.setupScene();
     // this.clock = new THREE.Clock();
   }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if(this.props.hidden !== nextProps.hidden) {
+      return true;
+    }
+    return false;
+  }
+
 
   onResize() {
     const width = sceneWidth();

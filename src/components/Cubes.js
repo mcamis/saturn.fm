@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import * as THREE from 'three';
 import autobind from 'utilities/autobind';
@@ -11,7 +11,7 @@ import {
   updateScaleAndColor,
 } from 'utilities/cubeTransforms';
 
-class Cubes extends PureComponent {
+class Cubes extends React.Component {
   constructor(props) {
     super(props);
     this.debouncedResize = null;
@@ -30,6 +30,12 @@ class Cubes extends PureComponent {
 
   componentDidMount() {
     this.setupScene();
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    if(this.props.hidden !== nextProps.hidden) {
+      return true;
+    }
+    return false;
   }
 
   onResize() {
