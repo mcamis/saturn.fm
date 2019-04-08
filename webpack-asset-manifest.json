@@ -1,5 +1,5 @@
 {
-  "app.js": "./js/app.cde37a4d794686eeb2b6.js",
+  "app.js": "./js/app.a617fd38d70feea19293.js",
   "vendor.js": "./js/vendor.72184bf0b4eea1540c62.js",
   ".DS_Store": "./.DS_Store",
   "CNAME": "./CNAME",
@@ -31,7 +31,6 @@
   "images/time.png": "./images/time.png",
   "images/track.png": "./images/track.png",
   "index.html": "./index.html",
-  "models/.DS_Store": "./models/.DS_Store",
   "models/cube.gltf": "./models/cube.gltf",
   "models/cubeBigger.gltf": "./models/cubeBigger.gltf",
   "models/saturn_v1.bin": "./models/saturn_v1.bin",
