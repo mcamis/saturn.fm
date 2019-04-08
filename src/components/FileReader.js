@@ -30,7 +30,7 @@ class FileReader extends Component {
       result.source.index,
       result.destination.index
     );
-
+    this.props.setCurrentTrack(result.destination.index);
     this.props.arrangeTracks(items);
   }
 

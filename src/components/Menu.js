@@ -163,7 +163,7 @@ class Menu extends PureComponent {
     const width = sceneWidth();
     const height = width * 0.75;
     const scene = new THREE.Scene();
-    // TODO: OrthographicCamera?
+
     const camera = new THREE.PerspectiveCamera(2.5, width / height, 1, 500);
     camera.aspect = width / height;
 

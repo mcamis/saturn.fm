@@ -11,8 +11,6 @@ import pinkSrc from 'images/pink.gif';
 import orbShadow from 'images/orb-shadow.png';
 
 import * as THREE from 'three';
-
-// Todo: Import specific tween functions as needed
 import { Tween, Easing } from '@tweenjs/tween.js';
 
 export const orbitGeometry = new THREE.CylinderGeometry(
