@@ -26,7 +26,7 @@ import highlightSrc from 'songs/button-highlight.mp3';
 import autobind from 'utilities/autobind';
 
 // TODO: Set more magic numbers to constants
-const SHADOW_OFFSET = 1;
+const SHADOW_OFFSET = 1.025;
 
 class Menu extends React.Component {
   constructor(props) {
@@ -249,6 +249,7 @@ class Menu extends React.Component {
     const shadowMaterial = new THREE.MeshBasicMaterial({
       map: shadowTexture,
       transparent: true,
+      opacity: .5,
       name,
       userData: {
         animationDelay: 900,
@@ -348,6 +349,7 @@ class Menu extends React.Component {
       const shadowMaterial = new THREE.MeshBasicMaterial({
         map: shadowTexture,
         transparent: true,
+        opacity: .5,
         name,
         userData: {
           animationDelay,

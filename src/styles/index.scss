@@ -195,7 +195,7 @@ canvas {
     // height: 900px;
 
     z-index: 20;
-    padding-bottom: 85%;
+    padding-bottom: 91%;
     @include pixelated;
 }
 
@@ -221,7 +221,7 @@ header {
         background: url("../images/header.png") top (center / cover) no-repeat;
         width: 80%;
         height: 0;
-        padding-top: calc(36 / 254 * 80%);
+        padding-top: calc(36 / 254 * 92%);
         margin: 0 auto;
         position: relative;
         z-index: 2;
@@ -601,11 +601,17 @@ header {
         display: none !important;
     }
 }
+// TODO: ReactCSSTransitionGroup
+@keyframes toolTip {
+    from {    opacity: 1;
+    }
+    to   {     opacity: 0;
+    }
+  }
 
 .tooltips {
     p {
         position: absolute;
-
         // width: 40%;
         background: white;
         left: 50%;
@@ -616,6 +622,7 @@ header {
         text-align: center;
         font-size: 14px;
         display: inline-block;
+        animation: 1ms linear 3s 1 forwards toolTip;
     }
 
     strong {

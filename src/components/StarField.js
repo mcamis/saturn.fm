@@ -167,6 +167,8 @@ class StarField extends React.Component {
   }
 
   addStars() {
+    // TODO: # of stars based on screen size
+    // TODO: Slight rounding?
     for (let z = -500; z < 500; z += 15) {
       let material = this.whiteMaterial;
       if (z > 0 && z < 100) {

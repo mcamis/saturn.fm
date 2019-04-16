@@ -89,6 +89,13 @@ class Cubes extends React.Component {
       }) => {
         cubeModel.material.color = new THREE.Color('hsl(143, 100%, 48%)');
         cubeModel.position.set(x, y, z);
+        cubeModel.rotateX(.075)
+        if(slot === 'rightCube'){
+          cubeModel.rotateY(.075);
+        } else {
+          cubeModel.rotateY(-.1);
+
+        }
 
         this[slot] = cubeModel;
         this.scene.add(cubeModel);
@@ -130,8 +137,8 @@ class Cubes extends React.Component {
       }
 
       // TODO: Idle color
-      idleRotation(this.leftCube, 1, this.animateDownL, this.animateUpL);
-      idleRotation(this.rightCube, -1, this.animateDownR, this.animateUpR);
+      idleRotation(this.leftCube, .35, this.animateDownL, this.animateUpL);
+      idleRotation(this.rightCube, .35, this.animateDownR, this.animateUpR);
     }
 
     this.renderer.render(this.scene, this.camera);

@@ -60,10 +60,10 @@ export const activeRotation = (cube, modifier) => {
 
 export const idleRotation = (cube, modifier = 1, down, up) => {
   if (up) {
-    cube.position.y += 0.0025;
+    cube.position.y += 0.0075;
   } else if (down) {
-    cube.position.y -= 0.0025;
+    cube.position.y -= 0.0075;
   }
-  cube.rotateX(IDLE_ROTATION * modifier);
+  // cube.rotateX(IDLE_ROTATION * modifier);
   cube.rotateY(IDLE_ROTATION * modifier);
 };
