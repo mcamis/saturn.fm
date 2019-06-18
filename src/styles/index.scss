@@ -41,721 +41,723 @@
 @import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
 
 @mixin pixelated {
-    text-rendering: optimizelegibility;
-    image-rendering: optimizeSpeed;             /* Older versions of FF          */
-    image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
-    image-rendering: -webkit-optimize-contrast; /* Safari                        */
-    image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
-    image-rendering: pixelated;                 /* Awesome future-browsers       */
+  text-rendering: optimizelegibility;
+  image-rendering: optimizeSpeed; /* Older versions of FF          */
+  image-rendering: -moz-crisp-edges; /* FF 6.0+                       */
+  image-rendering: -webkit-optimize-contrast; /* Safari                        */
+  image-rendering: -o-crisp-edges; /* OS X & Windows Opera (12.02+) */
+  image-rendering: pixelated; /* Awesome future-browsers       */
 }
 
 /* Typography & Base Styling */
 
 * {
-    box-sizing: border-box;
-    font-size: inherit;
+  box-sizing: border-box;
+  font-size: inherit;
 }
 
 html {
-    height: 100%;
+  height: 100%;
 }
 
 body {
-    font-family: 'Press Start 2P', 'Monaco', monospace;
-    font-size: 22px;
-    font-weight: 500;
-    line-height: 1.3;
-    height: 100%;
-    overflow: hidden;
-    color: #444;
-    margin: 0;
-    background: black;
+  font-family: "Press Start 2P", "Monaco", monospace;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.3;
+  height: 100%;
+  overflow: hidden;
+  color: #444;
+  margin: 0;
+  background: black;
 
-    // @include pixelated;
+  // @include pixelated;
 }
 
 p {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 .pointer {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .overlay {
-    background: black;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    z-index: 100;
+  background: black;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 100;
 }
 
 #root {
-    width: 100%;
-    height: 100%;
-    max-width: 125vh;
-    margin: 0 auto;
-    overflow: hidden;
+  width: 100%;
+  height: 100%;
+  max-width: 125vh;
+  margin: 0 auto;
+  overflow: hidden;
 
-    > div {
-        height: 100%;
-        width: 100%;
-        position: relative;
-    }
+  > div {
+    height: 100%;
+    width: 100%;
+    position: relative;
+  }
 }
 
 canvas {
-    position: fixed;
-    bottom: 0;
-    @include pixelated;
+  position: fixed;
+  bottom: 0;
+  @include pixelated;
 }
 
 .Cubes canvas {
-    left: 0;
-    padding: 0;
-    right: 0;
+  left: 0;
+  padding: 0;
+  right: 0;
 }
 
-.menu{
-  
-    canvas {
-        z-index: 90;
-        @media screen and (max-width: 400px) {
-            margin-bottom: 10vh;
-            
-        }
-    }
+.menu {
+  canvas {
+    z-index: 90;
+  }
 }
 
 @keyframes spin {
-    from {
-        transform: rotate(-0deg);
-    }
+  from {
+    transform: rotate(-0deg);
+  }
 
-    to {
-        transform: rotate(-360deg);
-    }
+  to {
+    transform: rotate(-360deg);
+  }
 }
 
 .StarField {
-    top: 0;
-    width: 100%;
-    height: 100%;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+
+  &:after {
+    content: "";
+    background: url("../images/galaxy.png") no-repeat;
+    background-size: cover;
+    background-color: black;
     position: absolute;
+    left: -35%;
+    right: -35%;
+    top: -35%;
+    bottom: -35%;
+    animation-name: spin;
+    animation-duration: 500s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    z-index: -1;
+  }
 
-    &:after {
-        content: "";
-        background: url("../images/galaxy.png") no-repeat;
-        background-size: cover;
-        background-color: black;
-        position: absolute;
-        left: -35%;
-        right: -35%;
-        top: -35%;
-        bottom: -35%;
-        animation-name: spin;
-        animation-duration: 500s;
-        animation-iteration-count: infinite;
-        animation-timing-function: linear;
-        z-index: -1;
-    }
-
-    canvas {
-        position: relative;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 1;
-    }
+  canvas {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+  }
 }
 
 @keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
+  from {
+    opacity: 1;
+  }
 
-    to {
-        opacity: 0;
-    }
+  to {
+    opacity: 0;
+  }
 }
 
 .dashboard,
 .dashboard:after {
-    content: "";
-    background: url("../images/dashboard.png") no-repeat;
-    background-size: 100% 50%;
-    background-position: 0 100%;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 50%;
-    // height: 900px;
+  content: "";
+  background: url("../images/dashboard.png") no-repeat;
+  background-size: 100% 50%;
+  background-position: 0 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50%;
+  // height: 900px;
 
-    z-index: 20;
-    padding-bottom: 91%;
-    @include pixelated;
+  z-index: 20;
+  padding-bottom: 91%;
+  @include pixelated;
 }
 
 .dashboard:after {
-    left: 99.9999%;
-    right: 0;
-    transform: scaleX(-1);
-    width: 100%;
-    background-size: 100% 100%;
-
+  left: 99.9999%;
+  right: 0;
+  transform: scaleX(-1);
+  width: 100%;
+  background-size: 100% 100%;
 }
 
 .cubes {
-    z-index: 70;
-    position: relative;
+  z-index: 70;
+  position: relative;
 }
 
 header {
-    position: relative;
-    @include pixelated;
+  position: relative;
+  @include pixelated;
 
-    .info {
-        background: url("../images/header.png") top (center / cover) no-repeat;
-        width: 80%;
-        height: 0;
-        padding-top: calc(36 / 254 * 92%);
-        margin: 0 auto;
-        position: relative;
-        z-index: 2;
-
-        .time,
-        .track {
-            position: absolute;
-            top: 24%;
-            left: 50%;
-            width: 8%;
-            line-height: 0;
-
-            img {
-                width: 100%;
-            }
-        }
-
-        .track {
-            left: 15%;
-            width: 11.79%;
-        }
-
-        .timer {
-            position: absolute;
-            top: 38%;
-            left: 60%;
-            color: #004848;
-            font-size: 22px;
-            line-height: 0;
-            -webkit-font-smoothing: none;
-        }
+  .info {
+    background: url("../images/header.png") top (center / cover) no-repeat;
+    @media screen and (max-width: 400px) {
+      width: 100%;
     }
+    width: 80%;
+    height: 0;
+    padding-top: calc(36 / 254 * 92%);
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+
+    .time,
+    .track {
+      position: absolute;
+      top: 24%;
+      left: 50%;
+      width: 8%;
+      line-height: 0;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .track {
+      left: 15%;
+      width: 11.79%;
+    }
+
+    .timer {
+      position: absolute;
+      top: 38%;
+      left: 60%;
+      color: #004848;
+      font-size: 22px;
+      line-height: 0;
+      -webkit-font-smoothing: none;
+    }
+  }
 }
 
 .music-picker {
-    background: white;
+  background: white;
 }
 
 .FileReader {
-    padding: 2em;
-    height: 100%;
-    cursor: default;
+  padding: 2em;
+  height: 100%;
+  cursor: default;
 
-    // z-index: 9999;
-    font-size: 14px;
+  // z-index: 9999;
+  font-size: 14px;
 
-    &:before {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        top: 0;
-        content: " ";
-        display: block;
-        filter: brightness(0);
-        @include pixelated;
-        background: url("../images/menuBg.png") repeat-y;
-        background-position: center;
-        background-size: contain;
-        z-index: -1;
-        animation-name: menuBrightness;
-        animation-duration: 1s;
-        animation-iteration-count: 1;
-        animation-fill-mode: forwards; // animation-delay: 10s;
-        animation-timing-function: ease-out;
-        animation-delay: 500ms;
-
-        @keyframes menuBrightness {
-            from {
-                filter: brightness(0);
-            }
-
-            to {
-                filter: brightness(1);
-            }
-        }
-    }
-
-    .content {
-        text-align: center;
-        max-width: 800px;
-        margin: 0 auto;
-        opacity: 0;
-        animation-name: menuContentFadeIn;
-        animation-duration: 10ms;
-        animation-iteration-count: 1;
-        animation-fill-mode: forwards; // animation-delay: 10s;
-        animation-timing-function: ease-out;
-        animation-delay: 1.35s;
-
-        @keyframes menuContentFadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        // &:nth-child(2) {
-        //     animation-delay: 1575ms;
-        // }
-        // &:nth-child(3) {
-        //     animation-delay: 1600ms;
-        // }
-        // &:nth-child(4) {
-        //     animation-delay: 1625ms;
-        // }
-    }
-
-    h2 {
-        background: url("../images/header_bg.png");
-        background-color: rgba(0,0,0,.5);
-        border-radius: 10px;
-
-        line-height: 53px;
-        padding: 0 1.5em;
-        background-size: 100% 100%;
-        @include pixelated;
-        color: white;
-        text-transform: capitalize;
-        margin: 0 auto;
-        margin-bottom: 2em;
-        display: inline-block;
-    }
-    button {
-        cursor: pointer;
-        margin: 0 10px;
-    }
-
-    .playlists {
-        background-color: rgba(131, 23, 71, 0.65);
-        border-radius: 3px;
-        padding: 1em;
-        height: 50%;
-        box-shadow: 0 0 0 2px rgba(53, 59, 101, 0.8), 0 0 0 3.5px rgba(149, 149, 149, 0.8), 0 0 0 5px rgba(53, 59, 101, 0.8);
-        font-size: 13px;
-        color: white;
-        font-weight: 400;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        margin: 0 0 2em;
-        max-height: 72vh;
-        overflow: scroll;
-        > div {
-       
-            
-        }
-            .draggable {
-                cursor: grab;
-            padding: 8px 10px;
-            border-radius: 2px;
-            margin: 0 0 2px;
-            display: flex;
-            flex-direction: row;
-            text-align: left;
-            font-size: 16px;
-            p {
-                margin: 0;
-                padding: 0;
-            }
-            &:hover {
-                animation: selectedItem 3s infinite;
-            }
-            &:active{
-                cursor: grabbing !important
-            }
-            &.isDragging {
-                cursor: grabbing;
-                border: 1px white;
-                background: rgba(255,255,255,.5);
-                border-radius: 2px;
-            }
-            div:nth-child(1){
-                width: 40px;
-            }
-            div:nth-child(2){
-                width: 40%;
-                max-width: 400px;
-            }
-            div:nth-child(3){
-                width: 25%;
-                max-width: 200px;
-            }
-            div:nth-child(4){
-                width: 25%;
-                max-width: 200px;
-            }
-            button {
-                transition: all 200ms ease;
-                margin-left: auto;
-                width: 10px;
-                appearance: none;
-                border: none;
-                outline:  none;
-                background: none;
-                color: rgba(255,255,255,.6);
-                cursor: pointer;
-                border-radius: 2px;
-                width: 30px;
-                border: 1px solid rgba(255,255,255,.25);
-                text-align: center;
-                &:hover{
-                    background: darkslategrey;
-                    border: 1px solid darkslategrey;
-
-                    color: white;
-                
-                }
-            }
-
-        }
-    }
-}
-
-.track-number {
+  &:before {
     position: absolute;
-    left: 114%;
-    top: 112%;
-    color: #004848;
-    font-size: 140%;
-    line-height: 0;
-    -webkit-font-smoothing: none;
-}
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    content: " ";
+    display: block;
+    filter: brightness(0);
+    @include pixelated;
+    background: url("../images/menuBg.png") repeat-y;
+    background-position: center;
+    background-size: contain;
+    z-index: -1;
+    animation-name: menuBrightness;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards; // animation-delay: 10s;
+    animation-timing-function: ease-out;
+    animation-delay: 500ms;
 
-@keyframes floatDownRelative {
-    from {
-        transform: translateY(0%);
-    }
+    @keyframes menuBrightness {
+      from {
+        filter: brightness(0);
+      }
 
-    to {
-        transform: translateY(100%);
-    }
-}
-
-@keyframes floatUpRelative {
-    from {
-        transform: translateY(0%);
-    }
-
-    to {
-        transform: translateY(-105%);
-    }
-}
-
-@keyframes floatDownButtons {
-    from {
-        transform: translateY(0%);
-    }
-
-    to {
-        transform: translateY(50vh);
-    }
-}
-
-@keyframes blink {
-    0% {
-        opacity: 0;
-    }
-
-    49% {
-        opacity: 0;
-    }
-
-    50% {
-        opacity: 1;
-    }
-}
-
-
-@keyframes selectedItem {
-    0% {
-        background: rgba(255,255,255, .7);
-    }
-
-    50% {
-        background: pink;
-    }
-
-    100% {
-        background: rgba(255,255,255, .7);
-    }
-}
-
-.hidden {
-    .toast {
-        animation: blink 1s infinite, fadeOut 0ms linear 3s 1 forwards running !important;
-    }
-
-    header {
-        animation-name: floatUpRelative;
-        animation-duration: 1000ms;
-        animation-iteration-count: 1;
-        animation-fill-mode: forwards; // animation-delay: 10s;
-        animation-timing-function: ease-out;
-
-        // animation-delay: 150ms;
-   
-    }
-
-    .dashboard,
-    .cubes canvas,
-    li {
-        animation-name: floatDownRelative;
-        animation-duration: 2000ms;
-        animation-iteration-count: 1;
-        animation-fill-mode: forwards; // animation-delay: 10s;
-        animation-timing-function: linear;
-    }
-
-    li {
-        animation-name: floatDownButtons;
-        animation-duration: 400ms;
-        animation-iteration-count: 1;
-        animation-fill-mode: forwards; // animation-delay: 10s;
-        animation-timing-function: ease-in;
-    }
-
-    li {
-        &:nth-child(1) {
-            animation-delay: 1400ms;
-            animation-duration: 300ms;
-        }
-
-        &:nth-child(2) {
-            animation-delay: 1300ms;
-            animation-duration: 300ms;
-        }
-
-        &:nth-child(3) {
-            animation-delay: 1100ms;
-            animation-duration: 300ms;
-        }
-
-        &:nth-child(4) {
-            animation-delay: 780ms;
-            animation-duration: 350ms;
-        }
-
-        &:nth-child(5) {
-            animation-delay: 800ms;
-            animation-duration: 350ms;
-        }
-
-        &:nth-child(6) {
-            animation-delay: 1000ms;
-            animation-duration: 350ms;
-        }
-
-        &:nth-child(7) {
-            animation-delay: 680ms;
-        }
-
-        &:nth-child(8) {
-            animation-delay: 600ms;
-        }
-
-        &:nth-child(9) {
-            animation-delay: 720ms;
-        }
-    }
-
-    li {
-        button,
-        a {
-            &.bottom:after {
-                animation-name: fadeOut;
-                animation-duration: 200ms;
-                animation-iteration-count: 1;
-                animation-fill-mode: forwards; // animation-delay: 10s;
-                animation-timing-function: linear;
-            }
-        }
-    }
-
-    .tooltips {
-        display: none !important;
-    }
-}
-// TODO: ReactCSSTransitionGroup
-@keyframes toolTip {
-    from {    opacity: 1;
-    }
-    to   {     opacity: 0;
+      to {
+        filter: brightness(1);
+      }
     }
   }
 
-.tooltips {
-    p,
-    img {
-        position: absolute;
-        // width: 40%;
-        background: rgba(255,255,255, .5);
-        left: 50%;
-        transform: translate(-50%, 0);
-        bottom: 0;
-        z-index: 70;
-        padding: 5px 10px;
+  .content {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    opacity: 0;
+    animation-name: menuContentFadeIn;
+    animation-duration: 10ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards; // animation-delay: 10s;
+    animation-timing-function: ease-out;
+    animation-delay: 1.35s;
+
+    @keyframes menuContentFadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    // &:nth-child(2) {
+    //     animation-delay: 1575ms;
+    // }
+    // &:nth-child(3) {
+    //     animation-delay: 1600ms;
+    // }
+    // &:nth-child(4) {
+    //     animation-delay: 1625ms;
+    // }
+  }
+
+  h2 {
+    background: url("../images/header_bg.png");
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+
+    line-height: 53px;
+    padding: 0 1.5em;
+    background-size: 100% 100%;
+    @include pixelated;
+    color: white;
+    text-transform: capitalize;
+    margin: 0 auto;
+    margin-bottom: 2em;
+    display: inline-block;
+  }
+  button {
+    cursor: pointer;
+    margin: 0 10px;
+  }
+
+  .playlists {
+    background-color: rgba(131, 23, 71, 0.65);
+    border-radius: 3px;
+    padding: 1em;
+    height: 50%;
+    box-shadow: 0 0 0 2px rgba(53, 59, 101, 0.8), 0 0 0 3.5px rgba(149, 149, 149, 0.8), 0 0 0 5px rgba(53, 59, 101, 0.8);
+    font-size: 13px;
+    color: white;
+    font-weight: 400;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+      "Helvetica Neue", sans-serif;
+    margin: 0 0 2em;
+    max-height: 72vh;
+    overflow: scroll;
+    > div {
+    }
+    .draggable {
+      cursor: grab;
+      padding: 8px 10px;
+      border-radius: 2px;
+      margin: 0 0 2px;
+      display: flex;
+      flex-direction: row;
+      text-align: left;
+      font-size: 16px;
+      p {
+        margin: 0;
+        padding: 0;
+      }
+      &:hover {
+        animation: selectedItem 3s infinite;
+      }
+      &:active {
+        cursor: grabbing !important;
+      }
+      &.isDragging {
+        cursor: grabbing;
+        border: 1px white;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 2px;
+      }
+      div:nth-child(1) {
+        width: 40px;
+      }
+      div:nth-child(2) {
+        width: 40%;
+        max-width: 400px;
+      }
+      div:nth-child(3) {
+        width: 25%;
+        max-width: 200px;
+      }
+      div:nth-child(4) {
+        width: 25%;
+        max-width: 200px;
+      }
+      button {
+        transition: all 200ms ease;
+        margin-left: auto;
+        width: 10px;
+        appearance: none;
+        border: none;
+        outline: none;
+        background: none;
+        color: rgba(255, 255, 255, 0.6);
+        cursor: pointer;
+        border-radius: 2px;
+        width: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.25);
         text-align: center;
-        font-size: 14px;
-        display: inline-block;
+        &:hover {
+          background: darkslategrey;
+          border: 1px solid darkslategrey;
+
+          color: white;
+        }
+      }
     }
-    img {
+  }
+}
+
+.track-number {
+  position: absolute;
+  left: 114%;
+  top: 112%;
+  color: #004848;
+  font-size: 140%;
+  line-height: 0;
+  -webkit-font-smoothing: none;
+}
+
+@keyframes floatDownRelative {
+  from {
+    transform: translateY(0%);
+  }
+
+  to {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes floatUpRelative {
+  from {
+    transform: translateY(0%);
+  }
+
+  to {
+    transform: translateY(-105%);
+  }
+}
+
+@keyframes floatDownButtons {
+  from {
+    transform: translateY(0%);
+  }
+
+  to {
+    transform: translateY(50vh);
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+
+  49% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes selectedItem {
+  0% {
+    background: rgba(255, 255, 255, 0.7);
+  }
+
+  50% {
+    background: pink;
+  }
+
+  100% {
+    background: rgba(255, 255, 255, 0.7);
+  }
+}
+
+.hidden {
+  .toast {
+    animation: blink 1s infinite, fadeOut 0ms linear 3s 1 forwards running !important;
+  }
+
+  header {
+    animation-name: floatUpRelative;
+    animation-duration: 1000ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards; // animation-delay: 10s;
+    animation-timing-function: ease-out;
+
+    // animation-delay: 150ms;
+  }
+
+  .dashboard,
+  .cubes canvas,
+  li {
+    animation-name: floatDownRelative;
+    animation-duration: 2000ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards; // animation-delay: 10s;
+    animation-timing-function: linear;
+  }
+
+  li {
+    animation-name: floatDownButtons;
+    animation-duration: 400ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards; // animation-delay: 10s;
+    animation-timing-function: ease-in;
+  }
+
+  li {
+    &:nth-child(1) {
+      animation-delay: 1400ms;
+      animation-duration: 300ms;
+    }
+
+    &:nth-child(2) {
+      animation-delay: 1300ms;
+      animation-duration: 300ms;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 1100ms;
+      animation-duration: 300ms;
+    }
+
+    &:nth-child(4) {
+      animation-delay: 780ms;
+      animation-duration: 350ms;
+    }
+
+    &:nth-child(5) {
+      animation-delay: 800ms;
+      animation-duration: 350ms;
+    }
+
+    &:nth-child(6) {
+      animation-delay: 1000ms;
+      animation-duration: 350ms;
+    }
+
+    &:nth-child(7) {
+      animation-delay: 680ms;
+    }
+
+    &:nth-child(8) {
+      animation-delay: 600ms;
+    }
+
+    &:nth-child(9) {
+      animation-delay: 720ms;
+    }
+  }
+
+  li {
+    button,
+    a {
+      &.bottom:after {
+        animation-name: fadeOut;
+        animation-duration: 200ms;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards; // animation-delay: 10s;
+        animation-timing-function: linear;
+      }
+    }
+  }
+
+  .tooltips {
+    display: none !important;
+  }
+}
+// TODO: ReactCSSTransitionGroup
+@keyframes toolTip {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.tooltips {
+  img {
+    position: absolute;
+    // width: 40%;
+    background: rgba(255, 255, 255, 0.5);
+    left: 50%;
+    transform: translate(-50%, 0);
+    bottom: 0;
+    z-index: 70;
+    padding: 5px 10px;
+    text-align: center;
+    font-size: 14px;
+    display: inline-block;
+
+    bottom: 4px;
+    height: 24px;
+    z-index: 99;
+
+    @include pixelated;
+    @media screen and (min-width: 500px) {
         height: 30px;
-        width: auto;
+        width: auto;   
+        bottom: 14px;
+    }
+  
+    @media screen and (min-width: 600px) {
         bottom: 20px;
-        @include pixelated;
     }
-    strong {
-        font-weight: normal;
-        color: rgb(255, 32, 52);
-    }
+  }
+  strong {
+    font-weight: normal;
+    color: rgb(255, 32, 52);
+  }
 }
 
 @keyframes knight-rider {
-    from {
-        left: 25%;
-    }
+  from {
+    left: 25%;
+  }
 
-    to {
-        left: 69%;
-    }
-}   
+  to {
+    left: 69%;
+  }
+}
 
 .knight-rider {
-    display: none;
-    content: "";
-    background: url("../images/knight-rider.png") no-repeat;
-    background-position: center center;
-    background-size: 100% 100%;
-    height: 12%;
-    width: 6%;
-    position: absolute;
-    left: 50%;
-    bottom: 5%;
-    z-index: 1;
-    animation-name: knight-rider;
-    animation-duration: 1300ms;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
+  display: none;
+  content: "";
+  background: url("../images/knight-rider.png") no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+  height: 12%;
+  width: 6%;
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  z-index: 1;
+  animation-name: knight-rider;
+  animation-duration: 1300ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 
 .playing {
-    .knight-rider {
-        display: inline-block;
-    }
+  .knight-rider {
+    display: inline-block;
+  }
 }
 
 blink {
-    animation: blink 1s infinite;
+  animation: blink 1s infinite;
 }
 
 .toast {
-    position: fixed;
-    left: 50%;
-    top: 40%;
-    transform: translate(-50%, -50%);
-    width: 6em;
-    z-index: 9999;
+  position: fixed;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  width: 6em;
+  z-index: 9999;
 }
 
 .paused {
-    .knight-rider {
-        display: inline-block;
-        animation-play-state: paused;
-    }
+  .knight-rider {
+    display: inline-block;
+    animation-play-state: paused;
+  }
 
-    .timer,
-    .toast,
-    .knight-rider {
-        animation: blink 1s infinite;
-    }
+  .timer,
+  .toast,
+  .knight-rider {
+    animation: blink 1s infinite;
+  }
 }
 
 @keyframes floatInRelative {
-    from {
-        transform: translateY(100%);
-    }
+  from {
+    transform: translateY(100%);
+  }
 
-    to {
-        transform: translateY(0%);
-    }
+  to {
+    transform: translateY(0%);
+  }
 }
 
 @keyframes floatDownInRelative {
-    from {
-        transform: translateY(-105%);
-    }
+  from {
+    transform: translateY(-105%);
+  }
 
-    to {
-        transform: translateY(0%);
-    }
+  to {
+    transform: translateY(0%);
+  }
 }
 
 @keyframes floatInButtons {
-    from {
-        transform: translateY(50vh);
-    }
+  from {
+    transform: translateY(50vh);
+  }
 
-    to {
-        transform: translateY(0%);
-    }
+  to {
+    transform: translateY(0%);
+  }
 }
 
 .show {
-    header {
-        animation-name: floatDownInRelative;
-        animation-duration: 600ms;
-        animation-iteration-count: 1;
-        animation-fill-mode: backwards; // animation-delay: 10s;
-        animation-timing-function: linear;
-        animation-delay: 700ms;
-    }
+  header {
+    animation-name: floatDownInRelative;
+    animation-duration: 600ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: backwards; // animation-delay: 10s;
+    animation-timing-function: linear;
+    animation-delay: 700ms;
+  }
 
-    .dashboard,
-    .cubes canvas {
-        animation-name: floatInRelative;
-        animation-duration: 800ms;
-        animation-iteration-count: 1;
-        animation-fill-mode: backwards; // animation-delay: 10s;
-        animation-timing-function: linear;
-        animation-delay: 300ms;
-    }
+  .dashboard,
+  .cubes canvas {
+    animation-name: floatInRelative;
+    animation-duration: 800ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: backwards; // animation-delay: 10s;
+    animation-timing-function: linear;
+    animation-delay: 300ms;
+  }
 
-    li {
-        button,
-        a {
-            &.bottom:after {
-                animation-name: fadeOut;
-                animation-duration: 200ms;
-                animation-iteration-count: 1;
-                animation-fill-mode: forwards; // animation-delay: 10s;
-                animation-timing-function: linear;
-            }
-        }
+  li {
+    button,
+    a {
+      &.bottom:after {
+        animation-name: fadeOut;
+        animation-duration: 200ms;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards; // animation-delay: 10s;
+        animation-timing-function: linear;
+      }
     }
+  }
 }
