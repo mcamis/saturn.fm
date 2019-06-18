@@ -89,6 +89,7 @@ class FileReader extends Component {
                                 <div>{album}</div>
                                 <button
                                   className="icon-button"
+                                  // TODO: Prompt on delete?
                                   onClick={() => this.props.removeTrack(index)}
                                   type="button"
                                 >

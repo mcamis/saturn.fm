@@ -24,6 +24,7 @@ import buttonSrc from 'songs/button-press.mp3';
 import highlightSrc from 'songs/button-highlight.mp3';
 
 import autobind from 'utilities/autobind';
+import Tooltip from './Tooltip';
 
 // TODO: Set more magic numbers to constants
 const SHADOW_OFFSET = 1.025;
@@ -461,60 +462,6 @@ class Menu extends React.Component {
     onClick();
   }
 
-  getToolTip() {
-    const { playing, paused, repeat } = this.props;
-
-    const tooltips = {
-      disc: () => <p>Choose Songs</p>,
-      settings: () => <p>About</p>,
-      hide: () => <p>Hide</p>,
-      rewind: () => <p>Rewind</p>,
-      fastforward: () => <p>Fast Forward</p>,
-      play: () => {
-        let playElement = <p>Play / Pause</p>;
-        if (playing) {
-          playElement = (
-            <p>
-              <strong>Play</strong>/ Pause
-            </p>
-          );
-        } else if (paused) {
-          playElement = (
-            <p>
-              Play / <strong>Pause</strong>
-            </p>
-          );
-        }
-        return playElement;
-      },
-      repeat: () => {
-        let repeatElement = (
-          <p>
-            Repeat: 1 / All / <strong>Off</strong>
-          </p>
-        );
-        if (repeat === 'track') {
-          repeatElement = (
-            <p>
-              Repeat: <strong>1</strong> / All / Off
-            </p>
-          );
-        } else if (repeat === 'context') {
-          repeatElement = (
-            <p>
-              Repeat: 1 / <strong>All</strong> / Off
-            </p>
-          );
-        }
-        return repeatElement;
-      },
-      stop: () => <p>Stop</p>,
-      advanced: () => <p>🚧 Coming Soon 🚧</p>,
-    };
-
-    return tooltips[this.state.activeButton]();
-  }
-
   createMenuElements() {
     const menuElements = createButtons(
       this.props.audioManager,
@@ -550,7 +497,7 @@ class Menu extends React.Component {
             this.mount = mount;
           }}
         />
-        <div className="tooltips">{this.getToolTip()}</div>
+        <Tooltip activeButton={this.state.activeButton} />
       </div>
     );
   }

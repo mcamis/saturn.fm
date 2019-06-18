@@ -62,12 +62,11 @@ class StarField extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if(this.props.hidden !== nextProps.hidden) {
+    if (this.props.hidden !== nextProps.hidden) {
       return true;
     }
     return false;
   }
-
 
   onResize() {
     const width = sceneWidth();

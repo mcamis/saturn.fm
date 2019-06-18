@@ -610,10 +610,11 @@ header {
   }
 
 .tooltips {
-    p {
+    p,
+    img {
         position: absolute;
         // width: 40%;
-        background: white;
+        background: rgba(255,255,255, .5);
         left: 50%;
         transform: translate(-50%, 0);
         bottom: 0;
@@ -622,9 +623,13 @@ header {
         text-align: center;
         font-size: 14px;
         display: inline-block;
-        animation: 1ms linear 3s 1 forwards toolTip;
     }
-
+    img {
+        height: 30px;
+        width: auto;
+        bottom: 20px;
+        @include pixelated;
+    }
     strong {
         font-weight: normal;
         color: rgb(255, 32, 52);
@@ -639,7 +644,7 @@ header {
     to {
         left: 69%;
     }
-}
+}   
 
 .knight-rider {
     display: none;
