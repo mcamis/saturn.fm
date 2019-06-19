@@ -353,7 +353,9 @@ header {
   .playlists {
     background-color: rgba(131, 23, 71, 0.65);
     border-radius: 3px;
-    padding: 1em;
+    @media screen and (min-width: 500px) {
+        padding: 1em;
+    }
     height: 50%;
     box-shadow: 0 0 0 2px rgba(53, 59, 101, 0.8), 0 0 0 3.5px rgba(149, 149, 149, 0.8), 0 0 0 5px rgba(53, 59, 101, 0.8);
     font-size: 13px;
@@ -374,7 +376,13 @@ header {
       display: flex;
       flex-direction: row;
       text-align: left;
-      font-size: 16px;
+
+      font-size: 10px;
+
+      @media screen and (min-width: 500px) {
+        font-size: 16px;
+    
+      }
       p {
         margin: 0;
         padding: 0;
@@ -408,6 +416,7 @@ header {
       }
       button {
         transition: all 200ms ease;
+        margin: 0;
         margin-left: auto;
         width: 10px;
         appearance: none;
