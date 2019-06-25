@@ -20,8 +20,8 @@ import testPng from 'images/test.png';
 import TWEEN from '@tweenjs/tween.js';
 import * as THREE from 'three';
 
-import buttonSrc from 'songs/button-press.mp3';
-import highlightSrc from 'songs/button-highlight.mp3';
+import buttonSrc from 'effects/button-press.mp3';
+import highlightSrc from 'effects/button-highlight.mp3';
 
 import autobind from 'utilities/autobind';
 import Tooltip from './Tooltip';
@@ -71,12 +71,12 @@ class Menu extends React.Component {
     if (this.state.activeButton !== nextState.activeButton) {
       return true;
     }
-    if(
+    if (
       this.props.hidden !== nextProps.hidden ||
       this.props.paused !== nextProps.paused ||
       this.props.repeat !== nextProps.repeat ||
       this.props.playing !== nextProps.playing
-      ) {
+    ) {
       return true;
     }
     return false;
@@ -250,7 +250,7 @@ class Menu extends React.Component {
     const shadowMaterial = new THREE.MeshBasicMaterial({
       map: shadowTexture,
       transparent: true,
-      opacity: .5,
+      opacity: 0.5,
       name,
       userData: {
         animationDelay: 900,
@@ -350,7 +350,7 @@ class Menu extends React.Component {
       const shadowMaterial = new THREE.MeshBasicMaterial({
         map: shadowTexture,
         transparent: true,
-        opacity: .5,
+        opacity: 0.5,
         name,
         userData: {
           animationDelay,

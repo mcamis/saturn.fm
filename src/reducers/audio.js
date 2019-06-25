@@ -1,9 +1,14 @@
 import { formatTime } from 'utilities/helpers';
+import Chaos from '../songs/01_Chaos.mp3';
+import Akihabara from '../songs/02_Akihabara.mp3';
+import NothingStopsDetroit from '../songs/03_Nothing_Stops_Detroit.mp3';
+import GnosisHardware from '../songs/04_Gnosis_Hardware.mp3';
+import NoRefuge from '../songs/05_No_Refuge.mp3';
+import OutHere from '../songs/06_Out_Here_At_The_Outersphere.mp3';
+import Chicago from '../songs/07_Chicago.mp3';
+import Passports from '../songs/08_Passports.mp3';
+import ComeTrue from '../songs/09_Come_True.mp3';
 
-import Rhyme from '../songs/Rhyme.mp3';
-import NoRefuge from '../songs/No-Refuge.mp3';
-import Higher from '../songs/Higher.mp3';
-import GoBack from '../songs/GoBack.mp3';
 export const defaultState = {
   currentTrack: null,
   loading: false,
@@ -11,37 +16,89 @@ export const defaultState = {
   currentTime: formatTime(0),
   playing: false,
   paused: false,
-  // playlist: [Higher, Rhyme, NoRefuge],
-  playlist: [GoBack, Rhyme, NoRefuge],
+  playlist: [
+    'Chaos',
+    'Akihabara',
+    'Nothing Stops Detroit',
+    'Gnosis Hardware',
+    'No Refuge',
+    'Out Here at the Outersphere',
+    'Chicago',
+    'Passports',
+    'Come True',
+  ],
   tracks: {
-    // [Higher]: {
-    //   name: Higher,
-    //   file: Higher,
-    //   track: 3,
-    //   album: 'Velocity',
-    //   artist: 'GRRL',
-    //   title: 'Higher',
-    // },
-    [GoBack]: {
-      file: GoBack,
+    ['Chaos']: {
+      name: 'Chaos',
+      file: Chaos,
       track: 1,
-      album: 'Music For Touching',
-      artist: 'Cookies',
-      title: 'Go Back',
+      album: 'Entertainment System',
+      artist: 'Professor Kliq',
+      title: 'Chaos',
     },
-    [Rhyme]: {
-      file: Rhyme,
+    ['Akihabara']: {
+      name: 'Akihabara',
+      file: Akihabara,
       track: 2,
-      album: 'N/A',
+      album: 'Entertainment System',
       artist: 'Professor Kliq',
-      title: 'Rhyme',
+      title: 'Chaos',
     },
-    [NoRefuge]: {
-      file: NoRefuge,
+    ['Nothing Stops Detroit']: {
+      name: 'Nothing Stops Detroit',
+      file: NothingStopsDetroit,
       track: 3,
-      album: 'OP-1 Outtakes',
+      album: 'Entertainment System',
       artist: 'Professor Kliq',
-      title: 'NoRefuge',
+      title: 'Chaos',
+    },
+    ['Gnosis Hardware']: {
+      name: 'Gnosis Hardware',
+      file: GnosisHardware,
+      track: 4,
+      album: 'Entertainment System',
+      artist: 'Professor Kliq',
+      title: 'Chaos',
+    },
+    ['No Refuge']: {
+      name: 'No Refuge',
+      file: NoRefuge,
+      track: 5,
+      album: 'Entertainment System',
+      artist: 'Professor Kliq',
+      title: 'Chaos',
+    },
+    ['Out Here at the Outersphere']: {
+      name: 'Out Here at the Outersphere',
+      file: OutHere,
+      track: 6,
+      album: 'Entertainment System',
+      artist: 'Professor Kliq',
+      title: 'Chaos',
+    },
+    ['Chicago']: {
+      name: 'Chicago',
+      file: Chicago,
+      track: 7,
+      album: 'Entertainment System',
+      artist: 'Professor Kliq',
+      title: 'Chaos',
+    },
+    ['Passports']: {
+      name: 'Passports',
+      file: Passports,
+      track: 8,
+      album: 'Entertainment System',
+      artist: 'Professor Kliq',
+      title: 'Chaos',
+    },
+    ['Come True']: {
+      name: 'Come True',
+      file: ComeTrue,
+      track: 9,
+      album: 'Entertainment System',
+      artist: 'Professor Kliq',
+      title: 'Chaos',
     },
   },
 };

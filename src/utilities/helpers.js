@@ -1,5 +1,3 @@
-import Rhyme from '../songs/Rhyme.mp3';
-import NoRefuge from '../songs/No-Refuge.mp3';
 export const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
 
 export const sceneWidth = () => {

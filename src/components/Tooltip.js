@@ -69,7 +69,7 @@ const Tooltip = props => {
 };
 
 Tooltip.propTypes = {
- activeButton: PropTypes.string.isRequired
+  activeButton: PropTypes.string.isRequired,
 };
 
 export default Tooltip;
