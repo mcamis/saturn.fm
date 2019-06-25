@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import fastforward from 'images/text/fastforward.png';
-import advance from 'images/text/advanced.png';
-import hide from 'images/text/hide.png';
-import stop from 'images/text/stop.png';
-import rewind from 'images/text/rewind.png';
+import fastforward from 'images/text_fastforward.png';
+import advance from 'images/text_advanced.png';
+import hide from 'images/text_hide.png';
+import stop from 'images/text_stop.png';
+import rewind from 'images/text_rewind.png';
 
 const getTooltipSrc = props => {
   // const { playing, paused, repeat } = props;
