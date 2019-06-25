@@ -1,11 +1,10 @@
 {
     "name": "saturn-fm",
     "devDependencies": {
-        "@babel/core": "^7.1.2",
-        "@babel/polyfill": "^7.2.5",
-        "@babel/preset-env": "^7.2.3",
+        "@babel/core": "^7.4.5",
+        "@babel/preset-env": "^7.4.5",
         "@babel/preset-react": "^7.0.0",
-        "babel-loader": "^8.0.4",
+        "babel-loader": "^8.0.6",
         "babel-plugin-istanbul": "^5.1.0",
         "babel-plugin-module-resolver": "^3.1.1",
         "babel-preset-airbnb": "^3.0.1",
@@ -53,6 +52,7 @@
     },
     "dependencies": {
         "@tweenjs/tween.js": "^17.2.0",
+        "core-js": "3",
         "jsmediatags": "^3.8.1",
         "prop-types": "^15.6.2",
         "react": "^16.8.1",

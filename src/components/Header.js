@@ -14,18 +14,15 @@ function useInterval(callback, delay) {
   });
 
   // TODO: move this to redux!
-  useEffect(
-    () => {
-      function tick() {
-        savedCallback.current();
-      }
-      if (delay !== null) {
-        const id = setInterval(tick, delay);
-        return () => clearInterval(id);
-      }
-    },
-    [delay]
-  );
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      const id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
 }
 
 const Header = ({ audioManager, currentTrack }) => {
