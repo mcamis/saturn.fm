@@ -1,6 +1,6 @@
 {
-  "app.js": "./js/app.4f1a3e9fb913284768bc.js",
-  "vendor.js": "./js/vendor.24fd6152234286f78e45.js",
+  "app.js": "./js/app.de817a2e340b8aff0eb4.js",
+  "vendor.js": "./js/vendor.1b0222ec1d34fe160dd6.js",
   ".DS_Store": "./.DS_Store",
   "CNAME": "./CNAME",
   "android-chrome-192x192.png": "./android-chrome-192x192.png",
@@ -43,10 +43,15 @@
   "mstile-150x150.png": "./mstile-150x150.png",
   "safari-pinned-tab.svg": "./safari-pinned-tab.svg",
   "site.webmanifest": "./site.webmanifest",
-  "songs/GoBack.mp3": "./songs/GoBack.mp3",
-  "songs/Higher.mp3": "./songs/Higher.mp3",
-  "songs/No-Refuge.mp3": "./songs/No-Refuge.mp3",
-  "songs/Rhyme.mp3": "./songs/Rhyme.mp3",
+  "songs/01_Chaos.mp3": "./songs/01_Chaos.mp3",
+  "songs/02_Akihabara.mp3": "./songs/02_Akihabara.mp3",
+  "songs/03_Nothing_Stops_Detroit.mp3": "./songs/03_Nothing_Stops_Detroit.mp3",
+  "songs/04_Gnosis_Hardware.mp3": "./songs/04_Gnosis_Hardware.mp3",
+  "songs/05_No_Refuge.mp3": "./songs/05_No_Refuge.mp3",
+  "songs/06_Out_Here_At_The_Outersphere.mp3": "./songs/06_Out_Here_At_The_Outersphere.mp3",
+  "songs/07_Chicago.mp3": "./songs/07_Chicago.mp3",
+  "songs/08_Passports.mp3": "./songs/08_Passports.mp3",
+  "songs/09_Come_True.mp3": "./songs/09_Come_True.mp3",
   "songs/button-highlight.mp3": "./songs/button-highlight.mp3",
   "songs/button-press.mp3": "./songs/button-press.mp3"
 }
