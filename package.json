@@ -60,7 +60,7 @@
         "react-dom": "^16.8.1",
         "react-redux": "^5.0.6",
         "redux": "^4.0.1",
-        "three": "^0.97.0",
+        "three": "^0.106.2",
         "three-gltf-loader": "^1.100.0",
         "uuid": "^3.3.2"
     },

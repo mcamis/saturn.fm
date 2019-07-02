@@ -43,6 +43,7 @@ export default class AudioManager {
 
     // We haven't started playing yet, so set src to first track in tracks
     if (!audioElement.src) {
+      console.log
       audioActions.setCurrentTrack(0);
     }
     if (audioElement.paused || audioElement.ended) {
@@ -63,7 +64,13 @@ export default class AudioManager {
       this.audioElement.src = objectUrl;
       this.audioElement.play();
     } else {
-      if (!this.audioElement.src || !this.audioElement.src.includes(nextSong)) {
+      // TODO: Workaround for preloaded files, move this to redux?
+      const splitSrc = nextSong.split('./songs');
+      const isFromDefaultPlaylist = splitSrc.length > 0;
+      const derivedSrc = isFromDefaultPlaylist ? splitSrc[1] : nextSong;
+
+      if (!this.audioElement.src || !this.audioElement.src.includes(derivedSrc)) {
+        console.log(this.audioElement.src, nextSong);
         this.audioElement.src = nextSong;
       }
       this.audioElement.play();
