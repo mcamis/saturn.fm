@@ -109,8 +109,9 @@ class Cubes extends React.Component {
       const [leftChannel, rightChannel] = this.props.audioManager.analyserFFT;
 
       // Reset to middle after idle
-      this.leftCube.position.y = -29.5;
-      this.rightCube.position.y = -29.5;
+      this.leftCube.position.y = -29;
+      this.rightCube.position.y = -29;
+
       updateScaleAndColor(this.leftCube, leftChannel);
       updateScaleAndColor(this.rightCube, rightChannel);
       activeRotation(this.leftCube);

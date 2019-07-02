@@ -213,12 +213,9 @@ header {
 
   .info {
     background: url("../images/header.png") top (center / cover) no-repeat;
-    @media screen and (max-width: 400px) {
-      width: 100%;
-    }
-    width: 80%;
+    width: 100%;
     height: 0;
-    padding-top: calc(36 / 254 * 92%);
+    padding-top: calc(36 / 254 * 100%);
     margin: 0 auto;
     position: relative;
     z-index: 2;
