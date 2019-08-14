@@ -1,6 +1,6 @@
 {
-  "app.js": "./js/app.e908fb02690ff369479c.js",
-  "vendor.js": "./js/vendor.7e57d8ce6b4d9170f582.js",
+  "app.js": "./js/app.e44826d525ec004f905c.js",
+  "vendor.js": "./js/vendor.6aea33d4fed195b63540.js",
   ".DS_Store": "./.DS_Store",
   "CNAME": "./CNAME",
   "android-chrome-192x192.png": "./android-chrome-192x192.png",
@@ -55,5 +55,6 @@
   "songs/08_Passports.mp3": "./songs/08_Passports.mp3",
   "songs/09_Come_True.mp3": "./songs/09_Come_True.mp3",
   "songs/button-highlight.mp3": "./songs/button-highlight.mp3",
-  "songs/button-press.mp3": "./songs/button-press.mp3"
+  "songs/button-press.mp3": "./songs/button-press.mp3",
+  "songs/shuffle.mp3": "./songs/shuffle.mp3"
 }
