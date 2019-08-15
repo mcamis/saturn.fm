@@ -24,7 +24,6 @@ import buttonSrc from 'effects/button-press.mp3';
 import highlightSrc from 'effects/button-highlight.mp3';
 
 import autobind from 'utilities/autobind';
-import Tooltip from './Tooltip';
 
 // TODO: Set more magic numbers to constants
 const SHADOW_OFFSET = 1.025;
@@ -71,12 +70,12 @@ class Menu extends React.Component {
     if (this.state.activeButton !== nextState.activeButton) {
       return true;
     }
-    if (
+    if(
       this.props.hidden !== nextProps.hidden ||
       this.props.paused !== nextProps.paused ||
       this.props.repeat !== nextProps.repeat ||
       this.props.playing !== nextProps.playing
-    ) {
+      ) {
       return true;
     }
     return false;
@@ -85,7 +84,7 @@ class Menu extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.state.activeButton !== prevState.activeButton) {
       this.highlightEffect.currentTime = 0;
-      // this.highlightEffect.play();
+      this.highlightEffect.play();
       const [x, y] = this.menuElements[this.state.activeButton].position;
       this.orbits.pink.position.set(x, y, 2);
       this.orbits.purple.position.set(x, y, 2.03);
@@ -250,7 +249,7 @@ class Menu extends React.Component {
     const shadowMaterial = new THREE.MeshBasicMaterial({
       map: shadowTexture,
       transparent: true,
-      opacity: 0.5,
+      opacity: .5,
       name,
       userData: {
         animationDelay: 900,
@@ -350,7 +349,7 @@ class Menu extends React.Component {
       const shadowMaterial = new THREE.MeshBasicMaterial({
         map: shadowTexture,
         transparent: true,
-        opacity: 0.5,
+        opacity: .5,
         name,
         userData: {
           animationDelay,
@@ -405,6 +404,11 @@ class Menu extends React.Component {
     if (this.props.hidden) {
       return this.showIfHidden();
     }
+
+    // TODO: Switch this to the real sound effect
+    this.highlightEffect.currentTime = 0;
+    this.highlightEffect.play();
+
     this.planes.forEach(plane => {
       const { x, y, z } = plane.position;
       animateButtonPosition(plane, new THREE.Vector3(x, y - 10, z));
@@ -462,6 +466,60 @@ class Menu extends React.Component {
     onClick();
   }
 
+  getToolTip() {
+    const { playing, paused, repeat } = this.props;
+
+    const tooltips = {
+      disc: () => <p>Choose Songs</p>,
+      settings: () => <p>About</p>,
+      hide: () => <p>Hide</p>,
+      rewind: () => <p>Rewind</p>,
+      fastforward: () => <p>Fast Forward</p>,
+      play: () => {
+        let playElement = <p>Play / Pause</p>;
+        if (playing) {
+          playElement = (
+            <p>
+              <strong>Play</strong>/ Pause
+            </p>
+          );
+        } else if (paused) {
+          playElement = (
+            <p>
+              Play / <strong>Pause</strong>
+            </p>
+          );
+        }
+        return playElement;
+      },
+      repeat: () => {
+        let repeatElement = (
+          <p>
+            Repeat: 1 / All / <strong>Off</strong>
+          </p>
+        );
+        if (repeat === 'track') {
+          repeatElement = (
+            <p>
+              Repeat: <strong>1</strong> / All / Off
+            </p>
+          );
+        } else if (repeat === 'context') {
+          repeatElement = (
+            <p>
+              Repeat: 1 / <strong>All</strong> / Off
+            </p>
+          );
+        }
+        return repeatElement;
+      },
+      stop: () => <p>Stop</p>,
+      advanced: () => <p>🚧 Coming Soon 🚧</p>,
+    };
+
+    return tooltips[this.state.activeButton]();
+  }
+
   createMenuElements() {
     const menuElements = createButtons(
       this.props.audioManager,
@@ -497,7 +555,7 @@ class Menu extends React.Component {
             this.mount = mount;
           }}
         />
-        <Tooltip activeButton={this.state.activeButton} />
+        <div className="tooltips">{this.getToolTip()}</div>
       </div>
     );
   }

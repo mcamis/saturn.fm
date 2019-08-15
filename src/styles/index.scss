@@ -344,7 +344,7 @@ header {
   }
   h3 {
     color: white;
-    margin: 0 0 2em
+    margin: 0 0 2em;
   }
   button {
     cursor: pointer;
@@ -355,7 +355,7 @@ header {
     background-color: rgba(131, 23, 71, 0.65);
     border-radius: 3px;
     @media screen and (min-width: 500px) {
-        padding: 1em;
+      padding: 1em;
     }
     height: 50%;
     box-shadow: 0 0 0 2px rgba(53, 59, 101, 0.8), 0 0 0 3.5px rgba(149, 149, 149, 0.8), 0 0 0 5px rgba(53, 59, 101, 0.8);
@@ -382,7 +382,6 @@ header {
 
       @media screen and (min-width: 500px) {
         font-size: 16px;
-    
       }
       p {
         margin: 0;
@@ -612,9 +611,8 @@ header {
     opacity: 0;
   }
 }
-
 .tooltips {
-  img {
+  p {
     position: absolute;
     // width: 40%;
     background: rgba(255, 255, 255, 0.5);
@@ -626,21 +624,12 @@ header {
     text-align: center;
     font-size: 14px;
     display: inline-block;
-
-    bottom: 4px;
-    height: 24px;
-    z-index: 99;
-
+  }
+  img {
+    height: 30px;
+    width: auto;
+    bottom: 20px;
     @include pixelated;
-    @media screen and (min-width: 500px) {
-        height: 30px;
-        width: auto;   
-        bottom: 14px;
-    }
-  
-    @media screen and (min-width: 600px) {
-        bottom: 20px;
-    }
   }
   strong {
     font-weight: normal;
