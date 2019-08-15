@@ -26,6 +26,10 @@ class Cubes extends React.Component {
       clearTimeout(this.debouncedResize);
       this.debouncedResize = setTimeout(this.onResize, 250);
     });
+
+    window.addEventListener("orientationchange", () => {
+      this.onResize();
+    });
   }
 
   componentDidMount() {

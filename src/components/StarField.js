@@ -54,6 +54,10 @@ class StarField extends React.Component {
       clearTimeout(this.timeOut);
       this.timeOut = setTimeout(this.onResize, 250);
     });
+
+    window.addEventListener("orientationchange", () => {
+      this.onResize()
+    });
   }
 
   componentDidMount() {
@@ -62,11 +66,12 @@ class StarField extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.hidden !== nextProps.hidden) {
+    if(this.props.hidden !== nextProps.hidden) {
       return true;
     }
     return false;
   }
+
 
   onResize() {
     const width = sceneWidth();

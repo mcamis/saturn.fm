@@ -214,6 +214,10 @@ class Menu extends React.Component {
       this.timeOut = setTimeout(this.onResize, 250);
     });
 
+    window.addEventListener("orientationchange", () => {
+      this.onResize();
+    });
+
     domElement.addEventListener('mousedown', e => this.onMouseDown(e), false);
     domElement.addEventListener('mousemove', e => this.onMouseMove(e), false);
   }
