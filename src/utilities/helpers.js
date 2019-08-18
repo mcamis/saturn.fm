@@ -1,9 +1,9 @@
 export const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
 
 export const sceneWidth = () => {
+  // Maintain a 4:3 aspect ratio on wide screens, shrink on portrait screens
   const actualWidth = window.innerWidth;
-  const idealWidth = window.innerHeight * 1.25;
-
+  const idealWidth = window.innerHeight * 1.3333;
   if (idealWidth > actualWidth) {
     return actualWidth;
   } else {
