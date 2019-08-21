@@ -5,8 +5,10 @@ export const sceneWidth = () => {
   const actualWidth = window.innerWidth;
   const idealWidth = window.innerHeight * 1.3333;
   if (idealWidth > actualWidth) {
+    document.documentElement.style.setProperty('--scene-width', actualWidth + "px");
     return actualWidth;
   } else {
+    document.documentElement.style.setProperty('--scene-width', idealWidth + "px");
     return idealWidth;
   }
 };

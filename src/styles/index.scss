@@ -234,13 +234,25 @@ header {
       width: 11.79%;
     }
 
-    .timer {
+    .track-number {
+
+      font-size: calc(var(--scene-width) / 20);
       position: absolute;
-      top: 38%;
-      left: 60%;
+      left: 28%;
+      top: 18%;
       color: #004848;
-      font-size: 22px;
-      line-height: 0;
+
+      -webkit-font-smoothing: none;
+    }
+
+    .timer {
+      font-size: calc(var(--scene-width) / 22);
+
+      position: absolute;
+      left: 60%;
+      top: 20%;
+      color: #004848;
+      
       -webkit-font-smoothing: none;
     }
   }
@@ -436,16 +448,6 @@ header {
   }
 }
 
-.track-number {
-  position: absolute;
-  left: 114%;
-  top: 112%;
-  color: #004848;
-  font-size: 140%;
-  line-height: 0;
-  -webkit-font-smoothing: none;
-}
-
 @keyframes floatDownRelative {
   from {
     transform: translateY(0%);
@@ -618,7 +620,7 @@ header {
     z-index: 70;
     padding: 5px 10px;
     text-align: center;
-    font-size: 14px;
+    font-size: calc(var(--scene-width) / 40);
     display: inline-block;
   }
   img {
