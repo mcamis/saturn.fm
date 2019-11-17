@@ -235,7 +235,6 @@ header {
     }
 
     .track-number {
-
       font-size: calc(var(--scene-width) / 20);
       position: absolute;
       left: 28%;
@@ -252,7 +251,7 @@ header {
       left: 60%;
       top: 20%;
       color: #004848;
-      
+
       -webkit-font-smoothing: none;
     }
   }
@@ -757,4 +756,9 @@ blink {
       }
     }
   }
+}
+
+.flip {
+  transform: scaleX(-1);
+  display: inline-block;
 }

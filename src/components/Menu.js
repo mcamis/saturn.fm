@@ -17,7 +17,7 @@ import {
 import testPng from 'images/test.png';
 
 // Todo: Import specific tween functions as needed
-import TWEEN from '@tweenjs/tween.js';
+import * as TWEEN from 'es6-tween';
 import * as THREE from 'three';
 
 import buttonSrc from 'effects/button-press.mp3';
@@ -518,7 +518,7 @@ class Menu extends React.Component {
         return repeatElement;
       },
       stop: () => <p>Stop</p>,
-      advanced: () => <p>🚧 Coming Soon 🚧</p>,
+      advanced: () => <p>🗿Coming Soon<span className="flip">🗿</span></p>,
     };
 
     return tooltips[this.state.activeButton]();

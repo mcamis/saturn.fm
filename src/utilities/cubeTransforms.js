@@ -1,4 +1,4 @@
-import { Tween, Easing } from '@tweenjs/tween.js';
+import { Tween, Easing } from 'es6-tween';
 import * as THREE from 'three';
 
 import { logarithmic } from 'utilities/helpers';

@@ -35,7 +35,7 @@ class StarField extends React.Component {
       1.0,
     ]);
 
-    bufferGeometry.addAttribute(
+    bufferGeometry.setAttribute(
       'position',
       new THREE.BufferAttribute(bufferVerticies, 3)
     );

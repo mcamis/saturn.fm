@@ -11,7 +11,7 @@ import pinkSrc from 'images/pink.gif';
 import orbShadow from 'images/orb-shadow.png';
 
 import * as THREE from 'three';
-import { Tween, Easing } from '@tweenjs/tween.js';
+import { Tween, Easing } from 'es6-tween';
 
 export const orbitGeometry = new THREE.CylinderGeometry(
   1.45,
@@ -29,14 +29,12 @@ orbitTexture.magFilter = THREE.NearestFilter;
 pinkTexture.magFilter = THREE.NearestFilter;
 
 export const purpleMesh = new THREE.MeshBasicMaterial({
-  lights: false,
   side: THREE.DoubleSide,
   transparent: true,
   map: orbitTexture,
 });
 
 export const pinkMesh = new THREE.MeshBasicMaterial({
-  lights: false,
   side: THREE.DoubleSide,
   transparent: true,
   map: pinkTexture,

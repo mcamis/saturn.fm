@@ -1,7 +1,7 @@
 const merge = require('webpack-merge');
 
 const TerserPlugin = require('terser-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const ManifestPlugin = require('webpack-manifest-plugin');
@@ -101,9 +101,10 @@ module.exports = merge(common, {
       filename: 'styles/app[chunkhash].css',
       allChunks: true,
     }),
-    new CleanWebpackPlugin(['dist'], {
-      root: app.root,
-    }),
+    // new CleanWebpackPlugin({
+    //   ['dist']
+    //   root: app.root,
+    // }),
     new ManifestPlugin({
       fileName: 'webpack-asset-manifest.json',
     }),
