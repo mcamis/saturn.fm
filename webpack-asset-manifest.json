@@ -1,6 +1,8 @@
 {
-  "app.js": "./js/app.c921088c7199cc329357.js",
-  "vendor.js": "./js/vendor.c1c4f170a6c3cb587a04.js",
+  "app.js": "./js/app.47dbb00eb6d7bad2d240.js",
+  "app.js.map": "./js/app.47dbb00eb6d7bad2d240.js.map",
+  "vendor.js": "./js/vendor.ccaa40a2d57113dc213a.js",
+  "vendor.js.map": "./js/vendor.ccaa40a2d57113dc213a.js.map",
   ".DS_Store": "./.DS_Store",
   "CNAME": "./CNAME",
   "android-chrome-192x192.png": "./android-chrome-192x192.png",
@@ -31,6 +33,7 @@
   "images/time.png": "./images/time.png",
   "images/track.png": "./images/track.png",
   "index.html": "./index.html",
+  "js/vendor.ccaa40a2d57113dc213a.js.LICENSE": "./js/vendor.ccaa40a2d57113dc213a.js.LICENSE",
   "models/.DS_Store": "./models/.DS_Store",
   "models/cube.gltf": "./models/cube.gltf",
   "models/cubeBigger.gltf": "./models/cubeBigger.gltf",
