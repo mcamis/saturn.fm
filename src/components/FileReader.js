@@ -60,7 +60,6 @@ class FileReader extends Component {
         <div className="content">
           <h2>Edit Playlist</h2>
           <h3>Drag to reorder tracks</h3>
-
           <div className="playlists">
             <DragDropContext onDragEnd={this.onDragEnd}>
               <Droppable droppableId="droppable">

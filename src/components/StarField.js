@@ -216,6 +216,7 @@ class StarField extends React.Component {
     this.renderer.render(this.scene, this.camera);
   }
 
+  // TODO: Render x,y according to screen
   render() {
     return (
       <div className="StarField">

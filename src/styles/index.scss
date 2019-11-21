@@ -79,6 +79,10 @@ p {
   margin-top: 0;
 }
 
+em {
+  font-family: "Georgia", serif;
+}
+
 .pointer {
   cursor: pointer;
 }
@@ -196,7 +200,7 @@ canvas {
 }
 
 .dashboard:after {
-  left: 99.9999%;
+  left: 99.9%;
   right: 0;
   transform: scaleX(-1);
   width: 100%;
@@ -448,6 +452,35 @@ header {
   }
 }
 
+.About {
+  .content {
+    .playlists {
+      font-size: 16px !important;
+      text-align: left;
+    }
+    line-height: 22px;
+    em {
+      margin:.5em;
+      padding: 1em 1em 1em 2em;
+      display: inline-block;
+      border-left: 2px solid white;
+    }
+    a {
+      text-decoration: none;
+      color: #f2f2f2;
+      font-weight: bold;
+      margin-left: .5em;
+    }
+    ul {
+      margin-top: 2em;
+    }
+    ul li {
+      list-style-type: none;
+      margin-bottom: 15px;
+    }
+  }
+}
+
 @keyframes floatDownRelative {
   from {
     transform: translateY(0%);
@@ -620,7 +653,7 @@ header {
     z-index: 70;
     padding: 5px 10px;
     text-align: center;
-    font-size: calc(var(--scene-width) / 40);
+    font-size: calc(var(--scene-width) / 60);
     display: inline-block;
   }
   img {
