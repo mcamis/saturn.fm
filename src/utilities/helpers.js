@@ -1,4 +1,4 @@
-export const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
+export const average = arr => arr.filter(Boolean).reduce((p, c) => p + c, 0) / arr.length;
 
 export const sceneWidth = () => {
   // Maintain a 4:3 aspect ratio on wide screens, shrink on portrait screens

@@ -8,6 +8,7 @@ import * as audioActions from 'actions/audio';
 
 import Cubes from 'components/Cubes';
 import Menu from 'components/Menu';
+import About from 'components/About';
 import FileReader from 'components/FileReader';
 import Header from 'components/Header';
 import StarField from 'components/StarField';
@@ -22,7 +23,8 @@ class App extends Component {
     this.state = {
       show: false,
       hidden: false,
-      menuVisible: false,
+      showAboutModal: false,
+      fileReaderVisible: false,
       frameCallbacks: [],
     };
     this.frameId = null;
@@ -82,7 +84,7 @@ class App extends Component {
       requestAnimationFrame(this.animate);
     }
 
-    this.setState(state => ({ menuVisible: !state.menuVisible }));
+    this.setState(state => ({ fileReaderVisible: !state.fileReaderVisible }));
   }
 
   render() {
@@ -104,6 +106,7 @@ class App extends Component {
           hidden={this.state.hidden}
           showIfHidden={this.showIfHidden}
           toggleMenu={this.toggleMenu}
+          toggleAbout={() => this.setState(prevState => ({ showAboutModal: !prevState.showAboutModal }))}
           hideDash={this.hideDash}
           repeat={repeat}
           paused={paused}
@@ -122,12 +125,19 @@ class App extends Component {
           hidden={this.state.hidden}
           setAnimationCallback={this.setAnimationCallback}
         />
-        {this.state.menuVisible && (
+        {this.state.fileReaderVisible && (
           <div className="overlay">
             <FileReader
               audio={this.props.audio}
               {...audioActions}
               toggleMenu={this.toggleMenu}
+            />
+          </div>
+        )}
+        {this.state.showAboutModal && (
+          <div className="overlay">
+            <About
+              toggleAbout={() => this.setState(prevState => ({ showAboutModal: !prevState.showAboutModal }))}
             />
           </div>
         )}

@@ -38,7 +38,7 @@ export const updateScaleAndColor = (cube, averageFFT) => {
   // cube.scale.set(derivedMax, derivedMax, derivedMax);
 
   return new Tween(cube.scale)
-    .to({ x: m, y: m, z: m }, 50)
+    .to({ x: m, y: m, z: m }, 10)
     .easing(Easing.Quadratic.Out)
     .start();
 };

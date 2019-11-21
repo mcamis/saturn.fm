@@ -240,7 +240,7 @@ class Menu extends React.Component {
         animationDelay: 900,
         animationDuration: 300,
         showShadow: true,
-        onClick: () => console.log("Hey kid, I'm a computer"),
+        onClick: this.props.toggleAbout,
       },
     });
 
@@ -518,7 +518,7 @@ class Menu extends React.Component {
         return repeatElement;
       },
       stop: () => <p>Stop</p>,
-      advanced: () => <p>🗿Coming Soon<span className="flip">🗿</span></p>,
+      advanced: () => <p>About</p>,
     };
 
     return tooltips[this.state.activeButton]();

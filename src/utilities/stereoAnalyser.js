@@ -2,7 +2,7 @@ import autobind from 'utilities/autobind';
 import { average } from 'utilities/helpers';
 
 const FFT_SIZE = 128;
-const SMOOTHING = 0.25;
+const SMOOTHING = 0.1;
 
 // tl;dr; Put stereo audio in, get averaged FFT data out
 //
