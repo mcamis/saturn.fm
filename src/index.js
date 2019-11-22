@@ -5,6 +5,11 @@ import { Provider } from 'react-redux';
 import configureStore from 'store/configure';
 import 'styles/index.scss';
 
+import * as Sentry from '@sentry/browser';
+
+Sentry.init({ dsn: 'https://992c24dba9924e9a9431f74d2b9515a6@sentry.io/1830195' });
+
+
 // Export the store so it can be used outside of react-redux
 export const store = configureStore(); // eslint-disable-line import/prefer-default-export
 

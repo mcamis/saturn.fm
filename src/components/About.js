@@ -23,6 +23,7 @@ const About = props => {
           </ul>
 
         </div>
+        {/* TODO: Saturn style buttons */}
         <button type="button" onClick={props.toggleAbout}>
           Close
           </button>
