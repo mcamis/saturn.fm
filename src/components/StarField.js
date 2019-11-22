@@ -1,9 +1,15 @@
-import React from 'react';
-import * as THREE from 'three';
-import GLTFLoader from 'three-gltf-loader';
+import React from "react";
+import * as THREE from "three";
+import GLTFLoader from "three-gltf-loader";
 
-import autobind from 'utilities/autobind';
-import { randomSize, randomPosition, sceneWidth } from 'utilities/helpers';
+import autobind from "utilities/autobind";
+import { randomSize, randomPosition, sceneWidth } from "utilities/helpers";
+
+const spaceshipPositions = {
+  plain: [2.5, -3.5, 510],
+  spinny: [-2.5, 3.5, 510],
+  fast: [0, -3, 510]
+};
 
 class StarField extends React.Component {
   constructor(props) {
@@ -32,11 +38,11 @@ class StarField extends React.Component {
       1.0,
       -1.0,
       -1.0,
-      1.0,
+      1.0
     ]);
 
     bufferGeometry.setAttribute(
-      'position',
+      "position",
       new THREE.BufferAttribute(bufferVerticies, 3)
     );
     this.blueMaterial = new THREE.MeshBasicMaterial({ color: 0x759cff });
@@ -50,13 +56,13 @@ class StarField extends React.Component {
     this.width = width * 1.75;
     this.height = height * 1.75;
 
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       clearTimeout(this.timeOut);
       this.timeOut = setTimeout(this.onResize, 250);
     });
 
     window.addEventListener("orientationchange", () => {
-      this.onResize()
+      this.onResize();
     });
   }
 
@@ -66,12 +72,18 @@ class StarField extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if(this.props.hidden !== nextProps.hidden) {
+    if (this.props.hidden !== nextProps.hidden) {
       return true;
     }
     return false;
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.animation !== prevProps.animation) {
+      const [x, y, z] = spaceshipPositions[this.props.animation];
+      this.spaceShip.position.set(x, y, z);
+    }
+  }
 
   onResize() {
     const width = sceneWidth();
@@ -107,8 +119,8 @@ class StarField extends React.Component {
     renderer.setClearColor(0xffffff);
     camera.position.z = 500;
     const isSafari =
-      navigator.userAgent.indexOf('Safari') !== -1 &&
-      navigator.userAgent.indexOf('Chrome') === -1;
+      navigator.userAgent.indexOf("Safari") !== -1 &&
+      navigator.userAgent.indexOf("Chrome") === -1;
 
     const pixRatio = window.devicePixelRatio;
     renderer.setPixelRatio(
@@ -131,9 +143,10 @@ class StarField extends React.Component {
   setupSpaceShip() {
     const loader = new GLTFLoader();
 
-    loader.load('./models/saturn_v1.gltf', gltf => {
+    loader.load("./models/saturn_v1.gltf", gltf => {
       const { scene: shipModel } = gltf;
-      shipModel.position.set(2.5, -3.5, 520);
+      const [x, y, z] = spaceshipPositions[this.props.animation];
+      shipModel.position.set(x, y, z);
       shipModel.rotateZ(3.5);
       shipModel.rotateY(Math.PI);
       shipModel.visible = false;
@@ -159,14 +172,44 @@ class StarField extends React.Component {
     if (this.spaceShip) {
       if (this.props.hidden) {
         this.spaceShip.visible = true;
-        this.spaceShip.rotateZ(0.01);
-        this.spaceShip.position.z -= 0.075;
-        if (this.spaceShip.position.z < 300) {
-          this.spaceShip.position.z = 520;
+
+        if (this.props.animation === "plain") {
+          this.plain();
+        } else if (this.props.animation === "spinny") {
+          this.spinny();
+        } else if (this.props.animation === "fast") {
+          this.fast();
         }
       } else {
         this.spaceShip.visible = false;
       }
+    }
+  }
+
+  plain() {
+    this.spaceShip.rotateZ(0.01);
+    this.spaceShip.position.z -= 0.075;
+    if (this.spaceShip.position.z < 400) {
+      this.spaceShip.position.z = 500;
+    }
+  }
+
+  spinny() {
+    this.spaceShip.rotateZ(-0.05);
+    this.spaceShip.position.z -= 0.075;
+    this.spaceShip.position.x -= 0.0075;
+    this.spaceShip.position.x -= 0.0075;
+    if (this.spaceShip.position.z < 300) {
+      this.spaceShip.position.z = 520;
+    }
+  }
+
+  fast() {
+    this.spaceShip.rotateZ(-0.005);
+    this.spaceShip.position.z -= 0.12;
+    this.spaceShip.position.x -= 0.0075;
+    if (this.spaceShip.position.z < 300) {
+      this.spaceShip.position.z = 520;
     }
   }
 

@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-import autobind from 'utilities/autobind';
-import AudioManager from 'utilities/audioManager';
-import * as audioActions from 'actions/audio';
+import autobind from "utilities/autobind";
+import AudioManager from "utilities/audioManager";
+import * as audioActions from "actions/audio";
 
-import Cubes from 'components/Cubes';
-import Menu from 'components/Menu';
-import About from 'components/About';
-import FileReader from 'components/FileReader';
-import Header from 'components/Header';
-import StarField from 'components/StarField';
+import Cubes from "components/Cubes";
+import Menu from "components/Menu";
+import About from "components/About";
+import FileReader from "components/FileReader";
+import Header from "components/Header";
+import StarField from "components/StarField";
 
 class App extends Component {
   constructor(props) {
@@ -21,11 +21,12 @@ class App extends Component {
     this.audioManager = new AudioManager();
 
     this.state = {
+      animation: "plain",
       show: false,
       hidden: false,
       showAboutModal: false,
       fileReaderVisible: false,
-      frameCallbacks: [],
+      frameCallbacks: []
     };
     this.frameId = null;
   }
@@ -36,19 +37,28 @@ class App extends Component {
 
   getClassNames() {
     const {
-      audio: { playing, paused },
+      audio: { playing, paused }
     } = this.props;
 
-    const hiddenClass = this.state.hidden ? 'hidden' : '';
-    const pausedClass = paused ? 'paused' : '';
-    const playingClass = playing ? 'playing' : '';
-    const showClass = this.state.show ? 'show' : '';
+    const hiddenClass = this.state.hidden ? "hidden" : "";
+    const pausedClass = paused ? "paused" : "";
+    const playingClass = playing ? "playing" : "";
+    const showClass = this.state.show ? "show" : "";
 
     return `${hiddenClass} ${pausedClass} ${playingClass} ${showClass}`;
   }
 
   hideDash() {
-    this.setState(prevState => ({ hidden: !prevState.hidden, show: false }));
+    const randomAnimation = ["plain", "spinny", "plain", "fast"];
+
+    const animation =
+      randomAnimation[Math.floor(Math.random() * randomAnimation.length)];
+
+    this.setState(prevState => ({
+      hidden: !prevState.hidden,
+      show: false,
+      animation
+    }));
   }
 
   showIfHidden() {
@@ -60,14 +70,14 @@ class App extends Component {
 
   appeaseSafari() {
     // ugh
-    if (this.audioManager.analyser.audioContext.state === 'suspended') {
+    if (this.audioManager.analyser.audioContext.state === "suspended") {
       this.audioManager.analyser.audioContext.resume();
     }
   }
 
   setAnimationCallback(callback) {
     this.setState(prevState => ({
-      frameCallbacks: [...prevState.frameCallbacks, callback],
+      frameCallbacks: [...prevState.frameCallbacks, callback]
     }));
   }
 
@@ -89,7 +99,7 @@ class App extends Component {
 
   render() {
     const {
-      audio: { playing, paused, repeat },
+      audio: { playing, paused, repeat }
     } = this.props;
 
     return (
@@ -106,7 +116,11 @@ class App extends Component {
           hidden={this.state.hidden}
           showIfHidden={this.showIfHidden}
           toggleMenu={this.toggleMenu}
-          toggleAbout={() => this.setState(prevState => ({ showAboutModal: !prevState.showAboutModal }))}
+          toggleAbout={() =>
+            this.setState(prevState => ({
+              showAboutModal: !prevState.showAboutModal
+            }))
+          }
           hideDash={this.hideDash}
           repeat={repeat}
           paused={paused}
@@ -122,6 +136,7 @@ class App extends Component {
         />
         {this.props.toast && <p>{this.props.toast}</p>}
         <StarField
+          animation={this.state.animation}
           hidden={this.state.hidden}
           setAnimationCallback={this.setAnimationCallback}
         />
@@ -137,7 +152,11 @@ class App extends Component {
         {this.state.showAboutModal && (
           <div className="overlay">
             <About
-              toggleAbout={() => this.setState(prevState => ({ showAboutModal: !prevState.showAboutModal }))}
+              toggleAbout={() =>
+                this.setState(prevState => ({
+                  showAboutModal: !prevState.showAboutModal
+                }))
+              }
             />
           </div>
         )}
@@ -151,13 +170,13 @@ App.propTypes = {
     currentTrack: PropTypes.number,
     playing: PropTypes.bool.isRequired,
     paused: PropTypes.bool.isRequired,
-    repeat: PropTypes.oneOf(['off', 'context', 'track']).isRequired,
-  }).isRequired,
+    repeat: PropTypes.oneOf(["off", "context", "track"]).isRequired
+  }).isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    audio: state.audio,
+    audio: state.audio
   };
 }
 export const AppContainer = App;

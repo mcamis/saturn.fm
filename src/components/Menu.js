@@ -1,7 +1,7 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
 
-import { sceneWidth } from 'utilities/helpers';
+import { sceneWidth } from "utilities/helpers";
 
 import {
   animateButtonPosition,
@@ -11,19 +11,19 @@ import {
   pinkMesh,
   planeGeometry,
   shadowGeometry,
-  shadowTexture,
-} from 'utilities/menuElements';
+  shadowTexture
+} from "utilities/menuElements";
 
-import testPng from 'images/test.png';
+import testPng from "images/test.png";
 
 // Todo: Import specific tween functions as needed
-import * as TWEEN from 'es6-tween';
-import * as THREE from 'three';
+import * as TWEEN from "es6-tween";
+import * as THREE from "three";
 
-import buttonSrc from 'effects/button-press.mp3';
-import highlightSrc from 'effects/button-highlight.mp3';
+import buttonSrc from "effects/button-press.mp3";
+import highlightSrc from "effects/button-highlight.mp3";
 
-import autobind from 'utilities/autobind';
+import autobind from "utilities/autobind";
 
 // TODO: Set more magic numbers to constants
 const SHADOW_OFFSET = 1.025;
@@ -40,22 +40,22 @@ class Menu extends React.Component {
     this.highlightEffect = new Audio();
     this.highlightEffect.src = highlightSrc;
     this.state = {
-      activeButton: 'play',
-      allowToggle: false,
+      activeButton: "play",
+      allowToggle: false
     };
 
     this.clock = new THREE.Clock();
 
     this.buttons = [
-      'disc',
-      'settings',
-      'hide',
-      'rewind',
-      'play',
-      'fastforward',
-      'repeat',
-      'stop',
-      'advanced',
+      "disc",
+      "settings",
+      "hide",
+      "rewind",
+      "play",
+      "fastforward",
+      "repeat",
+      "stop",
+      "advanced"
     ];
     autobind(this);
   }
@@ -70,12 +70,12 @@ class Menu extends React.Component {
     if (this.state.activeButton !== nextState.activeButton) {
       return true;
     }
-    if(
+    if (
       this.props.hidden !== nextProps.hidden ||
       this.props.paused !== nextProps.paused ||
       this.props.repeat !== nextProps.repeat ||
       this.props.playing !== nextProps.playing
-      ) {
+    ) {
       return true;
     }
     return false;
@@ -116,9 +116,9 @@ class Menu extends React.Component {
       const {
         object: {
           material: {
-            userData: { onClick },
-          },
-        },
+            userData: { onClick }
+          }
+        }
       } = intersects[0];
 
       const { object } = intersects[0];
@@ -138,27 +138,27 @@ class Menu extends React.Component {
   }
 
   setupKeyboardListeners() {
-    window.addEventListener('keydown', e => {
+    window.addEventListener("keydown", e => {
       let nextIndex = this.buttons.indexOf(this.state.activeButton);
       switch (e.code) {
-        case 'ArrowRight':
+        case "ArrowRight":
           if (nextIndex !== 2 && nextIndex !== 5) {
             nextIndex += 1;
           }
           break;
-        case 'ArrowLeft':
+        case "ArrowLeft":
           if (nextIndex !== 3 && nextIndex !== 6) {
             nextIndex -= 1;
           }
           break;
 
-        case 'ArrowUp':
+        case "ArrowUp":
           nextIndex -= 3;
           break;
-        case 'ArrowDown':
+        case "ArrowDown":
           nextIndex += 3;
           break;
-        case 'Enter':
+        case "Enter":
           this.triggerButtonCallback(
             this.menuElements[this.buttons[nextIndex]],
             this.menuElements[this.buttons[nextIndex]].onClick
@@ -206,10 +206,10 @@ class Menu extends React.Component {
 
   setupEventListeners() {
     const {
-      renderer: { domElement },
+      renderer: { domElement }
     } = this;
 
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       clearTimeout(this.timeOut);
       this.timeOut = setTimeout(this.onResize, 250);
     });
@@ -218,8 +218,8 @@ class Menu extends React.Component {
       this.onResize();
     });
 
-    domElement.addEventListener('mousedown', e => this.onMouseDown(e), false);
-    domElement.addEventListener('mousemove', e => this.onMouseMove(e), false);
+    domElement.addEventListener("mousedown", e => this.onMouseDown(e), false);
+    domElement.addEventListener("mousemove", e => this.onMouseMove(e), false);
   }
 
   setupOrbAnimation() {
@@ -235,13 +235,13 @@ class Menu extends React.Component {
     const globeMaterial = new THREE.MeshBasicMaterial({
       map: globeTexture,
       transparent: true,
-      name: 'advanced',
+      name: "advanced",
       userData: {
         animationDelay: 900,
         animationDuration: 300,
         showShadow: true,
-        onClick: this.props.toggleAbout,
-      },
+        onClick: this.props.toggleAbout
+      }
     });
 
     const spinningGlobe = new THREE.Mesh(planeGeometry, globeMaterial);
@@ -253,12 +253,12 @@ class Menu extends React.Component {
     const shadowMaterial = new THREE.MeshBasicMaterial({
       map: shadowTexture,
       transparent: true,
-      opacity: .5,
+      opacity: 0.5,
       name,
       userData: {
         animationDelay: 900,
-        animationDuration: 300,
-      },
+        animationDuration: 300
+      }
     });
 
     const shadowPlane = new THREE.Mesh(shadowGeometry, shadowMaterial);
@@ -312,20 +312,20 @@ class Menu extends React.Component {
 
     this.orbits = {
       pink,
-      purple,
+      purple
     };
 
     this.scene.add(pink, purple);
   }
 
   placeInScene({
-    name = '',
+    name = "",
     position,
     onClick,
     mapSrc,
     animationDelay,
     animationDuration,
-    showShadow,
+    showShadow
   }) {
     const [x, y, z] = position;
 
@@ -340,8 +340,8 @@ class Menu extends React.Component {
       userData: {
         onClick,
         animationDelay,
-        animationDuration,
-      },
+        animationDuration
+      }
     });
 
     const plane = new THREE.Mesh(planeGeometry, planeMaterial);
@@ -353,12 +353,12 @@ class Menu extends React.Component {
       const shadowMaterial = new THREE.MeshBasicMaterial({
         map: shadowTexture,
         transparent: true,
-        opacity: .5,
+        opacity: 0.5,
         name,
         userData: {
           animationDelay,
-          animationDuration,
-        },
+          animationDuration
+        }
       });
       const shadowPlane = new THREE.Mesh(shadowGeometry, shadowMaterial);
       shadowPlane.position.set(x, y - SHADOW_OFFSET, z - 0.5);
@@ -392,15 +392,15 @@ class Menu extends React.Component {
     if (intersects.length > 0) {
       const {
         object: {
-          material: { name },
-        },
+          material: { name }
+        }
       } = intersects[0];
       if (name && name !== this.state.activeButton) {
         this.setState({ activeButton: name });
       }
-      document.body.classList.add('pointer');
+      document.body.classList.add("pointer");
     } else {
-      document.body.classList.remove('pointer');
+      document.body.classList.remove("pointer");
     }
   }
 
@@ -475,7 +475,7 @@ class Menu extends React.Component {
 
     const tooltips = {
       disc: () => <p>Choose Songs</p>,
-      settings: () => <p>About</p>,
+      settings: () => <p>Coming Soon</p>,
       hide: () => <p>Hide</p>,
       rewind: () => <p>Rewind</p>,
       fastforward: () => <p>Fast Forward</p>,
@@ -502,13 +502,13 @@ class Menu extends React.Component {
             Repeat: 1 / All / <strong>Off</strong>
           </p>
         );
-        if (repeat === 'track') {
+        if (repeat === "track") {
           repeatElement = (
             <p>
               Repeat: <strong>1</strong> / All / Off
             </p>
           );
-        } else if (repeat === 'context') {
+        } else if (repeat === "context") {
           repeatElement = (
             <p>
               Repeat: 1 / <strong>All</strong> / Off
@@ -518,7 +518,7 @@ class Menu extends React.Component {
         return repeatElement;
       },
       stop: () => <p>Stop</p>,
-      advanced: () => <p>About</p>,
+      advanced: () => <p>About</p>
     };
 
     return tooltips[this.state.activeButton]();
@@ -535,15 +535,15 @@ class Menu extends React.Component {
       (obj, { name, position, onClick }) => ({
         [name]: {
           onClick,
-          position,
+          position
         },
-        ...obj,
+        ...obj
       }),
       {}
     );
     this.menuElements.advanced = {
       onClick: () => {},
-      position: [2.25, -4.3, 1],
+      position: [2.25, -4.3, 1]
     };
 
     this.placeOrbitsInScene();
@@ -567,10 +567,10 @@ class Menu extends React.Component {
 
 Menu.propTypes = {
   toggleMenu: PropTypes.func.isRequired,
-  repeat: PropTypes.oneOf(['off', 'context', 'track']).isRequired,
+  repeat: PropTypes.oneOf(["off", "context", "track"]).isRequired,
   hideDash: PropTypes.func.isRequired,
   hidden: PropTypes.bool.isRequired,
-  showIfHidden: PropTypes.func.isRequired,
+  showIfHidden: PropTypes.func.isRequired
 };
 
 export default Menu;
