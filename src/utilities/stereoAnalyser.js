@@ -57,7 +57,6 @@ export default class StereoAnalyser {
     this.audioContext = new AudioContext();
 
     const analyserLeft = this.createAnalyserNode();
-    console.log(analyserLeft);
     const analyserRight = this.createAnalyserNode();
     const splitter = this.audioContext.createChannelSplitter(2);
     // createMediaElementSource might be the cause of choppy audio in

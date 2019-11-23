@@ -53,7 +53,6 @@ export default class AudioManager {
   playAndReport() {
     const { tracks, playlist, currentTrack = 0 } = this.reduxState;
     const trackKey = playlist[currentTrack];
-    // console.log({trackKey})
     const nextSong = tracks[trackKey].file;
 
     if (nextSong instanceof File) {

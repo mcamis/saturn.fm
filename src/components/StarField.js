@@ -7,8 +7,8 @@ import { randomSize, randomPosition, sceneWidth } from "utilities/helpers";
 
 const spaceshipPositions = {
   plain: [2.5, -3.5, 510],
-  spinny: [-2.5, 3.5, 510],
-  fast: [0, -3, 510]
+  spinny: [-2.5, 3.5, 505],
+  fast: [0, 3, 510]
 };
 
 class StarField extends React.Component {
@@ -72,7 +72,7 @@ class StarField extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.hidden !== nextProps.hidden) {
+    if (this.props.hidden !== nextProps.hidden || this.props.animation !== nextProps.animation) {
       return true;
     }
     return false;
@@ -188,28 +188,29 @@ class StarField extends React.Component {
 
   plain() {
     this.spaceShip.rotateZ(0.01);
-    this.spaceShip.position.z -= 0.075;
+    this.spaceShip.position.z -= 0.045;
     if (this.spaceShip.position.z < 400) {
-      this.spaceShip.position.z = 500;
+      this.props.setRandomAnimation();
     }
   }
 
   spinny() {
-    this.spaceShip.rotateZ(-0.05);
-    this.spaceShip.position.z -= 0.075;
-    this.spaceShip.position.x -= 0.0075;
-    this.spaceShip.position.x -= 0.0075;
-    if (this.spaceShip.position.z < 300) {
-      this.spaceShip.position.z = 520;
+    this.spaceShip.rotateZ(0.0025);
+    this.spaceShip.position.z -= 0.2;
+    this.spaceShip.position.x += 0.05;
+    this.spaceShip.position.y += 0.025;
+
+    if (this.spaceShip.position.z < 400) {
+      this.props.setRandomAnimation();
     }
   }
 
   fast() {
     this.spaceShip.rotateZ(-0.005);
-    this.spaceShip.position.z -= 0.12;
+    this.spaceShip.position.z -= 0.05;
     this.spaceShip.position.x -= 0.0075;
-    if (this.spaceShip.position.z < 300) {
-      this.spaceShip.position.z = 520;
+    if (this.spaceShip.position.z < 400) {
+      this.props.setRandomAnimation();
     }
   }
 

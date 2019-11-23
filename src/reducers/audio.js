@@ -24,7 +24,9 @@ export const defaultState = {
       track: 1,
       album: "Entertainment System",
       artist: "Professor Kliq",
-      title: "No Refuge"
+      title: "No Refuge",
+      href: "https://www.professorkliq.com",
+
     }
   }
 };
