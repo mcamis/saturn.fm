@@ -37,7 +37,7 @@ function getMediaTags(file) {
 }
 
 async function generateTrackInfo(file) {
-  let metadata;
+  let metadata = {};
   try {
     metadata = await getMediaTags(file);
   } catch (err) {
