@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 
-import { sceneWidth } from "utilities/helpers";
+import { throttle, sceneWidth } from "utilities/helpers";
 
 import {
   animateButtonPosition,
@@ -57,6 +57,8 @@ class Menu extends React.Component {
       "stop",
       "advanced"
     ];
+
+    this.onMouseMoveThrottled = throttle(this.onMouseMove.bind(this), 200);
     autobind(this);
   }
 
@@ -221,7 +223,7 @@ class Menu extends React.Component {
     });
 
     domElement.addEventListener("mousedown", e => this.onMouseDown(e), false);
-    domElement.addEventListener("mousemove", e => this.onMouseMove(e), false);
+    domElement.addEventListener("mousemove", e => this.onMouseMoveThrottled(e), false);
   }
 
   setupOrbAnimation() {
@@ -495,7 +497,7 @@ class Menu extends React.Component {
         if (playing) {
           playElement = (
             <p>
-              <strong>Play</strong>/ Pause
+              <strong>Play </strong>/ Pause
             </p>
           );
         } else if (paused) {
