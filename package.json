@@ -1,5 +1,6 @@
 {
     "name": "saturn-fm",
+    "main": "main.js",
     "devDependencies": {
         "@babel/core": "^7.7.2",
         "@babel/preset-env": "^7.7.1",
@@ -40,6 +41,7 @@
         "build": "NODE_ENV=production webpack --config config/webpack.config.prod.js",
         "build:analyze": "NODE_ENV=production webpack --config config/webpack.config.analyze.js",
         "deploy": "NODE_ENV=production webpack --config config/webpack.config.prod.js; gh-pages -d dist",
+        "electron": "electron .",
         "lint": "eslint ./src ./config",
         "lint:fix": "eslint --fix ./src ./config",
         "start": "NODE_ENV=development webpack-dev-server --hot --inline --config config/webpack.config.dev.js",
@@ -50,6 +52,7 @@
         "@babel/runtime": "^7.7.2",
         "@sentry/browser": "^5.9.1",
         "core-js": "^3.4.1",
+        "electron": "^7.1.2",
         "es6-tween": "^5.5.10",
         "eslint-plugin-react-hooks": "^2.3.0",
         "jsmediatags": "^3.8.1",
