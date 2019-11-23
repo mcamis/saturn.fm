@@ -1,6 +1,6 @@
 {
-  "app.js": "./js/app.bc87b1cceda3b9e5341f.js",
-  "app.js.map": "./js/app.bc87b1cceda3b9e5341f.js.map",
+  "app.js": "./js/app.39abaf6d22c6def2f2b9.js",
+  "app.js.map": "./js/app.39abaf6d22c6def2f2b9.js.map",
   "vendor.js": "./js/vendor.c31a677b59b93a295a9e.js",
   "vendor.js.map": "./js/vendor.c31a677b59b93a295a9e.js.map",
   ".DS_Store": "./.DS_Store",
@@ -34,6 +34,7 @@
   "images/track.png": "./images/track.png",
   "index.html": "./index.html",
   "js/vendor.c31a677b59b93a295a9e.js.LICENSE": "./js/vendor.c31a677b59b93a295a9e.js.LICENSE",
+  "models/.DS_Store": "./models/.DS_Store",
   "models/cube.gltf": "./models/cube.gltf",
   "models/cubeBigger.gltf": "./models/cubeBigger.gltf",
   "models/saturn_v1.bin": "./models/saturn_v1.bin",
