@@ -83,8 +83,10 @@ class Menu extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.activeButton !== prevState.activeButton) {
-      this.highlightEffect.currentTime = 0;
-      this.highlightEffect.play();
+      if(this.canPlay()){
+        this.highlightEffect.currentTime = 0;
+        this.highlightEffect.play();
+      }
       const [x, y] = this.menuElements[this.state.activeButton].position;
       this.orbits.pink.position.set(x, y, 2);
       this.orbits.purple.position.set(x, y, 2.03);
@@ -404,14 +406,21 @@ class Menu extends React.Component {
     }
   }
 
+
+  canPlay() {
+    return this.props.audioManager.analyser.audioContext.state !== 'suspended'
+  }
+
   hideMenu() {
     if (this.props.hidden) {
       return this.showIfHidden();
     }
 
     // TODO: Switch this to the real sound effect
-    this.highlightEffect.currentTime = 0;
-    this.highlightEffect.play();
+    if(this.canPlay()){
+      this.highlightEffect.currentTime = 0;
+      this.highlightEffect.play();
+    }
 
     this.planes.forEach(plane => {
       const { x, y, z } = plane.position;
@@ -465,8 +474,10 @@ class Menu extends React.Component {
     }, 250);
 
     // TODO: Scale up onClick
-    this.buttonEffect.currentTime = 0;
-    this.buttonEffect.play();
+    if(this.canPlay()){
+      this.buttonEffect.currentTime = 0;
+      this.buttonEffect.play();
+    }
     onClick();
   }
 
