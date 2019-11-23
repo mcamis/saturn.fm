@@ -77,6 +77,8 @@ export default class AudioManager {
   revokeSongUrl() {
     const { tracks, playlist, currentTrack = 0 } = this.reduxState;
     const trackKey = playlist[currentTrack];
+    console.log(tracks);
+    console.log(trackKey);
     const currentSong = tracks[trackKey].file;
     if (currentSong instanceof File) {
       URL.revokeObjectURL(currentSong);

@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 
-import { throttle, sceneWidth } from "utilities/helpers";
+import { throttle, sceneWidth, textureAnimator } from "utilities/helpers";
 
 import {
   animateButtonPosition,
@@ -85,10 +85,6 @@ class Menu extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.activeButton !== prevState.activeButton) {
-      if(this.canPlay()){
-        this.highlightEffect.currentTime = 0;
-        this.highlightEffect.play();
-      }
       const [x, y] = this.menuElements[this.state.activeButton].position;
       this.orbits.pink.position.set(x, y, 2);
       this.orbits.purple.position.set(x, y, 2.03);
@@ -163,9 +159,11 @@ class Menu extends React.Component {
           nextIndex += 3;
           break;
         case "Enter":
+          const nextName = this.buttons[nextIndex];
+          const nextObject = this.planes.find(plane => plane.name === nextName);
           this.triggerButtonCallback(
-            this.menuElements[this.buttons[nextIndex]],
-            this.menuElements[this.buttons[nextIndex]].onClick
+            nextObject,
+            this.menuElements[nextName].onClick
           );
           break;
         default:
@@ -173,7 +171,9 @@ class Menu extends React.Component {
       }
 
       if (nextIndex >= 0 && nextIndex < this.buttons.length) {
-        this.setState({ activeButton: this.buttons[nextIndex] });
+        this.setState({ activeButton: this.buttons[nextIndex] }, () =>
+          this.playHighlight()
+        );
       }
     });
   }
@@ -234,7 +234,7 @@ class Menu extends React.Component {
     globeTexture.minFilter = THREE.NearestFilter;
 
     // https://stemkoski.github.io/Three.js/Texture-Animation.html
-    this.textureAnimator = new this.TextureAnimator(globeTexture, 455, 40);
+    this.textureAnimator = new textureAnimator(globeTexture, 455, 40);
 
     const globeMaterial = new THREE.MeshBasicMaterial({
       map: globeTexture,
@@ -250,6 +250,7 @@ class Menu extends React.Component {
 
     const spinningGlobe = new THREE.Mesh(planeGeometry, globeMaterial);
     spinningGlobe.position.set(x, y, z);
+    spinningGlobe.name = "advanced";
 
     shadowTexture.magFilter = THREE.NearestFilter;
     shadowTexture.minFilter = THREE.NearestFilter;
@@ -258,12 +259,13 @@ class Menu extends React.Component {
       map: shadowTexture,
       transparent: true,
       opacity: 0.5,
-      name,
       userData: {
         animationDelay: 900,
         animationDuration: 300
       }
     });
+
+
 
     const shadowPlane = new THREE.Mesh(shadowGeometry, shadowMaterial);
     shadowPlane.position.set(x, y - SHADOW_OFFSET, z - 0.5);
@@ -273,30 +275,6 @@ class Menu extends React.Component {
 
     this.planes.push(spinningGlobe);
     this.scene.add(spinningGlobe);
-  }
-
-  // TODO: Move to utility class
-  TextureAnimator(texture, tilesHoriz, tileDispDuration) {
-    this.tilesHorizontal = tilesHoriz;
-    this.numberOfTiles = tilesHoriz;
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.wrapT = THREE.RepeatWrapping;
-    texture.repeat.set(1 / this.tilesHorizontal, 1);
-
-    this.tileDisplayDuration = tileDispDuration;
-    this.currentDisplayTime = 0;
-    this.currentTile = 0;
-
-    this.update = milliSec => {
-      this.currentDisplayTime += milliSec;
-      while (this.currentDisplayTime > this.tileDisplayDuration) {
-        this.currentDisplayTime -= this.tileDisplayDuration;
-        this.currentTile += 1;
-        if (this.currentTile === this.numberOfTiles) this.currentTile = 0;
-        const currentColumn = this.currentTile % this.tilesHorizontal;
-        texture.offset.x = currentColumn / this.tilesHorizontal;
-      }
-    };
   }
 
   placeOrbitsInScene() {
@@ -350,6 +328,7 @@ class Menu extends React.Component {
 
     const plane = new THREE.Mesh(planeGeometry, planeMaterial);
     plane.position.set(x, y, z);
+    plane.name = name;
     if (showShadow) {
       shadowTexture.magFilter = THREE.NearestFilter;
       shadowTexture.minFilter = THREE.NearestFilter;
@@ -389,7 +368,6 @@ class Menu extends React.Component {
     }
   }
 
-  // TODO: Throttle this
   manageActiveButton() {
     this.raycaster.setFromCamera(this.mouse, this.camera);
     const intersects = this.raycaster.intersectObjects(this.planes);
@@ -400,7 +378,13 @@ class Menu extends React.Component {
         }
       } = intersects[0];
       if (name && name !== this.state.activeButton) {
-        this.setState({ activeButton: name });
+        this.setState({ activeButton: name }, () => {
+          if (this.canPlay()) {
+            this.highlightEffect.currentTime = 0;
+            this.highlightEffect.play();
+          }
+        });
+
       }
       document.body.classList.add("pointer");
     } else {
@@ -419,7 +403,7 @@ class Menu extends React.Component {
     }
 
     // TODO: Switch this to the real sound effect
-    if(this.canPlay()){
+    if (this.canPlay()) {
       this.highlightEffect.currentTime = 0;
       this.highlightEffect.play();
     }
@@ -476,7 +460,7 @@ class Menu extends React.Component {
     }, 250);
 
     // TODO: Scale up onClick
-    if(this.canPlay()){
+    if (this.canPlay()) {
       this.buttonEffect.currentTime = 0;
       this.buttonEffect.play();
     }
@@ -555,11 +539,18 @@ class Menu extends React.Component {
       {}
     );
     this.menuElements.advanced = {
-      onClick: () => {},
+      onClick: this.props.toggleAbout,
       position: [2.25, -4.3, 1]
     };
 
     this.placeOrbitsInScene();
+  }
+
+  playHighlight() {
+    if (this.canPlay()) {
+      this.highlightEffect.currentTime = 0;
+      this.highlightEffect.play();
+    }
   }
 
   render() {

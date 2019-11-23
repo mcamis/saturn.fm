@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 export const average = arr => arr.filter(Boolean).reduce((p, c) => p + c, 0) / arr.length;
 
 export const sceneWidth = () => {
@@ -46,6 +48,31 @@ export const throttle = (func, timeFrame = 0) => {
     if (now - lastTime >= timeFrame) {
       func(args);
       lastTime = now;
+    }
+  };
+}
+
+
+
+// TODO: Move to utility class
+export function textureAnimator(texture, tilesHorizontal, tileDisplayDuration) {
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.RepeatWrapping;
+  texture.repeat.set(1 / tilesHorizontal, 1);
+
+  let currentDisplayTime = 0;
+  let currentTile = 0;
+
+  this.update = milliSec => {
+    currentDisplayTime += milliSec;
+    while (currentDisplayTime > tileDisplayDuration) {
+      currentDisplayTime -= tileDisplayDuration;
+      currentTile += 1;
+
+      if (currentTile === tilesHorizontal) currentTile = 0;
+
+      const currentColumn = currentTile % tilesHorizontal;
+      texture.offset.x = currentColumn / tilesHorizontal;
     }
   };
 }
