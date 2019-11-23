@@ -56,9 +56,10 @@ export default class StereoAnalyser {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     this.audioContext = new AudioContext();
 
-    // Firefox AudioContext starts in a running state, even though it will block all audio play events
+    // For Firefox & Mobile Safari AudioContext starts in a running state, even though it will block all audio play events
+    const isMobileSafari = /iP(hone|od|ad)/.test(navigator.platform);
     const isFirefox = navigator.userAgent.indexOf("Firefox") > 0;
-    if(isFirefox) {
+    if(isFirefox || isMobileSafari) {
       this.audioContext.suspend();
     }
 
