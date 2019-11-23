@@ -56,6 +56,12 @@ export default class StereoAnalyser {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     this.audioContext = new AudioContext();
 
+    // Firefox AudioContext starts in a running state, even though it will block all audio play events
+    const isFirefox = navigator.userAgent.indexOf("Firefox") > 0;
+    if(isFirefox) {
+      this.audioContext.suspend();
+    }
+
     const analyserLeft = this.createAnalyserNode();
     const analyserRight = this.createAnalyserNode();
     const splitter = this.audioContext.createChannelSplitter(2);
