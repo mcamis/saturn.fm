@@ -59,8 +59,8 @@ export default class StereoAnalyser {
     // For Firefox & Mobile Safari AudioContext starts in a running state, even though it will block all audio play events
     const isMobileSafari = /iP(hone|od|ad)/.test(navigator.platform);
     const isFirefox = navigator.userAgent.indexOf("Firefox") > 0;
-    if(isFirefox || isMobileSafari) {
-      this.audioContext.suspend();
+    if (isFirefox || isMobileSafari) {
+      this.audioContext.suspend().then(() => { console.log(this.audioContext) }).catch(e => console.log(e));
     }
 
     const analyserLeft = this.createAnalyserNode();
@@ -133,15 +133,13 @@ export default class StereoAnalyser {
   // Public methods ahoy
 
   start() {
-    if (this.audioContext.state === 'suspended') {
-      this.audioContext.resume();
+    if (this.audioContext.state !== 'suspended') {
+      this.startAnalyser();
     }
-    this.startAnalyser();
   }
 
   pause() {
     this.pauseAnalyser();
-    this.audioContext.suspend();
   }
 
   stop() {

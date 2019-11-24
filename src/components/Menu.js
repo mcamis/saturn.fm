@@ -58,7 +58,7 @@ class Menu extends React.Component {
       "advanced"
     ];
 
-    this.onMouseMoveThrottled = throttle(this.onMouseMove.bind(this), 200);
+    this.onMouseMoveThrottled = throttle(this.onMouseMove.bind(this), 100);
     autobind(this);
   }
 
@@ -378,13 +378,8 @@ class Menu extends React.Component {
         }
       } = intersects[0];
       if (name && name !== this.state.activeButton) {
-        this.setState({ activeButton: name }, () => {
-          if (this.canPlay()) {
-            this.highlightEffect.currentTime = 0;
-            this.highlightEffect.play();
-          }
-        });
-
+        this.setState({ activeButton: name });
+        this.playHighlight();
       }
       document.body.classList.add("pointer");
     } else {
@@ -393,7 +388,11 @@ class Menu extends React.Component {
   }
 
 
-  canPlay() {
+  canPlay(playOnAllDevice = false) {
+    if (playOnAllDevice) {
+      return this.props.audioManager.analyser.audioContext.state !== 'suspended'
+
+    }
     return this.props.audioManager.analyser.audioContext.state !== 'suspended'
   }
 
@@ -403,10 +402,7 @@ class Menu extends React.Component {
     }
 
     // TODO: Switch this to the real sound effect
-    if (this.canPlay()) {
-      this.highlightEffect.currentTime = 0;
-      this.highlightEffect.play();
-    }
+    this.playHighlight();
 
     this.planes.forEach(plane => {
       const { x, y, z } = plane.position;
@@ -459,8 +455,7 @@ class Menu extends React.Component {
         .start();
     }, 250);
 
-    // TODO: Scale up onClick
-    if (this.canPlay()) {
+    if (this.canPlay(true)) {
       this.buttonEffect.currentTime = 0;
       this.buttonEffect.play();
     }
@@ -546,10 +541,14 @@ class Menu extends React.Component {
     this.placeOrbitsInScene();
   }
 
+
   playHighlight() {
-    if (this.canPlay()) {
-      this.highlightEffect.currentTime = 0;
-      this.highlightEffect.play();
+    // Only autoplay highlight on desktop to prevent multiple sounds at once
+    if (typeof window.orientation === 'undefined') {
+      if (this.props.audioManager.analyser.audioContext.state === "running") {
+        this.highlightEffect.currentTime = 0;
+        this.highlightEffect.play();
+      }
     }
   }
 

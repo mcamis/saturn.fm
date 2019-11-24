@@ -44,7 +44,7 @@ export default class AudioManager {
     }
     if (audioElement.paused || audioElement.ended) {
       // Delay so the song and sound effect don't overlap
-      setTimeout(() => this.playAndReport(), 500);
+      this.analyser.audioContext.resume().then(() => { this.playAndReport(); });
     } else {
       audioElement.pause();
     }

@@ -95,13 +95,6 @@ class App extends Component {
     }
   }
 
-  appeaseSafari() {
-    // ugh
-    if (this.audioManager.analyser.audioContext.state === "suspended") {
-      this.audioManager.analyser.audioContext.resume();
-    }
-  }
-
   setAnimationCallback(callback) {
     this.setState(prevState => ({
       frameCallbacks: [...prevState.frameCallbacks, callback]
@@ -135,7 +128,6 @@ class App extends Component {
     return (
       <div
         className={this.getClassNames()}
-        onClick={() => this.appeaseSafari()}
       >
         <Header
           currentTrack={this.props.audio.currentTrack}
