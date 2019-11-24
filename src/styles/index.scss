@@ -172,17 +172,16 @@ canvas {
   }
 }
 
-
 @keyframes fadeInOut {
   0% {
     opacity: 0;
   }
 
-  10%{
+  10% {
     opacity: 1;
   }
 
-  75%{
+  75% {
     opacity: 1;
   }
 
@@ -190,7 +189,6 @@ canvas {
     opacity: 0;
   }
 }
-
 
 @keyframes fadeOut {
   from {
@@ -477,6 +475,7 @@ header {
     .playlists {
       font-size: 16px !important;
       text-align: left;
+      padding: 1em;
     }
     line-height: 22px;
     em {
@@ -816,6 +815,7 @@ blink {
   transform: scaleX(-1);
   display: inline-block;
 }
+
 .current-track-info {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
   font-weight: lighter;
@@ -846,4 +846,44 @@ blink {
     font-weight: normal;
     color: white;
   }
+}
+
+.start-context {
+position: fixed;
+z-index: 9999;
+background: rgba(10,5,25,.5);
+left: 0;
+right: 0;
+bottom: 0;
+top: 0;
+display: flex;
+text-align: center;
+align-items: center;
+justify-content: center;
+font-size: 16px;
+button {
+  transition: background-color 250ms ease;
+  background: none;
+  border: 1px solid white;
+  color: white;
+  padding: .5em 1.5em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  color: white;
+  border-radius: 2px;
+  background: rgba(0,0,0,.75);
+
+  box-shadow: 0 5px 20px 10px rgba(255,255,255,.2);
+  span {
+    display: block;
+    margin-bottom:8px;
+    padding-bottom: 8px;
+    border-bottom: .5px solid white;
+  }
+  &:hover,
+  &:active {
+    background: rgba(255,255,255,.25);
+    cursor: pointer;
+  }
+}
 }

@@ -123,7 +123,17 @@ class Menu extends React.Component {
 
       const { object } = intersects[0];
 
-      this.triggerButtonCallback(object, onClick);
+      if (this.props.audioManager.analyser.audioContext.state === "running") {
+        this.buttonEffect.currentTime = 0;
+        this.buttonEffect.play();
+        this.triggerButtonCallback(object, onClick);
+      } else {
+        this.props.audioManager.analyser.audioContext.resume().then(() => {
+          this.buttonEffect.currentTime = 0;
+          this.buttonEffect.play();
+          this.triggerButtonCallback(object, onClick);
+        }).catch(e => console.log(e));
+      }
     }
   }
 
@@ -161,10 +171,24 @@ class Menu extends React.Component {
         case "Enter":
           const nextName = this.buttons[nextIndex];
           const nextObject = this.planes.find(plane => plane.name === nextName);
-          this.triggerButtonCallback(
-            nextObject,
-            this.menuElements[nextName].onClick
-          );
+          if (this.props.audioManager.analyser.audioContext.state === "running") {
+            this.buttonEffect.currentTime = 0;
+            this.buttonEffect.play();
+            this.triggerButtonCallback(
+              nextObject,
+              this.menuElements[nextName].onClick
+            );
+          } else {
+            this.props.audioManager.analyser.audioContext.resume().then(() => {
+              this.buttonEffect.currentTime = 0;
+              this.buttonEffect.play();
+              this.triggerButtonCallback(
+                nextObject,
+                this.menuElements[nextName].onClick
+              );
+            }).catch(e => console.log(e));
+          }
+
           break;
         default:
           nextIndex = -1;
@@ -387,15 +411,6 @@ class Menu extends React.Component {
     }
   }
 
-
-  canPlay(playOnAllDevice = false) {
-    if (playOnAllDevice) {
-      return this.props.audioManager.analyser.audioContext.state !== 'suspended'
-
-    }
-    return this.props.audioManager.analyser.audioContext.state !== 'suspended'
-  }
-
   hideMenu() {
     if (this.props.hidden) {
       return this.showIfHidden();
@@ -455,10 +470,6 @@ class Menu extends React.Component {
         .start();
     }, 250);
 
-    if (this.canPlay(true)) {
-      this.buttonEffect.currentTime = 0;
-      this.buttonEffect.play();
-    }
     onClick();
   }
 

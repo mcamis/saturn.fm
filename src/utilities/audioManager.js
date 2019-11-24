@@ -43,8 +43,7 @@ export default class AudioManager {
       audioActions.setCurrentTrack(0);
     }
     if (audioElement.paused || audioElement.ended) {
-      // Delay so the song and sound effect don't overlap
-      this.analyser.audioContext.resume().then(() => { this.playAndReport(); });
+      this.playAndReport();
     } else {
       audioElement.pause();
     }
@@ -75,9 +74,9 @@ export default class AudioManager {
 
   // Prevent memory leaks and revoke ObjectURL if one exists
   revokeSongUrl() {
-    
+
     const { tracks, playlist, currentTrack = 0 } = this.reduxState;
-    if(playlist.length === 1) return;
+    if (playlist.length === 1) return;
     const trackKey = playlist[currentTrack];
     const currentSong = tracks[trackKey].file;
     if (currentSong instanceof File) {

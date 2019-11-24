@@ -124,6 +124,7 @@ class App extends Component {
 
     const currentKey = playlist[currentTrack];
     const currentInfo = tracks[currentKey];
+    console.log(this.audioManager.analyser.audioContext.state);
 
     return (
       <div
@@ -184,6 +185,10 @@ class App extends Component {
           </div>
         )}
         {currentInfo && <CurrentTrackDisplay {...currentInfo} />}
+        {this.audioManager.analyser.audioContext.state === "suspended" &&
+          <div className="start-context">
+            <button onClick={() => this.audioManager.analyser.audioContext.resume().then(() => this.forceUpdate())}><span>Press Start</span> スタート</button>
+          </div>}
 
       </div>
     );
