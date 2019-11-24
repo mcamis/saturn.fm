@@ -75,10 +75,10 @@ export default class AudioManager {
 
   // Prevent memory leaks and revoke ObjectURL if one exists
   revokeSongUrl() {
+    
     const { tracks, playlist, currentTrack = 0 } = this.reduxState;
+    if(playlist.length === 1) return;
     const trackKey = playlist[currentTrack];
-    console.log(tracks);
-    console.log(trackKey);
     const currentSong = tracks[trackKey].file;
     if (currentSong instanceof File) {
       URL.revokeObjectURL(currentSong);
