@@ -11,6 +11,10 @@ export function average(arr) {
     }
   }
 
+  if (!filteredLength) {
+    return 0;
+  }
+
   return fullValue / filteredLength;
 }
 
