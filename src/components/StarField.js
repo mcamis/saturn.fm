@@ -54,8 +54,8 @@ class StarField extends React.Component {
 
     const width = sceneWidth();
     const height = window.innerHeight;
-    this.width = width * 1.75;
-    this.height = height * 1.75;
+    this.width = width;
+    this.height = height;
 
     window.addEventListener("resize", () => {
       clearTimeout(this.timeOut);
@@ -247,7 +247,7 @@ class StarField extends React.Component {
 
   animateStars() {
     for (let i = 0; i < this.stars.length; i += 1) {
-      this.stars[i].position.z += Math.random() * (12 - 8) + 8;
+      this.stars[i].position.z += 3 + i * 0.2;
 
       // if the particle is too close move it to the back
       if (this.stars[i].position.z > 550) {
