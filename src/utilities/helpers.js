@@ -2,23 +2,17 @@ import * as THREE from "three";
 import * as TWEEN from "es6-tween";
 
 export function average(arr) {
-  let fullValue = 0;
-  let filteredLength = 0;
-  for (let i = 0; i < arr.length; i += 1) {
-    // Filter out completely empty values for more interesting visuals when
-    // are mroe weighted to a specific range
-    if (arr[i]) {
-      fullValue += arr[i];
-      filteredLength += 1;
-    }
-  }
-
   // Prevent returning NaN
-  if (!filteredLength) {
+  if (!arr.length) {
     return 0;
   }
 
-  return fullValue / filteredLength;
+  let fullValue = 0;
+  for (let i = 0; i < arr.length; i += 1) {
+    fullValue += arr[i];
+  }
+
+  return fullValue / arr.length;
 }
 
 export const sceneWidth = () => {

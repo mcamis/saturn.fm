@@ -36,9 +36,13 @@ const CurrentTrackDisplay = ({ href, artist, title }) => {
 };
 
 CurrentTrackDisplay.propTypes = {
-  href: PropTypes.string.isRequired,
+  href: PropTypes.string,
   artist: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired
+};
+
+CurrentTrackDisplay.defaultProps = {
+  href: ""
 };
 
 class App extends Component {
@@ -54,7 +58,7 @@ class App extends Component {
       hidden: false,
       showAboutModal: false,
       fileReaderVisible: false,
-      frameCallbacks: [],
+      frameCallbacks: []
     };
     this.frameId = null;
   }
@@ -65,7 +69,7 @@ class App extends Component {
 
   getClassNames() {
     const {
-      audio: { playing, paused },
+      audio: { playing, paused }
     } = this.props;
 
     const hiddenClass = this.state.hidden ? "hidden" : "";
@@ -86,13 +90,13 @@ class App extends Component {
       withoutCurrent[Math.floor(Math.random() * withoutCurrent.length)];
 
     this.setState({
-      animation: nextAnimation,
+      animation: nextAnimation
     });
   }
 
   setAnimationCallback(callback) {
     this.setState(prevState => ({
-      frameCallbacks: [...prevState.frameCallbacks, callback],
+      frameCallbacks: [...prevState.frameCallbacks, callback]
     }));
   }
 
@@ -105,7 +109,7 @@ class App extends Component {
     this.setState(prevState => ({
       hidden: !prevState.hidden,
       show: false,
-      animation,
+      animation
     }));
   }
 
@@ -134,7 +138,7 @@ class App extends Component {
 
   render() {
     const {
-      audio: { playing, paused, repeat, playlist, currentTrack, tracks },
+      audio: { playing, paused, repeat, playlist, currentTrack, tracks }
     } = this.props;
 
     const currentKey = playlist[currentTrack];
@@ -153,7 +157,7 @@ class App extends Component {
           toggleMenu={this.toggleMenu}
           toggleAbout={() =>
             this.setState(prevState => ({
-              showAboutModal: !prevState.showAboutModal,
+              showAboutModal: !prevState.showAboutModal
             }))
           }
           hideDash={this.hideDash}
@@ -191,7 +195,7 @@ class App extends Component {
             <About
               toggleAbout={() =>
                 this.setState(prevState => ({
-                  showAboutModal: !prevState.showAboutModal,
+                  showAboutModal: !prevState.showAboutModal
                 }))
               }
             />
@@ -228,18 +232,18 @@ App.propTypes = {
     currentTrack: PropTypes.number,
     playing: PropTypes.bool.isRequired,
     paused: PropTypes.bool.isRequired,
-    repeat: PropTypes.oneOf(["off", "context", "track"]).isRequired,
+    repeat: PropTypes.oneOf(["off", "context", "track"]).isRequired
   }).isRequired,
-  toast: PropTypes.string,
+  toast: PropTypes.string
 };
 
 App.defaultProps = {
-  toast: "",
+  toast: ""
 };
 
 function mapStateToProps(state) {
   return {
-    audio: state.audio,
+    audio: state.audio
   };
 }
 export const AppContainer = App;
