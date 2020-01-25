@@ -5,12 +5,15 @@ export function average(arr) {
   let fullValue = 0;
   let filteredLength = 0;
   for (let i = 0; i < arr.length; i += 1) {
+    // Filter out completely empty values for more interesting visuals when
+    // are mroe weighted to a specific range
     if (arr[i]) {
       fullValue += arr[i];
       filteredLength += 1;
     }
   }
 
+  // Prevent returning NaN
   if (!filteredLength) {
     return 0;
   }

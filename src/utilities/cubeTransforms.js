@@ -9,43 +9,36 @@ const MAX_ACTIVE_ROTATION = 0.03;
 const MIN_ACTIVE_ROTATION = 0.01;
 const IDLE_ROTATION = 0.0025;
 
+const randomRange = (max, min) => Math.random() * (max - min) + min;
+
 const colorTween = (target, channelFFT) => {
   const logVal = logarithmic(channelFFT * COLOR_TWEENING_SCALE);
   const hue = 142.5 - logVal;
 
-  // const initial = new THREE.Color(target.material.color.getHex());
-  // TODO: This HSL change is quick but doesn't exactly match the original behavior
-  const newColor = new THREE.Color(`hsl(${hue > 0 ? hue : 0}, 100%, 48%)`);
+  // // TODO: This HSL change is quick but doesn't exactly match the original behavior
+  const { r, g, b } = new THREE.Color(`hsl(${hue > 0 ? hue : 0}, 100%, 48%)`);
 
-  target.material.color.set(newColor);
-  // return new Tween(initial)
-  //   .to(newColor, 150)
-  //   .easing(Easing.Quadratic.Out)
-  //   .onUpdate(() => {
-  //     target.material.color.set(initial);
-  //   })
-  //   .start();
+  return new Tween(target.material.color)
+    .to({ r, g, b }, 100)
+    .easing(Easing.Linear.None)
+    .start();
 };
 
 export const updateScaleAndColor = (cube, averageFFT) => {
   colorTween(cube, averageFFT);
 
+  const derivedInfluence = averageFFT * 0.007 > 1 ? 1 : averageFFT * 0.007;
+  cube.morphTargetInfluences[0] = derivedInfluence;
+
+  // TODO: Why did I use these magic numbers?
   const derivedSize = averageFFT * 0.008 + 0.5;
   const m = derivedSize < 1.65 ? derivedSize : 1.65;
 
-  // eslint-disable-next-line
-  const derivedInfluence = averageFFT * 0.007 > 1 ? 1 : averageFFT * 0.007;
-
-  cube.morphTargetInfluences[0] = derivedInfluence;
-  // cube.scale.set(derivedMax, derivedMax, derivedMax);
-
   return new Tween(cube.scale)
-    .to({ x: m, y: m, z: m }, 100)
-    .easing(Easing.Quadratic.Out)
+    .to({ x: m, y: m, z: m }, 50)
+    .easing(Easing.Linear.None)
     .start();
 };
-
-const randomRange = (max, min) => Math.random() * (max - min) + min;
 
 export const activeRotation = (cube, modifier) => {
   // TODO: At random interval, flip directions
