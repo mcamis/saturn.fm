@@ -247,15 +247,13 @@ class StarField extends React.Component {
 
   animateStars() {
     for (let i = 0; i < this.stars.length; i += 1) {
-      const animatedStar = this.stars[i];
-
-      animatedStar.position.z += Math.random() * (12 - 8) + 8;
+      this.stars[i].position.z += Math.random() * (12 - 8) + 8;
 
       // if the particle is too close move it to the back
-      if (animatedStar.position.z > 550) {
-        animatedStar.position.z -= 800;
-        animatedStar.position.x = randomPosition(this.width);
-        animatedStar.position.y = randomPosition(this.height);
+      if (this.stars[i].position.z > 550) {
+        this.stars[i].position.z -= 800;
+        this.stars[i].position.x = randomPosition(this.width);
+        this.stars[i].position.y = randomPosition(this.height);
       }
     }
   }

@@ -8,7 +8,7 @@ import { sceneWidth } from "utilities/helpers";
 import {
   activeRotation,
   idleRotation,
-  updateScaleAndColor
+  updateScaleAndColor,
 } from "utilities/cubeTransforms";
 
 class Cubes extends React.Component {
@@ -85,8 +85,8 @@ class Cubes extends React.Component {
       "./models/cubeBigger.gltf",
       ({
         scene: {
-          children: [, , cubeModel]
-        }
+          children: [, , cubeModel],
+        },
       }) => {
         // eslint-disable-next-line no-param-reassign
         cubeModel.material.color = new THREE.Color("hsl(143, 100%, 48%)");
@@ -162,7 +162,7 @@ Cubes.propTypes = {
   setAnimationCallback: PropTypes.func.isRequired,
   audioManager: PropTypes.shape({}).isRequired,
   playing: PropTypes.bool.isRequired,
-  hidden: PropTypes.bool.isRequired
+  hidden: PropTypes.bool.isRequired,
 };
 
 export default Cubes;
