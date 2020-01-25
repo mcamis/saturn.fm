@@ -242,8 +242,8 @@ class StarField extends React.Component {
   }
 
   animateStars() {
-    this.stars.forEach(star => {
-      const animatedStar = star;
+    for(let i = 0; i < this.stars.length; i++) {
+      const animatedStar = this.stars[i];
 
       animatedStar.position.z += Math.random() * (12 - 8) + 8;
 
@@ -253,7 +253,7 @@ class StarField extends React.Component {
         animatedStar.position.x = randomPosition(this.width);
         animatedStar.position.y = randomPosition(this.height);
       }
-    });
+    }
   }
 
   renderScene() {

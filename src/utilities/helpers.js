@@ -1,6 +1,14 @@
 import * as THREE from "three";
 
-export const average = arr => arr.filter(Boolean).reduce((p, c) => p + c, 0) / arr.length;
+export function average (arr){
+  let fullValue = 0;
+  for (let i = 0; i < arr.length; i++){
+    fullValue += arr[i];
+  }
+  
+  return fullValue / arr.length;
+}
+
 
 export const sceneWidth = () => {
   // Maintain a 4:3 aspect ratio on wide screens, shrink on portrait screens
