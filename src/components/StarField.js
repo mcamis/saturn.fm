@@ -19,43 +19,44 @@ class StarField extends React.Component {
     // this.Zspeed = Math.random() * (0.025 - 0.10) + 0.10;
     autobind(this);
 
-    const bufferGeometry = new THREE.BufferGeometry();
-    const bufferVerticies = new Float32Array([
-      -1.0,
-      -1.0,
-      1.0,
-      1.0,
-      -1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
+    const width = sceneWidth();
+    const height = window.innerHeight;
+    this.width = width;
+    this.height = height;
 
-      1.0,
-      1.0,
-      1.0,
-      -1.0,
-      1.0,
-      1.0,
-      -1.0,
-      -1.0,
-      1.0,
+    const bufferGeometry = new THREE.BufferGeometry();
+
+    const bufferVertices = new Float32Array([
+      -1,
+      -1,
+      1,
+      1,
+      -1,
+      1,
+      1,
+      1,
+      1,
+
+      1,
+      1,
+      1,
+      -1,
+      1,
+      1,
+      -1,
+      -1,
+      1,
     ]);
 
     bufferGeometry.setAttribute(
       "position",
-      new THREE.BufferAttribute(bufferVerticies, 3)
+      new THREE.BufferAttribute(bufferVertices, 3)
     );
     this.blueMaterial = new THREE.MeshBasicMaterial({ color: 0x759cff });
     this.redMaterial = new THREE.MeshBasicMaterial({ color: 0xff757a });
     this.yellowMaterial = new THREE.MeshBasicMaterial({ color: 0xede13b });
     this.whiteMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
     this.starGeometry = bufferGeometry;
-
-    const width = sceneWidth();
-    const height = window.innerHeight;
-    this.width = width;
-    this.height = height;
 
     window.addEventListener("resize", () => {
       clearTimeout(this.timeOut);
@@ -92,8 +93,8 @@ class StarField extends React.Component {
   onResize() {
     const width = sceneWidth();
     const height = window.innerHeight;
-    this.width = width * 1.75;
-    this.height = height * 1.75;
+    this.width = width;
+    this.height = height;
     this.camera.aspect = width / height;
 
     this.camera.updateProjectionMatrix();
@@ -101,11 +102,13 @@ class StarField extends React.Component {
   }
 
   setupScene() {
-    const width = sceneWidth();
-    const height = window.innerHeight;
-
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(100, width / height, 1, 1000);
+    const camera = new THREE.PerspectiveCamera(
+      70,
+      this.width / this.height,
+      1,
+      1000
+    );
 
     const mainLight = new THREE.DirectionalLight(0xffffff, 3);
     const leftLight = new THREE.DirectionalLight(0xffffff, 2);
@@ -130,7 +133,7 @@ class StarField extends React.Component {
     renderer.setPixelRatio(
       pixRatio === 1 || isSafari ? pixRatio * 0.65 : pixRatio * 0.25
     );
-    renderer.setSize(width, height);
+    renderer.setSize(this.width, this.height);
     renderer.setClearColor(0x000000, 0); // the default
 
     this.camera = camera;
@@ -219,9 +222,8 @@ class StarField extends React.Component {
   }
 
   addStars() {
-    // TODO: # of stars based on screen size
-    // TODO: Slight rounding?
-    for (let z = -500; z < 500; z += 15) {
+    // Seed starts across the full z range
+    for (let z = -500; z < 500; z += 13) {
       let material = this.whiteMaterial;
       if (z > 0 && z < 100) {
         material = this.redMaterial;
@@ -238,7 +240,9 @@ class StarField extends React.Component {
       star.position.y = randomPosition(this.height);
       star.position.z = z;
 
-      star.scale.set(randomSize(), randomSize(), 1);
+      const ranSize = randomSize();
+      const adjustment = this.width < 500 ? 0.75 : 1;
+      star.scale.set(ranSize * adjustment, ranSize * adjustment, 1);
 
       this.scene.add(star);
       this.stars.push(star);
@@ -247,7 +251,9 @@ class StarField extends React.Component {
 
   animateStars() {
     for (let i = 0; i < this.stars.length; i += 1) {
-      this.stars[i].position.z += 3 + i * 0.2;
+      // This animates super quickly on iOS
+      const widthAdjustment = this.width < 500 ? 0.5 : 1;
+      this.stars[i].position.z += 3 + i * 0.2 * widthAdjustment;
 
       // if the particle is too close move it to the back
       if (this.stars[i].position.z > 550) {

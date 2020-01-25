@@ -44,7 +44,7 @@ export const formatTime = time => {
   return `${MM}:${SS}`;
 };
 
-export const randomSize = () => Math.floor(Math.random() * Math.floor(2)) + 2;
+export const randomSize = () => Math.random() * 2 + 1;
 export const randomPosition = max => Math.random() * max - max * 0.5;
 
 // I am very bad at maths
