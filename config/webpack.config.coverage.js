@@ -1,5 +1,5 @@
-const merge = require('webpack-merge');
-const test = require('./webpack.config.test.js');
+const merge = require("webpack-merge");
+const test = require("./webpack.config.test.js");
 
 module.exports = merge(
   {
@@ -8,10 +8,10 @@ module.exports = merge(
         {
           test: /\.js$|\.jsx$/,
           use: {
-            loader: 'istanbul-instrumenter-loader',
+            loader: "istanbul-instrumenter-loader",
             options: { esModules: true },
           },
-          enforce: 'post',
+          enforce: "post",
           exclude: /node_modules|\.spec\.js$/,
         },
       ],

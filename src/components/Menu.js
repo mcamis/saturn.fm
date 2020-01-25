@@ -5,7 +5,7 @@ import {
   throttle,
   sceneWidth,
   triggerButtonCallback,
-  TextureAnimator
+  TextureAnimator,
 } from "utilities/helpers";
 
 import {
@@ -16,7 +16,7 @@ import {
   pinkMesh,
   planeGeometry,
   shadowGeometry,
-  shadowTexture
+  shadowTexture,
 } from "utilities/menuElements";
 
 import testPng from "images/test.png";
@@ -46,7 +46,7 @@ class Menu extends React.Component {
     this.highlightEffect.src = highlightSrc;
     this.state = {
       activeButton: "play",
-      allowToggle: false
+      allowToggle: false,
     };
 
     this.clock = new THREE.Clock();
@@ -60,7 +60,7 @@ class Menu extends React.Component {
       "fastforward",
       "repeat",
       "stop",
-      "advanced"
+      "advanced",
     ];
 
     this.onMouseMoveThrottled = throttle(this.onMouseMove.bind(this), 100);
@@ -121,9 +121,9 @@ class Menu extends React.Component {
       const {
         object: {
           material: {
-            userData: { onClick }
-          }
-        }
+            userData: { onClick },
+          },
+        },
       } = intersects[0];
 
       const { object } = intersects[0];
@@ -248,7 +248,7 @@ class Menu extends React.Component {
 
   setupEventListeners() {
     const {
-      renderer: { domElement }
+      renderer: { domElement },
     } = this;
 
     window.addEventListener("resize", () => {
@@ -286,8 +286,8 @@ class Menu extends React.Component {
         animationDelay: 900,
         animationDuration: 300,
         showShadow: true,
-        onClick: this.props.toggleAbout
-      }
+        onClick: this.props.toggleAbout,
+      },
     });
 
     const spinningGlobe = new THREE.Mesh(planeGeometry, globeMaterial);
@@ -303,8 +303,8 @@ class Menu extends React.Component {
       opacity: 0.5,
       userData: {
         animationDelay: 900,
-        animationDuration: 300
-      }
+        animationDuration: 300,
+      },
     });
 
     const shadowPlane = new THREE.Mesh(shadowGeometry, shadowMaterial);
@@ -365,7 +365,7 @@ class Menu extends React.Component {
         return repeatElement;
       },
       stop: () => <p>Stop</p>,
-      advanced: () => <p>About</p>
+      advanced: () => <p>About</p>,
     };
 
     return tooltips[this.state.activeButton]();
@@ -391,8 +391,8 @@ class Menu extends React.Component {
     if (intersects.length > 0) {
       const {
         object: {
-          material: { name }
-        }
+          material: { name },
+        },
       } = intersects[0];
       if (name && name !== this.state.activeButton) {
         this.setState({ activeButton: name });
@@ -459,7 +459,7 @@ class Menu extends React.Component {
     mapSrc,
     animationDelay,
     animationDuration,
-    showShadow
+    showShadow,
   }) {
     const [x, y, z] = position;
 
@@ -474,8 +474,8 @@ class Menu extends React.Component {
       userData: {
         onClick,
         animationDelay,
-        animationDuration
-      }
+        animationDuration,
+      },
     });
 
     const plane = new THREE.Mesh(planeGeometry, planeMaterial);
@@ -492,8 +492,8 @@ class Menu extends React.Component {
         name,
         userData: {
           animationDelay,
-          animationDuration
-        }
+          animationDuration,
+        },
       });
       const shadowPlane = new THREE.Mesh(shadowGeometry, shadowMaterial);
       shadowPlane.position.set(x, y - SHADOW_OFFSET, z - 0.5);
@@ -523,7 +523,7 @@ class Menu extends React.Component {
 
     this.orbits = {
       pink,
-      purple
+      purple,
     };
 
     this.scene.add(pink, purple);
@@ -540,15 +540,15 @@ class Menu extends React.Component {
       (obj, { name, position, onClick }) => ({
         [name]: {
           onClick,
-          position
+          position,
         },
-        ...obj
+        ...obj,
       }),
       {}
     );
     this.menuElements.advanced = {
       onClick: this.props.toggleAbout,
-      position: [2.25, -4.3, 1]
+      position: [2.25, -4.3, 1],
     };
 
     this.placeOrbitsInScene();
@@ -586,7 +586,7 @@ Menu.propTypes = {
   hideDash: PropTypes.func.isRequired,
   hidden: PropTypes.bool.isRequired,
   showIfHidden: PropTypes.func.isRequired,
-  audioManager: PropTypes.shape({}).isRequired
+  audioManager: PropTypes.shape({}).isRequired,
 };
 
 export default Menu;

@@ -25,9 +25,9 @@ export const defaultState = {
       album: "Entertainment System",
       artist: "Professor Kliq",
       title: "No Refuge",
-      href: "https://www.professorkliq.com"
-    }
-  }
+      href: "https://www.professorkliq.com",
+    },
+  },
 };
 
 export default (state = defaultState, action) => {
@@ -36,24 +36,24 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         playing: true,
-        paused: false
+        paused: false,
       };
     case "PAUSED":
       return {
         ...state,
         playing: false,
-        paused: true
+        paused: true,
       };
     case "TOGGLE_REPEAT":
       return {
         ...state,
-        repeat: action.data.repeat
+        repeat: action.data.repeat,
       };
 
     case "SET_CURRENT_TRACK":
       return {
         ...state,
-        currentTrack: action.data.trackIndex
+        currentTrack: action.data.trackIndex,
       };
 
     case "ADD_TRACKS":
@@ -61,7 +61,7 @@ export default (state = defaultState, action) => {
         ...state,
         tracks: {
           ...state.tracks,
-          ...action.data.tracks
+          ...action.data.tracks,
         },
         playlist: [
           ...state.playlist,
@@ -73,14 +73,14 @@ export default (state = defaultState, action) => {
             if (A.album < B.album) return -1;
             if (A.track > B.track) return 1;
             if (A.track < B.track) return -1;
-          })
-        ]
+          }),
+        ],
       };
 
     case "ARRANGE_TRACKS":
       return {
         ...state,
-        playlist: action.data.playlist
+        playlist: action.data.playlist,
       };
 
     case "REMOVE_TRACK": {
@@ -90,11 +90,11 @@ export default (state = defaultState, action) => {
         ...state,
         playlist: [
           ...state.playlist.slice(0, action.data.trackIndex),
-          ...state.playlist.slice(action.data.trackIndex + 1)
+          ...state.playlist.slice(action.data.trackIndex + 1),
         ],
         tracks: {
-          ...cleanTracks
-        }
+          ...cleanTracks,
+        },
       };
     }
     default:

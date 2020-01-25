@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 const OrbButton = ({ icon, buttonClick, className, callback, tooltipText }) => (
   <li>
@@ -12,9 +12,9 @@ const OrbButton = ({ icon, buttonClick, className, callback, tooltipText }) => (
 
 OrbButton.defaultProps = {
   callback: () => {},
-  className: '',
-  icon: '',
-  tooltipText: '',
+  className: "",
+  icon: "",
+  tooltipText: "",
 };
 
 OrbButton.propTypes = {

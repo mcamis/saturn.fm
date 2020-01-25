@@ -1,41 +1,41 @@
-const merge = require('webpack-merge');
+const merge = require("webpack-merge");
 
-const TerserPlugin = require('terser-webpack-plugin');
+const TerserPlugin = require("terser-webpack-plugin");
 // const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-const ManifestPlugin = require('webpack-manifest-plugin');
-const app = require('./helpers/app.js');
-const common = require('./webpack.config.common.js');
+const ManifestPlugin = require("webpack-manifest-plugin");
+const app = require("./helpers/app.js");
+const common = require("./webpack.config.common.js");
 
 module.exports = merge(common, {
-  mode: 'production',
-  devtool: 'source-map',
+  mode: "production",
+  devtool: "source-map",
   output: {
     path: app.dist,
-    filename: 'js/[name].[chunkhash].js',
-    publicPath: './',
+    filename: "js/[name].[chunkhash].js",
+    publicPath: "./",
   },
 
-  externals: ['child_process'],
+  externals: ["child_process"],
 
   module: {
     rules: [
       {
         test: /\.js$/,
         include: app.src,
-        use: ['babel-loader'],
+        use: ["babel-loader"],
       },
       {
         test: /\.(ico|svg|png|jpg|gif)$/,
         include: app.src,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              name: '[name].[ext]',
+              name: "[name].[ext]",
               exclude: /gltf/,
-              outputPath: 'images/',
+              outputPath: "images/",
             },
           },
         ],
@@ -45,10 +45,10 @@ module.exports = merge(common, {
         include: app.src,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              name: '[name].[ext]',
-              outputPath: 'songs/',
+              name: "[name].[ext]",
+              outputPath: "songs/",
             },
           },
         ],
@@ -58,10 +58,10 @@ module.exports = merge(common, {
         include: app.src,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              name: '[name].[ext]',
-              outputPath: 'fonts/',
+              name: "[name].[ext]",
+              outputPath: "fonts/",
             },
           },
         ],
@@ -70,13 +70,13 @@ module.exports = merge(common, {
         test: /\.scss$/,
         use: [
           {
-            loader: 'style-loader', // creates style nodes from JS strings
+            loader: "style-loader", // creates style nodes from JS strings
           },
           {
-            loader: 'css-loader', // translates CSS into CommonJS
+            loader: "css-loader", // translates CSS into CommonJS
           },
           {
-            loader: 'sass-loader', // compiles Sass to CSS
+            loader: "sass-loader", // compiles Sass to CSS
           },
         ],
       },
@@ -89,8 +89,8 @@ module.exports = merge(common, {
       cacheGroups: {
         commons: {
           test: /[\\/]node_modules[\\/]/,
-          name: 'vendor',
-          chunks: 'initial',
+          name: "vendor",
+          chunks: "initial",
         },
       },
     },
@@ -98,7 +98,7 @@ module.exports = merge(common, {
 
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'styles/app[chunkhash].css',
+      filename: "styles/app[chunkhash].css",
       allChunks: true,
     }),
     // new CleanWebpackPlugin({
@@ -106,7 +106,7 @@ module.exports = merge(common, {
     //   root: app.root,
     // }),
     new ManifestPlugin({
-      fileName: 'webpack-asset-manifest.json',
+      fileName: "webpack-asset-manifest.json",
     }),
   ],
 });

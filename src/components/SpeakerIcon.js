@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const SpeakerIcon = () => {
   return (
@@ -8,8 +8,8 @@ const SpeakerIcon = () => {
       height="400pt"
       viewBox="0 0 75 75"
       style={{
-        width: '20px',
-        height: '20px',
+        width: "20px",
+        height: "20px",
       }}
     >
       <g stroke="#FFF" strokeWidth="5">

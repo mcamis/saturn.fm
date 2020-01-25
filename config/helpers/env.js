@@ -7,17 +7,17 @@ let {
 } = process;
 
 switch (process.env.MODE) {
-  case 'staging':
-    NODE_ENV = NODE_ENV || 'development';
+  case "staging":
+    NODE_ENV = NODE_ENV || "development";
     break;
-  case 'release':
-    NODE_ENV = NODE_ENV || 'production';
+  case "release":
+    NODE_ENV = NODE_ENV || "production";
     break;
-  case 'test':
-    NODE_ENV = NODE_ENV || 'test';
+  case "test":
+    NODE_ENV = NODE_ENV || "test";
     break;
   default:
-    NODE_ENV = NODE_ENV || 'development';
+    NODE_ENV = NODE_ENV || "development";
 }
 
 module.exports = {

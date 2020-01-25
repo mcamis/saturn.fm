@@ -52,7 +52,7 @@ const Header = ({ audioManager, currentTrack }) => {
 };
 
 Header.propTypes = {
-  audioManager: PropTypes.shape({})
+  audioManager: PropTypes.shape({}),
 };
 
 export default Header;

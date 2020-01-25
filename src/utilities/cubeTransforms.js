@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
-import { Tween, Easing } from 'es6-tween';
-import * as THREE from 'three';
+import { Tween, Easing } from "es6-tween";
+import * as THREE from "three";
 
-import { logarithmic } from 'utilities/helpers';
+import { logarithmic } from "utilities/helpers";
 
 const COLOR_TWEENING_SCALE = 0.75;
 const MAX_ACTIVE_ROTATION = 0.03;
@@ -34,8 +34,9 @@ export const updateScaleAndColor = (cube, averageFFT) => {
   const m = derivedSize < 1.65 ? derivedSize : 1.65;
 
   // eslint-disable-next-line
-  cube.morphTargetInfluences[0] =
-    averageFFT * 0.007 > 1 ? 1 : averageFFT * 0.007;
+  const derivedInfluence = averageFFT * 0.007 > 1 ? 1 : averageFFT * 0.007;
+
+  cube.morphTargetInfluences[0] = derivedInfluence;
   // cube.scale.set(derivedMax, derivedMax, derivedMax);
 
   return new Tween(cube.scale)

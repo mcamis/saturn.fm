@@ -1,12 +1,12 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const webpack = require('webpack');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const webpack = require("webpack");
 // const nodeExternals = require('webpack-node-externals');
-const app = require('./helpers/app.js');
-const env = require('./helpers/env.js');
+const app = require("./helpers/app.js");
+const env = require("./helpers/env.js");
 
 module.exports = {
-  devtool: 'cheap-module-source-map',
+  devtool: "cheap-module-source-map",
   // Separate vendor packages for more aggressive caching
   entry: {
     app: app.indexJs,
@@ -34,7 +34,7 @@ module.exports = {
       },
     ]),
     new webpack.DefinePlugin({
-      'process.env': {
+      "process.env": {
         NODE_ENV: JSON.stringify(env.NODE_ENV),
       },
     }),
@@ -44,17 +44,17 @@ module.exports = {
       {
         test: /\.js$/,
         include: app.src,
-        use: ['babel-loader'],
+        use: ["babel-loader"],
       },
     ],
   },
 
   node: {
-    fs: 'empty',
+    fs: "empty",
   },
 
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: [".js", ".jsx"],
     symlinks: false,
   },
 };

@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { getFilesWithTags, reorder } from 'utilities/files';
-import SpeakerIcon from './SpeakerIcon';
-import TrashIcon from './TrashIcon';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { getFilesWithTags, reorder } from "utilities/files";
+import SpeakerIcon from "./SpeakerIcon";
+import TrashIcon from "./TrashIcon";
 
 const getDraggableClasses = ({ isDragging, currentPlaying }) => {
-  return `draggable ${isDragging ? 'isDragging' : ''} ${
-    currentPlaying ? 'currentTrack' : ''
+  return `draggable ${isDragging ? "isDragging" : ""} ${
+    currentPlaying ? "currentTrack" : ""
   }`;
 };
 
@@ -35,14 +35,14 @@ class FileReader extends Component {
 
   async getTracks() {
     const tracks = await getFilesWithTags({
-      extensions: '.mp3, .m4a, .flac, .wav, .aac',
+      extensions: ".mp3, .m4a, .flac, .wav, .aac",
     });
     this.props.addTracks(tracks);
   }
 
   async getDirectory() {
     const tracks = await getFilesWithTags({
-      extensions: '.mp3, .wav, .aac',
+      extensions: ".mp3, .wav, .aac",
       allowDirectory: true,
     });
 

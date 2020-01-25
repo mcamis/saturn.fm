@@ -1,5 +1,5 @@
-import jsmediatags from 'jsmediatags';
-import uuidv4 from 'uuid/v4';
+import jsmediatags from "jsmediatags";
+import uuidv4 from "uuid/v4";
 /**
  * Automatically generate a file input alert, resolves with a FileList instance
  * @param {*} extensions
@@ -10,17 +10,17 @@ export async function filePicker({
   allowDirectory = false,
 }) {
   return new Promise(resolve => {
-    const fileInput = document.createElement('input');
-    if (extensions) fileInput.setAttribute('accept', extensions);
+    const fileInput = document.createElement("input");
+    if (extensions) fileInput.setAttribute("accept", extensions);
 
-    fileInput.type = 'file';
+    fileInput.type = "file";
     fileInput.multiple = true;
 
     fileInput.webkitdirectory = allowDirectory;
     fileInput.directory = allowDirectory;
     fileInput.mozdirectory = allowDirectory;
 
-    fileInput.addEventListener('change', e => {
+    fileInput.addEventListener("change", e => {
       resolve(e.target.files);
     });
     fileInput.click();
@@ -42,10 +42,10 @@ async function generateTrackInfo(file) {
     metadata = await getMediaTags(file);
   } catch (err) {
     // eslint-disable-next-line no-console
-    console.log('Fetching Tags Error', err);
+    console.log("Fetching Tags Error", err);
   }
   const {
-    tags: { artist = '', album = '', title = file.name, track = 0 } = {},
+    tags: { artist = "", album = "", title = file.name, track = 0 } = {},
   } = metadata;
 
   return {
@@ -61,7 +61,7 @@ async function createTracklist(files) {
   const filesToAdd = [];
   // eslint-disable-next-line no-restricted-syntax
   for (const file of files) {
-    if (file.type.includes('audio')) {
+    if (file.type.includes("audio")) {
       filesToAdd.push(generateTrackInfo(file));
     }
   }

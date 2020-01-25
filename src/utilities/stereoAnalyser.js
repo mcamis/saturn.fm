@@ -1,5 +1,5 @@
-import autobind from 'utilities/autobind';
-import { average } from 'utilities/helpers';
+import autobind from "utilities/autobind";
+import { average } from "utilities/helpers";
 
 const FFT_SIZE = 128;
 const SMOOTHING = 0.1;
@@ -58,7 +58,7 @@ export default class StereoAnalyser {
 
     // For Firefox & Mobile Safari AudioContext starts in a running state, even though it will block all audio play events
     const isMobileSafari = /iP(hone|od|ad)/.test(navigator.platform);
-    const isFirefox = navigator.userAgent.indexOf('Firefox') > 0;
+    const isFirefox = navigator.userAgent.indexOf("Firefox") > 0;
     if (isFirefox || isMobileSafari) {
       this.audioContext.suspend();
     }
@@ -133,7 +133,7 @@ export default class StereoAnalyser {
   // Public methods ahoy
 
   start() {
-    if (this.audioContext.state !== 'suspended') {
+    if (this.audioContext.state !== "suspended") {
       this.startAnalyser();
     }
   }

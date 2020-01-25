@@ -61,6 +61,6 @@ const About = props => {
 };
 
 About.propTypes = {
-  toggleAbout: PropTypes.func.isRequired
+  toggleAbout: PropTypes.func.isRequired,
 };
 export default About;

@@ -1,16 +1,16 @@
-import autobind from 'utilities/autobind';
-import { store } from 'index';
-import StereoAnalyser from 'utilities/stereoAnalyser';
-import { defaultState } from 'reducers/audio';
-import * as audioActions from 'actions/audio';
+import autobind from "utilities/autobind";
+import { store } from "index";
+import StereoAnalyser from "utilities/stereoAnalyser";
+import { defaultState } from "reducers/audio";
+import * as audioActions from "actions/audio";
 
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio
 export default class AudioManager {
   constructor() {
     this.audioElement = new Audio();
-    this.audioElement.crossOrigin = 'anonymous';
+    this.audioElement.crossOrigin = "anonymous";
 
-    this.repeat = 'off';
+    this.repeat = "off";
     this.reduxState = defaultState;
     this.changeSrc = true;
 
@@ -61,7 +61,7 @@ export default class AudioManager {
     } else {
       // TODO: This was a dumb kludge that causes lots of files to restart after pausing
       // TODO: Workaround for preloaded files, move this to redux?
-      const splitSrc = nextSong.split('./songs');
+      const splitSrc = nextSong.split("./songs");
       const isFromDefaultPlaylist = splitSrc.length > 0;
       const derivedSrc = isFromDefaultPlaylist ? splitSrc[1] : nextSong;
 
@@ -94,7 +94,7 @@ export default class AudioManager {
     if (nextIndex >= this.reduxState.playlist.length) {
       audioActions.setCurrentTrack(0);
       // Only auto-play track if repeat is on or user has explicitly skipped?
-      if (!auto || this.reduxState.repeat === 'context') {
+      if (!auto || this.reduxState.repeat === "context") {
         this.playAndReport();
       }
     } else {
@@ -115,28 +115,28 @@ export default class AudioManager {
 
   setupEventListeners() {
     // https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Mediaevents
-    this.audioElement.addEventListener('loadstart', () =>
+    this.audioElement.addEventListener("loadstart", () =>
       audioActions.loadingStart()
     );
 
     // TODO: Get this working locally
-    this.audioElement.addEventListener('canplaythrough', () =>
+    this.audioElement.addEventListener("canplaythrough", () =>
       audioActions.loadingFinish()
     );
 
-    this.audioElement.addEventListener('play', () => {
+    this.audioElement.addEventListener("play", () => {
       audioActions.playing();
       this.analyser.start();
     });
 
-    this.audioElement.addEventListener('pause', () => {
+    this.audioElement.addEventListener("pause", () => {
       // TODO: Manually set pause state to fix stop
       audioActions.paused();
       this.analyser.pause();
     });
 
-    this.audioElement.addEventListener('ended', () => {
-      if (this.reduxState.repeat === 'track') {
+    this.audioElement.addEventListener("ended", () => {
+      if (this.reduxState.repeat === "track") {
         this.togglePlay();
       } else {
         this.loadNext(true);
@@ -186,14 +186,14 @@ export default class AudioManager {
   toggleRepeat() {
     let newState;
     switch (this.reduxState.repeat) {
-      case 'off':
-        newState = 'track';
+      case "off":
+        newState = "track";
         break;
-      case 'track':
-        newState = 'context';
+      case "track":
+        newState = "context";
         break;
       default:
-        newState = 'off';
+        newState = "off";
         break;
     }
     audioActions.toggleRepeat(newState);

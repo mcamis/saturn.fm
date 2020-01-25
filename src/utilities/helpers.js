@@ -1,8 +1,18 @@
 import * as THREE from "three";
 import * as TWEEN from "es6-tween";
 
-export const average = arr =>
-  arr.filter(Boolean).reduce((p, c) => p + c, 0) / arr.length;
+export function average(arr) {
+  let fullValue = 0;
+  let filteredLength = 0;
+  for (let i = 0; i < arr.length; i += 1) {
+    if (arr[i]) {
+      fullValue += arr[i];
+      filteredLength += 1;
+    }
+  }
+
+  return fullValue / filteredLength;
+}
 
 export const sceneWidth = () => {
   // Maintain a 4:3 aspect ratio on wide screens, shrink on portrait screens

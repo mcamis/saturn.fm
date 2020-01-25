@@ -1,17 +1,17 @@
-import discSrc from 'images/disc.png';
-import moreSrc from 'images/more.png';
-import hideSrc from 'images/hide.png';
-import rwdSrc from 'images/rwd.png';
-import playSrc from 'images/play-pause.png';
-import ffwdSrc from 'images/ffwd.png';
-import stopSrc from 'images/stop.png';
-import repeatSrc from 'images/repeat.png';
-import textureSrc from 'images/texture.gif';
-import pinkSrc from 'images/pink.gif';
-import orbShadow from 'images/orb-shadow.png';
+import discSrc from "images/disc.png";
+import moreSrc from "images/more.png";
+import hideSrc from "images/hide.png";
+import rwdSrc from "images/rwd.png";
+import playSrc from "images/play-pause.png";
+import ffwdSrc from "images/ffwd.png";
+import stopSrc from "images/stop.png";
+import repeatSrc from "images/repeat.png";
+import textureSrc from "images/texture.gif";
+import pinkSrc from "images/pink.gif";
+import orbShadow from "images/orb-shadow.png";
 
-import * as THREE from 'three';
-import { Tween, Easing } from 'es6-tween';
+import * as THREE from "three";
+import { Tween, Easing } from "es6-tween";
 
 export const orbitGeometry = new THREE.CylinderGeometry(
   1.45,
@@ -46,7 +46,7 @@ export const shadowTexture = new THREE.TextureLoader().load(orbShadow);
 
 export const createButtons = (audioManager, hideMenu, toggleMenu) => [
   {
-    name: 'disc',
+    name: "disc",
     position: [-2.25, 0, 1],
     onClick: () => {
       setTimeout(toggleMenu(), 500);
@@ -57,7 +57,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
     showShadow: false,
   },
   {
-    name: 'settings',
+    name: "settings",
     position: [0, 0, 1],
     onClick: () => {},
     animationDelay: 100,
@@ -66,7 +66,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
     showShadow: false,
   },
   {
-    name: 'hide',
+    name: "hide",
     position: [2.25, 0, 1],
     onClick: hideMenu,
     animationDelay: 180,
@@ -75,7 +75,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
     showShadow: false,
   },
   {
-    name: 'rewind',
+    name: "rewind",
     position: [-2.25, -2.15, 1],
     onClick: audioManager.previousTrack,
     animationDelay: 500,
@@ -84,7 +84,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
     showShadow: false,
   },
   {
-    name: 'play',
+    name: "play",
     position: [0, -2.15, 1],
     onClick: audioManager.togglePlay,
     animationDelay: 300,
@@ -93,7 +93,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
     showShadow: false,
   },
   {
-    name: 'fastforward',
+    name: "fastforward",
     position: [2.25, -2.15, 1],
     onClick: audioManager.nextTrack,
     animationDelay: 280,
@@ -101,7 +101,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
     mapSrc: ffwdSrc,
   },
   {
-    name: 'repeat',
+    name: "repeat",
     position: [-2.25, -4.3, 1],
     onClick: audioManager.toggleRepeat,
     animationDelay: 600,
@@ -110,7 +110,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
     showShadow: true,
   },
   {
-    name: 'stop',
+    name: "stop",
     position: [0, -4.3, 1],
     onClick: audioManager.stop,
     animationDelay: 700,

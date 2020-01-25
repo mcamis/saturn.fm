@@ -44,7 +44,7 @@
     "lint:fix": "eslint --fix ./src ./config",
     "start": "NODE_ENV=development webpack-dev-server --hot --inline --config config/webpack.config.dev.js",
     "test:coverage": "NODE_ENV=coverage nyc --reporter=lcov --reporter=text --webpack-config config/webpack.config.coverage.js npm run test",
-    "prettier": "prettier --single-quote --trailing-comma es5 --write './**/*.js'",
+    "prettier": "prettier --trailing-comma es5 --write './**/*.js'",
     "precommit": "lint-staged"
   },
   "lint-staged": {

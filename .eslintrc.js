@@ -1,30 +1,30 @@
-const path = require('path');
+const path = require("path");
 
 module.exports = {
   env: {
     browser: true,
     node: true,
   },
-  extends: ['airbnb', 'prettier'],
+  extends: ["airbnb", "prettier"],
   rules: {
     camelcase: 0,
-    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
-    'react/destructuring-assignment': 0,
-    'react/jsx-one-expression-per-line': 0,
-    'react/prop-types': [1, { ignore: ['audio'] }],
-    'jsx-a11y/anchor-is-valid': [
-      'error',
+    "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }],
+    "react/destructuring-assignment": 0,
+    "react/jsx-one-expression-per-line": 0,
+    "react/prop-types": [1, { ignore: ["audio"] }],
+    "jsx-a11y/anchor-is-valid": [
+      "error",
       {
-        components: ['Link'],
-        specialLink: ['to', 'hrefLeft', 'hrefRight'],
-        aspects: ['noHref', 'invalidHref', 'preferButton'],
+        components: ["Link"],
+        specialLink: ["to", "hrefLeft", "hrefRight"],
+        aspects: ["noHref", "invalidHref", "preferButton"],
       },
     ],
   },
   settings: {
-    'import/resolver': {
+    "import/resolver": {
       node: {
-        paths: [path.resolve(__dirname, 'src')],
+        paths: [path.resolve(__dirname, "src")],
       },
     },
   },

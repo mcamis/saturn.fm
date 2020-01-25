@@ -1,20 +1,20 @@
-const merge = require('webpack-merge');
-const common = require('./webpack.config.common.js');
-const app = require('./helpers/app.js');
+const merge = require("webpack-merge");
+const common = require("./webpack.config.common.js");
+const app = require("./helpers/app.js");
 
 module.exports = merge(common, {
-  mode: 'development',
+  mode: "development",
   output: {
-    filename: 'js/[name].js',
+    filename: "js/[name].js",
     pathinfo: true,
-    publicPath: '/',
+    publicPath: "/",
   },
 
   devServer: {
-    host: '0.0.0.0',
+    host: "0.0.0.0",
     overlay: true,
     port: 3000,
-    stats: 'minimal',
+    stats: "minimal",
     historyApiFallback: true,
   },
 
@@ -23,14 +23,14 @@ module.exports = merge(common, {
       {
         test: /\.js$/,
         include: app.src,
-        use: ['babel-loader'],
+        use: ["babel-loader"],
       },
       {
         test: /\.(ico|svg|mp3|png|jpg|gif)$/,
         include: app.src,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
           },
         ],
       },
@@ -39,7 +39,7 @@ module.exports = merge(common, {
         include: app.src,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
           },
         ],
       },
@@ -48,13 +48,13 @@ module.exports = merge(common, {
         include: app.src,
         use: [
           {
-            loader: 'style-loader', // creates style nodes from JS strings
+            loader: "style-loader", // creates style nodes from JS strings
           },
           {
-            loader: 'css-loader', // translates CSS into CommonJS
+            loader: "css-loader", // translates CSS into CommonJS
           },
           {
-            loader: 'sass-loader', // compiles Sass to CSS
+            loader: "sass-loader", // compiles Sass to CSS
           },
         ],
       },
