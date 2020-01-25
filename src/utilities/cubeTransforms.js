@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { Tween, Easing } from 'es6-tween';
 import * as THREE from 'three';
 

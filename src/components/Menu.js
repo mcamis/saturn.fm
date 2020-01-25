@@ -1,7 +1,12 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
-import { throttle, sceneWidth, textureAnimator } from "utilities/helpers";
+import {
+  throttle,
+  sceneWidth,
+  triggerButtonCallback,
+  TextureAnimator
+} from "utilities/helpers";
 
 import {
   animateButtonPosition,
@@ -126,13 +131,16 @@ class Menu extends React.Component {
       if (this.props.audioManager.analyser.audioContext.state === "running") {
         this.buttonEffect.currentTime = 0;
         this.buttonEffect.play();
-        this.triggerButtonCallback(object, onClick);
+        triggerButtonCallback(object, onClick);
       } else {
-        this.props.audioManager.analyser.audioContext.resume().then(() => {
-          this.buttonEffect.currentTime = 0;
-          this.buttonEffect.play();
-          this.triggerButtonCallback(object, onClick);
-        }).catch(e => console.log(e));
+        this.props.audioManager.analyser.audioContext
+          .resume()
+          .then(() => {
+            this.buttonEffect.currentTime = 0;
+            this.buttonEffect.play();
+            triggerButtonCallback(object, onClick);
+          })
+          .catch(e => console.log(e));
       }
     }
   }
@@ -168,10 +176,12 @@ class Menu extends React.Component {
         case "ArrowDown":
           nextIndex += 3;
           break;
-        case "Enter":
+        case "Enter": {
           const nextName = this.buttons[nextIndex];
           const nextObject = this.planes.find(plane => plane.name === nextName);
-          if (this.props.audioManager.analyser.audioContext.state === "running") {
+          if (
+            this.props.audioManager.analyser.audioContext.state === "running"
+          ) {
             this.buttonEffect.currentTime = 0;
             this.buttonEffect.play();
             this.triggerButtonCallback(
@@ -179,17 +189,21 @@ class Menu extends React.Component {
               this.menuElements[nextName].onClick
             );
           } else {
-            this.props.audioManager.analyser.audioContext.resume().then(() => {
-              this.buttonEffect.currentTime = 0;
-              this.buttonEffect.play();
-              this.triggerButtonCallback(
-                nextObject,
-                this.menuElements[nextName].onClick
-              );
-            }).catch(e => console.log(e));
+            this.props.audioManager.analyser.audioContext
+              .resume()
+              .then(() => {
+                this.buttonEffect.currentTime = 0;
+                this.buttonEffect.play();
+                this.triggerButtonCallback(
+                  nextObject,
+                  this.menuElements[nextName].onClick
+                );
+              })
+              .catch(err => console.log(err));
           }
 
           break;
+        }
         default:
           nextIndex = -1;
       }
@@ -247,7 +261,11 @@ class Menu extends React.Component {
     });
 
     domElement.addEventListener("mousedown", e => this.onMouseDown(e), false);
-    domElement.addEventListener("mousemove", e => this.onMouseMoveThrottled(e), false);
+    domElement.addEventListener(
+      "mousemove",
+      e => this.onMouseMoveThrottled(e),
+      false
+    );
   }
 
   setupOrbAnimation() {
@@ -258,7 +276,7 @@ class Menu extends React.Component {
     globeTexture.minFilter = THREE.NearestFilter;
 
     // https://stemkoski.github.io/Three.js/Texture-Animation.html
-    this.textureAnimator = new textureAnimator(globeTexture, 455, 40);
+    this.textureAnimator = new TextureAnimator(globeTexture, 455, 40);
 
     const globeMaterial = new THREE.MeshBasicMaterial({
       map: globeTexture,
@@ -289,8 +307,6 @@ class Menu extends React.Component {
       }
     });
 
-
-
     const shadowPlane = new THREE.Mesh(shadowGeometry, shadowMaterial);
     shadowPlane.position.set(x, y - SHADOW_OFFSET, z - 0.5);
     // shadowPlane.visible = window.innerWidth >= 400;
@@ -299,178 +315,6 @@ class Menu extends React.Component {
 
     this.planes.push(spinningGlobe);
     this.scene.add(spinningGlobe);
-  }
-
-  placeOrbitsInScene() {
-    const [x, y] = [0, -2.15];
-    const pink = new THREE.Mesh(orbitGeometry, pinkMesh);
-    const purple = new THREE.Mesh(orbitGeometry, purpleMesh);
-
-    // Push the orbits slight ahead in Z so they hit the plane at the eges of the sphere
-    pink.position.set(x, y, 2);
-    pink.rotateX(0.35);
-    pink.rotateZ(-0.8);
-
-    purple.position.set(x, y, 2.03);
-    purple.rotateZ(0.8);
-    purple.rotateX(0.25);
-    purple.rotateY(1);
-
-    this.orbits = {
-      pink,
-      purple
-    };
-
-    this.scene.add(pink, purple);
-  }
-
-  placeInScene({
-    name = "",
-    position,
-    onClick,
-    mapSrc,
-    animationDelay,
-    animationDuration,
-    showShadow
-  }) {
-    const [x, y, z] = position;
-
-    const planeTexture = new THREE.TextureLoader().load(mapSrc);
-    planeTexture.magFilter = THREE.NearestFilter;
-    planeTexture.minFilter = THREE.NearestFilter;
-
-    const planeMaterial = new THREE.MeshBasicMaterial({
-      map: planeTexture,
-      transparent: true,
-      name,
-      userData: {
-        onClick,
-        animationDelay,
-        animationDuration
-      }
-    });
-
-    const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-    plane.position.set(x, y, z);
-    plane.name = name;
-    if (showShadow) {
-      shadowTexture.magFilter = THREE.NearestFilter;
-      shadowTexture.minFilter = THREE.NearestFilter;
-
-      const shadowMaterial = new THREE.MeshBasicMaterial({
-        map: shadowTexture,
-        transparent: true,
-        opacity: 0.5,
-        name,
-        userData: {
-          animationDelay,
-          animationDuration
-        }
-      });
-      const shadowPlane = new THREE.Mesh(shadowGeometry, shadowMaterial);
-      shadowPlane.position.set(x, y - SHADOW_OFFSET, z - 0.5);
-      // shadowPlane.visible = window.innerWidth >= 400;
-      this.shadowPlanes.push(shadowPlane);
-      this.scene.add(shadowPlane);
-    }
-    // plane.rotateZ(0.75);
-    this.planes.push(plane);
-    this.scene.add(plane);
-  }
-
-  orbitButton() {
-    const { pink, purple } = this.orbits;
-
-    if (this.props.hidden) {
-      pink.material.visible = false;
-      purple.material.visible = false;
-    } else {
-      pink.material.visible = true;
-      purple.material.visible = true;
-      pink.rotateY(-0.065);
-      purple.rotateY(0.07);
-    }
-  }
-
-  manageActiveButton() {
-    this.raycaster.setFromCamera(this.mouse, this.camera);
-    const intersects = this.raycaster.intersectObjects(this.planes);
-    if (intersects.length > 0) {
-      const {
-        object: {
-          material: { name }
-        }
-      } = intersects[0];
-      if (name && name !== this.state.activeButton) {
-        this.setState({ activeButton: name });
-        this.playHighlight();
-      }
-      document.body.classList.add("pointer");
-    } else {
-      document.body.classList.remove("pointer");
-    }
-  }
-
-  hideMenu() {
-    if (this.props.hidden) {
-      return this.showIfHidden();
-    }
-
-    // TODO: Switch this to the real sound effect
-    this.playHighlight();
-
-    this.planes.forEach(plane => {
-      const { x, y, z } = plane.position;
-      animateButtonPosition(plane, new THREE.Vector3(x, y - 10, z));
-    });
-
-    this.shadowPlanes.forEach(shadow => {
-      shadow.visible = false;
-    });
-    this.props.hideDash();
-    setTimeout(() => this.setState({ allowToggle: true }), 1400);
-  }
-
-  animate() {
-    // TODO: Move tween.update to a central location?
-    TWEEN.update();
-    this.orbitButton();
-
-    const delta = this.clock.getDelta();
-    this.renderer.render(this.scene, this.camera);
-    this.textureAnimator.update(1000 * delta);
-  }
-
-  showIfHidden() {
-    if (this.state.allowToggle && this.props.hidden) {
-      this.props.showIfHidden();
-      this.setState({ allowToggle: false });
-      this.planes.forEach(plane => {
-        const { x, y, z } = plane.position;
-        animateButtonPosition(plane, new THREE.Vector3(x, y + 10, z));
-      });
-      setTimeout(() => {
-        this.shadowPlanes.forEach(shadow => {
-          shadow.visible = true;
-        });
-      }, 1000);
-    }
-  }
-
-  triggerButtonCallback(object, onClick) {
-    new TWEEN.Tween(object.scale)
-      .to({ x: 1.5, y: 1.5, z: 1.5 }, 100)
-      .easing(TWEEN.Easing.Quadratic.Out)
-      .start();
-
-    setTimeout(() => {
-      new TWEEN.Tween(object.scale)
-        .to({ x: 1, y: 1, z: 1 }, 100)
-        .easing(TWEEN.Easing.Quadratic.In)
-        .start();
-    }, 250);
-
-    onClick();
   }
 
   getToolTip() {
@@ -527,6 +371,164 @@ class Menu extends React.Component {
     return tooltips[this.state.activeButton]();
   }
 
+  orbitButton() {
+    const { pink, purple } = this.orbits;
+
+    if (this.props.hidden) {
+      pink.material.visible = false;
+      purple.material.visible = false;
+    } else {
+      pink.material.visible = true;
+      purple.material.visible = true;
+      pink.rotateY(-0.065);
+      purple.rotateY(0.07);
+    }
+  }
+
+  manageActiveButton() {
+    this.raycaster.setFromCamera(this.mouse, this.camera);
+    const intersects = this.raycaster.intersectObjects(this.planes);
+    if (intersects.length > 0) {
+      const {
+        object: {
+          material: { name }
+        }
+      } = intersects[0];
+      if (name && name !== this.state.activeButton) {
+        this.setState({ activeButton: name });
+        this.playHighlight();
+      }
+      document.body.classList.add("pointer");
+    } else {
+      document.body.classList.remove("pointer");
+    }
+  }
+
+  hideMenu() {
+    if (this.props.hidden) {
+      return this.showIfHidden();
+    }
+
+    // TODO: Switch this to the real sound effect
+    this.playHighlight();
+
+    this.planes.forEach(plane => {
+      const { x, y, z } = plane.position;
+      animateButtonPosition(plane, new THREE.Vector3(x, y - 10, z));
+    });
+
+    this.shadowPlanes.forEach(shadow => {
+      // eslint-disable-next-line no-param-reassign
+      shadow.visible = false;
+    });
+    this.props.hideDash();
+    return setTimeout(() => this.setState({ allowToggle: true }), 1400);
+  }
+
+  animate() {
+    // TODO: Move tween.update to a central location?
+    TWEEN.update();
+    this.orbitButton();
+
+    const delta = this.clock.getDelta();
+    this.renderer.render(this.scene, this.camera);
+    this.textureAnimator.update(1000 * delta);
+  }
+
+  showIfHidden() {
+    if (this.state.allowToggle && this.props.hidden) {
+      this.props.showIfHidden();
+      this.setState({ allowToggle: false });
+      this.planes.forEach(plane => {
+        const { x, y, z } = plane.position;
+        animateButtonPosition(plane, new THREE.Vector3(x, y + 10, z));
+      });
+      setTimeout(() => {
+        this.shadowPlanes.forEach(shadow => {
+          // eslint-disable-next-line no-param-reassign
+          shadow.visible = true;
+        });
+      }, 1000);
+    }
+  }
+
+  placeInScene({
+    name = "",
+    position,
+    onClick,
+    mapSrc,
+    animationDelay,
+    animationDuration,
+    showShadow
+  }) {
+    const [x, y, z] = position;
+
+    const planeTexture = new THREE.TextureLoader().load(mapSrc);
+    planeTexture.magFilter = THREE.NearestFilter;
+    planeTexture.minFilter = THREE.NearestFilter;
+
+    const planeMaterial = new THREE.MeshBasicMaterial({
+      map: planeTexture,
+      transparent: true,
+      name,
+      userData: {
+        onClick,
+        animationDelay,
+        animationDuration
+      }
+    });
+
+    const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+    plane.position.set(x, y, z);
+    plane.name = name;
+    if (showShadow) {
+      shadowTexture.magFilter = THREE.NearestFilter;
+      shadowTexture.minFilter = THREE.NearestFilter;
+
+      const shadowMaterial = new THREE.MeshBasicMaterial({
+        map: shadowTexture,
+        transparent: true,
+        opacity: 0.5,
+        name,
+        userData: {
+          animationDelay,
+          animationDuration
+        }
+      });
+      const shadowPlane = new THREE.Mesh(shadowGeometry, shadowMaterial);
+      shadowPlane.position.set(x, y - SHADOW_OFFSET, z - 0.5);
+      // shadowPlane.visible = window.innerWidth >= 400;
+      this.shadowPlanes.push(shadowPlane);
+      this.scene.add(shadowPlane);
+    }
+    // plane.rotateZ(0.75);
+    this.planes.push(plane);
+    this.scene.add(plane);
+  }
+
+  placeOrbitsInScene() {
+    const [x, y] = [0, -2.15];
+    const pink = new THREE.Mesh(orbitGeometry, pinkMesh);
+    const purple = new THREE.Mesh(orbitGeometry, purpleMesh);
+
+    // Push the orbits slight ahead in Z so they hit the plane at the eges of the sphere
+    pink.position.set(x, y, 2);
+    pink.rotateX(0.35);
+    pink.rotateZ(-0.8);
+
+    purple.position.set(x, y, 2.03);
+    purple.rotateZ(0.8);
+    purple.rotateX(0.25);
+    purple.rotateY(1);
+
+    this.orbits = {
+      pink,
+      purple
+    };
+
+    this.scene.add(pink, purple);
+  }
+
   createMenuElements() {
     const menuElements = createButtons(
       this.props.audioManager,
@@ -552,10 +554,9 @@ class Menu extends React.Component {
     this.placeOrbitsInScene();
   }
 
-
   playHighlight() {
     // Only autoplay highlight on desktop to prevent multiple sounds at once
-    if (typeof window.orientation === 'undefined') {
+    if (typeof window.orientation === "undefined") {
       if (this.props.audioManager.analyser.audioContext.state === "running") {
         this.highlightEffect.currentTime = 0;
         this.highlightEffect.play();
@@ -584,7 +585,8 @@ Menu.propTypes = {
   repeat: PropTypes.oneOf(["off", "context", "track"]).isRequired,
   hideDash: PropTypes.func.isRequired,
   hidden: PropTypes.bool.isRequired,
-  showIfHidden: PropTypes.func.isRequired
+  showIfHidden: PropTypes.func.isRequired,
+  audioManager: PropTypes.shape({}).isRequired
 };
 
 export default Menu;

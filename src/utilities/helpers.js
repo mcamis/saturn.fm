@@ -1,37 +1,34 @@
 import * as THREE from "three";
+import * as TWEEN from "es6-tween";
 
-export function average (arr){
-  let fullValue = 0;
-  for (let i = 0; i < arr.length; i++){
-    if(arr[i]){ 
-     fullValue += arr[i];
-    }
-  }
-  
-  return fullValue / arr.length;
-}
-
+export const average = arr =>
+  arr.filter(Boolean).reduce((p, c) => p + c, 0) / arr.length;
 
 export const sceneWidth = () => {
   // Maintain a 4:3 aspect ratio on wide screens, shrink on portrait screens
   const actualWidth = window.innerWidth;
   const idealWidth = window.innerHeight * 1.3333;
   if (idealWidth > actualWidth) {
-    document.documentElement.style.setProperty('--scene-width', actualWidth + "px");
+    document.documentElement.style.setProperty(
+      "--scene-width",
+      `${actualWidth}px`
+    );
     return actualWidth;
-  } else {
-    document.documentElement.style.setProperty('--scene-width', idealWidth + "px");
-    return idealWidth;
   }
+  document.documentElement.style.setProperty(
+    "--scene-width",
+    `${idealWidth}px`
+  );
+  return idealWidth;
 };
 
 export const formatTime = time => {
   const MM = Math.trunc(time / 60)
     .toString()
-    .padStart(2, '0');
+    .padStart(2, "0");
   const SS = Math.trunc(time % 60)
     .toString()
-    .padStart(2, '0');
+    .padStart(2, "0");
 
   return `${MM}:${SS}`;
 };
@@ -50,7 +47,6 @@ export const logarithmic = position => {
   return Math.exp(minv + scale * (position - minp));
 };
 
-
 export const throttle = (func, timeFrame = 0) => {
   let lastTime = 0;
   return args => {
@@ -60,12 +56,27 @@ export const throttle = (func, timeFrame = 0) => {
       lastTime = now;
     }
   };
+};
+
+export function triggerButtonCallback(object, onClick) {
+  new TWEEN.Tween(object.scale)
+    .to({ x: 1.5, y: 1.5, z: 1.5 }, 100)
+    .easing(TWEEN.Easing.Quadratic.Out)
+    .start();
+
+  setTimeout(() => {
+    new TWEEN.Tween(object.scale)
+      .to({ x: 1, y: 1, z: 1 }, 100)
+      .easing(TWEEN.Easing.Quadratic.In)
+      .start();
+  }, 250);
+
+  onClick();
 }
 
-
-
 // TODO: Move to utility class
-export function textureAnimator(texture, tilesHorizontal, tileDisplayDuration) {
+/* eslint-disable no-param-reassign */
+export function TextureAnimator(texture, tilesHorizontal, tileDisplayDuration) {
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
   texture.repeat.set(1 / tilesHorizontal, 1);

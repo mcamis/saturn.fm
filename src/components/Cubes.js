@@ -1,15 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as THREE from 'three';
-import autobind from 'utilities/autobind';
-import GLTFLoader from 'three-gltf-loader';
+import React from "react";
+import PropTypes from "prop-types";
+import * as THREE from "three";
+import autobind from "utilities/autobind";
+import GLTFLoader from "three-gltf-loader";
 
-import { sceneWidth } from 'utilities/helpers';
+import { sceneWidth } from "utilities/helpers";
 import {
   activeRotation,
   idleRotation,
-  updateScaleAndColor,
-} from 'utilities/cubeTransforms';
+  updateScaleAndColor
+} from "utilities/cubeTransforms";
 
 class Cubes extends React.Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class Cubes extends React.Component {
     this.animateUpR = false;
 
     autobind(this);
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       clearTimeout(this.debouncedResize);
       this.debouncedResize = setTimeout(this.onResize, 250);
     });
@@ -35,7 +35,8 @@ class Cubes extends React.Component {
   componentDidMount() {
     this.setupScene();
   }
-  shouldComponentUpdate(nextProps, nextState) {
+
+  shouldComponentUpdate(nextProps) {
     if (this.props.hidden !== nextProps.hidden) {
       return true;
     }
@@ -66,10 +67,6 @@ class Cubes extends React.Component {
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
 
-    const isSafari =
-      navigator.userAgent.indexOf('Safari') !== -1 &&
-      navigator.userAgent.indexOf('Chrome') === -1;
-
     const pixRatio = window.devicePixelRatio;
     renderer.setPixelRatio(pixRatio === 1 ? pixRatio * 0.5 : pixRatio * 0.25);
     renderer.setSize(width, height);
@@ -77,24 +74,25 @@ class Cubes extends React.Component {
     this.scene = scene;
     this.camera = camera;
     this.renderer = renderer;
-    this.setupCube('leftCube', [-6.75, -29.3, 0]);
-    this.setupCube('rightCube', [6.75, -29.7, 0]);
+    this.setupCube("leftCube", [-6.75, -29.3, 0]);
+    this.setupCube("rightCube", [6.75, -29.7, 0]);
 
     this.mount.appendChild(this.renderer.domElement);
   }
 
   setupCube(slot, [x, y, z]) {
     this.loader.load(
-      './models/cubeBigger.gltf',
+      "./models/cubeBigger.gltf",
       ({
         scene: {
-          children: [, , cubeModel],
-        },
+          children: [, , cubeModel]
+        }
       }) => {
-        cubeModel.material.color = new THREE.Color('hsl(143, 100%, 48%)');
+        // eslint-disable-next-line no-param-reassign
+        cubeModel.material.color = new THREE.Color("hsl(143, 100%, 48%)");
         cubeModel.position.set(x, y, z);
         cubeModel.rotateX(0.075);
-        if (slot === 'rightCube') {
+        if (slot === "rightCube") {
           cubeModel.rotateY(0.075);
         } else {
           cubeModel.rotateY(-0.1);
@@ -102,7 +100,7 @@ class Cubes extends React.Component {
 
         this[slot] = cubeModel;
         this.scene.add(cubeModel);
-        if (slot === 'rightCube') this.props.setAnimationCallback(this.animate);
+        if (slot === "rightCube") this.props.setAnimationCallback(this.animate);
       }
     );
   }
@@ -161,8 +159,10 @@ class Cubes extends React.Component {
 }
 
 Cubes.propTypes = {
-  // audioManager: PropTypes.instanceOf(AudioManager).isRequired,
+  setAnimationCallback: PropTypes.func.isRequired,
+  audioManager: PropTypes.shape({}).isRequired,
   playing: PropTypes.bool.isRequired,
+  hidden: PropTypes.bool.isRequired
 };
 
 export default Cubes;

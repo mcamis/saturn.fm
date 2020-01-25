@@ -21,11 +21,25 @@ const CurrentTrackDisplay = ({ href, artist, title }) => {
   // track: 1
   return (
     <div className="current-track-info" key={title + artist}>
-      <p>{title} {artist && <React.Fragment>- {artist}</React.Fragment>}</p>
-      {href && <p><a href={href} target="blank">{href}</a></p>}
+      <p>
+        {title} {artist && <>- {artist}</>}
+      </p>
+      {href && (
+        <p>
+          <a href={href} target="blank">
+            {href}
+          </a>
+        </p>
+      )}
     </div>
-  )
-}
+  );
+};
+
+CurrentTrackDisplay.propTypes = {
+  href: PropTypes.string.isRequired,
+  artist: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired
+};
 
 class App extends Component {
   constructor(props) {
@@ -62,6 +76,26 @@ class App extends Component {
     return `${hiddenClass} ${pausedClass} ${playingClass} ${showClass}`;
   }
 
+  setRandomAnimation() {
+    const randomAnimation = ["plain", "spinny", "fast"];
+    const withoutCurrent = randomAnimation.filter(
+      animation => animation !== this.state.animation
+    );
+
+    const nextAnimation =
+      withoutCurrent[Math.floor(Math.random() * withoutCurrent.length)];
+
+    this.setState({
+      animation: nextAnimation
+    });
+  }
+
+  setAnimationCallback(callback) {
+    this.setState(prevState => ({
+      frameCallbacks: [...prevState.frameCallbacks, callback]
+    }));
+  }
+
   hideDash() {
     const randomAnimation = ["plain", "spinny", "fast"];
 
@@ -75,30 +109,11 @@ class App extends Component {
     }));
   }
 
-
-  setRandomAnimation() {
-    const randomAnimation = ["plain", "spinny", "fast"];
-    const withoutCurrent = randomAnimation.filter(animation => animation !== this.state.animation);
-
-    const nextAnimation =
-      withoutCurrent[Math.floor(Math.random() * withoutCurrent.length)];
-
-    this.setState({
-      animation: nextAnimation
-    });
-  }
-
   showIfHidden() {
     if (this.state.hidden) {
       this.frameId = this.frameId || requestAnimationFrame(this.animate);
       this.setState({ hidden: false, show: true });
     }
-  }
-
-  setAnimationCallback(callback) {
-    this.setState(prevState => ({
-      frameCallbacks: [...prevState.frameCallbacks, callback]
-    }));
   }
 
   animate() {
@@ -124,12 +139,9 @@ class App extends Component {
 
     const currentKey = playlist[currentTrack];
     const currentInfo = tracks[currentKey];
-    console.log(this.audioManager.analyser.audioContext.state);
 
     return (
-      <div
-        className={this.getClassNames()}
-      >
+      <div className={this.getClassNames()}>
         <Header
           currentTrack={this.props.audio.currentTrack}
           audioManager={this.audioManager}
@@ -153,6 +165,7 @@ class App extends Component {
         <div className="dashboard" />
         <Cubes
           audioManager={this.audioManager}
+          hidden={this.state.hidden}
           paused={paused}
           playing={playing}
           setAnimationCallback={this.setAnimationCallback}
@@ -184,12 +197,27 @@ class App extends Component {
             />
           </div>
         )}
-        {currentInfo && <CurrentTrackDisplay {...currentInfo} />}
-        {this.audioManager.analyser.audioContext.state === "suspended" &&
+        {currentInfo && (
+          <CurrentTrackDisplay
+            title={currentInfo.title}
+            href={currentInfo.href}
+            artist={currentInfo.artist}
+          />
+        )}
+        {this.audioManager.analyser.audioContext.state === "suspended" && (
           <div className="start-context">
-            <button onClick={() => this.audioManager.analyser.audioContext.resume().then(() => this.forceUpdate())}><span>Press Start</span> スタート</button>
-          </div>}
-
+            <button
+              type="button"
+              onClick={() =>
+                this.audioManager.analyser.audioContext
+                  .resume()
+                  .then(() => this.forceUpdate())
+              }
+            >
+              <span>Press Start</span> スタート
+            </button>
+          </div>
+        )}
       </div>
     );
   }
@@ -201,7 +229,12 @@ App.propTypes = {
     playing: PropTypes.bool.isRequired,
     paused: PropTypes.bool.isRequired,
     repeat: PropTypes.oneOf(["off", "context", "track"]).isRequired
-  }).isRequired
+  }).isRequired,
+  toast: PropTypes.string
+};
+
+App.defaultProps = {
+  toast: ""
 };
 
 function mapStateToProps(state) {

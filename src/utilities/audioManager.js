@@ -65,7 +65,10 @@ export default class AudioManager {
       const isFromDefaultPlaylist = splitSrc.length > 0;
       const derivedSrc = isFromDefaultPlaylist ? splitSrc[1] : nextSong;
 
-      if (!this.audioElement.src || !this.audioElement.src.includes(derivedSrc)) {
+      if (
+        !this.audioElement.src ||
+        !this.audioElement.src.includes(derivedSrc)
+      ) {
         this.audioElement.src = nextSong;
       }
       this.audioElement.play();
@@ -74,7 +77,6 @@ export default class AudioManager {
 
   // Prevent memory leaks and revoke ObjectURL if one exists
   revokeSongUrl() {
-
     const { tracks, playlist, currentTrack = 0 } = this.reduxState;
     if (playlist.length === 1) return;
     const trackKey = playlist[currentTrack];

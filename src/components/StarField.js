@@ -1,14 +1,15 @@
-import React from "react";
-import * as THREE from "three";
-import GLTFLoader from "three-gltf-loader";
+import React from 'react';
+import PropTypes from 'prop-types';
+import * as THREE from 'three';
+import GLTFLoader from 'three-gltf-loader';
 
-import autobind from "utilities/autobind";
-import { randomSize, randomPosition, sceneWidth } from "utilities/helpers";
+import autobind from 'utilities/autobind';
+import { randomSize, randomPosition, sceneWidth } from 'utilities/helpers';
 
 const spaceshipPositions = {
   plain: [2.5, -3.5, 510],
   spinny: [-2.5, 3.5, 505],
-  fast: [0, 3, 510]
+  fast: [0, 3, 510],
 };
 
 class StarField extends React.Component {
@@ -38,11 +39,11 @@ class StarField extends React.Component {
       1.0,
       -1.0,
       -1.0,
-      1.0
+      1.0,
     ]);
 
     bufferGeometry.setAttribute(
-      "position",
+      'position',
       new THREE.BufferAttribute(bufferVerticies, 3)
     );
     this.blueMaterial = new THREE.MeshBasicMaterial({ color: 0x759cff });
@@ -56,12 +57,12 @@ class StarField extends React.Component {
     this.width = width * 1.75;
     this.height = height * 1.75;
 
-    window.addEventListener("resize", () => {
+    window.addEventListener('resize', () => {
       clearTimeout(this.timeOut);
       this.timeOut = setTimeout(this.onResize, 250);
     });
 
-    window.addEventListener("orientationchange", () => {
+    window.addEventListener('orientationchange', () => {
       this.onResize();
     });
   }
@@ -71,8 +72,11 @@ class StarField extends React.Component {
     // this.clock = new THREE.Clock();
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.hidden !== nextProps.hidden || this.props.animation !== nextProps.animation) {
+  shouldComponentUpdate(nextProps) {
+    if (
+      this.props.hidden !== nextProps.hidden ||
+      this.props.animation !== nextProps.animation
+    ) {
       return true;
     }
     return false;
@@ -119,8 +123,8 @@ class StarField extends React.Component {
     renderer.setClearColor(0xffffff);
     camera.position.z = 500;
     const isSafari =
-      navigator.userAgent.indexOf("Safari") !== -1 &&
-      navigator.userAgent.indexOf("Chrome") === -1;
+      navigator.userAgent.indexOf('Safari') !== -1 &&
+      navigator.userAgent.indexOf('Chrome') === -1;
 
     const pixRatio = window.devicePixelRatio;
     renderer.setPixelRatio(
@@ -143,7 +147,7 @@ class StarField extends React.Component {
   setupSpaceShip() {
     const loader = new GLTFLoader();
 
-    loader.load("./models/saturn_v1.gltf", gltf => {
+    loader.load('./models/saturn_v1.gltf', gltf => {
       const { scene: shipModel } = gltf;
       const [x, y, z] = spaceshipPositions[this.props.animation];
       shipModel.position.set(x, y, z);
@@ -173,11 +177,11 @@ class StarField extends React.Component {
       if (this.props.hidden) {
         this.spaceShip.visible = true;
 
-        if (this.props.animation === "plain") {
+        if (this.props.animation === 'plain') {
           this.plain();
-        } else if (this.props.animation === "spinny") {
+        } else if (this.props.animation === 'spinny') {
           this.spinny();
-        } else if (this.props.animation === "fast") {
+        } else if (this.props.animation === 'fast') {
           this.fast();
         }
       } else {
@@ -242,7 +246,7 @@ class StarField extends React.Component {
   }
 
   animateStars() {
-    for(let i = 0; i < this.stars.length; i++) {
+    for (let i = 0; i < this.stars.length; i += 1) {
       const animatedStar = this.stars[i];
 
       animatedStar.position.z += Math.random() * (12 - 8) + 8;
@@ -273,5 +277,12 @@ class StarField extends React.Component {
     );
   }
 }
+
+StarField.propTypes = {
+  hidden: PropTypes.bool.isRequired,
+  animation: PropTypes.string.isRequired,
+  setRandomAnimation: PropTypes.func.isRequired,
+  setAnimationCallback: PropTypes.func.isRequired,
+};
 
 export default StarField;

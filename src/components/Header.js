@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
-import { formatTime } from 'utilities/helpers';
-import timeSrc from 'images/time.png';
-import trackSrc from 'images/track.png';
+import React, { useState, useEffect, useRef } from "react";
+import PropTypes from "prop-types";
+import { formatTime } from "utilities/helpers";
+import timeSrc from "images/time.png";
+import trackSrc from "images/track.png";
 
 // https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 function useInterval(callback, delay) {
@@ -13,7 +13,7 @@ function useInterval(callback, delay) {
     savedCallback.current = callback;
   });
 
-  // TODO: move this to redux!
+  // TODO: move this to redux?
   useEffect(() => {
     function tick() {
       savedCallback.current();
@@ -40,15 +40,19 @@ const Header = ({ audioManager, currentTrack }) => {
         <div className="track">
           <img src={trackSrc} alt="TODO" />
         </div>
-          <div className="track-number">{`${currentTrack + 1}`}</div>
+        <div className="track-number">{`${currentTrack + 1}`}</div>
         <div className="time">
           <img src={timeSrc} alt="TODO" />
         </div>
-          <div className="timer">{formatTime(componentTime)}</div>
+        <div className="timer">{formatTime(componentTime)}</div>
       </div>
       <div className="knight-rider" />
     </header>
   );
+};
+
+Header.propTypes = {
+  audioManager: PropTypes.shape({})
 };
 
 export default Header;

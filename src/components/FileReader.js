@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { getFilesWithTags, reorder } from 'utilities/files';
 import SpeakerIcon from './SpeakerIcon';
 import TrashIcon from './TrashIcon';
-
-import { getFilesWithTags, reorder } from 'utilities/files';
 
 const getDraggableClasses = ({ isDragging, currentPlaying }) => {
   return `draggable ${isDragging ? 'isDragging' : ''} ${

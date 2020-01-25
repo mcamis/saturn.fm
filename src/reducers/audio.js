@@ -1,14 +1,14 @@
 import { formatTime } from "utilities/helpers";
-import Chaos from "../songs/01_Chaos.mp3";
-import Akihabara from "../songs/02_Akihabara.mp3";
-import NothingStopsDetroit from "../songs/03_Nothing_Stops_Detroit.mp3";
-import GnosisHardware from "../songs/04_Gnosis_Hardware.mp3";
+// import Chaos from "../songs/01_Chaos.mp3";
+// import Akihabara from "../songs/02_Akihabara.mp3";
+// import NothingStopsDetroit from "../songs/03_Nothing_Stops_Detroit.mp3";
+// import GnosisHardware from "../songs/04_Gnosis_Hardware.mp3";
 import NoRefuge from "../songs/05_No_Refuge.mp3";
-import OutHere from "../songs/06_Out_Here_At_The_Outersphere.mp3";
-import Chicago from "../songs/07_Chicago.mp3";
-import Passports from "../songs/08_Passports.mp3";
-import ComeTrue from "../songs/09_Come_True.mp3";
-import Shuffle from "../songs/shuffle.mp3";
+// import OutHere from "../songs/06_Out_Here_At_The_Outersphere.mp3";
+// import Chicago from "../songs/07_Chicago.mp3";
+// import Passports from "../songs/08_Passports.mp3";
+// import ComeTrue from "../songs/09_Come_True.mp3";
+// import Shuffle from "../songs/shuffle.mp3";
 
 export const defaultState = {
   currentTrack: null,
@@ -25,8 +25,7 @@ export const defaultState = {
       album: "Entertainment System",
       artist: "Professor Kliq",
       title: "No Refuge",
-      href: "https://www.professorkliq.com",
-
+      href: "https://www.professorkliq.com"
     }
   }
 };
@@ -84,7 +83,7 @@ export default (state = defaultState, action) => {
         playlist: action.data.playlist
       };
 
-    case "REMOVE_TRACK":
+    case "REMOVE_TRACK": {
       const trackKey = state.playlist[action.datatrackIndex];
       const { [trackKey]: removedTrack, ...cleanTracks } = state.tracks;
       return {
@@ -97,6 +96,7 @@ export default (state = defaultState, action) => {
           ...cleanTracks
         }
       };
+    }
     default:
       return state;
   }

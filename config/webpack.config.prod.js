@@ -1,7 +1,7 @@
 const merge = require('webpack-merge');
 
 const TerserPlugin = require('terser-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+// const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const ManifestPlugin = require('webpack-manifest-plugin');

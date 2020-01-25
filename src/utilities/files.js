@@ -41,6 +41,7 @@ async function generateTrackInfo(file) {
   try {
     metadata = await getMediaTags(file);
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.log('Fetching Tags Error', err);
   }
   const {
@@ -78,6 +79,7 @@ export async function getFilesWithTags(options) {
   try {
     fileList = await filePicker(options);
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.log(err);
     // this.queueToast('Oops, something went wrong fetching your files. Please try again')
   }
