@@ -3,7 +3,9 @@ import * as THREE from "three";
 export function average (arr){
   let fullValue = 0;
   for (let i = 0; i < arr.length; i++){
-    fullValue += arr[i];
+    if(arr[i]){ 
+     fullValue += arr[i];
+    }
   }
   
   return fullValue / arr.length;
