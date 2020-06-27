@@ -27,12 +27,14 @@ module.exports = {
         useShortDoctype: true,
       },
     }),
-    new CopyWebpackPlugin([
-      {
-        from: app.public,
-        to: app.dist,
-      },
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: app.public,
+          to: app.dist,
+        },
+      ],
+    }),
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: JSON.stringify(env.NODE_ENV),

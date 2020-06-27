@@ -1,5 +1,5 @@
 import jsmediatags from "jsmediatags";
-import uuidv4 from "uuid/v4";
+import { v4 as uuidv4 } from "uuid";
 /**
  * Automatically generate a file input alert, resolves with a FileList instance
  * @param {*} extensions
@@ -9,7 +9,7 @@ export async function filePicker({
   extensions = null,
   allowDirectory = false,
 }) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const fileInput = document.createElement("input");
     if (extensions) fileInput.setAttribute("accept", extensions);
 
@@ -20,7 +20,7 @@ export async function filePicker({
     fileInput.directory = allowDirectory;
     fileInput.mozdirectory = allowDirectory;
 
-    fileInput.addEventListener("change", e => {
+    fileInput.addEventListener("change", (e) => {
       resolve(e.target.files);
     });
     fileInput.click();
@@ -30,8 +30,8 @@ export async function filePicker({
 function getMediaTags(file) {
   return new Promise((resolve, reject) => {
     jsmediatags.read(file, {
-      onSuccess: tag => resolve(tag),
-      onError: error => reject(error),
+      onSuccess: (tag) => resolve(tag),
+      onError: (error) => reject(error),
     });
   });
 }
