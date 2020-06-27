@@ -1,6 +1,7 @@
 const merge = require("webpack-merge");
 const common = require("./webpack.config.common.js");
 const app = require("./helpers/app.js");
+const webpack = require("webpack");
 
 module.exports = merge(common, {
   mode: "development",
@@ -11,12 +12,18 @@ module.exports = merge(common, {
   },
 
   devServer: {
+    hot: true,
     host: "0.0.0.0",
     overlay: true,
     port: 3000,
     stats: "minimal",
     historyApiFallback: true,
   },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin({
+      // Options...
+    }),
+  ],
 
   module: {
     rules: [

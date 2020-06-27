@@ -19,7 +19,7 @@ import {
   shadowTexture,
 } from "utilities/menuElements";
 
-import testPng from "images/test.png";
+import globeSprite from "images/globeSprite.png";
 
 // Todo: Import specific tween functions as needed
 import * as TWEEN from "es6-tween";
@@ -140,7 +140,7 @@ class Menu extends React.Component {
             this.buttonEffect.play();
             triggerButtonCallback(object, onClick);
           })
-          .catch(e => console.log(e));
+          .catch((e) => console.log(e));
       }
     }
   }
@@ -156,7 +156,7 @@ class Menu extends React.Component {
   }
 
   setupKeyboardListeners() {
-    window.addEventListener("keydown", e => {
+    window.addEventListener("keydown", (e) => {
       let nextIndex = this.buttons.indexOf(this.state.activeButton);
       switch (e.code) {
         case "ArrowRight":
@@ -178,7 +178,9 @@ class Menu extends React.Component {
           break;
         case "Enter": {
           const nextName = this.buttons[nextIndex];
-          const nextObject = this.planes.find(plane => plane.name === nextName);
+          const nextObject = this.planes.find(
+            (plane) => plane.name === nextName
+          );
           if (
             this.props.audioManager.analyser.audioContext.state === "running"
           ) {
@@ -199,7 +201,7 @@ class Menu extends React.Component {
                   this.menuElements[nextName].onClick
                 );
               })
-              .catch(err => console.log(err));
+              .catch((err) => console.log(err));
           }
 
           break;
@@ -260,10 +262,10 @@ class Menu extends React.Component {
       this.onResize();
     });
 
-    domElement.addEventListener("mousedown", e => this.onMouseDown(e), false);
+    domElement.addEventListener("mousedown", (e) => this.onMouseDown(e), false);
     domElement.addEventListener(
       "mousemove",
-      e => this.onMouseMoveThrottled(e),
+      (e) => this.onMouseMoveThrottled(e),
       false
     );
   }
@@ -271,12 +273,11 @@ class Menu extends React.Component {
   setupOrbAnimation() {
     const [x, y, z] = [2.25, -4.3, 1];
 
-    const globeTexture = new THREE.TextureLoader().load(testPng);
+    const globeTexture = new THREE.TextureLoader().load(globeSprite);
     globeTexture.magFilter = THREE.NearestFilter;
     globeTexture.minFilter = THREE.NearestFilter;
 
-    // https://stemkoski.github.io/Three.js/Texture-Animation.html
-    this.textureAnimator = new TextureAnimator(globeTexture, 455, 40);
+    this.textureAnimator = new TextureAnimator(globeTexture);
 
     const globeMaterial = new THREE.MeshBasicMaterial({
       map: globeTexture,
@@ -412,12 +413,12 @@ class Menu extends React.Component {
     // TODO: Switch this to the real sound effect
     this.playHighlight();
 
-    this.planes.forEach(plane => {
+    this.planes.forEach((plane) => {
       const { x, y, z } = plane.position;
       animateButtonPosition(plane, new THREE.Vector3(x, y - 10, z));
     });
 
-    this.shadowPlanes.forEach(shadow => {
+    this.shadowPlanes.forEach((shadow) => {
       // eslint-disable-next-line no-param-reassign
       shadow.visible = false;
     });
@@ -439,12 +440,12 @@ class Menu extends React.Component {
     if (this.state.allowToggle && this.props.hidden) {
       this.props.showIfHidden();
       this.setState({ allowToggle: false });
-      this.planes.forEach(plane => {
+      this.planes.forEach((plane) => {
         const { x, y, z } = plane.position;
         animateButtonPosition(plane, new THREE.Vector3(x, y + 10, z));
       });
       setTimeout(() => {
-        this.shadowPlanes.forEach(shadow => {
+        this.shadowPlanes.forEach((shadow) => {
           // eslint-disable-next-line no-param-reassign
           shadow.visible = true;
         });
@@ -535,7 +536,7 @@ class Menu extends React.Component {
       this.hideMenu,
       this.props.toggleMenu
     );
-    menuElements.forEach(button => this.placeInScene(button));
+    menuElements.forEach((button) => this.placeInScene(button));
     this.menuElements = menuElements.reduce(
       (obj, { name, position, onClick }) => ({
         [name]: {
@@ -570,7 +571,7 @@ class Menu extends React.Component {
         <div
           onClick={this.showIfHidden}
           className="menu"
-          ref={mount => {
+          ref={(mount) => {
             this.mount = mount;
           }}
         />

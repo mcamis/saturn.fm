@@ -14,7 +14,7 @@ function resolveApp(relativePath) {
 module.exports = {
   dist: resolveApp("dist"),
   favicon: resolveApp("public/favicon.ico"),
-  htmlTemplate: resolveApp("public/index.html"),
+  htmlTemplate: resolveApp("src/template.html"),
   indexJs: resolveApp("src/index.js"),
   public: resolveApp("public"),
   root: appDirectory,

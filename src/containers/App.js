@@ -12,38 +12,7 @@ import About from "components/About";
 import FileReader from "components/FileReader";
 import Header from "components/Header";
 import StarField from "components/StarField";
-
-const CurrentTrackDisplay = ({ href, artist, title }) => {
-  //   album: "Entertainment System"
-  // artist: "Professor Kliq"
-  // file: "/7387f2263f3d4d909b3757f066da5ed9.mp3"
-  // title: "No Refuge"
-  // track: 1
-  return (
-    <div className="current-track-info" key={title + artist}>
-      <p>
-        {title} {artist && <>- {artist}</>}
-      </p>
-      {href && (
-        <p>
-          <a href={href} target="blank">
-            {href}
-          </a>
-        </p>
-      )}
-    </div>
-  );
-};
-
-CurrentTrackDisplay.propTypes = {
-  href: PropTypes.string,
-  artist: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-};
-
-CurrentTrackDisplay.defaultProps = {
-  href: "",
-};
+import CurrentTrackDisplay from "components/CurrentTrackDisplay";
 
 class App extends Component {
   constructor(props) {
@@ -186,13 +155,11 @@ class App extends Component {
             {this.props.toast && <p>{this.props.toast}</p>}
 
             {this.state.fileReaderVisible && (
-              <div className="overlay">
-                <FileReader
-                  audio={this.props.audio}
-                  {...audioActions}
-                  toggleMenu={this.toggleMenu}
-                />
-              </div>
+              <FileReader
+                audio={this.props.audio}
+                {...audioActions}
+                toggleMenu={this.toggleMenu}
+              />
             )}
             {this.state.showAboutModal && (
               <div className="overlay">

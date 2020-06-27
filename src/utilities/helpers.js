@@ -33,7 +33,7 @@ export const sceneWidth = () => {
   return idealWidth;
 };
 
-export const formatTime = time => {
+export const formatTime = (time) => {
   const MM = Math.trunc(time / 60)
     .toString()
     .padStart(2, "0");
@@ -45,11 +45,11 @@ export const formatTime = time => {
 };
 
 export const randomSize = () => Math.random() * 2 + 1;
-export const randomPosition = max => Math.random() * max - max * 0.5;
+export const randomPosition = (max) => Math.random() * max - max * 0.5;
 
 // I am very bad at maths
 // https://stackoverflow.com/a/846249
-export const logarithmic = position => {
+export const logarithmic = (position) => {
   const minp = 0;
   const maxp = 100;
   const minv = Math.log(1);
@@ -60,7 +60,7 @@ export const logarithmic = position => {
 
 export const throttle = (func, timeFrame = 0) => {
   let lastTime = 0;
-  return args => {
+  return (args) => {
     const now = new Date();
     if (now - lastTime >= timeFrame) {
       func(args);
@@ -85,25 +85,36 @@ export function triggerButtonCallback(object, onClick) {
   onClick();
 }
 
-// TODO: Move to utility class
+// https://stemkoski.github.io/Three.js/Texture-Animation.html
 /* eslint-disable no-param-reassign */
-export function TextureAnimator(texture, tilesHorizontal, tileDisplayDuration) {
+export function TextureAnimator(
+  texture,
+  tilesHorizontal = 222,
+  tileDisplayDuration = 40,
+  tilesVertical = 2
+) {
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
-  texture.repeat.set(1 / tilesHorizontal, 1);
+  texture.repeat.set(1 / tilesHorizontal, 1 / tilesVertical);
 
   let currentDisplayTime = 0;
   let currentTile = 0;
 
-  this.update = milliSec => {
+  this.update = (milliSec) => {
     currentDisplayTime += milliSec;
     while (currentDisplayTime > tileDisplayDuration) {
       currentDisplayTime -= tileDisplayDuration;
       currentTile += 1;
 
-      if (currentTile === tilesHorizontal) currentTile = 0;
+      if (currentTile === 437) {
+        currentTile = 0;
+      }
 
       const currentColumn = currentTile % tilesHorizontal;
+      const currentRow = Math.floor(currentTile / tilesHorizontal);
+
+      // texture.offset.y = currentRow / tilesVertical;
+      texture.offset.y = 1 - currentRow / tilesVertical - 1 / tilesVertical;
       texture.offset.x = currentColumn / tilesHorizontal;
     }
   };

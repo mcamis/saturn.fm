@@ -55,75 +55,83 @@ class FileReader extends Component {
     } = this.props;
 
     return (
-      <div className="FileReader">
-        <div className="content">
-          <h2>Edit Playlist</h2>
-          <h3>Drag to reorder tracks</h3>
-          <div className="playlists">
-            <DragDropContext onDragEnd={this.onDragEnd}>
-              <Droppable droppableId="droppable">
-                {provided => (
-                  <div ref={provided.innerRef}>
-                    {playlist.map((item, index) => {
-                      const { artist, album, title } = tracks[item];
-                      const currentPlaying =
-                        playing && item === playlist[currentTrack];
+      <div className="overlay">
+        <div className="FileReader">
+          <div className="content">
+            <h2>Edit Playlist</h2>
+            <h3>Drag to reorder tracks</h3>
+            <div className="playlists">
+              <DragDropContext onDragEnd={this.onDragEnd}>
+                <Droppable droppableId="droppable">
+                  {(provided) => (
+                    <div ref={provided.innerRef}>
+                      {playlist.map((item, index) => {
+                        const { artist, album, title } = tracks[item];
+                        const currentPlaying =
+                          playing && item === playlist[currentTrack];
 
-                      return (
-                        <Draggable key={item} draggableId={item} index={index}>
-                          {(draggableProvided, { isDragging }) => {
-                            return (
-                              <div
-                                className="draggable"
-                                className={getDraggableClasses({
-                                  isDragging,
-                                  currentPlaying,
-                                })}
-                                ref={draggableProvided.innerRef}
-                                {...draggableProvided.draggableProps}
-                                {...draggableProvided.dragHandleProps}
-                              >
-                                <div>{currentPlaying && <SpeakerIcon />}</div>
-                                <div>{title}</div>
-                                <div>{artist}</div>
-                                <div>{album}</div>
-                                <button
-                                  className="icon-button"
-                                  // TODO: Prompt on delete?
-                                  onClick={() => this.props.removeTrack(index)}
-                                  type="button"
+                        return (
+                          <Draggable
+                            key={item}
+                            draggableId={item}
+                            index={index}
+                          >
+                            {(draggableProvided, { isDragging }) => {
+                              return (
+                                <div
+                                  className="draggable"
+                                  className={getDraggableClasses({
+                                    isDragging,
+                                    currentPlaying,
+                                  })}
+                                  ref={draggableProvided.innerRef}
+                                  {...draggableProvided.draggableProps}
+                                  {...draggableProvided.dragHandleProps}
                                 >
-                                  <TrashIcon />
-                                </button>
-                              </div>
-                            );
-                          }}
-                        </Draggable>
-                      );
-                    })}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
+                                  <div>{currentPlaying && <SpeakerIcon />}</div>
+                                  <div>{title}</div>
+                                  <div>{artist}</div>
+                                  <div>{album}</div>
+                                  <button
+                                    className="icon-button"
+                                    // TODO: Prompt on delete?
+                                    onClick={() =>
+                                      this.props.removeTrack(index)
+                                    }
+                                    type="button"
+                                  >
+                                    <TrashIcon />
+                                  </button>
+                                </div>
+                              );
+                            }}
+                          </Draggable>
+                        );
+                      })}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+              </DragDropContext>
+            </div>
+            <button
+              className="add-files"
+              type="button"
+              onClick={() => this.getDirectory()}
+            >
+              Add a directory
+            </button>
+            <button
+              className="add-files"
+              type="button"
+              onClick={() => this.getTracks()}
+            >
+              Add file(s)
+            </button>
+            <button type="button" onClick={this.props.toggleMenu}>
+              Close
+            </button>
           </div>
-          <button
-            className="add-files"
-            type="button"
-            onClick={() => this.getDirectory()}
-          >
-            Add a directory
-          </button>
-          <button
-            className="add-files"
-            type="button"
-            onClick={() => this.getTracks()}
-          >
-            Add file(s)
-          </button>
-          <button type="button" onClick={this.props.toggleMenu}>
-            Close
-          </button>
         </div>
       </div>
     );
