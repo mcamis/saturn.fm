@@ -50,7 +50,7 @@ class App extends Component {
     super(props);
     autobind(this);
 
-    this.audioManager = new AudioManager();
+    this.audioManager = null;
 
     this.state = {
       animation: "plain",
@@ -65,6 +65,13 @@ class App extends Component {
 
   componentDidMount() {
     this.frameId = requestAnimationFrame(this.animate);
+  }
+
+  setupAnalyser() {
+    this.audioManager = new AudioManager();
+    this.audioManager.analyser.audioContext
+      .resume()
+      .then(() => this.forceUpdate());
   }
 
   getClassNames() {
@@ -83,7 +90,7 @@ class App extends Component {
   setRandomAnimation() {
     const randomAnimation = ["plain", "spinny", "fast"];
     const withoutCurrent = randomAnimation.filter(
-      animation => animation !== this.state.animation
+      (animation) => animation !== this.state.animation
     );
 
     const nextAnimation =
@@ -95,7 +102,7 @@ class App extends Component {
   }
 
   setAnimationCallback(callback) {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       frameCallbacks: [...prevState.frameCallbacks, callback],
     }));
   }
@@ -106,7 +113,7 @@ class App extends Component {
     const animation =
       randomAnimation[Math.floor(Math.random() * randomAnimation.length)];
 
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       hidden: !prevState.hidden,
       show: false,
       animation,
@@ -121,7 +128,7 @@ class App extends Component {
   }
 
   animate() {
-    this.state.frameCallbacks.forEach(callback => callback());
+    this.state.frameCallbacks.forEach((callback) => callback());
     this.frameId = requestAnimationFrame(this.animate);
   }
 
@@ -133,7 +140,7 @@ class App extends Component {
       requestAnimationFrame(this.animate);
     }
 
-    this.setState(state => ({ fileReaderVisible: !state.fileReaderVisible }));
+    this.setState((state) => ({ fileReaderVisible: !state.fileReaderVisible }));
   }
 
   render() {
@@ -146,78 +153,77 @@ class App extends Component {
     //
     return (
       <div className={this.getClassNames()}>
-        <Header
-          currentTrack={this.props.audio.currentTrack}
-          audioManager={this.audioManager}
-        />
-        <Menu
-          audioManager={this.audioManager}
-          hidden={this.state.hidden}
-          showIfHidden={this.showIfHidden}
-          toggleMenu={this.toggleMenu}
-          toggleAbout={() =>
-            this.setState(prevState => ({
-              showAboutModal: !prevState.showAboutModal,
-            }))
-          }
-          hideDash={this.hideDash}
-          repeat={repeat}
-          paused={paused}
-          playing={playing}
-          setAnimationCallback={this.setAnimationCallback}
-        />
-        <div className="dashboard" />
-        <Cubes
-          audioManager={this.audioManager}
-          hidden={this.state.hidden}
-          paused={paused}
-          playing={playing}
-          setAnimationCallback={this.setAnimationCallback}
-        />
-        {this.props.toast && <p>{this.props.toast}</p>}
+        {this.audioManager && (
+          <>
+            <Header
+              currentTrack={this.props.audio.currentTrack}
+              audioManager={this.audioManager}
+            />
+            <Menu
+              audioManager={this.audioManager}
+              hidden={this.state.hidden}
+              showIfHidden={this.showIfHidden}
+              toggleMenu={this.toggleMenu}
+              toggleAbout={() =>
+                this.setState((prevState) => ({
+                  showAboutModal: !prevState.showAboutModal,
+                }))
+              }
+              hideDash={this.hideDash}
+              repeat={repeat}
+              paused={paused}
+              playing={playing}
+              setAnimationCallback={this.setAnimationCallback}
+            />
+            <div className="dashboard" />
+            <Cubes
+              audioManager={this.audioManager}
+              hidden={this.state.hidden}
+              paused={paused}
+              playing={playing}
+              setAnimationCallback={this.setAnimationCallback}
+            />
+            {this.props.toast && <p>{this.props.toast}</p>}
+
+            {this.state.fileReaderVisible && (
+              <div className="overlay">
+                <FileReader
+                  audio={this.props.audio}
+                  {...audioActions}
+                  toggleMenu={this.toggleMenu}
+                />
+              </div>
+            )}
+            {this.state.showAboutModal && (
+              <div className="overlay">
+                <About
+                  toggleAbout={() =>
+                    this.setState((prevState) => ({
+                      showAboutModal: !prevState.showAboutModal,
+                    }))
+                  }
+                />
+              </div>
+            )}
+            {currentInfo && (
+              <CurrentTrackDisplay
+                title={currentInfo.title}
+                href={currentInfo.href}
+                artist={currentInfo.artist}
+              />
+            )}
+          </>
+        )}
         <StarField
           animation={this.state.animation}
           hidden={this.state.hidden}
           setAnimationCallback={this.setAnimationCallback}
           setRandomAnimation={this.setRandomAnimation}
         />
-        {this.state.fileReaderVisible && (
-          <div className="overlay">
-            <FileReader
-              audio={this.props.audio}
-              {...audioActions}
-              toggleMenu={this.toggleMenu}
-            />
-          </div>
-        )}
-        {this.state.showAboutModal && (
-          <div className="overlay">
-            <About
-              toggleAbout={() =>
-                this.setState(prevState => ({
-                  showAboutModal: !prevState.showAboutModal,
-                }))
-              }
-            />
-          </div>
-        )}
-        {currentInfo && (
-          <CurrentTrackDisplay
-            title={currentInfo.title}
-            href={currentInfo.href}
-            artist={currentInfo.artist}
-          />
-        )}
-        {this.audioManager.analyser.audioContext.state === "suspended" && (
+        {(!this.audioManager ||
+          this.audioManager.analyser.audioContext.state === "suspended") && (
           <div className="start-context">
-            <button
-              type="button"
-              onClick={() =>
-                this.audioManager.analyser.audioContext
-                  .resume()
-                  .then(() => this.forceUpdate())
-              }
-            >
+            <button type="button" onClick={() => this.setupAnalyser()}>
               <span>Press Start</span> スタート
             </button>
           </div>
