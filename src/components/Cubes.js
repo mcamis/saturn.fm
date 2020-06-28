@@ -67,8 +67,10 @@ class Cubes extends React.Component {
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
 
+    // Safari doesn't support image-rendering: pixelated for WebGL yet
+    // https://bugs.webkit.org/show_bug.cgi?id=193895
     const pixRatio = window.devicePixelRatio;
-    renderer.setPixelRatio(pixRatio === 1 ? pixRatio * 0.5 : pixRatio * 0.25);
+    renderer.setPixelRatio(pixRatio === 1 ? pixRatio * 0.5 : pixRatio * 0.15);
     renderer.setSize(width, height);
 
     this.scene = scene;
@@ -88,8 +90,10 @@ class Cubes extends React.Component {
           children: [, , cubeModel],
         },
       }) => {
-        // eslint-disable-next-line no-param-reassign
+        // eslint-disable no-param-reassign
         cubeModel.material.color = new THREE.Color("hsl(143, 100%, 48%)");
+        cubeModel.material.dithering = true;
+        cubeModel.material.flatShading = false;
         cubeModel.position.set(x, y, z);
         cubeModel.rotateX(0.075);
         if (slot === "rightCube") {
@@ -150,7 +154,7 @@ class Cubes extends React.Component {
     return (
       <div
         className="cubes"
-        ref={mount => {
+        ref={(mount) => {
           this.mount = mount;
         }}
       />

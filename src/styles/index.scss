@@ -204,7 +204,7 @@ canvas {
 .dashboard:after {
   content: "";
   background: url("../images/dashboard.png") no-repeat;
-  background-size: 100% 50%;
+  background-size: 100% 47%;
   background-position: 0 100%;
   position: absolute;
   left: 0;
@@ -230,8 +230,8 @@ header {
   @include pixelated;
 
   .info {
-    background: url("../images/header.png") top (center / cover) no-repeat;
-    width: 100%;
+    background: url("../images/header.png") top (center / 100%) no-repeat;
+    width: 79.5%;
     height: 0;
     padding-top: calc(36 / 254 * 100%);
     margin: 0 auto;
@@ -257,7 +257,7 @@ header {
     }
 
     .track-number {
-      font-size: calc(var(--scene-width) / 20);
+      font-size: calc(var(--scene-width) / 22);
       position: absolute;
       left: 28%;
       top: 18%;
@@ -267,7 +267,7 @@ header {
     }
 
     .timer {
-      font-size: calc(var(--scene-width) / 22);
+      font-size: calc(var(--scene-width) / 25);
 
       position: absolute;
       left: 60%;
@@ -388,12 +388,13 @@ header {
       padding: 1em;
     }
     height: 50%;
-    box-shadow: 0 0 0 2px rgba(53, 59, 101, 0.8), 0 0 0 3.5px rgba(149, 149, 149, 0.8), 0 0 0 5px rgba(53, 59, 101, 0.8);
+    box-shadow: 0 0 0 2px rgba(53, 59, 101, 0.8),
+      0 0 0 3.5px rgba(149, 149, 149, 0.8), 0 0 0 5px rgba(53, 59, 101, 0.8);
     font-size: 13px;
     color: white;
     font-weight: 400;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
-      "Helvetica Neue", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
     margin: 0 0 2em;
     max-height: calc(var(--vh, 1vh) * 72);
     overflow: scroll;
@@ -703,11 +704,11 @@ header {
   background: url("../images/knight-rider.png") no-repeat;
   background-position: center center;
   background-size: 100% 100%;
-  height: 12%;
+  height: 6.5%;
   width: 6%;
   position: absolute;
   left: 50%;
-  bottom: 5%;
+  bottom: 25%;
   z-index: 1;
   animation-name: knight-rider;
   animation-duration: 1300ms;
@@ -817,7 +818,8 @@ blink {
 }
 
 .current-track-info {
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+    sans-serif;
   font-weight: lighter;
   font-size: 12px;
   color: white;
@@ -849,41 +851,42 @@ blink {
 }
 
 .start-context {
-position: fixed;
-z-index: 9999;
-background: rgba(10,5,25,.5);
-left: 0;
-right: 0;
-bottom: 0;
-top: 0;
-display: flex;
-text-align: center;
-align-items: center;
-justify-content: center;
-font-size: 16px;
-button {
-  transition: background-color 250ms ease;
-  background: none;
-  border: 1px solid white;
-  color: white;
-  padding: .5em 1.5em;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
-  font-weight: normal;
-  color: white;
-  border-radius: 2px;
-  background: rgba(0,0,0,.75);
+  position: fixed;
+  z-index: 9999;
+  background: rgba(10, 5, 25, 0.5);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  button {
+    transition: background-color 250ms ease;
+    background: none;
+    border: 1px solid white;
+    color: white;
+    padding: 0.5em 1.5em;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+      sans-serif;
+    font-weight: normal;
+    color: white;
+    border-radius: 2px;
+    background: rgba(0, 0, 0, 0.75);
 
-  box-shadow: 0 5px 20px 10px rgba(255,255,255,.2);
-  span {
-    display: block;
-    margin-bottom:8px;
-    padding-bottom: 8px;
-    border-bottom: .5px solid white;
+    box-shadow: 0 5px 20px 10px rgba(255, 255, 255, 0.2);
+    span {
+      display: block;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 0.5px solid white;
+    }
+    &:hover,
+    &:active {
+      background: rgba(255, 255, 255, 0.25);
+      cursor: pointer;
+    }
   }
-  &:hover,
-  &:active {
-    background: rgba(255,255,255,.25);
-    cursor: pointer;
-  }
-}
 }
