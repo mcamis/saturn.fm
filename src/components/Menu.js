@@ -576,7 +576,9 @@ class Menu extends React.Component {
             this.mount = mount;
           }}
         />
-        <div className="tooltips">{this.getToolTip()}</div>
+        <div className="tooltips" key={this.state.activeButton}>
+          {this.getToolTip()}
+        </div>
       </div>
     );
   }
