@@ -432,6 +432,7 @@ class Menu extends React.Component {
     this.orbitButton();
 
     const delta = this.clock.getDelta();
+
     this.renderer.render(this.scene, this.camera);
     this.textureAnimator.update(1000 * delta);
   }

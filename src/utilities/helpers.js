@@ -89,9 +89,9 @@ export function triggerButtonCallback(object, onClick) {
 /* eslint-disable no-param-reassign */
 export function TextureAnimator(
   texture,
-  tilesHorizontal = 222,
+  tilesHorizontal = 23,
   tileDisplayDuration = 40,
-  tilesVertical = 2
+  tilesVertical = 19
 ) {
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
@@ -99,6 +99,7 @@ export function TextureAnimator(
 
   let currentDisplayTime = 0;
   let currentTile = 0;
+  const totalTiles = 419;
 
   this.update = (milliSec) => {
     currentDisplayTime += milliSec;
@@ -106,7 +107,7 @@ export function TextureAnimator(
       currentDisplayTime -= tileDisplayDuration;
       currentTile += 1;
 
-      if (currentTile === 437) {
+      if (currentTile > totalTiles) {
         currentTile = 0;
       }
 
