@@ -9,6 +9,7 @@ import repeatSrc from "images/repeat.png";
 import textureSrc from "images/texture.gif";
 import pinkSrc from "images/pink.gif";
 import orbShadow from "images/orb-shadow.png";
+import purpleAlpha from "images/purpleAlpha.png";
 
 import * as THREE from "three";
 import { Tween, Easing } from "es6-tween";
@@ -17,7 +18,7 @@ export const orbitGeometry = new THREE.CylinderGeometry(
   1.45,
   1.45,
   0.35,
-  12,
+  40,
   1,
   true
 );

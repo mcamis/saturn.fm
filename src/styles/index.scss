@@ -219,10 +219,9 @@ canvas {
 
 .dashboard:after {
   left: 99.9%;
-  right: 0;
-  transform: scaleX(-1);
+  top: 0;
+  transform: scale(-1, 1);
   width: 100%;
-  background-size: 100% 100%;
 }
 
 header {
