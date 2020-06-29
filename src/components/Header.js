@@ -36,16 +36,10 @@ const Header = ({ audioManager, currentTrack }) => {
   // TODO: Fix poor performance
   return (
     <header>
-      <div className="info">
-        <div className="track">
-          <img src={trackSrc} alt="TODO" />
-        </div>
-        <div className="track-number">{`${currentTrack + 1}`}</div>
-        <div className="time">
-          <img src={timeSrc} alt="TODO" />
-        </div>
-        <div className="timer">{formatTime(componentTime)}</div>
-      </div>
+      <h3>Track</h3>
+      <p className="track-number">{`${currentTrack + 1}`}</p>
+      <h3>Time</h3>
+      <p>{formatTime(componentTime)}</p>
       <div className="knight-rider" />
     </header>
   );

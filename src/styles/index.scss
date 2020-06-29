@@ -43,6 +43,11 @@
   src: url("../fonts/Phoebe-3.ttf");
 }
 
+@font-face {
+  font-family: "Phoebe Condensed Bold";
+  src: url("../fonts/PhoebeCondesnedB.ttf");
+}
+
 @mixin pixelated {
   text-rendering: optimizelegibility;
   image-rendering: optimizeSpeed; /* Older versions of FF          */
@@ -228,56 +233,32 @@ canvas {
 }
 
 header {
-  position: relative;
   @include pixelated;
+  background: url("../images/header.png") top (center / 100%) no-repeat;
+  width: 79.5%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  padding: 0 13.5%;
+  display: flex;
+  min-height: 25%;
+  color: #014949;
 
-  .info {
-    background: url("../images/header.png") top (center / 100%) no-repeat;
-    width: 79.5%;
-    height: 0;
-    padding-top: calc(36 / 254 * 100%);
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
-
-    .time,
-    .track {
-      position: absolute;
-      top: 24%;
-      left: 50%;
-      width: 8%;
-      line-height: 0;
-
-      img {
-        width: 100%;
-      }
-    }
-
-    .track {
-      left: 15%;
-      width: 11.79%;
-    }
-
-    .track-number {
-      font-size: calc(var(--scene-width) / 22);
-      position: absolute;
-      left: 28%;
-      top: 18%;
-      color: #004848;
-
-      -webkit-font-smoothing: none;
-    }
-
-    .timer {
-      font-size: calc(var(--scene-width) / 25);
-
-      position: absolute;
-      left: 60%;
-      top: 20%;
-      color: #004848;
-
-      -webkit-font-smoothing: none;
-    }
+  h3 {
+    display: inline-block;
+    font-size: 24px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: "Phoebe Condensed Bold";
+    vertical-align: top;
+  }
+  p {
+    font-size: calc(var(--scene-width) / 18);
+    display: inline-block;
+    padding: 18px;
+  }
+  h3:nth-of-type(2) {
+    margin-left: 25%;
   }
 }
 
