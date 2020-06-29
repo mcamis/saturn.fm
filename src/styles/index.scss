@@ -205,6 +205,7 @@ canvas {
 
   to {
     opacity: 0;
+    pointer-events: none;
   }
 }
 
@@ -396,7 +397,10 @@ header {
     // }
   }
 
-  h2 {
+  h2,
+  button.close {
+    font-family: "Phoebe", "Monaco", monospace;
+
     background: url("../images/header_bg.png");
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 10px;
@@ -411,6 +415,7 @@ header {
     margin-bottom: 2em;
     display: inline-block;
   }
+
   h3 {
     color: white;
     margin: 0 0 2em;

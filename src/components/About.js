@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // TODO: Fix event listener leak here
-const About = props => {
+const About = (props) => {
   return (
     <div className="About">
       <div className="content">
@@ -13,14 +13,6 @@ const About = props => {
               Your scientists were so preoccupied with whether or not they
               could, they didn’t stop to think if they should.
             </em>
-          </p>
-          <p>
-            Saturn.fm is a recreation of the Sega Saturn BIOS CD player
-            interface built with Javascript.
-          </p>
-          <p>
-            Development is ongoing: if you have any feedback, bug reports or
-            suggestions please let me know!
           </p>
           <ul>
             <li>
@@ -52,8 +44,8 @@ const About = props => {
           </ul>
         </div>
         {/* TODO: Saturn style buttons */}
-        <button type="button" onClick={props.toggleAbout}>
-          Close
+        <button className="close" type="button" onClick={props.toggleAbout}>
+          Exit
         </button>
       </div>
     </div>

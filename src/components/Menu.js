@@ -325,7 +325,7 @@ class Menu extends React.Component {
 
     const tooltips = {
       disc: () => <p>Choose Songs</p>,
-      settings: () => <p>{copy.advanced}</p>,
+      settings: () => <p>{copy.settings}</p>,
       hide: () => <p>{copy.hide}</p>,
       rewind: () => <p>{copy.skipBackwards}</p>,
       fastforward: () => <p>{copy.skipForwards}</p>,
