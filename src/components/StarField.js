@@ -16,7 +16,6 @@ class StarField extends React.Component {
   constructor(props) {
     super(props);
     this.timeOut = null;
-    // this.Zspeed = Math.random() * (0.025 - 0.10) + 0.10;
     autobind(this);
 
     const width = sceneWidth();
@@ -26,27 +25,8 @@ class StarField extends React.Component {
 
     const bufferGeometry = new THREE.BufferGeometry();
 
-    const bufferVertices = new Float32Array([
-      -1,
-      -1,
-      1,
-      1,
-      -1,
-      1,
-      1,
-      1,
-      1,
-
-      1,
-      1,
-      1,
-      -1,
-      1,
-      1,
-      -1,
-      -1,
-      1,
-    ]);
+    // prettier-ignore
+    const bufferVertices = new Float32Array([-1,-1,1,1,-1,1,1,1,1,1,1,1,-1,1,1,-1,-1,1,]);
 
     bufferGeometry.setAttribute(
       "position",

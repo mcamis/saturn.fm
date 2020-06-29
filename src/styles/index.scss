@@ -232,6 +232,21 @@ canvas {
   width: 100%;
 }
 
+@keyframes knight-rider {
+  0% {
+    transform: translateX(0) scaleX(0);
+  }
+  5% {
+    transform: translateX(50%) scaleX(1);
+  }
+
+  90% {
+    transform: translateX(690%) scaleX(1);
+  }
+  100% {
+    transform: translateX(710%) scaleX(0);
+  }
+}
 header {
   @include pixelated;
   &:before {
@@ -251,14 +266,13 @@ header {
     background: url("../images/knight-rider.png") no-repeat;
     background-position: center center;
     background-size: 100% 100%;
-    height: 6.5%;
-    width: 6%;
+    height: 12%;
+    width: 8%;
+    bottom: 5%;
     position: absolute;
-    left: 50%;
-    top: 23%;
     z-index: 1;
     animation-name: knight-rider;
-    animation-duration: 1300ms;
+    animation-duration: 1000ms;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
     z-index: -2;
@@ -269,7 +283,7 @@ header {
   position: relative;
   padding: 2% 13.5% 0;
   display: flex;
-  min-height: 25%;
+  height: calc(calc(var(--scene-width) * 0.795) * 0.1417322835);
   z-index: 10;
   color: #014949;
 
@@ -705,10 +719,9 @@ header {
     animation-name: toolTip;
     animation-duration: 200ms;
     animation-iteration-count: 1;
-    animation-fill-mode: forwards; // animation-delay: 10s;
+    animation-fill-mode: forwards;
     animation-timing-function: linear;
-    animation-delay: 10000ms;
-    filter: blur(0.75px);
+    animation-delay: 10s;
   }
   img {
     height: 30px;
@@ -719,16 +732,6 @@ header {
   strong {
     font-weight: normal;
     color: rgb(255, 32, 52);
-  }
-}
-
-@keyframes knight-rider {
-  from {
-    left: 25%;
-  }
-
-  to {
-    left: 69%;
   }
 }
 
@@ -751,8 +754,8 @@ blink {
     animation-play-state: paused;
   }
 
-  .timer,
   .toast,
+  header p:nth-of-type(2),
   .knight-rider {
     animation: blink 1s infinite;
   }
