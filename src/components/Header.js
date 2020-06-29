@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { formatTime } from "utilities/helpers";
-import timeSrc from "images/time.png";
-import trackSrc from "images/track.png";
 
 // https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 function useInterval(callback, delay) {
@@ -40,7 +38,6 @@ const Header = ({ audioManager, currentTrack }) => {
       <p className="track-number">{`${currentTrack + 1}`}</p>
       <h3>Time</h3>
       <p>{formatTime(componentTime)}</p>
-      <div className="knight-rider" />
     </header>
   );
 };
