@@ -150,7 +150,7 @@ class StarField extends React.Component {
   setupSpaceShip() {
     const loader = new GLTFLoader();
 
-    loader.load("./models/saturn_v1.gltf", gltf => {
+    loader.load("./models/saturn_v1.gltf", (gltf) => {
       const { scene: shipModel } = gltf;
       const [x, y, z] = spaceshipPositions[this.props.animation];
       shipModel.position.set(x, y, z);
@@ -252,8 +252,8 @@ class StarField extends React.Component {
   animateStars() {
     for (let i = 0; i < this.stars.length; i += 1) {
       // This animates super quickly on iOS
-      const widthAdjustment = this.width < 500 ? 0.5 : 1;
-      this.stars[i].position.z += 3 + i * 0.2 * widthAdjustment;
+      const baseSpeed = this.props.useSlow ? 5 : 20;
+      this.stars[i].position.z += baseSpeed * Math.random();
 
       // if the particle is too close move it to the back
       if (this.stars[i].position.z > 550) {
@@ -273,7 +273,7 @@ class StarField extends React.Component {
     return (
       <div className="StarField">
         <div
-          ref={mount => {
+          ref={(mount) => {
             this.mount = mount;
           }}
         />

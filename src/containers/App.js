@@ -182,6 +182,7 @@ class App extends Component {
           </>
         )}
         <StarField
+          useSlow={!this.audioManager}
           animation={this.state.animation}
           hidden={this.state.hidden}
           setAnimationCallback={this.setAnimationCallback}
