@@ -353,22 +353,22 @@ class Menu extends React.Component {
       repeat: () => {
         let repeatElement = (
           <p>
-            {copy.repeat}: {copy.repeatOne} / {copy.repeatAll} /
+            {copy.repeat}: {copy.repeatOne} / {copy.repeatAll} /{" "}
             <strong>{copy.repeatOff}</strong>
           </p>
         );
         if (repeat === "track") {
           repeatElement = (
             <p>
-              {copy.repeat}: <strong>{copy.repeatOne}</strong> /{copy.repeatAll}{" "}
-              / {copy.repeatOff}
+              {copy.repeat}: <strong>{copy.repeatOne}</strong> /{" "}
+              {copy.repeatAll} / {copy.repeatOff}
             </p>
           );
         } else if (repeat === "context") {
           repeatElement = (
             <p>
-              {copy.repeat}: {copy.repeatOne} /<strong>{copy.repeatAll}</strong>{" "}
-              / {copy.repeatOff}
+              {copy.repeat}: {copy.repeatOne} /{" "}
+              <strong>{copy.repeatAll}</strong> / {copy.repeatOff}
             </p>
           );
         }

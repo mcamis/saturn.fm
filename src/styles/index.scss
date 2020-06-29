@@ -248,6 +248,8 @@ canvas {
   }
 }
 header {
+  user-select: none; /* Standard */
+
   @include pixelated;
   &:before {
     background: url("../images/header.png") top (center / 100%) no-repeat;
@@ -703,7 +705,6 @@ header {
   p {
     color: black;
     position: absolute;
-    // width: 40%;
     background: rgba(255, 255, 255, 0.5);
     left: 50%;
     transform: translate(-50%, 0) scale(0.8, 1);
@@ -716,12 +717,14 @@ header {
     display: inline-block;
     margin: 0 0 15px;
     z-index: 99;
-    animation-name: toolTip;
+    // animation-name: toolTip;
     animation-duration: 200ms;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
     animation-timing-function: linear;
     animation-delay: 10s;
+    white-space: nowrap;
+    user-select: none;
   }
   img {
     height: 30px;
@@ -901,5 +904,14 @@ blink {
       background: rgba(255, 255, 255, 0.25);
       cursor: pointer;
     }
+  }
+}
+
+.japanese {
+  .tooltips p {
+    line-height: calc(var(--scene-width) / 20);
+    font-size: calc(var(--scene-width) / 20);
+    font-family: "Yu Gothic", sans-serif;
+    font-weight: 100;
   }
 }

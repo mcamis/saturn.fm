@@ -52,8 +52,11 @@ class App extends Component {
     const pausedClass = paused ? "paused" : "";
     const playingClass = playing ? "playing" : "";
     const showClass = this.state.show ? "show" : "";
+    const languageClass = ["ja-JP", "ja"].includes(navigator.language)
+      ? "japanese"
+      : "";
 
-    return `${hiddenClass} ${pausedClass} ${playingClass} ${showClass}`;
+    return `${hiddenClass} ${pausedClass} ${playingClass} ${showClass} ${languageClass}`;
   }
 
   setRandomAnimation() {

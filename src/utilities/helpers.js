@@ -70,7 +70,7 @@ export const throttle = (func, timeFrame = 0) => {
 };
 
 export const getI11yCopy = () => {
-  if (navigator.language === "ja") {
+  if (navigator.language === "ja-JP" || navigator.language === "ja") {
     return {
       disc: "Choose  Songs",
       settings: "ユーザー設定",
