@@ -35,7 +35,7 @@ const Header = ({ audioManager, currentTrack }) => {
   return (
     <header>
       <h3>Track</h3>
-      <p className="track-number">{`${currentTrack + 1}`}</p>
+      <p className="track-number">{currentTrack + 1}</p>
       <h3>Time</h3>
       <p>{formatTime(componentTime)}</p>
     </header>

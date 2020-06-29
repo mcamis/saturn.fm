@@ -6,6 +6,7 @@ import {
   sceneWidth,
   triggerButtonCallback,
   TextureAnimator,
+  getI11yCopy,
 } from "utilities/helpers";
 
 import {
@@ -320,25 +321,30 @@ class Menu extends React.Component {
 
   getToolTip() {
     const { playing, paused, repeat } = this.props;
+    const copy = getI11yCopy("jp");
 
     const tooltips = {
       disc: () => <p>Choose Songs</p>,
-      settings: () => <p>Coming Soon</p>,
-      hide: () => <p>Hide</p>,
-      rewind: () => <p>Rewind</p>,
-      fastforward: () => <p>Fast Forward</p>,
+      settings: () => <p>{copy.advanced}</p>,
+      hide: () => <p>{copy.hide}</p>,
+      rewind: () => <p>{copy.skipBackwards}</p>,
+      fastforward: () => <p>{copy.skipForwards}</p>,
       play: () => {
-        let playElement = <p>Play / Pause</p>;
+        let playElement = (
+          <p>
+            {copy.play} / {copy.pause}
+          </p>
+        );
         if (playing) {
           playElement = (
             <p>
-              <strong>Play </strong>/ Pause
+              <strong>{copy.play}</strong> / {copy.pause}
             </p>
           );
         } else if (paused) {
           playElement = (
             <p>
-              Play / <strong>Pause</strong>
+              {copy.play} / <strong>{copy.pause}</strong>
             </p>
           );
         }
@@ -347,26 +353,29 @@ class Menu extends React.Component {
       repeat: () => {
         let repeatElement = (
           <p>
-            Repeat: 1 / All / <strong>Off</strong>
+            {copy.repeat}: {copy.repeatOne} / {copy.repeatAll} /
+            <strong>{copy.repeatOff}</strong>
           </p>
         );
         if (repeat === "track") {
           repeatElement = (
             <p>
-              Repeat: <strong>1</strong> / All / Off
+              {copy.repeat}: <strong>{copy.repeatOne}</strong> /{copy.repeatAll}{" "}
+              / {copy.repeatOff}
             </p>
           );
         } else if (repeat === "context") {
           repeatElement = (
             <p>
-              Repeat: 1 / <strong>All</strong> / Off
+              {copy.repeat}: {copy.repeatOne} /<strong>{copy.repeatAll}</strong>{" "}
+              / {copy.repeatOff}
             </p>
           );
         }
         return repeatElement;
       },
-      stop: () => <p>Stop</p>,
-      advanced: () => <p>About</p>,
+      stop: () => <p>{copy.stop}</p>,
+      advanced: () => <p>{copy.advanced}</p>,
     };
 
     return tooltips[this.state.activeButton]();

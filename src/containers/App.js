@@ -119,7 +119,7 @@ class App extends Component {
 
     const currentKey = playlist[currentTrack];
     const currentInfo = tracks[currentKey];
-    //
+
     return (
       <div className={this.getClassNames()}>
         {this.audioManager && (

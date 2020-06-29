@@ -69,6 +69,44 @@ export const throttle = (func, timeFrame = 0) => {
   };
 };
 
+export const getI11yCopy = () => {
+  if (navigator.language === "ja") {
+    return {
+      disc: "Choose  Songs",
+      settings: "ユーザー設定",
+      hide: "パネル",
+      skipBackwards: "曲戻し",
+      skipForwards: "曲送り",
+      play: "再生",
+      pause: "一時停止",
+      repeat: "リピート",
+      repeatOne: "1曲",
+      repeatAll: "全曲",
+      repeatOff: "解除",
+      stop: "停  止",
+      advanced: "機能切り替え",
+      exit: "",
+    };
+  }
+
+  return {
+    disc: "Choose  Songs",
+    settings: "Coming Soon",
+    hide: "Hide",
+    skipBackwards: "Skip Backwards",
+    skipForwards: "Skip Forwards",
+    play: "Play",
+    pause: "Pause",
+    repeat: "Repeat",
+    repeatOne: "1",
+    repeatAll: "All",
+    repeatOff: "Off",
+    stop: "Stop",
+    advanced: "About",
+    exit: "",
+  };
+};
+
 export function triggerButtonCallback(object, onClick) {
   new TWEEN.Tween(object.scale)
     .to({ x: 1.5, y: 1.5, z: 1.5 }, 100)
