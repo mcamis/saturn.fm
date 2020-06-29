@@ -1,6 +1,6 @@
 {
-  "app.js": "./js/app.c70bf5bac7089f9e0ef2.js",
-  "vendor.js": "./js/vendor.04e2f61997a4c0a5e242.js",
+  "app.js": "./js/app.9908edf005960b93c506.js",
+  "vendor.js": "./js/vendor.13f72bf175569e1b2bb8.js",
   ".DS_Store": "./.DS_Store",
   "CNAME": "./CNAME",
   "android-chrome-192x192.png": "./android-chrome-192x192.png",
@@ -11,6 +11,7 @@
   "favicon-32x32.png": "./favicon-32x32.png",
   "favicon.ico": "./favicon.ico",
   "fonts/Phoebe-3.ttf": "./fonts/Phoebe-3.ttf",
+  "fonts/PhoebeCondesnedB.ttf": "./fonts/PhoebeCondesnedB.ttf",
   "images/dashboard.png": "./images/dashboard.png",
   "images/disc.png": "./images/disc.png",
   "images/ffwd.png": "./images/ffwd.png",
