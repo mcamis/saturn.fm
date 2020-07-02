@@ -5,6 +5,8 @@ import { getFilesWithTags, reorder } from "utilities/files";
 import SpeakerIcon from "./SpeakerIcon";
 import TrashIcon from "./TrashIcon";
 
+import { getI11yCopy } from "utilities/helpers";
+
 const getDraggableClasses = ({ isDragging, currentPlaying }) => {
   return `draggable ${isDragging ? "isDragging" : ""} ${
     currentPlaying ? "currentTrack" : ""
@@ -54,11 +56,13 @@ class FileReader extends Component {
       audio: { currentTrack, playing, playlist, tracks },
     } = this.props;
 
+    const copy = getI11yCopy();
+
     return (
       <div className="overlay">
         <div className="FileReader">
           <div className="content">
-            <h2>Edit Playlist</h2>
+            <h2>{copy.disc}</h2>
             <h3>Drag to reorder tracks</h3>
             <div className="playlists">
               <DragDropContext onDragEnd={this.onDragEnd}>

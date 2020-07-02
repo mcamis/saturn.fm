@@ -44,6 +44,11 @@
 }
 
 @font-face {
+  font-family: "PhoebeJP";
+  src: url("../fonts/PhoebeJP.ttf");
+}
+
+@font-face {
   font-family: "Phoebe Condensed Bold";
   src: url("../fonts/PhoebeCondesnedB.ttf");
 }
@@ -342,7 +347,7 @@ header {
     display: block;
     filter: brightness(0);
     @include pixelated;
-    background: url("../images/menuBg.png") repeat-y;
+    background: url("../images/menubg.png") repeat-y;
     background-position: center;
     background-size: contain;
     z-index: -1;
@@ -399,20 +404,24 @@ header {
 
   h2,
   button.close {
+    @include pixelated;
+
     font-family: "Phoebe", "Monaco", monospace;
+    font-weight: 100;
+    line-height: 68px;
+    font-size: 27px;
+    color: white;
+    text-transform: capitalize;
+
+    padding: 4px 1.5em 0;
+    margin: 0 auto;
+    margin-bottom: 2em;
 
     background: url("../images/header_bg.png");
     background-color: rgba(0, 0, 0, 0.5);
+    background-size: 100% 100%;
     border-radius: 10px;
 
-    line-height: 53px;
-    padding: 0 1.5em;
-    background-size: 100% 100%;
-    @include pixelated;
-    color: white;
-    text-transform: capitalize;
-    margin: 0 auto;
-    margin-bottom: 2em;
     display: inline-block;
   }
 
@@ -913,10 +922,16 @@ blink {
 }
 
 .japanese {
+  .FileReader {
+    h2 {
+      font-family: "PhoebeJP", sans-serif;
+    }
+  }
   .tooltips p {
     line-height: calc(var(--scene-width) / 20);
     font-size: calc(var(--scene-width) / 20);
-    font-family: "Yu Gothic", sans-serif;
+    font-family: "PhoebeJP", sans-serif;
+    padding-bottom: 8px;
     font-weight: 100;
   }
 }

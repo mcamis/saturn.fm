@@ -324,7 +324,7 @@ class Menu extends React.Component {
     const copy = getI11yCopy("jp");
 
     const tooltips = {
-      disc: () => <p>Choose Songs</p>,
+      disc: () => <p>{copy.disc}</p>,
       settings: () => <p>{copy.settings}</p>,
       hide: () => <p>{copy.hide}</p>,
       rewind: () => <p>{copy.skipBackwards}</p>,

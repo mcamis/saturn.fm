@@ -70,11 +70,11 @@ export const throttle = (func, timeFrame = 0) => {
 };
 
 export const getI11yCopy = () => {
-  if (navigator.language === "ja-JP" || navigator.language === "ja") {
+  if (["ja-JP", "ja"].includes(navigator.language)) {
     return {
-      disc: "Choose  Songs",
+      disc: "プレイリスト",
       settings: "ユーザー設定",
-      hide: "パネル",
+      hide: "パネル消去",
       skipBackwards: "曲戻し",
       skipForwards: "曲送り",
       play: "再生",
@@ -86,6 +86,13 @@ export const getI11yCopy = () => {
       stop: "停  止",
       advanced: "機能切り替え",
       exit: "",
+      fileReader: {
+        header: "",
+        helpText: "",
+        exit: "",
+        directory: "",
+        files: "",
+      },
     };
   }
 
