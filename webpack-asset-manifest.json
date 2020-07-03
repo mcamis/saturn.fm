@@ -1,6 +1,6 @@
 {
-  "app.js": "./js/app.5060638603b3f3ea873e.js",
-  "vendor.js": "./js/vendor.6216b39414146c16de8a.js",
+  "app.js": "./js/app.36764b64871c381e0aae.js",
+  "vendor.js": "./js/vendor.3ba5241ebce679155a74.js",
   ".DS_Store": "./.DS_Store",
   "CNAME": "./CNAME",
   "android-chrome-192x192.png": "./android-chrome-192x192.png",
@@ -13,6 +13,7 @@
   "fonts/Phoebe-3.ttf": "./fonts/Phoebe-3.ttf",
   "fonts/PhoebeCondesnedB.ttf": "./fonts/PhoebeCondesnedB.ttf",
   "fonts/PhoebeJP.ttf": "./fonts/PhoebeJP.ttf",
+  "images/chopin_third.jpeg": "./images/chopin_third.jpeg",
   "images/dashboard.png": "./images/dashboard.png",
   "images/disc.png": "./images/disc.png",
   "images/ffwd.png": "./images/ffwd.png",
