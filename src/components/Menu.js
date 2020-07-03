@@ -48,6 +48,7 @@ class Menu extends React.Component {
     this.state = {
       activeButton: "play",
       allowToggle: false,
+      introActive: true,
     };
 
     this.clock = new THREE.Clock();
@@ -72,6 +73,7 @@ class Menu extends React.Component {
     this.setupScene();
 
     this.setupKeyboardListeners();
+    setTimeout(() => this.setState({ introActive: false }), 1000);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -566,7 +568,7 @@ class Menu extends React.Component {
 
   playHighlight() {
     // Only autoplay highlight on desktop to prevent multiple sounds at once
-    if (typeof window.orientation === "undefined") {
+    if (typeof window.orientation === "undefined" && !this.state.introActive) {
       if (this.props.audioManager.analyser.audioContext.state === "running") {
         this.highlightEffect.currentTime = 0;
         this.highlightEffect.play();

@@ -38,9 +38,10 @@ class App extends Component {
 
   setupAnalyser() {
     this.audioManager = new AudioManager();
-    this.audioManager.analyser.audioContext
-      .resume()
-      .then(() => this.forceUpdate());
+    this.audioManager.analyser.audioContext.resume().then(() => {
+      this.forceUpdate();
+      this.playIntro();
+    });
   }
 
   getClassNames() {
@@ -49,6 +50,7 @@ class App extends Component {
     } = this.props;
 
     const hiddenClass = this.state.hidden ? "hidden" : "";
+    const introClass = this.audioManager ? "intro" : " ";
     const pausedClass = paused ? "paused" : "";
     const playingClass = playing ? "playing" : "";
     const showClass = this.state.show ? "show" : "";
@@ -56,7 +58,7 @@ class App extends Component {
       ? "japanese"
       : "";
 
-    return `${hiddenClass} ${pausedClass} ${playingClass} ${showClass} ${languageClass}`;
+    return `${hiddenClass} ${introClass} ${pausedClass} ${playingClass} ${showClass} ${languageClass}`;
   }
 
   setRandomAnimation() {
