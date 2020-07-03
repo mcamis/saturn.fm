@@ -278,7 +278,7 @@ header {
     width: 8%;
     bottom: 5%;
     position: absolute;
-    z-index: 1;
+
     animation-name: knight-rider;
     animation-duration: 1000ms;
     animation-iteration-count: infinite;
@@ -766,14 +766,15 @@ blink {
 }
 
 .paused {
-  .knight-rider {
+  header:after {
     display: inline-block;
+    transform: translate(350%, 0);
     animation-play-state: paused;
   }
 
   .toast,
   header p:nth-of-type(2),
-  .knight-rider {
+  header:after {
     animation: blink 1s infinite;
   }
 }

@@ -27,7 +27,7 @@ module.exports = merge(common, {
         use: ["babel-loader"],
       },
       {
-        test: /\.(ico|svg|png|jpg|gif)$/,
+        test: /\.(ico|svg|png|jpg|jpeg|gif)$/,
         include: app.src,
         use: [
           {
