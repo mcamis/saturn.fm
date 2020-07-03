@@ -1,5 +1,5 @@
 {
-  "app.js": "./js/app.1c3d2ef9ff6ae701ca3b.js",
+  "app.js": "./js/app.85e49acc9cefee792949.js",
   "vendor.js": "./js/vendor.3ba5241ebce679155a74.js",
   ".DS_Store": "./.DS_Store",
   "CNAME": "./CNAME",
@@ -45,5 +45,8 @@
   "songs/05_No_Refuge.mp3": "./songs/05_No_Refuge.mp3",
   "songs/button-highlight.mp3": "./songs/button-highlight.mp3",
   "songs/button-press.mp3": "./songs/button-press.mp3",
+  "songs/hide.mp3": "./songs/hide.mp3",
+  "songs/intro.mp3": "./songs/intro.mp3",
+  "songs/show.mp3": "./songs/show.mp3",
   "thumb.png": "./thumb.png"
 }
