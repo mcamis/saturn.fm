@@ -13,11 +13,15 @@ import FileReader from "components/FileReader";
 import Header from "components/Header";
 import StarField from "components/StarField";
 import CurrentTrackDisplay from "components/CurrentTrackDisplay";
+import introSrc from "effects/intro.mp3";
 
 class App extends Component {
   constructor(props) {
     super(props);
     autobind(this);
+
+    this.introEffect = new Audio();
+    this.introEffect.src = introSrc;
 
     this.audioManager = null;
 
@@ -79,6 +83,12 @@ class App extends Component {
     this.setState((prevState) => ({
       frameCallbacks: [...prevState.frameCallbacks, callback],
     }));
+  }
+
+  playIntro() {
+    setTimeout(() => {
+      this.introEffect.play();
+    }, 350);
   }
 
   hideDash() {

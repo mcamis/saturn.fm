@@ -28,6 +28,8 @@ import * as THREE from "three";
 
 import buttonSrc from "effects/button-press.mp3";
 import highlightSrc from "effects/button-highlight.mp3";
+import hideSrc from "effects/hide.mp3";
+import showSrc from "effects/show.mp3";
 
 import autobind from "utilities/autobind";
 
@@ -45,6 +47,11 @@ class Menu extends React.Component {
     this.buttonEffect.src = buttonSrc;
     this.highlightEffect = new Audio();
     this.highlightEffect.src = highlightSrc;
+
+    this.hideEffect = new Audio();
+    this.hideEffect.src = hideSrc;
+    this.showEffect = new Audio();
+    this.showEffect.src = showSrc;
     this.state = {
       activeButton: "play",
       allowToggle: false,
@@ -106,11 +113,6 @@ class Menu extends React.Component {
 
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);
-    // if(window.innerWidth < 400) {
-    //   this.shadowPlanes.forEach(shadow => shadow.visible = false);
-    // } else {
-    //   this.shadowPlanes.forEach(shadow => shadow.visible = true);
-    // }
   }
 
   onMouseDown(e) {
@@ -132,20 +134,25 @@ class Menu extends React.Component {
       const { object } = intersects[0];
 
       if (this.props.audioManager.analyser.audioContext.state === "running") {
-        this.buttonEffect.currentTime = 0;
-        this.buttonEffect.play();
-        triggerButtonCallback(object, onClick);
+        this.handleMouseDown(object, onClick);
       } else {
         this.props.audioManager.analyser.audioContext
           .resume()
           .then(() => {
-            this.buttonEffect.currentTime = 0;
-            this.buttonEffect.play();
-            triggerButtonCallback(object, onClick);
+            this.handleMouseDown(object, onClick);
           })
           .catch((e) => console.log(e));
       }
     }
+  }
+
+  handleMouseDown(object, onClick) {
+    if (object.name !== "hide") {
+      this.buttonEffect.currentTime = 0;
+      this.buttonEffect.play();
+    }
+
+    triggerButtonCallback(object, onClick);
   }
 
   onMouseMove(e) {
@@ -189,7 +196,7 @@ class Menu extends React.Component {
           ) {
             this.buttonEffect.currentTime = 0;
             this.buttonEffect.play();
-            this.triggerButtonCallback(
+            triggerButtonCallback(
               nextObject,
               this.menuElements[nextName].onClick
             );
@@ -199,7 +206,7 @@ class Menu extends React.Component {
               .then(() => {
                 this.buttonEffect.currentTime = 0;
                 this.buttonEffect.play();
-                this.triggerButtonCallback(
+                triggerButtonCallback(
                   nextObject,
                   this.menuElements[nextName].onClick
                 );
@@ -422,18 +429,21 @@ class Menu extends React.Component {
     }
 
     // TODO: Switch this to the real sound effect
-    this.playHighlight();
+    this.hideEffect.currentTime = 0;
+    this.hideEffect.play();
+    setTimeout(() => {
+      this.planes.forEach((plane) => {
+        const { x, y, z } = plane.position;
+        animateButtonPosition(plane, new THREE.Vector3(x, y - 10, z));
+      });
 
-    this.planes.forEach((plane) => {
-      const { x, y, z } = plane.position;
-      animateButtonPosition(plane, new THREE.Vector3(x, y - 10, z));
-    });
+      this.shadowPlanes.forEach((shadow) => {
+        // eslint-disable-next-line no-param-reassign
+        shadow.visible = false;
+      });
+      this.props.hideDash();
+    }, 450);
 
-    this.shadowPlanes.forEach((shadow) => {
-      // eslint-disable-next-line no-param-reassign
-      shadow.visible = false;
-    });
-    this.props.hideDash();
     return setTimeout(() => this.setState({ allowToggle: true }), 1400);
   }
 
@@ -451,6 +461,9 @@ class Menu extends React.Component {
     if (this.state.allowToggle && this.props.hidden) {
       this.props.showIfHidden();
       this.setState({ allowToggle: false });
+      this.showEffect.currentTime = 0;
+      this.showEffect.play();
+
       this.planes.forEach((plane) => {
         const { x, y, z } = plane.position;
         animateButtonPosition(plane, new THREE.Vector3(x, y + 10, z));

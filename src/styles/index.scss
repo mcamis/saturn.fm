@@ -844,11 +844,11 @@ blink {
   .dashboard,
   .cubes canvas {
     animation-name: floatInRelative;
-    animation-duration: 800ms;
+    animation-duration: 1500ms;
     animation-iteration-count: 1;
     animation-fill-mode: backwards; // animation-delay: 10s;
     animation-timing-function: linear;
-    animation-delay: 300ms;
+    animation-delay: 0;
   }
 
   li {
