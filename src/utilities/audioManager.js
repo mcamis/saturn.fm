@@ -168,6 +168,8 @@ export default class AudioManager {
       }
     });
 
+    if (!("mediaSession" in navigator)) return;
+
     navigator.mediaSession.setActionHandler("play", () => this.playAndReport());
     navigator.mediaSession.setActionHandler("pause", () =>
       this.playAndReport()
