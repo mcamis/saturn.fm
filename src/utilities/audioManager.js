@@ -3,6 +3,7 @@ import { store } from "index";
 import StereoAnalyser from "utilities/stereoAnalyser";
 import { defaultState } from "reducers/audio";
 import * as audioActions from "actions/audio";
+import art from "images/chopin_third.jpeg";
 
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio
 export default class AudioManager {
@@ -49,6 +50,25 @@ export default class AudioManager {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  updateMediaSession({ title, artist, album, albumArtUrl, ...rest }) {
+    console.log(albumArtUrl);
+    if (!("mediaSession" in navigator)) return;
+
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title,
+      artist,
+      album,
+      artwork: [
+        {
+          src: albumArtUrl ? albumArtUrl : art,
+          sizes: "512x512",
+          // type: "image/png",
+        },
+      ],
+    });
+  }
+
   playAndReport() {
     const { tracks, playlist, currentTrack = 0 } = this.reduxState;
     const trackKey = playlist[currentTrack];
@@ -58,6 +78,9 @@ export default class AudioManager {
       const objectUrl = URL.createObjectURL(nextSong);
       this.audioElement.src = objectUrl;
       this.audioElement.play();
+      this.audioElement.play().then(() => {
+        this.updateMediaSession(tracks[trackKey]);
+      });
     } else {
       // TODO: This was a dumb kludge that causes lots of files to restart after pausing
       // TODO: Workaround for preloaded files, move this to redux?
@@ -71,7 +94,9 @@ export default class AudioManager {
       ) {
         this.audioElement.src = nextSong;
       }
-      this.audioElement.play();
+      this.audioElement.play().then(() => {
+        this.updateMediaSession(tracks[trackKey]);
+      });
     }
   }
 
@@ -143,6 +168,16 @@ export default class AudioManager {
       }
     });
 
+    navigator.mediaSession.setActionHandler("play", () => this.playAndReport());
+    navigator.mediaSession.setActionHandler("pause", () =>
+      this.playAndReport()
+    );
+    navigator.mediaSession.setActionHandler("previoustrack", () =>
+      this.previousTrack()
+    );
+    navigator.mediaSession.setActionHandler("nexttrack", () =>
+      this.nextTrack()
+    );
     // TODO: Error handling
     /*
       suspend

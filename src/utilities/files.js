@@ -45,8 +45,23 @@ async function generateTrackInfo(file) {
     console.log("Fetching Tags Error", err);
   }
   const {
-    tags: { artist = "", album = "", title = file.name, track = 0 } = {},
+    tags: {
+      artist = "",
+      album = "",
+      title = file.name,
+      track = 0,
+      picture = {},
+    } = {},
   } = metadata;
+
+  const { data, type } = picture;
+
+  let maybAlbumArtBlob;
+  if (data) {
+    const byteArray = new Uint8Array(data);
+    const blob = new Blob([byteArray], { type });
+    maybAlbumArtBlob = URL.createObjectURL(blob);
+  }
 
   return {
     file,
@@ -54,6 +69,7 @@ async function generateTrackInfo(file) {
     artist,
     album,
     title,
+    albumArtUrl: maybAlbumArtBlob,
   };
 }
 

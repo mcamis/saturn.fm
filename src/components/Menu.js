@@ -436,7 +436,6 @@ class Menu extends React.Component {
   }
 
   animate() {
-    // TODO: Move tween.update to a central location?
     TWEEN.update();
     this.orbitButton();
 

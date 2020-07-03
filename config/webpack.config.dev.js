@@ -33,7 +33,7 @@ module.exports = merge(common, {
         use: ["babel-loader"],
       },
       {
-        test: /\.(ico|svg|mp3|png|jpg|gif)$/,
+        test: /\.(ico|svg|mp3|png|jpeg|jpg|gif)$/,
         include: app.src,
         use: [
           {
