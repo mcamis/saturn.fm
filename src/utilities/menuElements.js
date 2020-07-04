@@ -10,10 +10,17 @@ import textureSrc from "images/texture.gif";
 import pinkSrc from "images/pink.gif";
 import orbShadow from "images/orb-shadow.png";
 
-import * as THREE from "three";
+import {
+  TextureLoader,
+  NearestFilter,
+  DoubleSide,
+  CylinderGeometry,
+  MeshBasicMaterial,
+  PlaneGeometry,
+} from "three";
 import { Tween, Easing } from "es6-tween";
 
-export const orbitGeometry = new THREE.CylinderGeometry(
+export const orbitGeometry = new CylinderGeometry(
   1.45,
   1.45,
   0.35,
@@ -21,28 +28,28 @@ export const orbitGeometry = new THREE.CylinderGeometry(
   1,
   true
 );
-const orbitTexture = new THREE.TextureLoader().load(textureSrc);
-const pinkTexture = new THREE.TextureLoader().load(pinkSrc);
+const orbitTexture = new TextureLoader().load(textureSrc);
+const pinkTexture = new TextureLoader().load(pinkSrc);
 
 // NearestFilter gets us that sweet sweet pixelated look
-orbitTexture.magFilter = THREE.NearestFilter;
-pinkTexture.magFilter = THREE.NearestFilter;
+orbitTexture.magFilter = NearestFilter;
+pinkTexture.magFilter = NearestFilter;
 
-export const purpleMesh = new THREE.MeshBasicMaterial({
-  side: THREE.DoubleSide,
+export const purpleMesh = new MeshBasicMaterial({
+  side: DoubleSide,
   transparent: true,
   map: orbitTexture,
 });
 
-export const pinkMesh = new THREE.MeshBasicMaterial({
-  side: THREE.DoubleSide,
+export const pinkMesh = new MeshBasicMaterial({
+  side: DoubleSide,
   transparent: true,
   map: pinkTexture,
 });
 
-export const planeGeometry = new THREE.PlaneGeometry(2, 2, 1, 1);
-export const shadowGeometry = new THREE.PlaneGeometry(1.5, 1.5, 1, 1);
-export const shadowTexture = new THREE.TextureLoader().load(orbShadow);
+export const planeGeometry = new PlaneGeometry(2, 2, 1, 1);
+export const shadowGeometry = new PlaneGeometry(1.5, 1.5, 1, 1);
+export const shadowTexture = new TextureLoader().load(orbShadow);
 
 export const createButtons = (audioManager, hideMenu, toggleMenu) => [
   {

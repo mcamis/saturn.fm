@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import { RepeatWrapping } from "three";
 import * as TWEEN from "es6-tween";
 
 export function average(arr) {
@@ -138,8 +138,8 @@ export function TextureAnimator(
   tileDisplayDuration = 40,
   tilesVertical = 19
 ) {
-  texture.wrapS = THREE.RepeatWrapping;
-  texture.wrapT = THREE.RepeatWrapping;
+  texture.wrapS = RepeatWrapping;
+  texture.wrapT = RepeatWrapping;
   texture.repeat.set(1 / tilesHorizontal, 1 / tilesVertical);
 
   let currentDisplayTime = 0;

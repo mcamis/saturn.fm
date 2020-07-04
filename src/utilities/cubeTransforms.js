@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { Tween, Easing } from "es6-tween";
-import * as THREE from "three";
-
+import { Color } from "three";
 import { logarithmic } from "utilities/helpers";
 
 const COLOR_TWEENING_SCALE = 0.75;
@@ -16,7 +15,7 @@ const colorTween = (target, channelFFT) => {
   const hue = 142.5 - logVal;
 
   // // TODO: This HSL change is quick but doesn't exactly match the original behavior
-  const { r, g, b } = new THREE.Color(`hsl(${hue > 0 ? hue : 0}, 100%, 48%)`);
+  const { r, g, b } = new Color(`hsl(${hue > 0 ? hue : 0}, 100%, 48%)`);
 
   return new Tween(target.material.color)
     .to({ r, g, b }, 100)

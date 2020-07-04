@@ -1,6 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import * as THREE from "three";
+import {
+  Color,
+  Scene,
+  PerspectiveCamera,
+  WebGLRenderer,
+  AmbientLight,
+  DirectionalLight,
+} from "three";
 import autobind from "utilities/autobind";
 import GLTFLoader from "three-gltf-loader";
 
@@ -55,17 +62,17 @@ class Cubes extends React.Component {
     const width = sceneWidth();
     const height = width * 0.75;
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(20, width / height, 1, 1200);
+    const scene = new Scene();
+    const camera = new PerspectiveCamera(20, width / height, 1, 1200);
     camera.position.z = 45;
     camera.position.y = -27;
 
-    const ambient = new THREE.AmbientLight(0xffffff, 0.35);
-    const directional = new THREE.DirectionalLight(0xffffff, 0.7);
+    const ambient = new AmbientLight(0xffffff, 0.35);
+    const directional = new DirectionalLight(0xffffff, 0.7);
     directional.position.set(0, 500, 900);
     scene.add(ambient, directional);
 
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
+    const renderer = new WebGLRenderer({ alpha: true, antialias: false });
 
     // Safari doesn't support image-rendering: pixelated for WebGL yet
     // https://bugs.webkit.org/show_bug.cgi?id=193895
@@ -91,7 +98,7 @@ class Cubes extends React.Component {
         },
       }) => {
         // eslint-disable no-param-reassign
-        cubeModel.material.color = new THREE.Color("hsl(143, 100%, 48%)");
+        cubeModel.material.color = new Color("hsl(143, 100%, 48%)");
         cubeModel.material.dithering = true;
         cubeModel.material.flatShading = false;
         cubeModel.position.set(x, y, z);

@@ -1,8 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import * as THREE from "three";
-import GLTFLoader from "three-gltf-loader";
 
+import GLTFLoader from "three-gltf-loader";
+import {
+  Scene,
+  PerspectiveCamera,
+  WebGLRenderer,
+  DirectionalLight,
+  BufferGeometry,
+  BufferAttribute,
+  LinearFilter,
+  MeshBasicMaterial,
+  Mesh,
+} from "three";
 import autobind from "utilities/autobind";
 import { randomSize, randomPosition, sceneWidth } from "utilities/helpers";
 
@@ -23,19 +33,19 @@ class StarField extends React.Component {
     this.width = width;
     this.height = height;
 
-    const bufferGeometry = new THREE.BufferGeometry();
+    const bufferGeometry = new BufferGeometry();
 
     // prettier-ignore
     const bufferVertices = new Float32Array([-1,-1,1,1,-1,1,1,1,1,1,1,1,-1,1,1,-1,-1,1,]);
 
     bufferGeometry.setAttribute(
       "position",
-      new THREE.BufferAttribute(bufferVertices, 3)
+      new BufferAttribute(bufferVertices, 3)
     );
-    this.blueMaterial = new THREE.MeshBasicMaterial({ color: 0x759cff });
-    this.redMaterial = new THREE.MeshBasicMaterial({ color: 0xff757a });
-    this.yellowMaterial = new THREE.MeshBasicMaterial({ color: 0xede13b });
-    this.whiteMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    this.blueMaterial = new MeshBasicMaterial({ color: 0x759cff });
+    this.redMaterial = new MeshBasicMaterial({ color: 0xff757a });
+    this.yellowMaterial = new MeshBasicMaterial({ color: 0xede13b });
+    this.whiteMaterial = new MeshBasicMaterial({ color: 0xffffff });
     this.starGeometry = bufferGeometry;
 
     window.addEventListener("resize", () => {
@@ -50,7 +60,7 @@ class StarField extends React.Component {
 
   componentDidMount() {
     this.setupScene();
-    // this.clock = new THREE.Clock();
+    // this.clock = new Clock();
   }
 
   shouldComponentUpdate(nextProps) {
@@ -82,17 +92,12 @@ class StarField extends React.Component {
   }
 
   setupScene() {
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-      70,
-      this.width / this.height,
-      1,
-      1000
-    );
+    const scene = new Scene();
+    const camera = new PerspectiveCamera(70, this.width / this.height, 1, 1000);
 
-    const mainLight = new THREE.DirectionalLight(0xffffff, 3);
-    const leftLight = new THREE.DirectionalLight(0xffffff, 2);
-    const rightLight = new THREE.DirectionalLight(0xffffff, 2);
+    const mainLight = new DirectionalLight(0xffffff, 3);
+    const leftLight = new DirectionalLight(0xffffff, 2);
+    const rightLight = new DirectionalLight(0xffffff, 2);
     mainLight.position.set(-10, 46, 600);
     leftLight.position.set(-200, 46, 500);
     rightLight.position.set(200, 46, 500);
@@ -102,7 +107,7 @@ class StarField extends React.Component {
 
     // scene.add(directional, );
 
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
+    const renderer = new WebGLRenderer({ alpha: true, antialias: false });
     renderer.setClearColor(0xffffff);
     camera.position.z = 500;
     const isSafari =
@@ -140,15 +145,15 @@ class StarField extends React.Component {
 
       // Disable texture filtering for the authenitc chunky Saturn gfx
       const shipMap = shipModel.children[1].material.map;
-      shipMap.magFilter = THREE.LinearFilter;
-      shipMap.minFilter = THREE.LinearFilter;
+      shipMap.magFilter = LinearFilter;
+      shipMap.minFilter = LinearFilter;
       shipMap.generateMipmaps = false;
 
       this.spaceShip = shipModel;
       window.ship = shipModel;
       this.scene.add(shipModel);
 
-      // this.mixer = new THREE.AnimationMixer(shipModel);
+      // this.mixer = new AnimationMixer(shipModel);
       // this.mixer.clipAction(gltf.animations[0]).play();
     });
   }
@@ -213,7 +218,7 @@ class StarField extends React.Component {
         material = this.blueMaterial;
       }
 
-      const star = new THREE.Mesh(this.starGeometry, material);
+      const star = new Mesh(this.starGeometry, material);
 
       // TODO: Better positioning so stars don't smack the viewer in the face
       star.position.x = randomPosition(this.width);

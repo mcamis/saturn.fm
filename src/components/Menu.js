@@ -24,7 +24,18 @@ import globeSprite from "images/globeSprite.png";
 
 // Todo: Import specific tween functions as needed
 import * as TWEEN from "es6-tween";
-import * as THREE from "three";
+import {
+  Clock,
+  Scene,
+  Vector2,
+  Raycaster,
+  PerspectiveCamera,
+  WebGLRenderer,
+  TextureLoader,
+  NearestFilter,
+  Mesh,
+  MeshBasicMaterial,
+} from "three";
 
 import buttonSrc from "effects/button-press.mp3";
 import highlightSrc from "effects/button-highlight.mp3";
@@ -58,7 +69,7 @@ class Menu extends React.Component {
       introActive: true,
     };
 
-    this.clock = new THREE.Clock();
+    this.clock = new Clock();
 
     this.buttons = [
       "disc",
@@ -230,20 +241,20 @@ class Menu extends React.Component {
   setupScene() {
     const width = sceneWidth();
     const height = width * 0.75;
-    const scene = new THREE.Scene();
+    const scene = new Scene();
 
-    const camera = new THREE.PerspectiveCamera(2.5, width / height, 1, 500);
+    const camera = new PerspectiveCamera(2.5, width / height, 1, 500);
     camera.aspect = width / height;
 
     camera.position.z = 360;
     camera.position.y = 0.5;
     camera.updateProjectionMatrix();
 
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
+    const renderer = new WebGLRenderer({ alpha: true, antialias: false });
     renderer.setSize(width, height);
 
-    this.mouse = new THREE.Vector2();
-    this.raycaster = new THREE.Raycaster();
+    this.mouse = new Vector2();
+    this.raycaster = new Raycaster();
     this.scene = scene;
     this.camera = camera;
 
@@ -282,13 +293,13 @@ class Menu extends React.Component {
   setupOrbAnimation() {
     const [x, y, z] = [2.25, -4.3, 1];
 
-    const globeTexture = new THREE.TextureLoader().load(globeSprite);
-    globeTexture.magFilter = THREE.NearestFilter;
-    globeTexture.minFilter = THREE.NearestFilter;
+    const globeTexture = new TextureLoader().load(globeSprite);
+    globeTexture.magFilter = NearestFilter;
+    globeTexture.minFilter = NearestFilter;
 
     this.textureAnimator = new TextureAnimator(globeTexture);
 
-    const globeMaterial = new THREE.MeshBasicMaterial({
+    const globeMaterial = new MeshBasicMaterial({
       map: globeTexture,
       transparent: true,
       name: "advanced",
@@ -300,14 +311,14 @@ class Menu extends React.Component {
       },
     });
 
-    const spinningGlobe = new THREE.Mesh(planeGeometry, globeMaterial);
+    const spinningGlobe = new Mesh(planeGeometry, globeMaterial);
     spinningGlobe.position.set(x, y, z);
     spinningGlobe.name = "advanced";
 
-    shadowTexture.magFilter = THREE.NearestFilter;
-    shadowTexture.minFilter = THREE.NearestFilter;
+    shadowTexture.magFilter = NearestFilter;
+    shadowTexture.minFilter = NearestFilter;
 
-    const shadowMaterial = new THREE.MeshBasicMaterial({
+    const shadowMaterial = new MeshBasicMaterial({
       map: shadowTexture,
       transparent: true,
       opacity: 0.5,
@@ -317,7 +328,7 @@ class Menu extends React.Component {
       },
     });
 
-    const shadowPlane = new THREE.Mesh(shadowGeometry, shadowMaterial);
+    const shadowPlane = new Mesh(shadowGeometry, shadowMaterial);
     shadowPlane.position.set(x, y - SHADOW_OFFSET, z - 0.5);
     // shadowPlane.visible = window.innerWidth >= 400;
     this.shadowPlanes.push(shadowPlane);
@@ -432,7 +443,7 @@ class Menu extends React.Component {
     setTimeout(() => {
       this.planes.forEach((plane) => {
         const { x, y, z } = plane.position;
-        animateButtonPosition(plane, new THREE.Vector3(x, y - 10, z));
+        animateButtonPosition(plane, new Vector3(x, y - 10, z));
       });
 
       this.shadowPlanes.forEach((shadow) => {
@@ -464,7 +475,7 @@ class Menu extends React.Component {
 
       this.planes.forEach((plane) => {
         const { x, y, z } = plane.position;
-        animateButtonPosition(plane, new THREE.Vector3(x, y + 10, z));
+        animateButtonPosition(plane, new Vector3(x, y + 10, z));
       });
       setTimeout(() => {
         this.shadowPlanes.forEach((shadow) => {
@@ -486,11 +497,11 @@ class Menu extends React.Component {
   }) {
     const [x, y, z] = position;
 
-    const planeTexture = new THREE.TextureLoader().load(mapSrc);
-    planeTexture.magFilter = THREE.NearestFilter;
-    planeTexture.minFilter = THREE.NearestFilter;
+    const planeTexture = new TextureLoader().load(mapSrc);
+    planeTexture.magFilter = NearestFilter;
+    planeTexture.minFilter = NearestFilter;
 
-    const planeMaterial = new THREE.MeshBasicMaterial({
+    const planeMaterial = new MeshBasicMaterial({
       map: planeTexture,
       transparent: true,
       name,
@@ -501,14 +512,14 @@ class Menu extends React.Component {
       },
     });
 
-    const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+    const plane = new Mesh(planeGeometry, planeMaterial);
     plane.position.set(x, y, z);
     plane.name = name;
     if (showShadow) {
-      shadowTexture.magFilter = THREE.NearestFilter;
-      shadowTexture.minFilter = THREE.NearestFilter;
+      shadowTexture.magFilter = NearestFilter;
+      shadowTexture.minFilter = NearestFilter;
 
-      const shadowMaterial = new THREE.MeshBasicMaterial({
+      const shadowMaterial = new MeshBasicMaterial({
         map: shadowTexture,
         transparent: true,
         opacity: 0.5,
@@ -518,7 +529,7 @@ class Menu extends React.Component {
           animationDuration,
         },
       });
-      const shadowPlane = new THREE.Mesh(shadowGeometry, shadowMaterial);
+      const shadowPlane = new Mesh(shadowGeometry, shadowMaterial);
       shadowPlane.position.set(x, y - SHADOW_OFFSET, z - 0.5);
       // shadowPlane.visible = window.innerWidth >= 400;
       this.shadowPlanes.push(shadowPlane);
@@ -531,8 +542,8 @@ class Menu extends React.Component {
 
   placeOrbitsInScene() {
     const [x, y] = [0, -2.15];
-    const pink = new THREE.Mesh(orbitGeometry, pinkMesh);
-    const purple = new THREE.Mesh(orbitGeometry, purpleMesh);
+    const pink = new Mesh(orbitGeometry, pinkMesh);
+    const purple = new Mesh(orbitGeometry, purpleMesh);
 
     // Push the orbits slight ahead in Z so they hit the plane at the eges of the sphere
     pink.position.set(x, y, 2);
