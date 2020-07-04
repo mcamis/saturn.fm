@@ -76,7 +76,9 @@ export default class AudioManager {
 
     if (nextSong instanceof File) {
       const objectUrl = URL.createObjectURL(nextSong);
-      this.audioElement.src = objectUrl;
+      if (this.audioElement.src !== objectUrl) {
+        this.audioElement.src = objectUrl;
+      }
       this.audioElement.play();
       this.audioElement.play().then(() => {
         this.updateMediaSession(tracks[trackKey]);
@@ -86,8 +88,7 @@ export default class AudioManager {
       // TODO: Workaround for preloaded files, move this to redux?
       const splitSrc = nextSong.split("./songs");
       const isFromDefaultPlaylist = splitSrc.length > 0;
-      const derivedSrc = isFromDefaultPlaylist ? splitSrc[1] : nextSong;
-
+      const derivedSrc = isFromDefaultPlaylist ? splitSrc[0] : nextSong;
       if (
         !this.audioElement.src ||
         !this.audioElement.src.includes(derivedSrc)
@@ -170,10 +171,8 @@ export default class AudioManager {
 
     if (!("mediaSession" in navigator)) return;
 
-    navigator.mediaSession.setActionHandler("play", () => this.playAndReport());
-    navigator.mediaSession.setActionHandler("pause", () =>
-      this.playAndReport()
-    );
+    navigator.mediaSession.setActionHandler("play", () => this.togglePlay());
+    navigator.mediaSession.setActionHandler("pause", () => this.togglePlay());
     navigator.mediaSession.setActionHandler("previoustrack", () =>
       this.previousTrack()
     );

@@ -4,6 +4,8 @@ import { formatTime } from "utilities/helpers";
 // import NothingStopsDetroit from "../songs/03_Nothing_Stops_Detroit.mp3";
 // import GnosisHardware from "../songs/04_Gnosis_Hardware.mp3";
 import NoRefuge from "../songs/05_No_Refuge.mp3";
+import KliqSrc from "../images/kliq.jpg";
+
 // import OutHere from "../songs/06_Out_Here_At_The_Outersphere.mp3";
 // import Chicago from "../songs/07_Chicago.mp3";
 // import Passports from "../songs/08_Passports.mp3";
@@ -26,6 +28,7 @@ export const defaultState = {
       artist: "Professor Kliq",
       title: "No Refuge",
       href: "https://www.professorkliq.com",
+      albumArtUrl: KliqSrc,
     },
   },
 };

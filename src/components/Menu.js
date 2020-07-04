@@ -103,6 +103,7 @@ class Menu extends React.Component {
       const [x, y] = this.menuElements[this.state.activeButton].position;
       this.orbits.pink.position.set(x, y, 2);
       this.orbits.purple.position.set(x, y, 2.03);
+      this.playHighlight();
     }
   }
 
@@ -221,9 +222,7 @@ class Menu extends React.Component {
       }
 
       if (nextIndex >= 0 && nextIndex < this.buttons.length) {
-        this.setState({ activeButton: this.buttons[nextIndex] }, () =>
-          this.playHighlight()
-        );
+        this.setState({ activeButton: this.buttons[nextIndex] });
       }
     });
   }
@@ -415,7 +414,6 @@ class Menu extends React.Component {
       } = intersects[0];
       if (name && name !== this.state.activeButton) {
         this.setState({ activeButton: name });
-        this.playHighlight();
       }
       document.body.classList.add("pointer");
     } else {
