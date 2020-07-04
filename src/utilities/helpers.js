@@ -97,7 +97,7 @@ export const getI11yCopy = () => {
   }
 
   return {
-    disc: "Choose  Songs",
+    disc: "Edit Playlist",
     settings: "Coming Soon",
     hide: "Hide",
     skipBackwards: "Skip Backwards",

@@ -35,6 +35,7 @@ import {
   NearestFilter,
   Mesh,
   MeshBasicMaterial,
+  Vector3,
 } from "three";
 
 import buttonSrc from "effects/button-press.mp3";

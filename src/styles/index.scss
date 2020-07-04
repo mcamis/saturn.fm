@@ -40,26 +40,34 @@
 
 @font-face {
   font-family: "Phoebe";
-  src: url("../fonts/Phoebe-3.ttf");
+  src: url("../fonts/PhoebeV4.ttf");
 }
 
 @font-face {
   font-family: "PhoebeJP";
   src: url("../fonts/PhoebeJP.ttf");
 }
-
+@font-face {
+  font-family: "ChibiPhoebe";
+  src: url("../fonts/ChibiPhoebe.ttf");
+}
 @font-face {
   font-family: "Phoebe Condensed Bold";
   src: url("../fonts/PhoebeCondesnedB.ttf");
 }
 
 @mixin pixelated {
-  text-rendering: optimizelegibility;
   image-rendering: optimizeSpeed; /* Older versions of FF          */
   image-rendering: -moz-crisp-edges; /* FF 6.0+                       */
   image-rendering: -webkit-optimize-contrast; /* Safari                        */
   image-rendering: -o-crisp-edges; /* OS X & Windows Opera (12.02+) */
   image-rendering: pixelated; /* Awesome future-browsers       */
+}
+
+@mixin menuBackground {
+  border-radius: 3px;
+  box-shadow: 0 0 0 2px rgba(53, 59, 101, 0.8),
+    0 0 0 3.5px rgba(149, 149, 149, 0.8), 0 0 0 5px rgba(53, 59, 101, 0.8);
 }
 
 @mixin fadeInFilter {
@@ -86,6 +94,8 @@
 * {
   box-sizing: border-box;
   font-size: inherit;
+  text-rendering: geometricPrecision;
+  font-weight: 100;
 }
 
 html {
@@ -96,7 +106,7 @@ html {
 body {
   font-family: "Phoebe", "Monaco", monospace;
   font-size: 22px;
-  font-weight: 500;
+
   line-height: 1.3;
   height: calc(var(--vh, 1vh) * 100);
   overflow: hidden;
@@ -113,10 +123,6 @@ body {
 
 p {
   margin-top: 0;
-}
-
-em {
-  font-family: "Georgia", serif;
 }
 
 .pointer {
@@ -372,14 +378,17 @@ header {
     @include fadeInFilter;
     @include pixelated;
     background: url("../images/menubg.png") repeat-y;
-    background-position: center;
-    background-size: contain;
+    // background-position: center;
+    // background-size: contain ;
+    background-position: center top;
+    background-size: 100% 880px;
     z-index: -1;
   }
 
   .content {
     text-align: center;
-    max-width: 800px;
+    // max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
     opacity: 0;
     animation-name: menuContentFadeIn;
@@ -388,6 +397,10 @@ header {
     animation-fill-mode: forwards; // animation-delay: 10s;
     animation-timing-function: ease-out;
     animation-delay: 1.35s;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
 
     @keyframes menuContentFadeIn {
       from {
@@ -414,8 +427,6 @@ header {
   button.close {
     @include pixelated;
 
-    font-family: "Phoebe", "Monaco", monospace;
-    font-weight: 100;
     line-height: 68px;
     font-size: 27px;
     color: white;
@@ -423,7 +434,7 @@ header {
 
     padding: 4px 1.5em 0;
     margin: 0 auto;
-    margin-bottom: 2em;
+    margin-bottom: 20px;
 
     background: url("../images/header_bg.png");
     background-color: rgba(0, 0, 0, 0.5);
@@ -433,31 +444,89 @@ header {
     display: inline-block;
   }
 
-  h3 {
-    color: white;
-    margin: 0 0 2em;
+  h2 {
+    line-height: 59px;
+    padding: 2px 22px 6px;
+    font-size: 42px;
+    -webkit-text-stroke: 0.45px rgba(0, 0, 0, 0.5);
   }
+
   button {
     cursor: pointer;
     margin: 0 10px;
   }
 
-  .playlists {
+  .playlist-wrapper {
+    @include menuBackground;
+    width: 100%;
+    max-height: calc(var(--vh, 1vh) * 60);
+    display: flex;
+    flex-direction: column;
+  }
+  .playlist-header {
     background-color: rgba(131, 23, 71, 0.65);
-    border-radius: 3px;
+
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    color: white;
+    // text-align: left;
+    font-size: 42px;
     @media screen and (min-width: 500px) {
-      padding: 1em;
+      padding: 14px 0 0;
     }
-    height: 50%;
-    box-shadow: 0 0 0 2px rgba(53, 59, 101, 0.8),
-      0 0 0 3.5px rgba(149, 149, 149, 0.8), 0 0 0 5px rgba(53, 59, 101, 0.8);
+
+    div:nth-child(1) {
+      width: 40px;
+    }
+    //Song
+    div:nth-child(2) {
+      width: 40%;
+      max-width: 400px;
+    }
+    //Artist
+    div:nth-child(3) {
+      width: 25%;
+      max-width: 200px;
+    }
+    // Album
+    div:nth-child(4) {
+      width: 25%;
+      max-width: 200px;
+    }
+    div:nth-child(5) {
+      width: 30px;
+    }
+  }
+
+  .memory-wrapper {
+    background-color: rgba(131, 23, 71, 0.65);
+
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    color: white;
+    // text-align: left;
+    font-size: 42px;
+    @media screen and (min-width: 500px) {
+      padding: 5px 40px;
+    }
+    div {
+      margin-left: auto;
+    }
+  }
+
+  .playlists {
+    width: 100%;
+    background-color: rgba(52, 19, 37, 0.7);
+    @media screen and (min-width: 500px) {
+      padding: 4px;
+    }
+
     font-size: 13px;
     color: white;
-    font-weight: 400;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-    margin: 0 0 2em;
-    max-height: calc(var(--vh, 1vh) * 72);
+    min-height: 200px;
+    height: 100%;
     overflow-y: scroll;
     &::-webkit-scrollbar {
       width: 1em;
@@ -474,7 +543,6 @@ header {
 
     .draggable {
       cursor: grab;
-      padding: 8px 10px;
       border-radius: 2px;
       margin: 0 0 2px;
       display: flex;
@@ -482,9 +550,16 @@ header {
       text-align: left;
       align-items: center;
       font-size: 10px;
+      font-family: ChibiPhoebe;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 20px;
 
       @media screen and (min-width: 500px) {
-        font-size: 16px;
+        font-size: 26px;
+        line-height: 14px;
+        padding: 0px 0 2px;
+        margin: 0;
       }
       p {
         margin: 0;
@@ -502,47 +577,58 @@ header {
         background: rgba(255, 255, 255, 0.5);
         border-radius: 2px;
       }
+      // Handle
       div:nth-child(1) {
         width: 40px;
       }
+      //Song
       div:nth-child(2) {
         width: 40%;
         max-width: 400px;
+        overflow: hidden;
+        white-space: pre;
+        text-overflow: ellipsis;
       }
+      //Artist
       div:nth-child(3) {
         width: 25%;
-        max-width: 200px;
+        max-width: 300px;
+        overflow: hidden;
+        white-space: pre;
+        text-overflow: ellipsis;
       }
+      // Album
       div:nth-child(4) {
         width: 25%;
-        max-width: 200px;
+        max-width: 300px;
+        overflow: hidden;
+        white-space: pre;
+        text-overflow: ellipsis;
       }
       button {
+        font-family: ChibiPhoebe;
         transition: all 200ms ease;
+        color: white;
+        background: none;
+        border: 0;
+        outline: 0;
+        padding: 0;
         margin: 0;
-        margin-left: auto;
-        width: 30px;
-        height: 30px;
-        outline: none;
-        color: rgba(255, 255, 255, 0.6);
-        cursor: pointer;
-        border-radius: 2px;
-        border: 1px solid white;
-        text-align: center;
-        background-color: white;
-        fill: darkslategrey;
-        &:hover {
-          border: 1px solid darkslategrey;
-          path {
-            fill: darkslategrey;
-          }
-        }
-        svg {
-          vertical-align: middle;
-          height: 100%;
-        }
+        line-height: inherit;
       }
     }
+  }
+  .exit {
+    @include menuBackground;
+    display: block;
+    margin: 0 auto;
+    margin-top: auto;
+    color: white;
+    font-family: Phoebe;
+    font-size: 36px;
+    padding: 14px 14px 10px;
+    background-color: rgba(93, 21, 122, 0.8);
+    border: 0;
   }
 }
 
@@ -563,7 +649,7 @@ header {
     a {
       text-decoration: none;
       color: #f2f2f2;
-      font-weight: bold;
+
       margin-left: 0.5em;
     }
     ul {
@@ -769,7 +855,7 @@ header {
     @include pixelated;
   }
   strong {
-    font-weight: normal;
+    font-weight: 100;
     color: rgb(255, 32, 52);
   }
 }
@@ -871,9 +957,6 @@ blink {
 }
 
 .current-track-info {
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
-    sans-serif;
-  font-weight: lighter;
   font-size: 12px;
   color: white;
   position: absolute;
@@ -922,9 +1005,7 @@ blink {
     border: 1px solid white;
     color: white;
     padding: 0.5em 1.5em;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
-      sans-serif;
-    font-weight: normal;
+
     color: white;
     border-radius: 2px;
     background: rgba(0, 0, 0, 0.75);
@@ -955,6 +1036,5 @@ blink {
     font-size: calc(var(--scene-width) / 20);
     font-family: "PhoebeJP", sans-serif;
     padding-bottom: 8px;
-    font-weight: 100;
   }
 }

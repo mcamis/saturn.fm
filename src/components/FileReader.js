@@ -63,60 +63,80 @@ class FileReader extends Component {
         <div className="FileReader">
           <div className="content">
             <h2>{copy.disc}</h2>
-            <h3>Drag to reorder tracks</h3>
-            <div className="playlists">
-              <DragDropContext onDragEnd={this.onDragEnd}>
-                <Droppable droppableId="droppable">
-                  {(provided) => (
-                    <div ref={provided.innerRef}>
-                      {playlist.map((item, index) => {
-                        const { artist, album, title } = tracks[item];
-                        const currentPlaying =
-                          playing && item === playlist[currentTrack];
+            <div className="playlist-wrapper">
+              <div className="playlist-header">
+                <div>No.</div>
+                <div>Title</div>
+                <div>Artist</div>
+                <div>Album</div>
+                <div></div>
+              </div>
+              {/* TODO: Small font for playlist items */}
+              <div className="playlists">
+                <DragDropContext onDragEnd={this.onDragEnd}>
+                  <Droppable droppableId="droppable">
+                    {(provided) => (
+                      <div ref={provided.innerRef}>
+                        {playlist.map((item, index) => {
+                          const { artist, album, title } = tracks[item];
+                          const currentPlaying =
+                            playing && item === playlist[currentTrack];
 
-                        return (
-                          <Draggable
-                            key={item}
-                            draggableId={item}
-                            index={index}
-                          >
-                            {(draggableProvided, { isDragging }) => {
-                              return (
-                                <div
-                                  className="draggable"
-                                  className={getDraggableClasses({
-                                    isDragging,
-                                    currentPlaying,
-                                  })}
-                                  ref={draggableProvided.innerRef}
-                                  {...draggableProvided.draggableProps}
-                                  {...draggableProvided.dragHandleProps}
-                                >
-                                  <div>{currentPlaying && <SpeakerIcon />}</div>
-                                  <div>{title}</div>
-                                  <div>{artist}</div>
-                                  <div>{album}</div>
-                                  <button
-                                    className="icon-button"
-                                    // TODO: Prompt on delete?
-                                    onClick={() =>
-                                      this.props.removeTrack(index)
-                                    }
-                                    type="button"
+                          return (
+                            <Draggable
+                              key={item}
+                              draggableId={item}
+                              index={index}
+                            >
+                              {(draggableProvided, { isDragging }) => {
+                                return (
+                                  <div
+                                    className="draggable"
+                                    className={getDraggableClasses({
+                                      isDragging,
+                                      currentPlaying,
+                                    })}
+                                    ref={draggableProvided.innerRef}
+                                    {...draggableProvided.draggableProps}
+                                    {...draggableProvided.dragHandleProps}
                                   >
-                                    <TrashIcon />
-                                  </button>
-                                </div>
-                              );
-                            }}
-                          </Draggable>
-                        );
-                      })}
-                      {provided.placeholder}
-                    </div>
-                  )}
-                </Droppable>
-              </DragDropContext>
+                                    <div>
+                                      {currentPlaying ? "▱" : index + 1}
+                                    </div>
+                                    <div>{title}</div>
+                                    <div>{artist}</div>
+                                    <div>{album}</div>
+                                    <button
+                                      className="icon-button"
+                                      // TODO: Prompt on delete?
+                                      onClick={() =>
+                                        this.props.removeTrack(index)
+                                      }
+                                      type="button"
+                                    >
+                                      ▵
+                                    </button>
+                                  </div>
+                                );
+                              }}
+                            </Draggable>
+                          );
+                        })}
+                        {provided.placeholder}
+                      </div>
+                    )}
+                  </Droppable>
+                </DragDropContext>
+              </div>
+              <div className="memory-wrapper">
+                Memory available:{" "}
+                <div>
+                  {performance.memory
+                    ? performance.memory.jsHeapSizeLimit -
+                      performance.memory.usedJSHeapSize
+                    : ""}
+                </div>
+              </div>
             </div>
             <button
               className="add-files"
@@ -132,8 +152,12 @@ class FileReader extends Component {
             >
               Add file(s)
             </button>
-            <button type="button" onClick={this.props.toggleMenu}>
-              Close
+            <button
+              className="exit"
+              type="button"
+              onClick={this.props.toggleMenu}
+            >
+              Exit
             </button>
           </div>
         </div>
