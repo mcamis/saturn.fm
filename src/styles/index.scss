@@ -542,6 +542,9 @@ header {
     }
 
     .draggable {
+      * {
+        user-select: none; /* Standard */
+      }
       cursor: grab;
       border-radius: 2px;
       margin: 0 0 2px;
@@ -613,7 +616,7 @@ header {
         border: 0;
         outline: 0;
         padding: 0;
-        margin: 0;
+        margin: 0 auto;
         line-height: inherit;
       }
     }

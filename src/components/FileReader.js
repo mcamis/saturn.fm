@@ -131,10 +131,7 @@ class FileReader extends Component {
               <div className="memory-wrapper">
                 Memory available:{" "}
                 <div>
-                  {performance.memory
-                    ? performance.memory.jsHeapSizeLimit -
-                      performance.memory.usedJSHeapSize
-                    : ""}
+                  <AvailableMemory playlist={playlist} />
                 </div>
               </div>
             </div>
@@ -165,6 +162,21 @@ class FileReader extends Component {
     );
   }
 }
+
+const AvailableMemory = (props) => {
+  let baseMemory;
+
+  React.useEffect(() => {
+    baseMemory = 10000 * Math.random();
+  }, []);
+  const memory = React.useMemo(() => {
+    return performance.memory
+      ? performance.memory.jsHeapSizeLimit - performance.memory.usedJSHeapSize
+      : baseMemory - props.playlist.length;
+  }, [props.playlist.length]);
+
+  return <>{memory}</>;
+};
 
 FileReader.propTypes = {
   audio: PropTypes.shape({
