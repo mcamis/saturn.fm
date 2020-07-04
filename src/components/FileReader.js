@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { getFilesWithTags, reorder } from "utilities/files";
-import SpeakerIcon from "./SpeakerIcon";
-import TrashIcon from "./TrashIcon";
 
 import { getI11yCopy } from "utilities/helpers";
 
@@ -21,6 +19,7 @@ class FileReader extends Component {
   }
 
   onDragEnd(result) {
+    const curr = this.props.audio.currentTrack;
     // dropped outside the list
     if (!result.destination) {
       return;
@@ -31,7 +30,22 @@ class FileReader extends Component {
       result.source.index,
       result.destination.index
     );
-    this.props.setCurrentTrack(result.destination.index);
+
+    // TODO: lol
+    if (result.source.index === curr) {
+      this.props.setCurrentTrack(result.destination.index);
+    } else if (result.destination.index === curr) {
+      if (result.source.index < curr) {
+        this.props.setCurrentTrack(curr - 1);
+      } else {
+        this.props.setCurrentTrack(result.destination.index ? curr + 1 : 1);
+      }
+    } else if (result.source.index > curr && curr > result.destination.index) {
+      this.props.setCurrentTrack(curr + 1);
+    } else if (result.source.index < curr && curr < result.destination.index) {
+      this.props.setCurrentTrack(curr - 1);
+    }
+
     this.props.arrangeTracks(items);
   }
 
