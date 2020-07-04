@@ -33,7 +33,7 @@ module.exports = merge(common, {
           {
             loader: "file-loader",
             options: {
-              name: "[name].[ext]",
+              name: "[contenthash].[ext]",
               exclude: /gltf/,
               outputPath: "images/",
             },
