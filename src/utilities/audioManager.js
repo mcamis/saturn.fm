@@ -52,7 +52,7 @@ export default class AudioManager {
 
   // eslint-disable-next-line class-methods-use-this
   updateMediaSession({ title, artist, album, albumArtUrl, ...rest }) {
-    console.log(albumArtUrl);
+    this.audioElement.title = `${"「"}SATURN.FM」${title} - ${artist}`;
     if (!("mediaSession" in navigator)) return;
 
     navigator.mediaSession.metadata = new MediaMetadata({

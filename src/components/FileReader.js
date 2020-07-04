@@ -142,17 +142,11 @@ class FileReader extends Component {
                   </Droppable>
                 </DragDropContext>
               </div>
-              <div className="memory-wrapper">
-                Memory available:{" "}
-                <div>
-                  <AvailableMemory playlist={playlist} />
-                </div>
-              </div>
             </div>
             <button
               className="add-files"
               type="button"
-              onClick={() => this.getDirectory()}
+              onClick={() => this.getDirectory()} // TODO: fix perf issue in safari for large directories
             >
               Add a directory
             </button>
@@ -176,21 +170,6 @@ class FileReader extends Component {
     );
   }
 }
-
-const AvailableMemory = (props) => {
-  let baseMemory;
-
-  React.useEffect(() => {
-    baseMemory = 10000 * Math.random();
-  }, []);
-  const memory = React.useMemo(() => {
-    return performance.memory
-      ? performance.memory.jsHeapSizeLimit - performance.memory.usedJSHeapSize
-      : baseMemory - props.playlist.length;
-  }, [props.playlist.length]);
-
-  return <>{memory}</>;
-};
 
 FileReader.propTypes = {
   audio: PropTypes.shape({
