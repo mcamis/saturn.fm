@@ -20,6 +20,7 @@ module.exports = {
         aspects: ["noHref", "invalidHref", "preferButton"],
       },
     ],
+    "import/prefer-default-export": 0,
   },
   settings: {
     "import/resolver": {

@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { getFilesWithTags, reorder } from "utilities/files";
-
 import { getLocalizedCopy } from "utilities/helpers";
+import { ModalHeader } from "./ModalHeader";
 
 const getDraggableClasses = ({ isDragging, currentPlaying }) => {
   return `draggable ${isDragging ? "isDragging" : ""} ${
@@ -76,7 +76,7 @@ class FileReader extends Component {
       <div className="overlay">
         <div className="FileReader">
           <div className="content">
-            <h2>{fileReader.header}</h2>
+            <ModalHeader>{fileReader.header}</ModalHeader>
             <div className="playlist-wrapper">
               <div className="playlist-header">
                 <div>{playlistCopy.number}</div>

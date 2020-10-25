@@ -1,12 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { ModalHeader } from "./ModalHeader";
+
 // TODO: Fix event listener leak here
 const About = (props) => {
   return (
     <div className="About">
       <div className="content">
-        <h2>About</h2>
+        <ModalHeader>About</ModalHeader>
         <div className="playlists">
           <p>
             <em>

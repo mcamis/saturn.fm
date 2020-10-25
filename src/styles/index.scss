@@ -422,35 +422,6 @@ header {
     //     animation-delay: 1625ms;
     // }
   }
-
-  h2,
-  button.close {
-    @include pixelated;
-
-    line-height: 68px;
-    font-size: 27px;
-    color: white;
-    text-transform: capitalize;
-
-    padding: 4px 1.5em 0;
-    margin: 0 auto;
-    margin-bottom: 20px;
-
-    background: url("../images/header_bg.png");
-    background-color: rgba(0, 0, 0, 0.5);
-    background-size: 100% 100%;
-    border-radius: 10px;
-
-    display: inline-block;
-  }
-
-  h2 {
-    line-height: 59px;
-    padding: 2px 22px 6px;
-    font-size: 42px;
-    -webkit-text-stroke: 0.45px rgba(0, 0, 0, 0.5);
-  }
-
   button {
     cursor: pointer;
     margin: 0 10px;
