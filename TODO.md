@@ -1,0 +1,8 @@
+- [ ] Add Typescript to project config
+- [ ] Add Storybooko to project config
+- [ ] Storybook for Modal
+- [ ] Storybook for Header (rename header?)
+- [ ] Storybook for Cubes (rename header?)
+- [ ] Type checks for commit hooks
+- [ ]
+- [ ]

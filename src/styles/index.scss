@@ -129,16 +129,6 @@ p {
   cursor: pointer;
 }
 
-.overlay {
-  background: black;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  z-index: 100;
-}
-
 #root {
   width: 100%;
   height: 100%;
@@ -359,69 +349,6 @@ header {
 
 .FileReader,
 .About {
-  padding: 2em;
-  height: 100%;
-  cursor: default;
-
-  // z-index: 9999;
-  font-size: 14px;
-
-  &:before {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    content: " ";
-    display: block;
-    filter: brightness(0);
-    @include fadeInFilter;
-    @include pixelated;
-    background: url("../images/menubg.png") repeat-y;
-    // background-position: center;
-    // background-size: contain ;
-    background-position: center top;
-    background-size: 100% 880px;
-    z-index: -1;
-  }
-
-  .content {
-    text-align: center;
-    // max-width: 800px;
-    max-width: 1000px;
-    margin: 0 auto;
-    opacity: 0;
-    animation-name: menuContentFadeIn;
-    animation-duration: 10ms;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards; // animation-delay: 10s;
-    animation-timing-function: ease-out;
-    animation-delay: 1.35s;
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    align-items: center;
-
-    @keyframes menuContentFadeIn {
-      from {
-        opacity: 0;
-      }
-
-      to {
-        opacity: 1;
-      }
-    }
-
-    // &:nth-child(2) {
-    //     animation-delay: 1575ms;
-    // }
-    // &:nth-child(3) {
-    //     animation-delay: 1600ms;
-    // }
-    // &:nth-child(4) {
-    //     animation-delay: 1625ms;
-    // }
-  }
   button {
     cursor: pointer;
     margin: 0 10px;
@@ -490,30 +417,6 @@ header {
   }
 
   .playlists {
-    width: 100%;
-    background-color: rgba(52, 19, 37, 0.7);
-    @media screen and (min-width: 500px) {
-      padding: 4px;
-    }
-
-    font-size: 13px;
-    color: white;
-    min-height: 200px;
-    height: 100%;
-    overflow-y: scroll;
-    &::-webkit-scrollbar {
-      width: 1em;
-    }
-
-    &::-webkit-scrollbar-track {
-      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: darkgrey;
-      outline: 1px solid slategrey;
-    }
-
     .draggable {
       * {
         user-select: none; /* Standard */
@@ -605,36 +508,6 @@ header {
     padding: 14px 14px 10px;
     background-color: rgba(93, 21, 122, 0.8);
     border: 0;
-  }
-}
-
-.About {
-  .content {
-    .playlists {
-      font-size: 16px !important;
-      text-align: left;
-      padding: 1em;
-    }
-    line-height: 22px;
-    em {
-      margin: 0.5em;
-      padding: 1em 1em 1em 2em;
-      display: inline-block;
-      border-left: 2px solid white;
-    }
-    a {
-      text-decoration: none;
-      color: #f2f2f2;
-
-      margin-left: 0.5em;
-    }
-    ul {
-      margin-top: 2em;
-    }
-    ul li {
-      list-style-type: none;
-      margin-bottom: 15px;
-    }
   }
 }
 

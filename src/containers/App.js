@@ -171,21 +171,19 @@ class App extends Component {
 
             {this.state.fileReaderVisible && (
               <FileReader
-                audio={this.props.audio}
                 {...audioActions}
+                audio={this.props.audio}
                 toggleMenu={this.toggleMenu}
               />
             )}
             {this.state.showAboutModal && (
-              <div className="overlay">
-                <About
-                  toggleAbout={() =>
-                    this.setState((prevState) => ({
-                      showAboutModal: !prevState.showAboutModal,
-                    }))
-                  }
-                />
-              </div>
+              <About
+                toggleAbout={() =>
+                  this.setState((prevState) => ({
+                    showAboutModal: !prevState.showAboutModal,
+                  }))
+                }
+              />
             )}
             {currentInfo && (
               <CurrentTrackDisplay

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { getFilesWithTags, reorder } from "utilities/files";
 import { getLocalizedCopy } from "utilities/helpers";
-import { ModalHeader } from "./ModalHeader";
+import { Modal } from "./Modal";
 
 const getDraggableClasses = ({ isDragging, currentPlaying }) => {
   return `draggable ${isDragging ? "isDragging" : ""} ${
@@ -73,100 +73,83 @@ class FileReader extends Component {
     const { fileReader, playlist: playlistCopy } = getLocalizedCopy();
 
     return (
-      <div className="overlay">
-        <div className="FileReader">
-          <div className="content">
-            <ModalHeader>{fileReader.header}</ModalHeader>
-            <div className="playlist-wrapper">
-              <div className="playlist-header">
-                <div>{playlistCopy.number}</div>
-                <div>{playlistCopy.title}</div>
-                <div>{playlistCopy.artist}</div>
-                <div>{playlistCopy.album}</div>
-                <div />
-              </div>
-              {/* TODO: Small font for playlist items */}
-              <div className="playlists">
-                <DragDropContext onDragEnd={this.onDragEnd}>
-                  <Droppable droppableId="droppable">
-                    {(provided) => (
-                      <div ref={provided.innerRef}>
-                        {playlist.map((item, index) => {
-                          const { artist, album, title } = tracks[item];
-                          const currentPlaying =
-                            playing && item === playlist[currentTrack];
+      <Modal className="FileReader" header={fileReader.header}>
+        <div className="playlist-wrapper">
+          <div className="playlist-header">
+            <div>{playlistCopy.number}</div>
+            <div>{playlistCopy.title}</div>
+            <div>{playlistCopy.artist}</div>
+            <div>{playlistCopy.album}</div>
+            <div />
+          </div>
+          {/* TODO: Small font for playlist items */}
+          <div className="playlists">
+            <DragDropContext onDragEnd={this.onDragEnd}>
+              <Droppable droppableId="droppable">
+                {(provided) => (
+                  <div ref={provided.innerRef}>
+                    {playlist.map((item, index) => {
+                      const { artist, album, title } = tracks[item];
+                      const currentPlaying =
+                        playing && item === playlist[currentTrack];
 
-                          return (
-                            <Draggable
-                              key={item}
-                              draggableId={item}
-                              index={index}
-                            >
-                              {(draggableProvided, { isDragging }) => {
-                                return (
-                                  <div
-                                    className="draggable"
-                                    className={getDraggableClasses({
-                                      isDragging,
-                                      currentPlaying,
-                                    })}
-                                    ref={draggableProvided.innerRef}
-                                    {...draggableProvided.draggableProps}
-                                    {...draggableProvided.dragHandleProps}
-                                  >
-                                    <div>
-                                      {currentPlaying ? "▱" : index + 1}
-                                    </div>
-                                    <div>{title}</div>
-                                    <div>{artist}</div>
-                                    <div>{album}</div>
-                                    <button
-                                      className="icon-button"
-                                      // TODO: Prompt on delete?
-                                      onClick={() =>
-                                        this.props.removeTrack(index)
-                                      }
-                                      type="button"
-                                    >
-                                      ▵
-                                    </button>
-                                  </div>
-                                );
-                              }}
-                            </Draggable>
-                          );
-                        })}
-                        {provided.placeholder}
-                      </div>
-                    )}
-                  </Droppable>
-                </DragDropContext>
-              </div>
-            </div>
-            <button
-              className="add-files"
-              type="button"
-              onClick={() => this.getDirectory()} // TODO: fix perf issue in safari for large directories
-            >
-              Add a directory
-            </button>
-            <button
-              className="add-files"
-              type="button"
-              onClick={() => this.getTracks()}
-            >
-              Add file(s)
-            </button>
-            <button
-              className="exit"
-              type="button"
-              onClick={this.props.toggleMenu}
-            >
-              Exit
-            </button>
+                      return (
+                        <Draggable key={item} draggableId={item} index={index}>
+                          {(draggableProvided, { isDragging }) => {
+                            return (
+                              <div
+                                className="draggable"
+                                className={getDraggableClasses({
+                                  isDragging,
+                                  currentPlaying,
+                                })}
+                                ref={draggableProvided.innerRef}
+                                {...draggableProvided.draggableProps}
+                                {...draggableProvided.dragHandleProps}
+                              >
+                                <div>{currentPlaying ? "▱" : index + 1}</div>
+                                <div>{title}</div>
+                                <div>{artist}</div>
+                                <div>{album}</div>
+                                <button
+                                  className="icon-button"
+                                  // TODO: Prompt on delete?
+                                  onClick={() => this.props.removeTrack(index)}
+                                  type="button"
+                                >
+                                  ▵
+                                </button>
+                              </div>
+                            );
+                          }}
+                        </Draggable>
+                      );
+                    })}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
           </div>
         </div>
-      </div>
+        <button
+          className="add-files"
+          type="button"
+          onClick={() => this.getDirectory()}
+        >
+          Add a directory
+        </button>
+        <button
+          className="add-files"
+          type="button"
+          onClick={() => this.getTracks()}
+        >
+          Add file(s)
+        </button>
+        <button className="exit" type="button" onClick={this.props.toggleMenu}>
+          Exit
+        </button>
+      </Modal>
     );
   }
 }
