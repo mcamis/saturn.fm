@@ -1,6 +1,8 @@
 import { RepeatWrapping } from "three";
 import * as TWEEN from "es6-tween";
 
+const JP_LOCALES = ["ja-JP", "ja"];
+
 export function average(arr) {
   // Prevent returning NaN
   if (!arr.length) {
@@ -69,51 +71,6 @@ export const throttle = (func, timeFrame = 0) => {
   };
 };
 
-export const getI11yCopy = () => {
-  if (["ja-JP", "ja"].includes(navigator.language)) {
-    return {
-      disc: "プレイリスト",
-      settings: "ユーザー設定",
-      hide: "パネル消去",
-      skipBackwards: "曲戻し",
-      skipForwards: "曲送り",
-      play: "再生",
-      pause: "一時停止",
-      repeat: "リピート",
-      repeatOne: "1曲",
-      repeatAll: "全曲",
-      repeatOff: "解除",
-      stop: "停  止",
-      advanced: "機能切り替え",
-      exit: "",
-      fileReader: {
-        header: "",
-        helpText: "",
-        exit: "",
-        directory: "",
-        files: "",
-      },
-    };
-  }
-
-  return {
-    disc: "Edit Playlist",
-    settings: "Coming Soon",
-    hide: "Hide",
-    skipBackwards: "Skip Backwards",
-    skipForwards: "Skip Forwards",
-    play: "Play",
-    pause: "Pause",
-    repeat: "Repeat",
-    repeatOne: "1",
-    repeatAll: "All",
-    repeatOff: "Off",
-    stop: "Stop",
-    advanced: "About",
-    exit: "",
-  };
-};
-
 export function triggerButtonCallback(object, onClick) {
   new TWEEN.Tween(object.scale)
     .to({ x: 1.5, y: 1.5, z: 1.5 }, 100)
@@ -165,3 +122,72 @@ export function TextureAnimator(
     }
   };
 }
+
+export const getLocalizedCopy = (preferredLanguage = navigator.language) => {
+  if (JP_LOCALES.includes(preferredLanguage)) {
+    return {
+      intro: {},
+      menu: {
+        disc: "プレイリスト",
+        settings: "ユーザー設定",
+        hide: "パネル消去",
+        skipBackwards: "曲戻し",
+        skipForwards: "曲送り",
+        play: "再生",
+        pause: "一時停止",
+        repeat: "リピート",
+        repeatOne: "1曲",
+        repeatAll: "全曲",
+        repeatOff: "解除",
+        stop: "停  止",
+        advanced: "機能切り替え",
+        exit: "",
+      },
+      fileReader: {
+        header: "Edit Playlist",
+        helpText: "",
+        exit: "",
+        directory: "",
+        files: "",
+      },
+      playlist: {
+        number: "#",
+        title: "title",
+        artist: "artist",
+        album: "album",
+      },
+    };
+  }
+
+  return {
+    menu: {
+      disc: "Edit Playlist",
+      settings: "Coming Soon",
+      hide: "Hide",
+      skipBackwards: "Skip Backwards",
+      skipForwards: "Skip Forwards",
+      play: "Play",
+      pause: "Pause",
+      repeat: "Repeat",
+      repeatOne: "1",
+      repeatAll: "All",
+      repeatOff: "Off",
+      stop: "Stop",
+      advanced: "About",
+      exit: "",
+    },
+    fileReader: {
+      header: "Edit Playlist",
+      helpText: "",
+      exit: "",
+      directory: "",
+      files: "",
+    },
+    playlist: {
+      number: "#",
+      title: "title",
+      artist: "artist",
+      album: "album",
+    },
+  };
+};

@@ -470,8 +470,10 @@ header {
     display: flex;
     flex-direction: row;
     color: white;
-    // text-align: left;
+    text-align: left;
     font-size: 42px;
+    text-transform: capitalize;
+
     @media screen and (min-width: 500px) {
       padding: 14px 0 0;
     }

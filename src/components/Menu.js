@@ -6,7 +6,7 @@ import {
   sceneWidth,
   triggerButtonCallback,
   TextureAnimator,
-  getI11yCopy,
+  getLocalizedCopy,
 } from "utilities/helpers";
 
 import {
@@ -341,30 +341,30 @@ class Menu extends React.Component {
 
   getToolTip() {
     const { playing, paused, repeat } = this.props;
-    const copy = getI11yCopy("jp");
+    const { menu } = getLocalizedCopy("jp");
 
     const tooltips = {
-      disc: () => <p>{copy.disc}</p>,
-      settings: () => <p>{copy.settings}</p>,
-      hide: () => <p>{copy.hide}</p>,
-      rewind: () => <p>{copy.skipBackwards}</p>,
-      fastforward: () => <p>{copy.skipForwards}</p>,
+      disc: () => <p>{menu.disc}</p>,
+      settings: () => <p>{menu.settings}</p>,
+      hide: () => <p>{menu.hide}</p>,
+      rewind: () => <p>{menu.skipBackwards}</p>,
+      fastforward: () => <p>{menu.skipForwards}</p>,
       play: () => {
         let playElement = (
           <p>
-            {copy.play} / {copy.pause}
+            {menu.play} / {menu.pause}
           </p>
         );
         if (playing) {
           playElement = (
             <p>
-              <strong>{copy.play}</strong> / {copy.pause}
+              <strong>{menu.play}</strong> / {menu.pause}
             </p>
           );
         } else if (paused) {
           playElement = (
             <p>
-              {copy.play} / <strong>{copy.pause}</strong>
+              {menu.play} / <strong>{menu.pause}</strong>
             </p>
           );
         }
@@ -373,29 +373,29 @@ class Menu extends React.Component {
       repeat: () => {
         let repeatElement = (
           <p>
-            {copy.repeat}: {copy.repeatOne} / {copy.repeatAll} /{" "}
-            <strong>{copy.repeatOff}</strong>
+            {menu.repeat}: {menu.repeatOne} / {menu.repeatAll} /{" "}
+            <strong>{menu.repeatOff}</strong>
           </p>
         );
         if (repeat === "track") {
           repeatElement = (
             <p>
-              {copy.repeat}: <strong>{copy.repeatOne}</strong> /{" "}
-              {copy.repeatAll} / {copy.repeatOff}
+              {menu.repeat}: <strong>{menu.repeatOne}</strong> /{" "}
+              {menu.repeatAll} / {menu.repeatOff}
             </p>
           );
         } else if (repeat === "context") {
           repeatElement = (
             <p>
-              {copy.repeat}: {copy.repeatOne} /{" "}
-              <strong>{copy.repeatAll}</strong> / {copy.repeatOff}
+              {menu.repeat}: {menu.repeatOne} /{" "}
+              <strong>{menu.repeatAll}</strong> / {menu.repeatOff}
             </p>
           );
         }
         return repeatElement;
       },
-      stop: () => <p>{copy.stop}</p>,
-      advanced: () => <p>{copy.advanced}</p>,
+      stop: () => <p>{menu.stop}</p>,
+      advanced: () => <p>{menu.advanced}</p>,
     };
 
     return tooltips[this.state.activeButton]();

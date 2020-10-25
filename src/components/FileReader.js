@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { getFilesWithTags, reorder } from "utilities/files";
 
-import { getI11yCopy } from "utilities/helpers";
+import { getLocalizedCopy } from "utilities/helpers";
 
 const getDraggableClasses = ({ isDragging, currentPlaying }) => {
   return `draggable ${isDragging ? "isDragging" : ""} ${
@@ -70,20 +70,20 @@ class FileReader extends Component {
       audio: { currentTrack, playing, playlist, tracks },
     } = this.props;
 
-    const copy = getI11yCopy();
+    const { fileReader, playlist: playlistCopy } = getLocalizedCopy();
 
     return (
       <div className="overlay">
         <div className="FileReader">
           <div className="content">
-            <h2>{copy.disc}</h2>
+            <h2>{fileReader.header}</h2>
             <div className="playlist-wrapper">
               <div className="playlist-header">
-                <div>No.</div>
-                <div>Title</div>
-                <div>Artist</div>
-                <div>Album</div>
-                <div></div>
+                <div>{playlistCopy.number}</div>
+                <div>{playlistCopy.title}</div>
+                <div>{playlistCopy.artist}</div>
+                <div>{playlistCopy.album}</div>
+                <div />
               </div>
               {/* TODO: Small font for playlist items */}
               <div className="playlists">
