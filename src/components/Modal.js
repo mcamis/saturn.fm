@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css, keyframes } from "styled-components";
-import modalBackgroundSrc from "../images/menubg.png";
 
+import modalBackgroundSrc from "../images/menubg.png";
 import { ModalHeader } from "./ModalHeader";
 
 export const Modal = (props) => {
@@ -29,7 +29,7 @@ const FullscreenOverlay = styled.div`
 
 const MainContent = styled.div`
   width: 100%;
-  background-color: rgba(52, 19, 37, 0.7);
+
   @media screen and (min-width: 500px) {
     padding: 4px;
   }
@@ -67,7 +67,7 @@ const fadeInFilter = css`
   animation-name: ${menuBrightness};
   animation-duration: 1s;
   animation-iteration-count: 1;
-  animation-fill-mode: forwards; // animation-delay: 10s;
+  animation-fill-mode: forwards;
   animation-timing-function: ease-out;
   animation-delay: 500ms;
 `;

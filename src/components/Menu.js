@@ -341,7 +341,7 @@ class Menu extends React.Component {
 
   getToolTip() {
     const { playing, paused, repeat } = this.props;
-    const { menu } = getLocalizedCopy("jp");
+    const { menu } = getLocalizedCopy();
 
     const tooltips = {
       disc: () => <p>{menu.disc}</p>,

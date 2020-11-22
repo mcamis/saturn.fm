@@ -1,8 +1,8 @@
-- [ ] Add Typescript to project config
-- [ ] Add Storybooko to project config
+- [ ] Add Storybook to project config
 - [ ] Storybook for Modal
 - [ ] Storybook for Header (rename header?)
 - [ ] Storybook for Cubes (rename header?)
+- [ ] Add Typescript to project config
 - [ ] Type checks for commit hooks
-- [ ]
+- [ ] Migrate to React Hooks
 - [ ]
