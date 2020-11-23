@@ -7,60 +7,24 @@ import { ModalHeader } from "./ModalHeader";
 export const Modal = (props) => {
   return (
     <FullscreenOverlay>
-      <Container className={props.className}>
+      <ContainerWithAnimatedBackground className={props.className}>
         <ChildrenWrapper>
           <ModalHeader>{props.header}</ModalHeader>
           <MainContent>{props.children}</MainContent>
         </ChildrenWrapper>
-      </Container>
+      </ContainerWithAnimatedBackground>
     </FullscreenOverlay>
   );
 };
 
-const FullscreenOverlay = styled.div`
-  background: black;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  z-index: 100;
-`;
-
-const MainContent = styled.div`
-  width: 100%;
-
-  @media screen and (min-width: 500px) {
-    padding: 4px;
-  }
-
-  font-size: 13px;
-  color: white;
-  min-height: 200px;
-  height: 100%;
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
-    width: 1em;
-  }
-
-  &::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
-    outline: 1px solid slategrey;
-  }
-`;
-
 const menuBrightness = keyframes`
-from {
-  filter: brightness(0);
-}
+  from {
+    filter: brightness(0);
+  }
 
-to {
-  filter: brightness(1);
-}
+  to {
+    filter: brightness(1);
+  }
 `;
 
 const fadeInFilter = css`
@@ -73,14 +37,29 @@ const fadeInFilter = css`
 `;
 
 const pixelated = css`
-  image-rendering: optimizeSpeed; /* Older versions of FF          */
-  image-rendering: -moz-crisp-edges; /* FF 6.0+                       */
-  image-rendering: -webkit-optimize-contrast; /* Safari                        */
+  image-rendering: optimizeSpeed; /* Older versions of FF */
+  image-rendering: -moz-crisp-edges; /* FF 6.0+  */
+  image-rendering: -webkit-optimize-contrast; /* Safari */
   image-rendering: -o-crisp-edges; /* OS X & Windows Opera (12.02+) */
-  image-rendering: pixelated; /* Awesome future-browsers       */
+  image-rendering: pixelated; /* Awesome future-browsers */
 `;
 
-const Container = styled.div`
+const menuContentFadeIn = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`;
+
+const FullscreenOverlay = styled.div`
+  background: black;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 100;
+`;
+
+const ContainerWithAnimatedBackground = styled.div`
   padding: 2em;
   height: 100%;
   cursor: default;
@@ -104,13 +83,7 @@ const Container = styled.div`
   }
 `;
 
-const menuContentFadeIn = keyframes`
-  from { opacity: 0; }
-  to { opacity: 1; }
-`;
-
 const ChildrenWrapper = styled.div`
-  text-align: center;
   max-width: 1000px;
   margin: 0 auto;
   opacity: 0;
@@ -124,4 +97,32 @@ const ChildrenWrapper = styled.div`
   height: 100%;
   flex-direction: column;
   align-items: center;
+`;
+
+const MainContent = styled.div`
+  width: 100%;
+  font-size: 13px;
+  color: white;
+  min-height: 200px;
+  height: 100%;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  // &::-webkit-scrollbar {
+  //   width: 1em;
+  // }
+  // &::-webkit-scrollbar-track {
+  //   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  // }
+
+  // &::-webkit-scrollbar-thumb {
+  //   background-color: darkgrey;
+  //   outline: 1px solid slategrey;
+  // }
+
+  @media screen and (min-width: 500px) {
+    padding: 4px;
+  }
 `;

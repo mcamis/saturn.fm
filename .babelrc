@@ -19,7 +19,7 @@
   "plugins": [
     ["module-resolver", {
       "root": ["./src"]
-    }]
+    }], "babel-plugin-styled-components"
   ],
   "env": {
     "coverage": {

@@ -133,44 +133,61 @@ class FileReader extends Component {
             </DragDropContext>
           </PlaylistEditor>
         </PlaylistWrapper>
-        <button
-          className="add-files"
-          type="button"
-          onClick={() => this.getDirectory()}
-        >
-          Add a directory
-        </button>
-        <button
-          className="add-files"
-          type="button"
-          onClick={() => this.getTracks()}
-        >
-          Add file(s)
-        </button>
-        <button
-          className="exit-button"
-          type="button"
-          onClick={this.props.toggleMenu}
-        >
-          Exit
-        </button>
+        <EditorControlButtons>
+          <button
+            className="add-files"
+            type="button"
+            onClick={() => this.getDirectory()}
+          >
+            Add a directory
+          </button>
+          <button
+            className="add-files"
+            type="button"
+            onClick={() => this.getTracks()}
+          >
+            Add file(s)
+          </button>
+        </EditorControlButtons>
+        <PlaylistFooter>
+          <button
+            className="exit-button"
+            type="button"
+            onClick={this.props.toggleMenu}
+          >
+            Exit
+          </button>
+        </PlaylistFooter>
       </Modal>
     );
   }
 }
+
+const EditorControlButtons = styled.div`
+  margin-top: 2em;
+  button {
+    margin: 0 1em;
+  }
+`;
 
 const PlaylistWrapper = styled.div`
   width: 100%;
   max-height: calc(var(--vh, 1vh) * 60);
   display: flex;
   flex-direction: column;
+  align-items: center;
   border-radius: 3px;
   box-shadow: 0 0 0 2px rgba(53, 59, 101, 0.8),
     0 0 0 3.5px rgba(149, 149, 149, 0.8), 0 0 0 5px rgba(53, 59, 101, 0.8);
 `;
 
+const PlaylistFooter = styled.footer`
+  margin-top: auto;
+`;
+
 const PlaylistHeader = styled.div`
   background-color: rgba(131, 23, 71, 0.65);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
 
   width: 100%;
   display: flex;
@@ -223,6 +240,7 @@ const selectedItemPulse = keyframes`
 
 const PlaylistEditor = styled.div`
   background-color: rgba(131, 23, 71, 0.65);
+  width: 100%;
 
   .draggable {
     * {
@@ -244,7 +262,7 @@ const PlaylistEditor = styled.div`
     @media screen and (min-width: 500px) {
       font-size: 26px;
       line-height: 14px;
-      padding: 0px 0 2px;
+      padding: 3px 0 3px;
       margin: 0;
     }
     p {
