@@ -1,16 +1,10 @@
 import { formatTime } from "utilities/helpers";
-// import Chaos from "../songs/01_Chaos.mp3";
-// import Akihabara from "../songs/02_Akihabara.mp3";
-// import NothingStopsDetroit from "../songs/03_Nothing_Stops_Detroit.mp3";
-// import GnosisHardware from "../songs/04_Gnosis_Hardware.mp3";
-import NoRefuge from "../songs/05_No_Refuge.mp3";
-import KliqSrc from "../images/kliq.jpg";
 
-// import OutHere from "../songs/06_Out_Here_At_The_Outersphere.mp3";
-// import Chicago from "../songs/07_Chicago.mp3";
-// import Passports from "../songs/08_Passports.mp3";
-// import ComeTrue from "../songs/09_Come_True.mp3";
-// import Shuffle from "../songs/shuffle.mp3";
+import Track2 from "../songs/cookies/02.mp3";
+import Track3 from "../songs/cookies/03.mp3";
+import Track4 from "../songs/cookies/04.mp3";
+
+import CookiesCover from "../songs/cookies/cover.jpg";
 
 export const defaultState = {
   currentTrack: null,
@@ -19,16 +13,34 @@ export const defaultState = {
   currentTime: formatTime(0),
   playing: false,
   paused: false,
-  playlist: ["NoRefuge"],
+  playlist: ["01", "02", "03"],
   tracks: {
-    NoRefuge: {
-      file: NoRefuge,
+    "01": {
+      file: Track2,
       track: 1,
-      album: "Entertainment System",
-      artist: "Professor Kliq",
-      title: "No Refuge",
-      href: "https://www.professorkliq.com",
-      albumArtUrl: KliqSrc,
+      album: "Music for Touching",
+      artist: "Cookies",
+      title: "Go Back",
+      href: "",
+      albumArtUrl: CookiesCover,
+    },
+    "02": {
+      file: Track3,
+      track: 2,
+      album: "Music for Touching",
+      artist: "Cookies",
+      title: "July Seventeen",
+      href: "",
+      albumArtUrl: CookiesCover,
+    },
+    "03": {
+      file: Track4,
+      track: 3,
+      album: "Music for Touching",
+      artist: "Cookies",
+      title: "Crybaby (A)",
+      href: "",
+      albumArtUrl: CookiesCover,
     },
   },
 };

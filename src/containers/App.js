@@ -205,7 +205,7 @@ class App extends Component {
           this.audioManager.analyser.audioContext.state === "suspended") && (
           <div className="start-context">
             <button type="button" onClick={() => this.setupAnalyser()}>
-              <span>Press Start</span> スタート
+              Press Start
             </button>
           </div>
         )}
