@@ -1,10 +1,10 @@
 import { formatTime } from "utilities/helpers";
 
-import Track2 from "../songs/cookies/02.mp3";
-import Track3 from "../songs/cookies/03.mp3";
-import Track4 from "../songs/cookies/04.mp3";
+import Track2 from "../songs/Cookies/02.mp3";
+import Track3 from "../songs/Cookies/03.mp3";
+import Track4 from "../songs/Cookies/04.mp3";
 
-import CookiesCover from "../songs/cookies/cover.jpg";
+import CookiesCover from "../songs/Cookies/cover.jpg";
 
 export const defaultState = {
   currentTrack: null,
