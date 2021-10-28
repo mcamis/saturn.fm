@@ -15,6 +15,8 @@ import StarField from "components/StarField";
 import CurrentTrackDisplay from "components/CurrentTrackDisplay";
 import introSrc from "effects/intro.mp3";
 
+const spaceshipAnimations = ["plain", "spinny", "fast"];
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -66,8 +68,7 @@ class App extends Component {
   }
 
   setRandomAnimation() {
-    const randomAnimation = ["plain", "spinny", "fast"];
-    const withoutCurrent = randomAnimation.filter(
+    const withoutCurrent = spaceshipAnimations.filter(
       (animation) => animation !== this.state.animation
     );
 
@@ -92,10 +93,10 @@ class App extends Component {
   }
 
   hideDash() {
-    const randomAnimation = ["plain", "spinny", "fast"];
-
     const animation =
-      randomAnimation[Math.floor(Math.random() * randomAnimation.length)];
+      spaceshipAnimations[
+        Math.floor(Math.random() * spaceshipAnimations.length)
+      ];
 
     this.setState((prevState) => ({
       hidden: !prevState.hidden,
