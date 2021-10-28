@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import GLTFLoader from "three-gltf-loader";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import {
   Scene,
   PerspectiveCamera,

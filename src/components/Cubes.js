@@ -9,7 +9,7 @@ import {
   DirectionalLight,
 } from "three";
 import autobind from "utilities/autobind";
-import GLTFLoader from "three-gltf-loader";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 import { sceneWidth } from "utilities/helpers";
 import {
