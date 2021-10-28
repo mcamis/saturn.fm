@@ -4,7 +4,7 @@ import Track2 from "../songs/Cookies/02.mp3";
 import Track3 from "../songs/Cookies/03.mp3";
 import Track4 from "../songs/Cookies/04.mp3";
 
-import CookiesCover from "../songs/Cookies/cover.jpg";
+import CookiesCover from "../songs/Cookies/cover.png";
 
 export const defaultState = {
   currentTrack: null,
@@ -13,9 +13,9 @@ export const defaultState = {
   currentTime: formatTime(0),
   playing: false,
   paused: false,
-  playlist: ["01", "02", "03"],
+  playlist: ["Track2", "Track3", "Track4"],
   tracks: {
-    "01": {
+    Track2: {
       file: Track2,
       track: 1,
       album: "Music for Touching",
@@ -24,7 +24,7 @@ export const defaultState = {
       href: "",
       albumArtUrl: CookiesCover,
     },
-    "02": {
+    Track3: {
       file: Track3,
       track: 2,
       album: "Music for Touching",
@@ -33,7 +33,7 @@ export const defaultState = {
       href: "",
       albumArtUrl: CookiesCover,
     },
-    "03": {
+    Track4: {
       file: Track4,
       track: 3,
       album: "Music for Touching",

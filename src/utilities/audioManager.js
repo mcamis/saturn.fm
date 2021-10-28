@@ -88,10 +88,10 @@ export default class AudioManager {
       // TODO: Workaround for preloaded files, move this to redux?
       const splitSrc = nextSong.split("./songs");
       const isFromDefaultPlaylist = splitSrc.length > 0;
-      const derivedSrc = isFromDefaultPlaylist ? splitSrc[0] : nextSong;
+      const derivedSrc = isFromDefaultPlaylist ? splitSrc[1] : nextSong;
       if (
         !this.audioElement.src ||
-        !this.audioElement.src.includes(derivedSrc)
+        (derivedSrc.length > 0 && !this.audioElement.src.includes(derivedSrc))
       ) {
         this.audioElement.src = nextSong;
       }
@@ -125,7 +125,6 @@ export default class AudioManager {
       }
     } else {
       audioActions.setCurrentTrack(nextIndex);
-
       this.playAndReport();
     }
   }
