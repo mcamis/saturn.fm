@@ -80,7 +80,7 @@
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
     "styled-components": "^5.0.0",
-    "three": "^0.133.1",
+    "three": "^0.137.0",
     "uuid": "^8.2.0"
   }
 }
