@@ -4,10 +4,12 @@ import StereoAnalyser from "utilities/stereoAnalyser";
 import { defaultState } from "reducers/audio";
 import * as audioActions from "actions/audio";
 import art from "images/chopin_third.jpeg";
+import { TranceVibrator } from "./TranceVibrator";
 
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio
 export default class AudioManager {
   constructor() {
+    this.tranceVibe = new TranceVibrator();
     this.audioElement = new Audio();
     this.audioElement.crossOrigin = "anonymous";
 
@@ -216,6 +218,16 @@ export default class AudioManager {
     this.audioElement.pause();
     // this.audioElement.src = firstSong;
     this.audioElement.currentTime = 0;
+  }
+
+  connectTrv() {
+    this.tranceVibe.connect();
+  }
+
+  sendTrv() {
+    console.log(this.analyser.tranceVibeData);
+
+    this.tranceVibe.send(this.analyser.tranceVibeData);
   }
 
   toggleRepeat() {

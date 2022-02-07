@@ -3,6 +3,8 @@ import { average } from "utilities/helpers";
 
 const FFT_SIZE = 128;
 const SMOOTHING = 0.1;
+const FREQ_RANGE = [0, Math.floor(FFT_SIZE / 100)];
+const EXPONENT = 4;
 
 // tl;dr; Put stereo audio in, get averaged FFT data out
 //
@@ -43,6 +45,7 @@ export default class StereoAnalyser {
     this.audio = audio;
     this.leftChannel = [];
     this.rightChannel = [];
+    this.tranceVibeData = 0;
     this.setupAudioNodes();
     autobind(this);
   }
@@ -104,12 +107,21 @@ export default class StereoAnalyser {
    * @private
    */
   runAnalysis() {
+    console.log("runAnalysis");
     const { analyserLeft, analyserRight, dataArrayLeft, dataArrayRight } = this;
     // getByteFrequencyData mutates its arguments
     analyserLeft.getByteFrequencyData(dataArrayLeft);
     analyserRight.getByteFrequencyData(dataArrayRight);
     this.leftChannel = dataArrayLeft;
     this.rightChannel = dataArrayRight;
+    let sum = 0;
+    for (let i = FREQ_RANGE[0]; i < FREQ_RANGE[1]; i++) {
+      sum += Math.pow(dataArrayLeft[i] / 255, 2);
+    }
+    const value = Math.round(
+      Math.pow(sum / (FREQ_RANGE[1] - FREQ_RANGE[0]), EXPONENT) * 255
+    );
+    this.tranceVibeData = value;
 
     // Set to frameId so we can cancel later
     this.frameId = requestAnimationFrame(this.runAnalysis);
@@ -126,6 +138,7 @@ export default class StereoAnalyser {
    * @private
    */
   pauseAnalyser() {
+    this.tranceVibeData = 0;
     cancelAnimationFrame(this.frameId);
     this.frameId = undefined;
   }
@@ -140,6 +153,7 @@ export default class StereoAnalyser {
 
   pause() {
     this.pauseAnalyser();
+    this.tranceVibeData = 0;
   }
 
   stop() {

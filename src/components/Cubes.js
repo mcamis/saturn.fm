@@ -120,7 +120,8 @@ class Cubes extends React.Component {
     // Only animated the cubes when audio is playing
     if (this.props.playing) {
       const [leftChannel, rightChannel] = this.props.audioManager.analyserFFT;
-
+      this.props.audioManager.sendTrv();
+      console.log("playing?");
       // Reset to middle after idle
       this.leftCube.position.y = -29;
       this.rightCube.position.y = -29;

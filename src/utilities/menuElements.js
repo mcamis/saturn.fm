@@ -66,7 +66,9 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
   {
     name: "settings",
     position: [0, 0, 1],
-    onClick: () => {},
+    onClick: () => {
+      audioManager.connectTrv();
+    },
     animationDelay: 100,
     animationDuration: 400,
     mapSrc: moreSrc,
