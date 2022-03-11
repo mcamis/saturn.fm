@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { Tween, Easing } from "es6-tween";
 import { Color } from "three";
-import { logarithmic } from "utilities/helpers";
+import { logarithmic } from "./helpers";
 
 const COLOR_TWEENING_SCALE = 0.75;
 const MAX_ACTIVE_ROTATION = 0.03;

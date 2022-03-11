@@ -2,18 +2,18 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import autobind from "utilities/autobind";
-import AudioManager from "utilities/audioManager";
-import * as audioActions from "actions/audio";
+import autobind from "../utilities/autobind";
+import AudioManager from "../utilities/audioManager";
+import * as audioActions from "../actions/audio";
 
-import Cubes from "components/Cubes";
-import Menu from "components/Menu";
-import About from "components/About";
-import FileReader from "components/FileReader";
-import Header from "components/Header";
-import StarField from "components/StarField";
-import CurrentTrackDisplay from "components/CurrentTrackDisplay";
-import introSrc from "effects/intro.mp3";
+import Cubes from "../components/Cubes";
+import Menu from "../components/Menu";
+import About from "../components/About";
+import FileReader from "../components/FileReader";
+import Header from "../components/Header";
+import StarField from "../components/StarField";
+import CurrentTrackDisplay from "../components/CurrentTrackDisplay";
+import introSrc from "../effects/intro.mp3";
 
 const spaceshipAnimations = ["plain", "spinny", "fast"];
 

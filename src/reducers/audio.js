@@ -1,4 +1,4 @@
-import { formatTime } from "utilities/helpers";
+import { formatTime } from "../utilities/helpers";
 
 import Track2 from "../songs/Cookies/02.mp3";
 import Track3 from "../songs/Cookies/03.mp3";

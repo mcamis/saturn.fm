@@ -1,27 +1,3 @@
-import React from "react";
-import PropTypes from "prop-types";
-
-import {
-  throttle,
-  sceneWidth,
-  triggerButtonCallback,
-  TextureAnimator,
-  getLocalizedCopy,
-} from "utilities/helpers";
-
-import {
-  animateButtonPosition,
-  createButtons,
-  orbitGeometry,
-  purpleMesh,
-  pinkMesh,
-  planeGeometry,
-  shadowGeometry,
-  shadowTexture,
-} from "utilities/menuElements";
-
-import globeSprite from "images/globeSprite.png";
-
 // Todo: Import specific tween functions as needed
 import * as TWEEN from "es6-tween";
 import {
@@ -37,13 +13,36 @@ import {
   MeshBasicMaterial,
   Vector3,
 } from "three";
+import React from "react";
+import PropTypes from "prop-types";
 
-import buttonSrc from "effects/button-press.mp3";
-import highlightSrc from "effects/button-highlight.mp3";
-import hideSrc from "effects/hide.mp3";
-import showSrc from "effects/show.mp3";
+import {
+  throttle,
+  sceneWidth,
+  triggerButtonCallback,
+  TextureAnimator,
+  getLocalizedCopy,
+} from "../utilities/helpers";
 
-import autobind from "utilities/autobind";
+import {
+  animateButtonPosition,
+  createButtons,
+  orbitGeometry,
+  purpleMesh,
+  pinkMesh,
+  planeGeometry,
+  shadowGeometry,
+  shadowTexture,
+} from "../utilities/menuElements";
+
+import globeSprite from "../images/globeSprite.png";
+
+import buttonSrc from "../effects/button-press.mp3";
+import highlightSrc from "../effects/button-highlight.mp3";
+import hideSrc from "../effects/hide.mp3";
+import showSrc from "../effects/show.mp3";
+
+import autobind from "../utilities/autobind";
 
 // TODO: Set more magic numbers to constants
 const SHADOW_OFFSET = 1.025;

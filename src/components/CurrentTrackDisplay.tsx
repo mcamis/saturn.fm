@@ -1,7 +1,14 @@
 import React from "react";
-import PropTypes from "prop-types";
 
-const CurrentTrackDisplay = ({ href, artist, title }) => {
+const CurrentTrackDisplay = ({
+  href,
+  artist,
+  title,
+}: {
+  href?: string;
+  artist: string;
+  title: string;
+}) => {
   // album: "Entertainment System"
   // artist: "Professor Kliq"
   // file: "/7387f2263f3d4d909b3757f066da5ed9.mp3"
@@ -21,15 +28,6 @@ const CurrentTrackDisplay = ({ href, artist, title }) => {
       )}
     </div>
   );
-};
-CurrentTrackDisplay.propTypes = {
-  href: PropTypes.string,
-  artist: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-};
-
-CurrentTrackDisplay.defaultProps = {
-  href: "",
 };
 
 export default CurrentTrackDisplay;
