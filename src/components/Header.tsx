@@ -40,7 +40,6 @@ const Header = ({
   }, 1000);
 
   // TODO: Fix Safari missing prop changes / renders
-  // TODO: Fix poor performance
   return (
     <header>
       <h3>Track</h3>
