@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import PropTypes from "prop-types";
 import { formatTime } from "../utilities/helpers";
 
 // https://overreacted.io/making-setinterval-declarative-with-react-hooks/
-function useInterval(callback, delay) {
-  const savedCallback = useRef();
+function useInterval(callback: () => void, delay: number) {
+  const savedCallback = useRef<() => void>();
 
   // Remember the latest callback.
   useEffect(() => {
@@ -23,7 +22,17 @@ function useInterval(callback, delay) {
   }, [delay]);
 }
 
-const Header = ({ audioManager, currentTrack }) => {
+type AudioManager = {
+  currentTime: number;
+};
+
+const Header = ({
+  audioManager,
+  currentTrack,
+}: {
+  audioManager: AudioManager;
+  currentTrack: number;
+}) => {
   const [componentTime, setComponentTime] = useState(0);
 
   useInterval(() => {
@@ -40,10 +49,6 @@ const Header = ({ audioManager, currentTrack }) => {
       <p>{formatTime(componentTime)}</p>
     </header>
   );
-};
-
-Header.propTypes = {
-  audioManager: PropTypes.shape({}),
 };
 
 export default Header;
