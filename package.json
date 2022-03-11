@@ -69,6 +69,7 @@
     "@babel/runtime": "^7.10.3",
     "@sentry/browser": "^5.18.1",
     "@types/three": "^0.138.0",
+    "@typescript-eslint/parser": "^5.14.0",
     "core-js": "^3.6.5",
     "es6-tween": "^5.5.11",
     "eslint-plugin-react-hooks": "^4.0.4",
