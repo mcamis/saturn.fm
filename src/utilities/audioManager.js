@@ -1,9 +1,9 @@
-import autobind from "utilities/autobind";
-import { store } from "index";
-import StereoAnalyser from "utilities/stereoAnalyser";
-import { defaultState } from "reducers/audio";
-import * as audioActions from "actions/audio";
-import art from "images/chopin_third.jpeg";
+import { store } from "../index";
+import autobind from "./autobind";
+import StereoAnalyser from "./stereoAnalyser";
+import { defaultState } from "../reducers/audio";
+import * as audioActions from "../actions/audio";
+import art from "../images/chopin_third.jpeg";
 
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio
 export default class AudioManager {

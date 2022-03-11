@@ -1,5 +1,5 @@
-import autobind from "utilities/autobind";
-import { average } from "utilities/helpers";
+import autobind from "./autobind";
+import { average } from "./helpers";
 
 const FFT_SIZE = 128;
 const SMOOTHING = 0.1;

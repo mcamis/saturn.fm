@@ -8,15 +8,15 @@ import {
   AmbientLight,
   DirectionalLight,
 } from "three";
-import autobind from "utilities/autobind";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import autobind from "../utilities/autobind";
 
-import { sceneWidth } from "utilities/helpers";
+import { sceneWidth } from "../utilities/helpers";
 import {
   activeRotation,
   idleRotation,
   updateScaleAndColor,
-} from "utilities/cubeTransforms";
+} from "../utilities/cubeTransforms";
 
 class Cubes extends React.Component {
   constructor(props) {

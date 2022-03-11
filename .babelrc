@@ -1,29 +1,29 @@
 {
-  "presets": [   [
-    "@babel/preset-env",
-    {
-      "useBuiltIns": "entry",
-      "corejs": 3,
-      "targets": {
-        "browsers": [
-          "last 2 Chrome versions",
-          "last 2 ChromeAndroid versions",
-          "last 2 Safari versions",
-          "last 2 Firefox versions",
-          "last 2 Edge versions",
-          "last 2 iOS versions",
-        ]
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "entry",
+        "corejs": 3,
+        "targets": {
+          "browsers": [
+            "last 2 Chrome versions",
+            "last 2 ChromeAndroid versions",
+            "last 2 Safari versions",
+            "last 2 Firefox versions",
+            "last 2 Edge versions",
+            "last 2 iOS versions"
+          ]
+        }
       }
-    }
-  ], "@babel/react", "airbnb"],
-  "plugins": [
-    ["module-resolver", {
-      "root": ["./src"]
-    }], "babel-plugin-styled-components"
+    ],
+    "@babel/react",
+    "airbnb"
   ],
+
   "env": {
     "coverage": {
-      "plugins": [ "istanbul" ]
+      "plugins": ["istanbul"]
     }
   }
 }

@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import styled, { keyframes } from "styled-components";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-import { getFilesWithTags, reorder } from "utilities/files";
-import { getLocalizedCopy } from "utilities/helpers";
+import { getFilesWithTags, reorder } from "../utilities/files";
+import { getLocalizedCopy } from "../utilities/helpers";
 import { Modal } from "./Modal";
 
 const getDraggableClasses = ({ isDragging, currentPlaying }) => {

@@ -1,4 +1,4 @@
-import { store } from "index";
+import { store } from "../index";
 
 export const loadingStart = () =>
   store.dispatch({
@@ -12,7 +12,7 @@ export const loadingFinish = () =>
     data: { loading: false },
   });
 
-export const toggleRepeat = repeat =>
+export const toggleRepeat = (repeat) =>
   store.dispatch({
     type: "TOGGLE_REPEAT",
     data: { repeat },
@@ -28,7 +28,7 @@ export const paused = () =>
     type: "PAUSED",
   });
 
-export const setCurrentTrack = trackIndex =>
+export const setCurrentTrack = (trackIndex) =>
   store.dispatch({
     type: "SET_CURRENT_TRACK",
     data: {
@@ -36,7 +36,7 @@ export const setCurrentTrack = trackIndex =>
     },
   });
 
-export const addTracks = tracks =>
+export const addTracks = (tracks) =>
   store.dispatch({
     type: "ADD_TRACKS",
     data: {
@@ -44,7 +44,7 @@ export const addTracks = tracks =>
     },
   });
 
-export const arrangeTracks = playlist =>
+export const arrangeTracks = (playlist) =>
   store.dispatch({
     type: "ARRANGE_TRACKS",
     data: {
@@ -52,7 +52,7 @@ export const arrangeTracks = playlist =>
     },
   });
 
-export const removeTrack = trackIndex =>
+export const removeTrack = (trackIndex) =>
   store.dispatch({
     type: "REMOVE_TRACK",
     data: {

@@ -11,7 +11,6 @@ module.exports = {
     "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }],
     "react/destructuring-assignment": 0,
     "react/jsx-one-expression-per-line": 0,
-    "react/prop-types": [1, { ignore: ["audio"] }],
     "jsx-a11y/anchor-is-valid": [
       "error",
       {
@@ -21,13 +20,6 @@ module.exports = {
       },
     ],
     "import/prefer-default-export": 0,
-  },
-  settings: {
-    "import/resolver": {
-      node: {
-        paths: [path.resolve(__dirname, "src")],
-      },
-    },
   },
   globals: {
     after: true,

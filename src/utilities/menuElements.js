@@ -1,15 +1,3 @@
-import discSrc from "images/disc.png";
-import moreSrc from "images/more.png";
-import hideSrc from "images/hide.png";
-import rwdSrc from "images/rwd.png";
-import playSrc from "images/play-pause.png";
-import ffwdSrc from "images/ffwd.png";
-import stopSrc from "images/stop.png";
-import repeatSrc from "images/repeat.png";
-import textureSrc from "images/texture.gif";
-import pinkSrc from "images/pink.gif";
-import orbShadow from "images/orb-shadow.png";
-
 import {
   TextureLoader,
   NearestFilter,
@@ -19,6 +7,17 @@ import {
   PlaneGeometry,
 } from "three";
 import { Tween, Easing } from "es6-tween";
+import discSrc from "../images/disc.png";
+import moreSrc from "../images/more.png";
+import hideSrc from "../images/hide.png";
+import rwdSrc from "../images/rwd.png";
+import playSrc from "../images/play-pause.png";
+import ffwdSrc from "../images/ffwd.png";
+import stopSrc from "../images/stop.png";
+import repeatSrc from "../images/repeat.png";
+import textureSrc from "../images/texture.gif";
+import pinkSrc from "../images/pink.gif";
+import orbShadow from "../images/orb-shadow.png";
 
 export const orbitGeometry = new CylinderGeometry(
   1.45,

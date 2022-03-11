@@ -13,8 +13,8 @@ import {
   MeshBasicMaterial,
   Mesh,
 } from "three";
-import autobind from "utilities/autobind";
-import { randomSize, randomPosition, sceneWidth } from "utilities/helpers";
+import autobind from "../utilities/autobind";
+import { randomSize, randomPosition, sceneWidth } from "../utilities/helpers";
 
 const spaceshipPositions = {
   plain: [2.5, -3.5, 510],

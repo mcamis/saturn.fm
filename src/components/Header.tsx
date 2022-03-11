@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { formatTime } from "utilities/helpers";
+import { formatTime } from "../utilities/helpers";
 
 // https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 function useInterval(callback, delay) {
@@ -14,7 +14,7 @@ function useInterval(callback, delay) {
   // TODO: move this to redux?
   useEffect(() => {
     function tick() {
-      savedCallback.current();
+      savedCallback?.current();
     }
     if (delay !== null) {
       const id = setInterval(tick, delay);
