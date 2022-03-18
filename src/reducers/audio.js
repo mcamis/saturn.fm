@@ -12,7 +12,7 @@ export const defaultState = {
   repeat: "off",
   currentTime: formatTime(0),
   isPlaying: false,
-  paused: false,
+  isPaused: false,
   playlist: ["Track2", "Track3", "Track4"],
   tracks: {
     Track2: {
@@ -51,13 +51,13 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         isPlaying: true,
-        paused: false,
+        isPaused: false,
       };
     case "PAUSED":
       return {
         ...state,
         isPlaying: false,
-        paused: true,
+        isPaused: true,
       };
     case "TOGGLE_REPEAT":
       return {

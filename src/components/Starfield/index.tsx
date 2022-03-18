@@ -3,13 +3,13 @@ import StarfieldScene from "./scene";
 import "./style.scss";
 
 const useStarfieldScene = (containerRef: any) => {
-  const [scene] = React.useState(new StarfieldScene());
+  const [scene, setScene] = React.useState(null);
   React.useEffect(() => {
-    containerRef?.current?.appendChild(scene.domElement);
-  }, [containerRef]);
+    scene && containerRef?.current?.appendChild(scene.domElement);
+  }, [scene]);
 
   React.useEffect(() => {
-    scene.start();
+    setScene( new StarfieldScene());
   }, []);
 };
 

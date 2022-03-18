@@ -52,12 +52,12 @@ class App extends Component {
 
   getClassNames() {
     const {
-      audio: { isPlaying, paused },
+      audio: { isPlaying, isPaused },
     } = this.props;
 
     const hiddenClass = this.state.hidden ? "hidden" : "";
     const introClass = this.audioManager ? "intro" : " ";
-    const pausedClass = paused ? "paused" : "";
+    const pausedClass = isPaused ? "paused" : "";
     const playingClass = isPlaying ? "playing" : "";
     const showClass = this.state.show ? "show" : "";
     const languageClass = ["ja-JP", "ja"].includes(navigator.language)
@@ -65,19 +65,6 @@ class App extends Component {
       : "";
 
     return `${hiddenClass} ${introClass} ${pausedClass} ${playingClass} ${showClass} ${languageClass}`;
-  }
-
-  setRandomAnimation() {
-    const withoutCurrent = spaceshipAnimations.filter(
-      (animation) => animation !== this.state.animation
-    );
-
-    const nextAnimation =
-      withoutCurrent[Math.floor(Math.random() * withoutCurrent.length)];
-
-    this.setState({
-      animation: nextAnimation,
-    });
   }
 
   setAnimationCallback(callback) {
@@ -130,7 +117,7 @@ class App extends Component {
 
   render() {
     const {
-      audio: { isPlaying, paused, repeat, playlist, currentTrack, tracks },
+      audio: { isPlaying, isPaused, repeat, playlist, currentTrack, tracks },
     } = this.props;
 
     const currentKey = playlist[currentTrack];
@@ -155,7 +142,7 @@ class App extends Component {
                 }))}
               hideDash={this.hideDash}
               repeat={repeat}
-              paused={paused}
+              isPaused={isPaused}
               isPlaying={isPlaying}
               setAnimationCallback={this.setAnimationCallback}
             />
@@ -163,7 +150,7 @@ class App extends Component {
             <Cubes
               audioManager={this.audioManager}
               hidden={this.state.hidden}
-              paused={paused}
+              isPaused={isPaused}
               isPlaying={isPlaying}
               setAnimationCallback={this.setAnimationCallback}
             />
@@ -193,13 +180,7 @@ class App extends Component {
             )}
           </>
         )}
-        <Starfield
-          useSlow={!this.audioManager}
-          animation={this.state.animation}
-          hidden={this.state.hidden}
-          setAnimationCallback={this.setAnimationCallback}
-          setRandomAnimation={this.setRandomAnimation}
-        />
+        <Starfield />
         {(!this.audioManager ||
           this.audioManager.analyser.audioContext.state === "suspended") && (
           <div className="start-context">
@@ -217,7 +198,7 @@ App.propTypes = {
   audio: PropTypes.shape({
     currentTrack: PropTypes.number,
     isPlaying: PropTypes.bool.isRequired,
-    paused: PropTypes.bool.isRequired,
+    isPaused: PropTypes.bool.isRequired,
     repeat: PropTypes.oneOf(["off", "context", "track"]).isRequired,
   }).isRequired,
   toast: PropTypes.string,

@@ -100,7 +100,7 @@ class Menu extends React.Component {
     }
     if (
       this.props.hidden !== nextProps.hidden ||
-      this.props.paused !== nextProps.paused ||
+      this.props.isPaused !== nextProps.isPaused ||
       this.props.repeat !== nextProps.repeat ||
       this.props.isPlaying !== nextProps.isPlaying
     ) {
@@ -339,7 +339,7 @@ class Menu extends React.Component {
   }
 
   getToolTip() {
-    const { isPlaying, paused, repeat } = this.props;
+    const { isPlaying, isPaused, repeat } = this.props;
     const { menu } = getLocalizedCopy();
 
     const tooltips = {
@@ -360,7 +360,7 @@ class Menu extends React.Component {
               <strong>{menu.play}</strong> / {menu.pause}
             </p>
           );
-        } else if (paused) {
+        } else if (isPaused) {
           playElement = (
             <p>
               {menu.play} / <strong>{menu.pause}</strong>

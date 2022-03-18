@@ -42,6 +42,7 @@ export default class AudioManager {
     if (!audioElement.src) {
       audioActions.setCurrentTrack(0);
     }
+
     if (audioElement.paused || audioElement.ended) {
       this.playAndReport();
     } else {
@@ -49,7 +50,6 @@ export default class AudioManager {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
   updateMediaSession({ title, artist, album, albumArtUrl }) {
     this.audioElement.title = `「SATURN.FM」${title} - ${artist}`;
     if (!("mediaSession" in navigator)) return;
@@ -73,6 +73,7 @@ export default class AudioManager {
     const trackKey = playlist[currentTrack];
     const nextSong = tracks[trackKey].file;
 
+
     if (nextSong instanceof File) {
       const objectUrl = URL.createObjectURL(nextSong);
       if (this.audioElement.src !== objectUrl) {
@@ -87,10 +88,11 @@ export default class AudioManager {
       // TODO: Workaround for preloaded files, move this to redux?
       const splitSrc = nextSong.split("./songs");
       const isFromDefaultPlaylist = splitSrc.length > 0;
+
       const derivedSrc = isFromDefaultPlaylist ? splitSrc[1] : nextSong;
       if (
         !this.audioElement.src ||
-        (derivedSrc.length > 0 && !this.audioElement.src.includes(derivedSrc))
+        (derivedSrc && derivedSrc.length > 0 && !this.audioElement.src.includes(derivedSrc))
       ) {
         this.audioElement.src = nextSong;
       }

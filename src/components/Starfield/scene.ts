@@ -46,6 +46,7 @@ class StarfieldScene {
     });
 
     this.setupScene();
+    this.start();
   }
 
   setDimensions() {
