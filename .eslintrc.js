@@ -5,7 +5,7 @@ module.exports = {
     browser: true,
     node: true,
   },
-  extends: ["airbnb", "prettier"],
+  extends: ["airbnb", "prettier", "plugin:import/typescript"],
   rules: {
     camelcase: 0,
     "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }],
@@ -20,6 +20,7 @@ module.exports = {
       },
     ],
     "import/prefer-default-export": 0,
+    "import/extensions": 0,
   },
   globals: {
     after: true,

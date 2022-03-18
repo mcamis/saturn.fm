@@ -9,7 +9,6 @@ import art from "../images/chopin_third.jpeg";
 export default class AudioManager {
   constructor() {
     this.audioElement = new Audio();
-    this.audioElement.crossOrigin = "anonymous";
 
     this.repeat = "off";
     this.reduxState = defaultState;

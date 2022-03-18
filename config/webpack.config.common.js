@@ -44,12 +44,12 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|.jsx)$/,
+        test: /\.(js|jsx)$/,
         include: app.src,
         use: ["babel-loader"],
       },
       {
-        test: /\.tsx?$/,
+        test: /\.(tsx|ts)$/,
         use: "ts-loader",
         exclude: /node_modules/,
       },

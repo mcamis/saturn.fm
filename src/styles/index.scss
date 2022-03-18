@@ -171,39 +171,6 @@ canvas {
   }
 }
 
-.StarField {
-  top: 0;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-
-  &:after {
-    content: "";
-    background: url("../images/galaxy.png") no-repeat;
-    background-size: cover;
-    background-color: black;
-    position: absolute;
-    left: -35%;
-    right: -35%;
-    top: -35%;
-    bottom: -35%;
-    animation-name: spin;
-    animation-duration: 500s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-    z-index: -1;
-  }
-
-  canvas {
-    position: relative;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1;
-  }
-}
-
 @keyframes fadeInOut {
   0% {
     opacity: 0;

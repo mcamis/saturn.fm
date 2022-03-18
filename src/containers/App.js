@@ -11,7 +11,7 @@ import Menu from "../components/Menu";
 import About from "../components/About";
 import FileReader from "../components/FileReader";
 import Header from "../components/Header";
-import StarField from "../components/StarField";
+import Starfield from "../components/Starfield";
 import CurrentTrackDisplay from "../components/CurrentTrackDisplay";
 import introSrc from "../effects/intro.mp3";
 
@@ -195,7 +195,7 @@ class App extends Component {
             )}
           </>
         )}
-        <StarField
+        <Starfield
           useSlow={!this.audioManager}
           animation={this.state.animation}
           hidden={this.state.hidden}

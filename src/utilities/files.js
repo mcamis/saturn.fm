@@ -15,14 +15,17 @@ export async function filePicker({
 
     fileInput.type = "file";
     fileInput.multiple = true;
-
     fileInput.webkitdirectory = allowDirectory;
     fileInput.directory = allowDirectory;
     fileInput.mozdirectory = allowDirectory;
 
     fileInput.addEventListener("change", (e) => {
       resolve(e.target.files);
+      document.body.removeChild(fileInput);
+
     });
+
+    document.body.appendChild(fileInput);
     fileInput.click();
   });
 }
