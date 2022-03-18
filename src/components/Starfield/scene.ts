@@ -6,6 +6,7 @@ import {
   BufferGeometry,
   BufferAttribute,
   MeshBasicMaterial,
+  LinearFilter,
   Mesh,
 } from "three";
 import {
@@ -13,6 +14,8 @@ import {
   randomPosition,
   sceneWidth,
 } from "../../utilities/helpers";
+
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 class StarfieldScene {
   private camera: PerspectiveCamera;
@@ -22,7 +25,9 @@ class StarfieldScene {
   private renderer: WebGLRenderer;
   private scene: Scene;
   private stars: Mesh[] = [];
+  private spaceship: any;
   private width: number;
+  private shouldShowSpaceship: boolean;
 
   public domElement;
 
@@ -99,8 +104,23 @@ class StarfieldScene {
 
   animate() {
     this.animateStars();
+    this.animateSpaceship();
     this.renderer.render(this.scene, this.camera);
     this.rafId = window.requestAnimationFrame(this.animate.bind(this));
+  }
+
+  animateSpaceship() {
+    if (!this.spaceship) return;
+
+    this.spaceship.visible = this.shouldShowSpaceship;
+
+    if (this.shouldShowSpaceship) {
+      this.spaceship.rotateZ(0.01);
+      this.spaceship.position.z -= 0.045;
+      if (this.spaceship.position.z < 400) {
+        this.spaceship.position.z = 0;
+      }
+    }
   }
 
   animateStars() {
@@ -162,6 +182,35 @@ class StarfieldScene {
 
       this.scene.add(star);
       this.stars.push(star);
+    }
+  }
+
+  setupSpaceship() {
+    const loader = new GLTFLoader();
+
+    loader.load("../models/saturn_v1.gltf", (gltf) => {
+      const { scene: shipModel } = gltf;
+      const [x, y, z] = [2.5, -3.5, 510];
+      shipModel.position.set(x, y, z);
+      shipModel.rotateZ(3.5);
+      shipModel.rotateY(Math.PI);
+      shipModel.visible = false;
+
+      // Disable texture filtering for the authenitc chunky Saturn gfx
+      const shipMap = (shipModel.children[1] as any).material?.map;
+      shipMap.magFilter = LinearFilter;
+      shipMap.minFilter = LinearFilter;
+      shipMap.generateMipmaps = false;
+
+      this.spaceship = shipModel;
+      this.scene.add(shipModel);
+    });
+  }
+
+  toggleSpaceShipVisbility(shouldShowSpaceship: boolean) {
+    this.shouldShowSpaceship = shouldShowSpaceship;
+    if (!this.spaceship && shouldShowSpaceship) {
+      this.setupSpaceship();
     }
   }
 }

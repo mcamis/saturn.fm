@@ -44,7 +44,7 @@ class Cubes extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (this.props.hidden !== nextProps.hidden) {
+    if (this.props.isUiHidden !== nextProps.isUiHidden) {
       return true;
     }
     return false;
@@ -173,7 +173,7 @@ Cubes.propTypes = {
   setAnimationCallback: PropTypes.func.isRequired,
   audioManager: PropTypes.shape({}).isRequired,
   isPlaying: PropTypes.bool.isRequired,
-  hidden: PropTypes.bool.isRequired,
+  isUiHidden: PropTypes.bool.isRequired,
 };
 
 export default Cubes;

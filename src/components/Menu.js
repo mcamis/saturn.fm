@@ -99,7 +99,7 @@ class Menu extends React.Component {
       return true;
     }
     if (
-      this.props.hidden !== nextProps.hidden ||
+      this.props.isUiHidden !== nextProps.isUiHidden ||
       this.props.isPaused !== nextProps.isPaused ||
       this.props.repeat !== nextProps.repeat ||
       this.props.isPlaying !== nextProps.isPlaying
@@ -129,7 +129,7 @@ class Menu extends React.Component {
 
   onMouseDown(e) {
     e.stopPropagation();
-    if (this.props.hidden) return;
+    if (this.props.isUiHidden) return;
 
     this.raycaster.setFromCamera(this.mouse, this.camera);
 
@@ -403,7 +403,7 @@ class Menu extends React.Component {
   orbitButton() {
     const { pink, purple } = this.orbits;
 
-    if (this.props.hidden) {
+    if (this.props.isUiHidden) {
       pink.material.visible = false;
       purple.material.visible = false;
     } else {
@@ -433,7 +433,7 @@ class Menu extends React.Component {
   }
 
   hideMenu() {
-    if (this.props.hidden) {
+    if (this.props.isUiHidden) {
       return this.showIfHidden();
     }
 
@@ -467,7 +467,7 @@ class Menu extends React.Component {
   }
 
   showIfHidden() {
-    if (this.state.allowToggle && this.props.hidden) {
+    if (this.state.allowToggle && this.props.isUiHidden) {
       this.props.showIfHidden();
       this.setState({ allowToggle: false });
       this.showEffect.currentTime = 0;
@@ -620,7 +620,7 @@ Menu.propTypes = {
   toggleMenu: PropTypes.func.isRequired,
   repeat: PropTypes.oneOf(["off", "context", "track"]).isRequired,
   hideDash: PropTypes.func.isRequired,
-  hidden: PropTypes.bool.isRequired,
+  isUiHidden: PropTypes.bool.isRequired,
   showIfHidden: PropTypes.func.isRequired,
   audioManager: PropTypes.shape({}).isRequired,
 };

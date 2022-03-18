@@ -13,9 +13,8 @@ import FileReader from "../components/FileReader";
 import Header from "../components/Header";
 import Starfield from "../components/Starfield";
 import CurrentTrackDisplay from "../components/CurrentTrackDisplay";
-import introSrc from "../effects/intro.mp3";
 
-const spaceshipAnimations = ["plain", "spinny", "fast"];
+import introSrc from "../effects/intro.mp3";
 
 class App extends Component {
   constructor(props) {
@@ -28,9 +27,8 @@ class App extends Component {
     this.audioManager = null;
 
     this.state = {
-      animation: "plain",
       show: false,
-      hidden: false,
+      isUiHidden: false,
       showAboutModal: false,
       fileReaderVisible: false,
       frameCallbacks: [],
@@ -55,7 +53,7 @@ class App extends Component {
       audio: { isPlaying, isPaused },
     } = this.props;
 
-    const hiddenClass = this.state.hidden ? "hidden" : "";
+    const hiddenClass = this.state.isUiHidden ? "hidden" : "";
     const introClass = this.audioManager ? "intro" : " ";
     const pausedClass = isPaused ? "paused" : "";
     const playingClass = isPlaying ? "playing" : "";
@@ -80,22 +78,16 @@ class App extends Component {
   }
 
   hideDash() {
-    const animation =
-      spaceshipAnimations[
-        Math.floor(Math.random() * spaceshipAnimations.length)
-      ];
-
     this.setState((prevState) => ({
-      hidden: !prevState.hidden,
+      isUiHidden: !prevState.isUiHidden,
       show: false,
-      animation,
     }));
   }
 
   showIfHidden() {
-    if (this.state.hidden) {
+    if (this.state.isUiHidden) {
       this.frameId = this.frameId || requestAnimationFrame(this.animate);
-      this.setState({ hidden: false, show: true });
+      this.setState({ isUiHidden: false, show: true });
     }
   }
 
@@ -133,13 +125,14 @@ class App extends Component {
             />
             <Menu
               audioManager={this.audioManager}
-              hidden={this.state.hidden}
+              isUiHidden={this.state.isUiHidden}
               showIfHidden={this.showIfHidden}
               toggleMenu={this.toggleMenu}
               toggleAbout={() =>
                 this.setState((prevState) => ({
                   showAboutModal: !prevState.showAboutModal,
-                }))}
+                }))
+              }
               hideDash={this.hideDash}
               repeat={repeat}
               isPaused={isPaused}
@@ -149,7 +142,7 @@ class App extends Component {
             <div className="dashboard" />
             <Cubes
               audioManager={this.audioManager}
-              hidden={this.state.hidden}
+              isUiHidden={this.state.isUiHidden}
               isPaused={isPaused}
               isPlaying={isPlaying}
               setAnimationCallback={this.setAnimationCallback}
@@ -168,7 +161,8 @@ class App extends Component {
                 toggleAbout={() =>
                   this.setState((prevState) => ({
                     showAboutModal: !prevState.showAboutModal,
-                  }))}
+                  }))
+                }
               />
             )}
             {currentInfo && (
@@ -180,7 +174,7 @@ class App extends Component {
             )}
           </>
         )}
-        <Starfield />
+        <Starfield isUiHidden={this.state.isUiHidden} />
         {(!this.audioManager ||
           this.audioManager.analyser.audioContext.state === "suspended") && (
           <div className="start-context">

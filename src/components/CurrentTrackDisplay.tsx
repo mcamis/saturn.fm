@@ -1,19 +1,16 @@
 import React from "react";
 
-const CurrentTrackDisplay = ({
-  href,
-  artist,
-  title,
-}: {
+type CurrentTrack = {
   href?: string;
   artist: string;
   title: string;
-}) => {
-  // album: "Entertainment System"
-  // artist: "Professor Kliq"
-  // file: "/7387f2263f3d4d909b3757f066da5ed9.mp3"
-  // title: "No Refuge"
-  // track: 1
+}
+
+const CurrentTrackDisplay = (currentTrack?: CurrentTrack) => {
+  if (!currentTrack) return null;
+
+  const { href, artist, title } = currentTrack;
+
   return (
     <div className="current-track-info nice" key={title + artist}>
       <p>
