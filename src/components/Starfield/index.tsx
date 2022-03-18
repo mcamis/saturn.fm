@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-
+import React from "react";
 import StarfieldScene from "./scene";
 import "./style.scss";
 
 const useStarfieldScene = (containerRef: any) => {
-  const [scene] = React.useState(new StarfieldScene({}));
+  const [scene] = React.useState(new StarfieldScene());
   React.useEffect(() => {
     containerRef?.current?.appendChild(scene.domElement);
   }, [containerRef]);

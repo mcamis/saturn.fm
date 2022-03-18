@@ -15,20 +15,18 @@ import {
 } from "../../utilities/helpers";
 
 class StarfieldScene {
-  private debouncedResize: number;
   private camera: PerspectiveCamera;
+  private debouncedResize: number;
+  private height: number;
+  private rafId: number;
   private renderer: WebGLRenderer;
   private scene: Scene;
-  private rafId: number;
-
   private stars: Mesh[] = [];
-
-  private height: number;
   private width: number;
 
   public domElement;
 
-  constructor(options: any) {
+  constructor() {
     this.setDimensions();
     this.scene = new Scene();
     this.renderer = new WebGLRenderer({ alpha: true, antialias: false });
@@ -101,7 +99,6 @@ class StarfieldScene {
   animate() {
     this.animateStars();
     this.renderer.render(this.scene, this.camera);
-
     this.rafId = window.requestAnimationFrame(this.animate.bind(this));
   }
 
@@ -109,9 +106,9 @@ class StarfieldScene {
     for (let i = 0; i < this.stars.length; i += 1) {
       const currentStar = this.stars[i];
       if (!currentStar) return;
+      // rAF seems to run at 120fps even if the scene is only running at 60fps
       // TODO: how the heck can I determine rAF rate indepenent of FPS?
       const isHighRefreshRate = true;
-      // This animates super quickly on iOS
       const baseSpeed = isHighRefreshRate ? 1.25 : 20;
 
       this.stars[i].position.z += baseSpeed + i * 0.05;
@@ -165,7 +162,6 @@ class StarfieldScene {
       this.scene.add(star);
       this.stars.push(star);
     }
-    console.log(this.stars);
   }
 }
 
