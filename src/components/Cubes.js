@@ -118,7 +118,7 @@ class Cubes extends React.Component {
 
   animate() {
     // Only animated the cubes when audio is playing
-    if (this.props.playing) {
+    if (this.props.isPlaying) {
       const [leftChannel, rightChannel] = this.props.audioManager.analyserFFT;
 
       // Reset to middle after idle
@@ -172,7 +172,7 @@ class Cubes extends React.Component {
 Cubes.propTypes = {
   setAnimationCallback: PropTypes.func.isRequired,
   audioManager: PropTypes.shape({}).isRequired,
-  playing: PropTypes.bool.isRequired,
+  isPlaying: PropTypes.bool.isRequired,
   hidden: PropTypes.bool.isRequired,
 };
 

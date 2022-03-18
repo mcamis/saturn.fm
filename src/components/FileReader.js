@@ -70,7 +70,7 @@ class FileReader extends Component {
 
   render() {
     const {
-      audio: { currentTrack, playing, playlist, tracks },
+      audio: { currentTrack, isPlaying, playlist, tracks },
     } = this.props;
 
     const { fileReader, playlist: playlistCopy } = getLocalizedCopy();
@@ -94,7 +94,7 @@ class FileReader extends Component {
                     {playlist.map((item, index) => {
                       const { artist, album, title } = tracks[item];
                       const currentPlaying =
-                        playing && item === playlist[currentTrack];
+                      isPlaying && item === playlist[currentTrack];
 
                       return (
                         <Draggable key={item} draggableId={item} index={index}>

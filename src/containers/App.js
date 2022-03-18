@@ -52,13 +52,13 @@ class App extends Component {
 
   getClassNames() {
     const {
-      audio: { playing, paused },
+      audio: { isPlaying, paused },
     } = this.props;
 
     const hiddenClass = this.state.hidden ? "hidden" : "";
     const introClass = this.audioManager ? "intro" : " ";
     const pausedClass = paused ? "paused" : "";
-    const playingClass = playing ? "playing" : "";
+    const playingClass = isPlaying ? "playing" : "";
     const showClass = this.state.show ? "show" : "";
     const languageClass = ["ja-JP", "ja"].includes(navigator.language)
       ? "japanese"
@@ -130,7 +130,7 @@ class App extends Component {
 
   render() {
     const {
-      audio: { playing, paused, repeat, playlist, currentTrack, tracks },
+      audio: { isPlaying, paused, repeat, playlist, currentTrack, tracks },
     } = this.props;
 
     const currentKey = playlist[currentTrack];
@@ -152,12 +152,11 @@ class App extends Component {
               toggleAbout={() =>
                 this.setState((prevState) => ({
                   showAboutModal: !prevState.showAboutModal,
-                }))
-              }
+                }))}
               hideDash={this.hideDash}
               repeat={repeat}
               paused={paused}
-              playing={playing}
+              isPlaying={isPlaying}
               setAnimationCallback={this.setAnimationCallback}
             />
             <div className="dashboard" />
@@ -165,7 +164,7 @@ class App extends Component {
               audioManager={this.audioManager}
               hidden={this.state.hidden}
               paused={paused}
-              playing={playing}
+              isPlaying={isPlaying}
               setAnimationCallback={this.setAnimationCallback}
             />
             {this.props.toast && <p>{this.props.toast}</p>}
@@ -182,8 +181,7 @@ class App extends Component {
                 toggleAbout={() =>
                   this.setState((prevState) => ({
                     showAboutModal: !prevState.showAboutModal,
-                  }))
-                }
+                  }))}
               />
             )}
             {currentInfo && (
@@ -218,7 +216,7 @@ class App extends Component {
 App.propTypes = {
   audio: PropTypes.shape({
     currentTrack: PropTypes.number,
-    playing: PropTypes.bool.isRequired,
+    isPlaying: PropTypes.bool.isRequired,
     paused: PropTypes.bool.isRequired,
     repeat: PropTypes.oneOf(["off", "context", "track"]).isRequired,
   }).isRequired,
