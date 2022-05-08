@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import autobind from "../utilities/autobind";
-import AudioManager, {PlayerState} from "../utilities/audioManager";
+import {audioManagerSingleton, PlayerState} from "../utilities/audioManager";
 import * as audioActions from "../actions/audio";
 
 import Cubes from "../components/Cubes";
@@ -24,7 +24,6 @@ class App extends Component {
     this.introEffect = new Audio();
     this.introEffect.src = introSrc;
 
-    this.audioManager = null;
 
     this.state = {
       show: false,
@@ -41,21 +40,19 @@ class App extends Component {
   }
 
   setupAnalyser() {
-    this.audioManager = new AudioManager();
 
-    this.audioManager.createContext(() => { 
+    audioManagerSingleton.createContext(() => { 
       this.forceUpdate();
       this.playIntro();
     });
   }
 
   getClassNames() {
-    const {
-      audio: { isPlaying, isPaused },
-    } = this.props;
+    const isPlaying = audioManagerSingleton.state.playerState === PlayerState.Playing;
+    const isPaused = audioManagerSingleton.state.playerState === PlayerState.Paused;
 
     const hiddenClass = this.state.isUiHidden ? "hidden" : "";
-    const introClass = this.audioManager ? "intro" : " ";
+    const introClass = audioManagerSingleton ? "intro" : " ";
     const pausedClass = isPaused ? "paused" : "";
     const playingClass = isPlaying ? "playing" : "";
     const showClass = this.state.show ? "show" : "";
@@ -114,22 +111,21 @@ class App extends Component {
     } = this.props;
 
     // todo these updates are occuring outside of react;
-    const isPaused = this.audioManager && this.audioManager.state.playerState === PlayerState.Paused;
-    const isPlaying = this.audioManager && this.audioManager.state.playerState === PlayerState.Playing;
+    const isPaused = audioManagerSingleton.state.playerState === PlayerState.Paused;
+    const isPlaying = audioManagerSingleton.state.playerState === PlayerState.Playing;
  
     const currentKey = playlist[currentTrack];
     const currentInfo = tracks[currentKey];
 
     return (
       <div className={this.getClassNames()}>
-        {this.audioManager && (
+        {audioManagerSingleton.analyser.audioContext.state !== "suspended" && (
           <>
             <Header
               currentTrack={this.props.audio.currentTrack}
-              audioManager={this.audioManager}
+              audioManager={audioManagerSingleton}
             />
             <Menu
-              audioManager={this.audioManager}
               isUiHidden={this.state.isUiHidden}
               showIfHidden={this.showIfHidden}
               toggleMenu={this.toggleMenu}
@@ -139,14 +135,11 @@ class App extends Component {
                 }))
               }
               hideDash={this.hideDash}
-              repeat={this.audioManager.state.repeat}
-              isPaused={isPaused}
-              isPlaying={isPlaying}
               setAnimationCallback={this.setAnimationCallback}
             />
             <div className="dashboard" />
             <Cubes
-              audioManager={this.audioManager}
+              audioManager={audioManagerSingleton}
               isUiHidden={this.state.isUiHidden}
               isPaused={isPaused}
               isPlaying={isPlaying}
@@ -180,8 +173,7 @@ class App extends Component {
           </>
         )}
         <Starfield isUiHidden={this.state.isUiHidden} />
-        {(!this.audioManager ||
-          this.audioManager.analyser.audioContext.state === "suspended") && (
+        {(audioManagerSingleton.analyser.audioContext.state === "suspended") && (
           <div className="start-context">
             <button type="button" onClick={() => this.setupAnalyser()}>
               Press Start

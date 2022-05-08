@@ -285,12 +285,6 @@ export default class AudioManager {
   }
 }
 
-export const useAudioManager = () => {
-  const [audioManager, setAudioManager] = React.useState<any>();
-  React.useEffect(() => {
-    setAudioManager(new AudioManager());
-  }, []);
+export const audioManagerSingleton = new AudioManager();
 
-  return audioManager;
-}
 

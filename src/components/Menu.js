@@ -15,7 +15,7 @@ import {
 } from "three";
 import React from "react";
 import PropTypes from "prop-types";
-import {RepeatValues} from "../utilities/audioManager";
+import {audioManagerSingleton, PlayerState, RepeatValues} from "../utilities/audioManager";
 
 import {
   throttle,
@@ -132,10 +132,10 @@ class Menu extends React.Component {
 
       const { object } = intersects[0];
 
-      if (this.props.audioManager.analyser.audioContext.state === "running") {
+      if (audioManagerSingleton.analyser.audioContext.state === "running") {
         this.handleMouseDown(object, onClick);
       } else {
-        this.props.audioManager.analyser.audioContext
+        audioManagerSingleton.analyser.audioContext
           .resume()
           .then(() => {
             this.handleMouseDown(object, onClick);
@@ -191,7 +191,7 @@ class Menu extends React.Component {
             (plane) => plane.name === nextName
           );
           if (
-            this.props.audioManager.analyser.audioContext.state === "running"
+            audioManagerSingleton.analyser.audioContext.state === "running"
           ) {
             this.buttonEffect.currentTime = 0;
             this.buttonEffect.play();
@@ -200,7 +200,7 @@ class Menu extends React.Component {
               this.menuElements[nextName].onClick
             );
           } else {
-            this.props.audioManager.analyser.audioContext
+            audioManagerSingleton.analyser.audioContext
               .resume()
               .then(() => {
                 this.buttonEffect.currentTime = 0;
@@ -326,11 +326,11 @@ class Menu extends React.Component {
   }
 
   getToolTip() {
-    const { isPlaying, isPaused, audioManager } = this.props;
     const { menu } = getLocalizedCopy();
+    const { repeat, playerState } = audioManagerSingleton.state;
+    const isPlaying = playerState === PlayerState.Playing;
+    const isPaused = playerState === PlayerState.Paused;
 
-    const { repeat } = audioManager.state;
-    
     const tooltips = {
       disc: () => <p>{menu.disc}</p>,
       settings: () => <p>{menu.settings}</p>,
@@ -554,7 +554,7 @@ class Menu extends React.Component {
 
   createMenuElements() {
     const menuElements = createButtons(
-      this.props.audioManager,
+      audioManagerSingleton,
       this.hideMenu,
       this.props.toggleMenu
     );
@@ -580,7 +580,7 @@ class Menu extends React.Component {
   playHighlight() {
     // Only autoplay highlight on desktop to prevent multiple sounds at once
     if (typeof window.orientation === "undefined" && !this.state.introActive) {
-      if (this.props.audioManager.analyser.audioContext.state === "running") {
+      if (audioManagerSingleton.analyser.audioContext.state === "running") {
         this.highlightEffect.currentTime = 0;
         this.highlightEffect.play();
       }
@@ -607,11 +607,9 @@ class Menu extends React.Component {
 
 Menu.propTypes = {
   toggleMenu: PropTypes.func.isRequired,
-  repeat: PropTypes.oneOf(["off", "context", "track"]).isRequired,
   hideDash: PropTypes.func.isRequired,
   isUiHidden: PropTypes.bool.isRequired,
   showIfHidden: PropTypes.func.isRequired,
-  audioManager: PropTypes.shape({}).isRequired,
 };
 
 export default Menu;
