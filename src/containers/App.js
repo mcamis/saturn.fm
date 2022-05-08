@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Suspense } from "react";
 import PropTypes from "prop-types";
 
 import autobind from "../utilities/autobind";
@@ -7,12 +7,13 @@ import { audioManagerSingleton, PlayerState } from "../utilities/audioManager";
 import Cubes from "../components/Cubes";
 import Menu from "../components/Menu";
 import About from "../components/About";
-import FileReader from "../components/FileReader";
 import Header from "../components/Header";
 import Starfield from "../components/Starfield";
 import CurrentTrackDisplay from "../components/CurrentTrackDisplay";
 
 import introSrc from "../effects/intro.mp3";
+
+const FileReader = React.lazy(() => import("../components/FileReader"));
 
 class App extends Component {
   constructor(props) {
@@ -145,12 +146,14 @@ class App extends Component {
             {this.props.toast && <p>{this.props.toast}</p>}
 
             {this.state.fileReaderVisible && (
-              <FileReader
-                setCurrentTrack={() => {}}
-                addTracks={() => {}}
-                removeTrack={() => {}}
-                toggleMenu={this.toggleMenu}
-              />
+              <Suspense fallback={null}>
+                <FileReader
+                  setCurrentTrack={() => {}}
+                  addTracks={() => {}}
+                  removeTrack={() => {}}
+                  toggleMenu={this.toggleMenu}
+                />
+              </Suspense>
             )}
             {this.state.showAboutModal && (
               <About
