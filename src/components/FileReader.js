@@ -3,11 +3,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled, { keyframes } from "styled-components";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import {
-  audioManagerSingleton,
-  PlayerState,
-  RepeatValues,
-} from "../utilities/audioManager";
+import { audioManagerSingleton } from "../utilities/audioManager";
 import { getFilesWithTags, reorder } from "../utilities/files";
 import { getLocalizedCopy } from "../utilities/helpers";
 import { Modal } from "./Modal";
@@ -78,10 +74,8 @@ class FileReader extends Component {
 
   render() {
     const {
-      state: { tracks, currentTrackIndex, playerState },
+      state: { tracks },
     } = audioManagerSingleton;
-
-    const isPlaying = playerState === PlayerState.Playing;
 
     const { fileReader, playlist: playlistCopy } = getLocalizedCopy();
 
