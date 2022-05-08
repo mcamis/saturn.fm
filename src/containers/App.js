@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 
 import autobind from "../utilities/autobind";
 import {audioManagerSingleton, PlayerState} from "../utilities/audioManager";
-import * as audioActions from "../actions/audio";
 
 import Cubes from "../components/Cubes";
 import Menu from "../components/Menu";
@@ -106,23 +104,17 @@ class App extends Component {
   }
 
   render() {
-    const {
-      audio: {  playlist, currentTrack, tracks },
-    } = this.props;
-
     // todo these updates are occuring outside of react;
     const isPaused = audioManagerSingleton.state.playerState === PlayerState.Paused;
     const isPlaying = audioManagerSingleton.state.playerState === PlayerState.Playing;
- 
-    const currentKey = playlist[currentTrack];
-    const currentInfo = tracks[currentKey];
+    const currentTrack = audioManagerSingleton.state.tracks[audioManagerSingleton.state.currentTrackIndex];
 
     return (
       <div className={this.getClassNames()}>
         {audioManagerSingleton.analyser.audioContext.state !== "suspended" && (
           <>
             <Header
-              currentTrack={this.props.audio.currentTrack}
+              currentTrack={currentTrack}
               audioManager={audioManagerSingleton}
             />
             <Menu
@@ -149,7 +141,6 @@ class App extends Component {
 
             {this.state.fileReaderVisible && (
               <FileReader
-                {...audioActions}
                 audio={this.props.audio}
                 toggleMenu={this.toggleMenu}
               />
@@ -163,11 +154,11 @@ class App extends Component {
                 }
               />
             )}
-            {currentInfo && (
+            {currentTrack && (
               <CurrentTrackDisplay
-                title={currentInfo.title}
-                href={currentInfo.href}
-                artist={currentInfo.artist}
+                title={currentTrack.title}
+                href={currentTrack.href}
+                artist={currentTrack.artist}
               />
             )}
           </>
@@ -199,10 +190,6 @@ App.defaultProps = {
   toast: "",
 };
 
-function mapStateToProps(state) {
-  return {
-    audio: state.audio,
-  };
-}
+
 export const AppContainer = App;
-export default connect(mapStateToProps)(App);
+export default App;

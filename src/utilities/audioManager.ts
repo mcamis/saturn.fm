@@ -255,6 +255,7 @@ export default class AudioManager {
     this.audioElement.pause();
     // this.audioElement.src = firstSong;
     this.audioElement.currentTime = 0;
+    this.state.currentTrackIndex = 0;
     this.state.playerState = PlayerState.Stopped;
   }
 
