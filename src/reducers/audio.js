@@ -116,3 +116,38 @@ export default (state = defaultState, action) => {
       return state;
   }
 };
+
+
+export const defaultTracks =   [{
+  file: Track2,
+  track: 1,
+  album: "Music for Touching",
+  artist: "Cookies",
+  title: "Go Back",
+  href: "",
+  albumArtUrl: CookiesCover,
+  isDefault: true,
+  srcPath: "",
+},
+ {
+  file: Track3,
+  track: 2,
+  album: "Music for Touching",
+  artist: "Cookies",
+  title: "July Seventeen",
+  href: "",
+  albumArtUrl: CookiesCover,
+  isDefault: true,
+  srcPath: "",
+},
+ {
+  file: Track4,
+  track: 3,
+  album: "Music for Touching",
+  artist: "Cookies",
+  title: "Crybaby (A)",
+  href: "",
+  albumArtUrl: CookiesCover,
+  isDefault: true,
+  srcPath: "",
+}];

@@ -92,7 +92,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
   {
     name: "play",
     position: [0, -2.15, 1],
-    onClick: audioManager.togglePlay,
+    onClick: audioManager.togglePlayPause,
     animationDelay: 300,
     animationDuration: 350,
     mapSrc: playSrc,
@@ -101,7 +101,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
   {
     name: "fastforward",
     position: [2.25, -2.15, 1],
-    onClick: audioManager.nextTrack,
+    onClick: audioManager.loadNextTrack,
     animationDelay: 280,
     animationDuration: 350,
     mapSrc: ffwdSrc,

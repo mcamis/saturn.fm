@@ -42,7 +42,8 @@ class App extends Component {
 
   setupAnalyser() {
     this.audioManager = new AudioManager();
-    this.audioManager.analyser.audioContext.resume().then(() => {
+
+    this.audioManager.createContext(() => { 
       this.forceUpdate();
       this.playIntro();
     });
@@ -111,6 +112,8 @@ class App extends Component {
     const {
       audio: { isPlaying, isPaused, repeat, playlist, currentTrack, tracks },
     } = this.props;
+
+    
 
     const currentKey = playlist[currentTrack];
     const currentInfo = tracks[currentKey];
