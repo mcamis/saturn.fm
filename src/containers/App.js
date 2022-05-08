@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import autobind from "../utilities/autobind";
-import AudioManager from "../utilities/audioManager";
+import AudioManager, {PlayerState} from "../utilities/audioManager";
 import * as audioActions from "../actions/audio";
 
 import Cubes from "../components/Cubes";
@@ -110,11 +110,13 @@ class App extends Component {
 
   render() {
     const {
-      audio: { isPlaying, isPaused, repeat, playlist, currentTrack, tracks },
+      audio: {  playlist, currentTrack, tracks },
     } = this.props;
 
-    
-
+    // todo these updates are occuring outside of react;
+    const isPaused = this.audioManager && this.audioManager.state.playerState === PlayerState.Paused;
+    const isPlaying = this.audioManager && this.audioManager.state.playerState === PlayerState.Playing;
+ 
     const currentKey = playlist[currentTrack];
     const currentInfo = tracks[currentKey];
 
@@ -137,7 +139,7 @@ class App extends Component {
                 }))
               }
               hideDash={this.hideDash}
-              repeat={repeat}
+              repeat={this.audioManager.state.repeat}
               isPaused={isPaused}
               isPlaying={isPlaying}
               setAnimationCallback={this.setAnimationCallback}

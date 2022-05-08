@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { formatTime } from "../utilities/helpers";
+import AudioManager  from "../utilities/audioManager";
 
 // https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 function useInterval(callback: () => void, delay: number) {
@@ -22,16 +23,10 @@ function useInterval(callback: () => void, delay: number) {
   }, [delay]);
 }
 
-type AudioManager = {
-  currentTime: number;
-};
-
 const Header = ({
   audioManager,
-  currentTrack,
 }: {
-  audioManager: AudioManager;
-  currentTrack: number;
+  audioManager:  AudioManager;
 }) => {
   const [componentTime, setComponentTime] = useState(0);
 
@@ -43,7 +38,7 @@ const Header = ({
   return (
     <header>
       <h3>Track</h3>
-      <p className="track-number">{currentTrack + 1}</p>
+      <p className="track-number">{audioManager.state.currentTrackIndex + 1}</p>
       <h3>Time</h3>
       <p>{formatTime(componentTime)}</p>
     </header>

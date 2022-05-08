@@ -15,6 +15,7 @@ import {
 } from "three";
 import React from "react";
 import PropTypes from "prop-types";
+import {RepeatValues} from "../utilities/audioManager";
 
 import {
   throttle,
@@ -43,6 +44,7 @@ import hideSrc from "../effects/hide.mp3";
 import showSrc from "../effects/show.mp3";
 
 import autobind from "../utilities/autobind";
+import audio from "../reducers/audio";
 
 // TODO: Set more magic numbers to constants
 const SHADOW_OFFSET = 1.025;
@@ -92,21 +94,6 @@ class Menu extends React.Component {
 
     this.setupKeyboardListeners();
     setTimeout(() => this.setState({ introActive: false }), 1000);
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.activeButton !== nextState.activeButton) {
-      return true;
-    }
-    if (
-      this.props.isUiHidden !== nextProps.isUiHidden ||
-      this.props.isPaused !== nextProps.isPaused ||
-      this.props.repeat !== nextProps.repeat ||
-      this.props.isPlaying !== nextProps.isPlaying
-    ) {
-      return true;
-    }
-    return false;
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -339,9 +326,11 @@ class Menu extends React.Component {
   }
 
   getToolTip() {
-    const { isPlaying, isPaused, repeat } = this.props;
+    const { isPlaying, isPaused, audioManager } = this.props;
     const { menu } = getLocalizedCopy();
 
+    const { repeat } = audioManager.state;
+    
     const tooltips = {
       disc: () => <p>{menu.disc}</p>,
       settings: () => <p>{menu.settings}</p>,
@@ -376,14 +365,14 @@ class Menu extends React.Component {
             <strong>{menu.repeatOff}</strong>
           </p>
         );
-        if (repeat === "track") {
+        if (repeat === RepeatValues.Single) {
           repeatElement = (
             <p>
               {menu.repeat}: <strong>{menu.repeatOne}</strong> /{" "}
               {menu.repeatAll} / {menu.repeatOff}
             </p>
           );
-        } else if (repeat === "context") {
+        } else if (repeat === RepeatValues.All) {
           repeatElement = (
             <p>
               {menu.repeat}: {menu.repeatOne} /{" "}

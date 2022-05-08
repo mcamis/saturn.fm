@@ -8,13 +8,13 @@ import { formatTime } from "./helpers";
 import backupCover from "../images/chopin_third.jpeg";
 
 
-enum RepeatValues {
+export enum RepeatValues {
   Off,
   Single,
   All
 }
 
-enum PlayerState {
+export enum PlayerState {
   Idle,
   Playing,
   Stopped,
@@ -37,8 +37,6 @@ type AudioState = {
   loading: boolean,
   repeat: RepeatValues,
   currentTime: string,
-  isPlaying: boolean,
-  isPaused: boolean,
   hasPendingSrcChange: boolean
   currentTrackIndex: number,
   tracks: Track[],
@@ -53,8 +51,6 @@ const defaultState = {
   loading: false,
   repeat: RepeatValues.Off,
   currentTime: formatTime(0),
-  isPlaying: false,
-  isPaused: false,
   hasPendingSrcChange: false,
   currentTrackIndex: 0,
   tracks: defaultTracks,
@@ -62,7 +58,7 @@ const defaultState = {
 }
 
 export default class AudioManager {
-  private state: AudioState;
+  public state: AudioState;
   private audioElement: HTMLAudioElement;
   private analyser: any;
 
@@ -146,7 +142,6 @@ export default class AudioManager {
    * Attempt to load the next track in the plalist
    */
   loadTrack(trackIndex: number) {
-    console.log({ trackIndex })
     const { srcPath, file } = this.state.tracks[trackIndex] ?? {};
     // todo: stop
     if (!srcPath && !file) return

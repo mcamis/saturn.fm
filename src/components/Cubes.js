@@ -17,6 +17,7 @@ import {
   idleRotation,
   updateScaleAndColor,
 } from "../utilities/cubeTransforms";
+import { PlayerState } from "../utilities/audioManager";
 
 class Cubes extends React.Component {
   constructor(props) {
@@ -118,7 +119,7 @@ class Cubes extends React.Component {
 
   animate() {
     // Only animated the cubes when audio is playing
-    if (this.props.isPlaying) {
+    if (this.props.audioManager.state.playerState === PlayerState.Playing) {
       const [leftChannel, rightChannel] = this.props.audioManager.analyserFFT;
 
       // Reset to middle after idle
