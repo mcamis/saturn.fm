@@ -11,7 +11,6 @@ function useInterval(callback: () => void, delay: number) {
     savedCallback.current = callback;
   });
 
-  // TODO: move this to redux?
   useEffect(() => {
     function tick() {
       savedCallback?.current();

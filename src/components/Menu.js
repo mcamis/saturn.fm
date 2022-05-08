@@ -15,7 +15,11 @@ import {
 } from "three";
 import React from "react";
 import PropTypes from "prop-types";
-import {audioManagerSingleton, PlayerState, RepeatValues} from "../utilities/audioManager";
+import {
+  audioManagerSingleton,
+  PlayerState,
+  RepeatValues,
+} from "../utilities/audioManager";
 
 import {
   throttle,
@@ -44,7 +48,6 @@ import hideSrc from "../effects/hide.mp3";
 import showSrc from "../effects/show.mp3";
 
 import autobind from "../utilities/autobind";
-import audio from "../reducers/audio";
 
 // TODO: Set more magic numbers to constants
 const SHADOW_OFFSET = 1.025;
@@ -190,9 +193,7 @@ class Menu extends React.Component {
           const nextObject = this.planes.find(
             (plane) => plane.name === nextName
           );
-          if (
-            audioManagerSingleton.analyser.audioContext.state === "running"
-          ) {
+          if (audioManagerSingleton.analyser.audioContext.state === "running") {
             this.buttonEffect.currentTime = 0;
             this.buttonEffect.play();
             triggerButtonCallback(

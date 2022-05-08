@@ -4,7 +4,6 @@
 import React from "react";
 import FileReader from "./FileReader";
 
-import { defaultState } from "../reducers/audio";
 import "../styles/index.scss";
 
 const props = {

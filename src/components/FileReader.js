@@ -3,7 +3,11 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled, { keyframes } from "styled-components";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-
+import {
+  audioManagerSingleton,
+  PlayerState,
+  RepeatValues,
+} from "../utilities/audioManager";
 import { getFilesWithTags, reorder } from "../utilities/files";
 import { getLocalizedCopy } from "../utilities/helpers";
 import { Modal } from "./Modal";
@@ -22,7 +26,11 @@ class FileReader extends Component {
   }
 
   onDragEnd(result) {
-    const curr = this.props.audio.currentTrack;
+    const curr =
+      audioManagerSingleton.state.tracks[
+        audioManagerSingleton.state.currentTrackIndex
+      ];
+
     // dropped outside the list
     if (!result.destination) {
       return;
@@ -70,8 +78,10 @@ class FileReader extends Component {
 
   render() {
     const {
-      audio: { currentTrack, isPlaying, playlist, tracks },
-    } = this.props;
+      state: { tracks, currentTrackIndex, playerState },
+    } = audioManagerSingleton;
+
+    const isPlaying = playerState === PlayerState.Playing;
 
     const { fileReader, playlist: playlistCopy } = getLocalizedCopy();
 
@@ -91,13 +101,13 @@ class FileReader extends Component {
               <Droppable droppableId="droppable">
                 {(provided) => (
                   <div ref={provided.innerRef}>
-                    {playlist.map((item, index) => {
-                      const { artist, album, title } = tracks[item];
-                      const currentPlaying =
-                      isPlaying && item === playlist[currentTrack];
+                    {tracks.map(({ artist, album, title, file }, index) => {
+                      // const currentPlaying =
+                      //   isPlaying && item === tracks[currentTrackIndex];
+                      const currentPlaying = false;
 
                       return (
-                        <Draggable key={item} draggableId={item} index={index}>
+                        <Draggable key={file} draggableId={file} index={index}>
                           {(draggableProvided, { isDragging }) => {
                             return (
                               <div
@@ -324,10 +334,6 @@ const PlaylistEditor = styled.div`
 `;
 
 FileReader.propTypes = {
-  audio: PropTypes.shape({
-    tracks: PropTypes.object.isRequired,
-    playlist: PropTypes.array.isRequired,
-  }).isRequired,
   arrangeTracks: PropTypes.func.isRequired,
   addTracks: PropTypes.func.isRequired,
   removeTrack: PropTypes.func.isRequired,

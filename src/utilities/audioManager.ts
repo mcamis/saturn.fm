@@ -2,8 +2,7 @@ import React from "react";
 
 import autobind from "./autobind";
 import StereoAnalyser from "./stereoAnalyser";
-import { defaultTracks } from "../reducers/audio";
-import { formatTime } from "./helpers";
+import { formatTime, defaultTracks } from "./helpers";
 
 import backupCover from "../images/chopin_third.jpeg";
 
