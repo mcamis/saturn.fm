@@ -1,5 +1,10 @@
 import type { Reducer, Dispatch, FC } from "react";
-import React, { useContext, createContext, useReducer } from "react";
+import React, {
+  useContext,
+  createContext,
+  useSyncExternalStore,
+  useReducer,
+} from "react";
 import {
   audioManagerSingleton,
   AudioManagerState,
@@ -38,12 +43,18 @@ export const AudioManagerContextProvider = ({
 }: {
   children: any;
 }) => {
-  const [state, dispatch] = useReducer(reducer, defaultState);
-  audioManagerSingleton.registerStateListeners((payload: AudioManagerState) => {
-    dispatch({ payload });
-  });
+  const state = useSyncExternalStore(
+    audioManagerSingleton.subscribe,
+    audioManagerSingleton.getSnapshot
+  );
+  const [dispatch] = useReducer(reducer, defaultState);
+  // audioManagerSingleton.subscribe((payload: AudioManagerState) => {
+  //   dispatch({ payload });
+  // });
   return (
-    <CONTEXT.Provider value={[state, dispatch]}>{children}</CONTEXT.Provider>
+    <CONTEXT.Provider value={[state, dispatch as any]}>
+      {children}
+    </CONTEXT.Provider>
   );
 };
 

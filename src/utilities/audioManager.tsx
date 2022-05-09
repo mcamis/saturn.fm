@@ -313,13 +313,18 @@ export class AudioManager {
     this.updateState({ type: "setNewTrackOrder", payload: tracks });
   }
 
-  updateState(actionx) {
+  updateState(action: any) {
     const newState = reducer(this.state, action);
     this.state = newState;
-    this.stateUpdateListener(newState);
+    this.stateUpdateListener && this.stateUpdateListener(newState);
   }
-  registerStateListeners(cb: () => void) {
+  subscribe(cb: any) {
     this.stateUpdateListener = cb;
+
+    return (): void => (this.stateUpdateListener = null);
+  }
+  getSnapshot() {
+    return this.state;
   }
 }
 
@@ -333,7 +338,7 @@ export enum ActionTypes {
   setNewTrackOrder = "setNewTrackOrder",
 }
 
-const reducer = (state, action) => {
+const reducer = (state: any, action: any) => {
   switch (action.type) {
     case "currentTrackIndex":
       return { ...state, currentTrackIndex: action.payload };

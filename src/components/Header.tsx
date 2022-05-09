@@ -29,7 +29,7 @@ const Header = () => {
   const [componentTime, setComponentTime] = useState(0);
   const [state] = useAudioManagerContext();
   console.log(state?.currentTrackIndex);
-  console.log(state?.playerState);
+  // console.log(state?.playerState);
 
   // useInterval(() => {
   //   setComponentTime(audioManagerSingleton.currentTime);
