@@ -1,60 +1,9 @@
-import React, { Component, Suspense } from "react";
-import autobind from "./autobind";
 import StereoAnalyser from "./stereoAnalyser";
-import { formatTime, defaultTracks } from "./helpers";
-
 import backupCover from "../images/chopin_third.jpeg";
-
+import { ActionTypes, RepeatValues, PlayerState, Track, AudioManagerState } from "./types";
+import { defaultState, reducer } from "./state";
 const htmlAudioElement = new Audio();
 
-export enum RepeatValues {
-  Off,
-  Single,
-  All,
-}
-
-export enum PlayerState {
-  Idle,
-  Playing,
-  Stopped,
-  Paused,
-}
-
-export type Track = {
-  track: number;
-  album: string;
-  artist: string;
-  title: string;
-  href: string;
-  albumArtUrl: string;
-  isDefault: boolean;
-  srcPath?: string;
-  file?: File;
-};
-
-export type AudioManagerState = {
-  repeat: RepeatValues;
-  hasPendingSrcChange: boolean;
-  currentTrackIndex: number;
-  tracks: Track[];
-  playerState: PlayerState;
-  audioElement: HTMLAudioElement;
-};
-// type MediaSessionProps = {
-//   title: string;
-//   artist: string;
-//   album: string;
-//   albumArtUrl: string;
-// };
-
-export const defaultState = {
-  audioElement: htmlAudioElement,
-  repeat: RepeatValues.Off,
-  hasPendingSrcChange: false,
-  currentTrackIndex: 0,
-  tracks: defaultTracks,
-  playerState: PlayerState.Idle,
-};
 
 export class AudioManager {
   public state: AudioManagerState;
@@ -71,7 +20,6 @@ export class AudioManager {
 
     this.setupEventListeners();
     // this.syncManagerWithStore();
-    autobind(this);
     this.loadFirstTrack();
   }
 
@@ -155,7 +103,7 @@ export class AudioManager {
     } else {
       this.audioElement.src = file ?? srcPath;
     }
-    this.updateState({ type: "currentTrackIndex", payload: trackIndex });
+    this.updateState({ type: ActionTypes.currentTrackIndex, payload: trackIndex });
     this.revokeSongUrl(currentSrc);
   }
 
@@ -186,7 +134,6 @@ export class AudioManager {
     //   audioActions.loadingStart()
     // );
 
-    // TODO: Get this working locally
     this.audioElement.addEventListener("canplaythrough", () => {
       if (this.state.playerState === PlayerState.Playing) {
         this.togglePlayPause();
@@ -196,13 +143,13 @@ export class AudioManager {
     this.audioElement.addEventListener("play", () => {
       this.updateMediaSession();
       this.analyser.start();
-      this.updateState({ type: "playerState", payload: PlayerState.Playing });
+      this.updateState({ type: ActionTypes.playerState, payload: PlayerState.Playing });
     });
 
     this.audioElement.addEventListener("pause", () => {
       // TODO: Manually set pause state to fix stop
       this.analyser.pause();
-      this.updateState({ type: "playerState", payload: PlayerState.Paused });
+      this.updateState({ type: ActionTypes.playerState, payload: PlayerState.Paused });
     });
 
     this.audioElement.addEventListener("ended", () => {
@@ -223,19 +170,6 @@ export class AudioManager {
     navigator.mediaSession.setActionHandler("nexttrack", () =>
       this.loadNextTrack()
     );
-    // TODO: Error handling
-    /*
-      suspend
-      Media data is no longer being fetched even though the file has not been entirely downloaded.
-      abort
-      Media data download has been aborted but not due to an error.
-      error
-      An error is encountered while media data is being download.
-      emptied
-      The media buffer has been emptied, possibly due to an error or because the load() method was invoked to reload it.
-      stalled
-      Media data is unexpectedly no longer available.
-    */
   }
 
   previousTrack() {
@@ -249,7 +183,7 @@ export class AudioManager {
 
   pause() {
     this.audioElement.pause();
-    this.updateState({ type: "playerState", payload: PlayerState.Paused });
+    this.updateState({ type: ActionTypes.playerState, payload: PlayerState.Paused });
   }
 
   stop() {
@@ -277,35 +211,23 @@ export class AudioManager {
         break;
     }
 
-    this.updateState({ type: "repeat", payload });
-  }
-
-  get analyserFFT() {
-    return this.analyser.averageFFT;
-  }
-
-  get rawFFT() {
-    return this.analyser.rawFFT;
-  }
-
-  get currentTime() {
-    return this.audioElement.currentTime;
+    this.updateState({ type: ActionTypes.repeat, payload });
   }
 
   addTracks(newTracks: Track[]) {
     console.log({ newTracks });
 
-    this.updateState({ type: "addTracks", payload: newTracks });
+    this.updateState({ type: ActionTypes.addTracks, payload: newTracks });
   }
 
   setCurrentTrack(newIndex: number) {
     // this.state.currentTrackIndex = newIndex;
-    this.updateState({ type: "currentTrackIndex", payload: newIndex });
+    this.updateState({ type: ActionTypes.currentTrackIndex, payload: newIndex });
   }
 
   setNewTrackOrder(tracks: Track[]) {
     // this.state.tracks = tracks;
-    this.updateState({ type: "setNewTrackOrder", payload: tracks });
+    this.updateState({ type: ActionTypes.setNewTrackOrder, payload: tracks });
   }
 
   updateState(action: any) {
@@ -321,51 +243,19 @@ export class AudioManager {
   getSnapshot() {
     return this.state;
   }
-}
 
-export enum ActionTypes {
-  currentTrackIndex = "currentTrackIndex",
-  playerState = "playerState",
-  SaveAndReload = "saveAndReload",
-  setStopped = "setStopped",
-  repeat = "repeat",
-  addTracks = "addTracks",
-  setNewTrackOrder = "setNewTrackOrder",
-}
-
-const reducer = (state: any, action: any) => {
-  switch (action.type) {
-    case ActionTypes.currentTrackIndex:
-      return { ...state, currentTrackIndex: action.payload };
-    case ActionTypes.playerState:
-      return { ...state, playerState: action.payload };
-    case ActionTypes.setStopped:
-      return {
-        ...state,
-        currentTrackIndex: 0,
-        playerState: PlayerState.Stopped,
-      };
-    case ActionTypes.repeat:
-      return { ...state, repeat: action.payload };
-    case ActionTypes.addTracks:
-      return {
-        ...state,
-        tracks: [
-          ...state.tracks,
-          // sort new tracks before adding them
-          ...action.payload.sort((a: Track, b: Track) => {
-            if (a.album > b.album) return 1;
-            if (a.album < b.album) return -1;
-            if (a.track > b.track) return 1;
-            if (a.track < b.track) return -1;
-          }),
-        ],
-      };
-    // case ActionTypes.setNewTrackOrder:
-
-    default:
-      return state;
+  get analyserFFT() {
+    return this.analyser.averageFFT;
   }
-};
+
+  get rawFFT() {
+    return this.analyser.rawFFT;
+  }
+
+  get currentTime() {
+    return this.audioElement.currentTime;
+  }
+}
+
 
 export const audioManagerSingleton = new AudioManager();

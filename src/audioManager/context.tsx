@@ -1,9 +1,7 @@
 import React, { useContext, createContext, useSyncExternalStore } from "react";
-import {
-  audioManagerSingleton,
-  AudioManagerState,
-  defaultState,
-} from "../utilities/audioManager";
+import { audioManagerSingleton } from "./audioManager";
+import type { AudioManagerState } from "./types";
+import { defaultState } from "./state";
 
 const CONTEXT = createContext<AudioManagerState>(defaultState);
 

@@ -3,11 +3,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled, { keyframes } from "styled-components";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { audioManagerSingleton } from "../utilities/audioManager";
 import { getFilesWithTags, reorder } from "../utilities/files";
 import { getLocalizedCopy } from "../utilities/helpers";
 import { Modal } from "./Modal";
-import { useAudioManagerContext } from "../containers/AudioManagerContext";
+import { audioManagerSingleton, useAudioManagerContext } from "../audioManager";
 
 async function getTracks() {
   const tracks = await getFilesWithTags({
@@ -72,7 +71,7 @@ function onDragEnd(result) {
 const FileReader = (props) => {
   const { tracks } = useAudioManagerContext();
   const { fileReader, playlist: playlistCopy } = getLocalizedCopy();
-
+  t;
   return (
     <Modal className="FileReader" header={fileReader.header}>
       <PlaylistWrapper>

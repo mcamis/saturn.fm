@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { formatTime } from "../utilities/helpers";
-import { useAudioManagerContext } from "../containers/AudioManagerContext";
+import { useAudioManagerContext } from "../audioManager";
 // https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 function useInterval(callback: () => void, delay: number) {
   const savedCallback = useRef<() => void>();

@@ -2,7 +2,11 @@ import React, { Component, Suspense } from "react";
 import PropTypes from "prop-types";
 
 import autobind from "../utilities/autobind";
-import { audioManagerSingleton, PlayerState } from "../utilities/audioManager";
+import {
+  AudioManagerContextProvider,
+  audioManagerSingleton,
+  PlayerState,
+} from "../audioManager";
 // import { AudioManagerContextProvider } from "./AudioManagerContext";
 import Cubes from "../components/Cubes";
 import Menu from "../components/Menu";
@@ -10,7 +14,6 @@ import About from "../components/About";
 import Header from "../components/Header";
 import Starfield from "../components/Starfield";
 import CurrentTrackDisplay from "../components/CurrentTrackDisplay";
-import { AudioManagerContextProvider } from "./AudioManagerContext";
 import introSrc from "../effects/intro.mp3";
 
 const FileReader = React.lazy(() => import("../components/FileReader"));

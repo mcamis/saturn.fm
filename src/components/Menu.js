@@ -19,7 +19,7 @@ import {
   audioManagerSingleton,
   PlayerState,
   RepeatValues,
-} from "../utilities/audioManager";
+} from "../audioManager";
 
 import {
   throttle,

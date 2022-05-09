@@ -1,7 +1,7 @@
 import type { TagType } from "jsmediatags/types";
 import jsmediatags from "jsmediatags";
 import { v4 as uuidv4 } from "uuid";
-import type { Track } from './audioManager'
+import type { Track } from '../audioManager'
 
 type FilePickerOptions = {
   extensions?: string,
