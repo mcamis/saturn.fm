@@ -1,3 +1,4 @@
+import type { TagType } from "jsmediatags/types";
 import jsmediatags from "jsmediatags";
 import { v4 as uuidv4 } from "uuid";
 import type { Track } from './audioManager'
@@ -38,7 +39,7 @@ export async function filePicker({
 function getMediaTags(file: File) {
   return new Promise((resolve, reject) => {
     jsmediatags.read(file, {
-      onSuccess: (tag) => resolve(tag),
+      onSuccess: (tag: TagType) => resolve(tag),
       onError: (error) => reject(error),
     });
   });
@@ -54,14 +55,13 @@ async function generateTrackInfo(file: File) {
     // eslint-disable-next-line no-console
     console.log("Fetching Tags Error", err);
   }
-  const { tags: { artist, album, title, track, picture = {} } = {} } = metadata;
+  const { tags: { artist, album, title, track, picture } = {} } = metadata as TagType;
 
-  const { data, type } = picture;
 
   let maybAlbumArtBlob;
-  if (data) {
-    const byteArray = new Uint8Array(data);
-    const blob = new Blob([byteArray], { type });
+  if (picture?.data) {
+    const byteArray = new Uint8Array(picture?.data);
+    const blob = new Blob([byteArray], { type: picture?.format });
     maybAlbumArtBlob = URL.createObjectURL(blob);
   }
 
