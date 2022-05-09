@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import autobind from "../utilities/autobind";
 import { audioManagerSingleton, PlayerState } from "../utilities/audioManager";
-
+// import { AudioManagerContextProvider } from "./AudioManagerContext";
 import Cubes from "../components/Cubes";
 import Menu from "../components/Menu";
 import About from "../components/About";
@@ -38,7 +38,7 @@ class App extends Component {
   }
 
   setupAnalyser() {
-    audioManagerSingleton.createContext(() => {
+    audioManagerSingleton.createAudioContext(() => {
       this.forceUpdate();
       this.playIntro();
     });
@@ -194,5 +194,4 @@ App.defaultProps = {
   toast: "",
 };
 
-export const AppContainer = App;
 export default App;
