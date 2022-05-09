@@ -5,6 +5,8 @@ import { formatTime, defaultTracks } from "./helpers";
 
 import backupCover from "../images/chopin_third.jpeg";
 
+const htmlAudioElement = new Audio();
+
 export enum RepeatValues {
   Off,
   Single,
@@ -18,7 +20,7 @@ export enum PlayerState {
   Paused,
 }
 
-type Track = {
+export type Track = {
   track: number;
   album: string;
   artist: string;
@@ -36,6 +38,7 @@ export type AudioManagerState = {
   currentTrackIndex: number;
   tracks: Track[];
   playerState: PlayerState;
+  audioElement: HTMLAudioElement;
 };
 // type MediaSessionProps = {
 //   title: string;
@@ -45,6 +48,7 @@ export type AudioManagerState = {
 // };
 
 export const defaultState = {
+  audioElement: htmlAudioElement,
   repeat: RepeatValues.Off,
   hasPendingSrcChange: false,
   currentTrackIndex: 0,
@@ -60,7 +64,7 @@ export class AudioManager {
 
   constructor() {
     this.state = defaultState;
-    this.audioElement = new Audio();
+    this.audioElement = htmlAudioElement;
 
     // TODO: Preloading & total track time?
     this.analyser = new StereoAnalyser(this.audioElement);
@@ -165,7 +169,6 @@ export class AudioManager {
 
   playAndReport() {
     this.audioElement.play();
-    this.updateState({ type: "playerStatus", payload: PlayerState.Playing });
   }
 
   // Prevent memory leaks and revoke ObjectURL if one exists
@@ -185,18 +188,21 @@ export class AudioManager {
 
     // TODO: Get this working locally
     this.audioElement.addEventListener("canplaythrough", () => {
-      this.updateState({ type: "playerStatus", payload: PlayerState.Playing });
-      this.togglePlayPause();
+      if (this.state.playerState === PlayerState.Playing) {
+        this.togglePlayPause();
+      }
     });
 
     this.audioElement.addEventListener("play", () => {
       this.updateMediaSession();
       this.analyser.start();
+      this.updateState({ type: "playerState", payload: PlayerState.Playing });
     });
 
     this.audioElement.addEventListener("pause", () => {
       // TODO: Manually set pause state to fix stop
       this.analyser.pause();
+      this.updateState({ type: "playerState", payload: PlayerState.Paused });
     });
 
     this.audioElement.addEventListener("ended", () => {
@@ -243,7 +249,7 @@ export class AudioManager {
 
   pause() {
     this.audioElement.pause();
-    this.updateState({ type: "playerStatus", payload: PlayerState.Paused });
+    this.updateState({ type: "playerState", payload: PlayerState.Paused });
   }
 
   stop() {
@@ -290,17 +296,6 @@ export class AudioManager {
     console.log({ newTracks });
 
     this.updateState({ type: "addTracks", payload: newTracks });
-    // const currentTracks = this.state.tracks;
-    // this.state.tracks = [
-    //   ...currentTracks,
-    //   // sort new tracks before adding them
-    //   ...newTracks.sort((a, b) => {
-    //     if (a.album > b.album) return 1;
-    //     if (a.album < b.album) return -1;
-    //     if (a.track > b.track) return 1;
-    //     if (a.track < b.track) return -1;
-    //   }),
-    // ];
   }
 
   setCurrentTrack(newIndex: number) {
@@ -330,7 +325,7 @@ export class AudioManager {
 
 export enum ActionTypes {
   currentTrackIndex = "currentTrackIndex",
-  playerStatus = "playerStatus",
+  playerState = "playerState",
   SaveAndReload = "saveAndReload",
   setStopped = "setStopped",
   repeat = "repeat",
@@ -340,8 +335,34 @@ export enum ActionTypes {
 
 const reducer = (state: any, action: any) => {
   switch (action.type) {
-    case "currentTrackIndex":
+    case ActionTypes.currentTrackIndex:
       return { ...state, currentTrackIndex: action.payload };
+    case ActionTypes.playerState:
+      return { ...state, playerState: action.payload };
+    case ActionTypes.setStopped:
+      return {
+        ...state,
+        currentTrackIndex: 0,
+        playerState: PlayerState.Stopped,
+      };
+    case ActionTypes.repeat:
+      return { ...state, repeat: action.payload };
+    case ActionTypes.addTracks:
+      return {
+        ...state,
+        tracks: [
+          ...state.tracks,
+          // sort new tracks before adding them
+          ...action.payload.sort((a: Track, b: Track) => {
+            if (a.album > b.album) return 1;
+            if (a.album < b.album) return -1;
+            if (a.track > b.track) return 1;
+            if (a.track < b.track) return -1;
+          }),
+        ],
+      };
+    // case ActionTypes.setNewTrackOrder:
+
     default:
       return state;
   }

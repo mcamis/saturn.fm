@@ -10,7 +10,7 @@ import About from "../components/About";
 import Header from "../components/Header";
 import Starfield from "../components/Starfield";
 import CurrentTrackDisplay from "../components/CurrentTrackDisplay";
-
+import { AudioManagerContextProvider } from "./AudioManagerContext";
 import introSrc from "../effects/intro.mp3";
 
 const FileReader = React.lazy(() => import("../components/FileReader"));
@@ -194,4 +194,8 @@ App.defaultProps = {
   toast: "",
 };
 
-export default App;
+export default () => (
+  <AudioManagerContextProvider>
+    <App />
+  </AudioManagerContextProvider>
+);

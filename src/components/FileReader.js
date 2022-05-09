@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import styled, { keyframes } from "styled-components";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
@@ -7,6 +7,7 @@ import { audioManagerSingleton } from "../utilities/audioManager";
 import { getFilesWithTags, reorder } from "../utilities/files";
 import { getLocalizedCopy } from "../utilities/helpers";
 import { Modal } from "./Modal";
+import { useAudioManagerContext } from "../containers/AudioManagerContext";
 
 async function getTracks() {
   const tracks = await getFilesWithTags({
@@ -41,8 +42,6 @@ function onDragEnd(result) {
     return;
   }
 
-  console.log({ tracks: audioManagerSingleton.state.tracks });
-
   const items = reorder(
     audioManagerSingleton.state.tracks,
     result.source.index,
@@ -66,111 +65,98 @@ function onDragEnd(result) {
     audioManagerSingleton.setCurrentTrack(curr - 1);
   }
 
-  console.log({ items });
-
   audioManagerSingleton.setNewTrackOrder(items);
 }
 
 // TODO: Fix event listener leak here
-class FileReader extends Component {
-  constructor(props) {
-    super(props);
-  }
 
-  render() {
-    const {
-      state: { tracks },
-    } = audioManagerSingleton;
+const FileReader = (props) => {
+  const [{ tracks }] = useAudioManagerContext();
 
-    const { fileReader, playlist: playlistCopy } = getLocalizedCopy();
+  const { fileReader, playlist: playlistCopy } = getLocalizedCopy();
 
-    return (
-      <Modal className="FileReader" header={fileReader.header}>
-        <PlaylistWrapper>
-          <PlaylistHeader>
-            <div>{playlistCopy.number}</div>
-            <div>{playlistCopy.title}</div>
-            <div>{playlistCopy.artist}</div>
-            <div>{playlistCopy.album}</div>
-            <div />
-          </PlaylistHeader>
-          {/* TODO: Small font for playlist items */}
-          <PlaylistEditor>
-            <DragDropContext onDragEnd={onDragEnd}>
-              <Droppable droppableId="droppable">
-                {(provided) => (
-                  <div ref={provided.innerRef}>
-                    {tracks.map(({ artist, album, title, id }, index) => {
-                      // const currentPlaying =
-                      //   isPlaying && item === tracks[currentTrackIndex];
-                      const currentPlaying = false;
+  return (
+    <Modal className="FileReader" header={fileReader.header}>
+      <PlaylistWrapper>
+        <PlaylistHeader>
+          <div>{playlistCopy.number}</div>
+          <div>{playlistCopy.title}</div>
+          <div>{playlistCopy.artist}</div>
+          <div>{playlistCopy.album}</div>
+          <div />
+        </PlaylistHeader>
+        {/* TODO: Small font for playlist items */}
+        <PlaylistEditor>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="droppable">
+              {(provided) => (
+                <div ref={provided.innerRef}>
+                  {tracks.map(({ artist, album, title, id }, index) => {
+                    // const currentPlaying =
+                    //   isPlaying && item === tracks[currentTrackIndex];
+                    const currentPlaying = false;
 
-                      return (
-                        <Draggable key={id} draggableId={id} index={index}>
-                          {(draggableProvided, { isDragging }) => {
-                            return (
-                              <div
-                                className={getDraggableClasses({
-                                  isDragging,
-                                  currentPlaying,
-                                })}
-                                ref={draggableProvided.innerRef}
-                                {...draggableProvided.draggableProps}
-                                {...draggableProvided.dragHandleProps}
+                    return (
+                      <Draggable key={id} draggableId={id} index={index}>
+                        {(draggableProvided, { isDragging }) => {
+                          return (
+                            <div
+                              className={getDraggableClasses({
+                                isDragging,
+                                currentPlaying,
+                              })}
+                              ref={draggableProvided.innerRef}
+                              {...draggableProvided.draggableProps}
+                              {...draggableProvided.dragHandleProps}
+                            >
+                              <div>{currentPlaying ? "▱" : index + 1}</div>
+                              <div>{title}</div>
+                              <div>{artist}</div>
+                              <div>{album}</div>
+                              <button
+                                className="icon-button"
+                                onClick={() => props.removeTrack(index)}
+                                type="button"
                               >
-                                <div>{currentPlaying ? "▱" : index + 1}</div>
-                                <div>{title}</div>
-                                <div>{artist}</div>
-                                <div>{album}</div>
-                                <button
-                                  className="icon-button"
-                                  onClick={() => this.props.removeTrack(index)}
-                                  type="button"
-                                >
-                                  ▵
-                                </button>
-                              </div>
-                            );
-                          }}
-                        </Draggable>
-                      );
-                    })}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
-          </PlaylistEditor>
-        </PlaylistWrapper>
-        <EditorControlButtons>
-          <button
-            className="add-files"
-            type="button"
-            onClick={() => getDirectory()}
-          >
-            Add a directory
-          </button>
-          <button
-            className="add-files"
-            type="button"
-            onClick={() => getTracks()}
-          >
-            Add file(s)
-          </button>
-        </EditorControlButtons>
-        <PlaylistFooter>
-          <button
-            className="exit-button"
-            type="button"
-            onClick={this.props.toggleMenu}
-          >
-            Exit
-          </button>
-        </PlaylistFooter>
-      </Modal>
-    );
-  }
-}
+                                ▵
+                              </button>
+                            </div>
+                          );
+                        }}
+                      </Draggable>
+                    );
+                  })}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </PlaylistEditor>
+      </PlaylistWrapper>
+      <EditorControlButtons>
+        <button
+          className="add-files"
+          type="button"
+          onClick={() => getDirectory()}
+        >
+          Add a directory
+        </button>
+        <button className="add-files" type="button" onClick={() => getTracks()}>
+          Add file(s)
+        </button>
+      </EditorControlButtons>
+      <PlaylistFooter>
+        <button
+          className="exit-button"
+          type="button"
+          onClick={props.toggleMenu}
+        >
+          Exit
+        </button>
+      </PlaylistFooter>
+    </Modal>
+  );
+};
 
 const EditorControlButtons = styled.div`
   margin-top: 2em;

@@ -3075,6 +3075,11 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
+"@types/jsmediatags@^3.9.3":
+  version "3.9.3"
+  resolved "https://registry.yarnpkg.com/@types/jsmediatags/-/jsmediatags-3.9.3.tgz#b98b964ac052ab301f6ca0efee89642fc4e6f35d"
+  integrity sha512-oNEPG+SI5E/VWK0x9JTWwkU+LmmOgW4tisCE4IrxiyNfzIRyg9kspNjaoqknpN9HUIexDvbD2/wbViw6TGIFgw==
+
 "@types/json-schema@^7.0.4":
   version "7.0.5"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.5.tgz#dcce4430e64b443ba8945f0290fb564ad5bac6dd"
@@ -3252,6 +3257,11 @@
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@types/unist/-/unist-2.0.3.tgz#9c088679876f374eb5983f150d4787aa6fb32d7e"
   integrity sha512-FvUupuM3rlRsRtCN+fDudtmytGO6iHJuuRKS1Ss0pG5z8oX0diNEw94UEL7hgDbpN94rgaK5R7sWm6RrSkZuAQ==
+
+"@types/uuid@^8.3.4":
+  version "8.3.4"
+  resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-8.3.4.tgz#bd86a43617df0594787d38b735f55c805becf1bc"
+  integrity sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==
 
 "@types/webpack-env@^1.15.3":
   version "1.15.3"

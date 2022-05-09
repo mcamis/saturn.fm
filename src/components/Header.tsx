@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { formatTime } from "../utilities/helpers";
-import { audioManagerSingleton } from "../utilities/audioManager";
-import {
-  useAudioManagerContext,
-  AudioManagerContextProvider,
-} from "../containers/AudioManagerContext";
+import { useAudioManagerContext } from "../containers/AudioManagerContext";
 // https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 function useInterval(callback: () => void, delay: number) {
   const savedCallback = useRef<() => void>();
@@ -28,12 +24,10 @@ function useInterval(callback: () => void, delay: number) {
 const Header = () => {
   const [componentTime, setComponentTime] = useState(0);
   const [state] = useAudioManagerContext();
-  console.log(state?.currentTrackIndex);
-  // console.log(state?.playerState);
 
-  // useInterval(() => {
-  //   setComponentTime(audioManagerSingleton.currentTime);
-  // }, 1000);
+  useInterval(() => {
+    setComponentTime(state.audioElement.currentTime);
+  }, 1000);
 
   // TODO: Fix Safari missing prop changes / renders
   return (
@@ -46,10 +40,4 @@ const Header = () => {
   );
 };
 
-const WithProvider = () => (
-  <AudioManagerContextProvider>
-    <Header />
-  </AudioManagerContextProvider>
-);
-
-export default WithProvider;
+export default Header;
