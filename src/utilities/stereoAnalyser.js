@@ -54,7 +54,7 @@ export default class StereoAnalyser {
   setupAudioNodes() {
     // Safari is still prefixed
     const AudioContext = window.AudioContext || window.webkitAudioContext;
-    this.audioContext = new AudioContext();
+    this.audioContext = new AudioContext({ sampleRate: 41000 });
 
     // For Firefox & Mobile Safari AudioContext starts in a running state, even though it will block all audio play events
     const isMobileSafari = /iP(hone|od|ad)/.test(navigator.platform);
@@ -70,12 +70,13 @@ export default class StereoAnalyser {
     // https://forums.developer.apple.com/message/353323#353323
     const mediaElement = this.audioContext.createMediaElementSource(this.audio);
 
-    // Plug source into the splitter
-    mediaElement.connect(splitter);
-
     // Plug analysers nodes into separate channels
     splitter.connect(analyserLeft, 0);
     splitter.connect(analyserRight, 1);
+
+    // Plug source into the splitter
+    mediaElement.connect(splitter);
+    mediaElement.connect(this.audioContext.destination);
 
     this.dataArrayLeft = new Uint8Array(analyserLeft.frequencyBinCount);
     this.dataArrayRight = new Uint8Array(analyserRight.frequencyBinCount);
@@ -92,9 +93,6 @@ export default class StereoAnalyser {
 
     analysisNode.smoothingTimeConstant = SMOOTHING;
     analysisNode.fftSize = FFT_SIZE;
-
-    // Ensure channel is still audible
-    analysisNode.connect(this.audioContext.destination);
 
     return analysisNode;
   }

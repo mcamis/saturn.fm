@@ -1,10 +1,4 @@
-import type { Reducer, FC } from "react";
-import React, {
-  useContext,
-  createContext,
-  useSyncExternalStore,
-  useReducer,
-} from "react";
+import React, { useContext, createContext, useSyncExternalStore } from "react";
 import {
   audioManagerSingleton,
   AudioManagerState,

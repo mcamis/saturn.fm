@@ -69,10 +69,8 @@ function onDragEnd(result) {
 }
 
 // TODO: Fix event listener leak here
-
 const FileReader = (props) => {
   const { tracks } = useAudioManagerContext();
-
   const { fileReader, playlist: playlistCopy } = getLocalizedCopy();
 
   return (
