@@ -1,4 +1,4 @@
-import type { Reducer, Dispatch, FC } from "react";
+import type { Reducer, FC } from "react";
 import React, {
   useContext,
   createContext,
@@ -11,31 +11,11 @@ import {
   defaultState,
 } from "../utilities/audioManager";
 
-export enum ActionTypes {
-  Clear = "clear",
-  Update = "update",
-  SaveAndReload = "saveAndReload",
-}
-type SavePayload = {
-  cache: Cache;
-};
-
-export const update = (payload: AudioManagerState) => ({ payload } as const);
-export type Action = ReturnType<typeof update>;
-
-export const reducer: Reducer<AudioManagerState, Action> = (state, action) => {
-  return action.payload;
-};
-
-const CONTEXT = createContext<[AudioManagerState, Dispatch<Action>]>([
-  defaultState,
-  () => null,
-]);
+const CONTEXT = createContext<AudioManagerState>(defaultState);
 
 export const useAudioManagerContext = () => {
-  const [state, dispatch] = useContext(CONTEXT);
-
-  return [state, dispatch] as const;
+  const state = useContext(CONTEXT);
+  return state;
 };
 
 export const AudioManagerContextProvider = ({
@@ -47,15 +27,7 @@ export const AudioManagerContextProvider = ({
     audioManagerSingleton.subscribe,
     audioManagerSingleton.getSnapshot
   );
-  const [dispatch] = useReducer(reducer, defaultState);
-  // audioManagerSingleton.subscribe((payload: AudioManagerState) => {
-  //   dispatch({ payload });
-  // });
-  return (
-    <CONTEXT.Provider value={[state, dispatch as any]}>
-      {children}
-    </CONTEXT.Provider>
-  );
+  return <CONTEXT.Provider value={state}>{children}</CONTEXT.Provider>;
 };
 
 export default CONTEXT;
