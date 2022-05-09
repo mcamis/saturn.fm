@@ -66,8 +66,7 @@ export default class StereoAnalyser {
     const analyserLeft = this.createAnalyserNode();
     const analyserRight = this.createAnalyserNode();
     const splitter = this.audioContext.createChannelSplitter(2);
-    // createMediaElementSource might be the cause of choppy audio in
-    // https://forums.developer.apple.com/message/353323#353323
+
     const mediaElement = this.audioContext.createMediaElementSource(this.audio);
 
     // Plug analysers nodes into separate channels
