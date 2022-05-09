@@ -1,26 +1,32 @@
 import jsmediatags from "jsmediatags";
 import { v4 as uuidv4 } from "uuid";
+import type { Track } from './audioManager'
+
+type FilePickerOptions = {
+  extensions?: string,
+  allowDirectory?: boolean
+}
 /**
  * Automatically generate a file input alert, resolves with a FileList instance
  * @param {*} extensions
  * @param {*} allowDirectory
  */
 export async function filePicker({
-  extensions = null,
-  allowDirectory = false,
-}) {
-  return new Promise((resolve) => {
+  extensions,
+  allowDirectory,
+}: FilePickerOptions) {
+  return new Promise<FileList>((resolve) => {
     const fileInput = document.createElement("input");
     if (extensions) fileInput.setAttribute("accept", extensions);
 
     fileInput.type = "file";
     fileInput.multiple = true;
     fileInput.webkitdirectory = allowDirectory;
-    fileInput.directory = allowDirectory;
-    fileInput.mozdirectory = allowDirectory;
+    (fileInput as any).directory = allowDirectory;
+    (fileInput as any).mozdirectory = allowDirectory;
 
     fileInput.addEventListener("change", (e) => {
-      resolve(e.target.files);
+      resolve((e.target as any).files); // todo fix
       document.body.removeChild(fileInput);
     });
 
@@ -29,7 +35,7 @@ export async function filePicker({
   });
 }
 
-function getMediaTags(file) {
+function getMediaTags(file: File) {
   return new Promise((resolve, reject) => {
     jsmediatags.read(file, {
       onSuccess: (tag) => resolve(tag),
@@ -38,7 +44,9 @@ function getMediaTags(file) {
   });
 }
 
-async function generateTrackInfo(file) {
+const isValidString = (s: unknown) => typeof s === "string" && s.length;
+
+async function generateTrackInfo(file: File) {
   let metadata = {};
   try {
     metadata = await getMediaTags(file);
@@ -46,15 +54,7 @@ async function generateTrackInfo(file) {
     // eslint-disable-next-line no-console
     console.log("Fetching Tags Error", err);
   }
-  const {
-    tags: {
-      artist = "",
-      album = "",
-      title = file.name,
-      track = 0,
-      picture = {},
-    } = {},
-  } = metadata;
+  const { tags: { artist, album, title, track, picture = {} } = {} } = metadata;
 
   const { data, type } = picture;
 
@@ -67,18 +67,18 @@ async function generateTrackInfo(file) {
 
   return {
     file,
-    track,
-    artist,
-    album,
-    title,
+    track: track ?? 0,
+    artist: isValidString(artist) ? artist : "Unknown Artist",
+    album: isValidString(album) ? album : "Unknown Album",
+    title: isValidString(title) ? title : file.name,
     albumArtUrl: maybAlbumArtBlob,
   };
 }
 
-async function createTracklist(files) {
+async function createTracklist(files: FileList) {
   const filesToAdd = [];
   // eslint-disable-next-line no-restricted-syntax
-  for (const file of files) {
+  for (const file of Array.from(files)) {
     if (file.type.includes("audio")) {
       filesToAdd.push(generateTrackInfo(file));
     }
@@ -91,10 +91,11 @@ async function createTracklist(files) {
   }, []);
 }
 
-export async function getFilesWithTags(options) {
+export async function getFilesWithTags(options: FilePickerOptions) {
   let fileList;
   try {
     fileList = await filePicker(options);
+    console.log(fileList)
   } catch (err) {
     // eslint-disable-next-line no-console
     console.log(err);
@@ -105,8 +106,8 @@ export async function getFilesWithTags(options) {
 }
 
 // a little function to help us with reordering the result
-export const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
+export const reorder = (trackList: Track[], startIndex: number, endIndex: number) => {
+  const result = Array.from(trackList);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
 
