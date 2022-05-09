@@ -8,68 +8,73 @@ import { getFilesWithTags, reorder } from "../utilities/files";
 import { getLocalizedCopy } from "../utilities/helpers";
 import { Modal } from "./Modal";
 
+async function getTracks() {
+  const tracks = await getFilesWithTags({
+    extensions: ".mp3, .m4a, .flac, .wav, .aac",
+  });
+  audioManagerSingleton.addTracks(tracks);
+}
+
+async function getDirectory() {
+  const tracks = await getFilesWithTags({
+    extensions: ".mp3, .wav, .aac",
+    allowDirectory: true,
+  });
+
+  audioManagerSingleton.addTracks(tracks);
+}
+
 const getDraggableClasses = ({ isDragging, currentPlaying }) => {
   return `draggable ${isDragging ? "isDragging" : ""} ${
     currentPlaying ? "currentTrack" : ""
   }`;
 };
 
+function onDragEnd(result) {
+  const curr =
+    audioManagerSingleton.state.tracks[
+      audioManagerSingleton.state.currentTrackIndex
+    ];
+
+  // dropped outside the list
+  if (!result.destination) {
+    return;
+  }
+
+  console.log({ tracks: audioManagerSingleton.state.tracks });
+
+  const items = reorder(
+    audioManagerSingleton.state.tracks,
+    result.source.index,
+    result.destination.index
+  );
+
+  // TODO: lol
+  if (result.source.index === curr) {
+    audioManagerSingleton.setCurrentTrack(result.destination.index);
+  } else if (result.destination.index === curr) {
+    if (result.source.index < curr) {
+      audioManagerSingleton.setCurrentTrack(curr - 1);
+    } else {
+      audioManagerSingleton.setCurrentTrack(
+        result.destination.index ? curr + 1 : 1
+      );
+    }
+  } else if (result.source.index > curr && curr > result.destination.index) {
+    audioManagerSingleton.setCurrentTrack(curr + 1);
+  } else if (result.source.index < curr && curr < result.destination.index) {
+    audioManagerSingleton.setCurrentTrack(curr - 1);
+  }
+
+  console.log({ items });
+
+  audioManagerSingleton.setNewTrackOrder(items);
+}
+
 // TODO: Fix event listener leak here
 class FileReader extends Component {
   constructor(props) {
     super(props);
-    this.onDragEnd = this.onDragEnd.bind(this);
-  }
-
-  onDragEnd(result) {
-    const curr =
-      audioManagerSingleton.state.tracks[
-        audioManagerSingleton.state.currentTrackIndex
-      ];
-
-    // dropped outside the list
-    if (!result.destination) {
-      return;
-    }
-
-    const items = reorder(
-      this.props.audio.playlist,
-      result.source.index,
-      result.destination.index
-    );
-
-    // TODO: lol
-    if (result.source.index === curr) {
-      this.props.setCurrentTrack(result.destination.index);
-    } else if (result.destination.index === curr) {
-      if (result.source.index < curr) {
-        this.props.setCurrentTrack(curr - 1);
-      } else {
-        this.props.setCurrentTrack(result.destination.index ? curr + 1 : 1);
-      }
-    } else if (result.source.index > curr && curr > result.destination.index) {
-      this.props.setCurrentTrack(curr + 1);
-    } else if (result.source.index < curr && curr < result.destination.index) {
-      this.props.setCurrentTrack(curr - 1);
-    }
-
-    this.props.arrangeTracks(items);
-  }
-
-  async getTracks() {
-    const tracks = await getFilesWithTags({
-      extensions: ".mp3, .m4a, .flac, .wav, .aac",
-    });
-    this.props.addTracks(tracks);
-  }
-
-  async getDirectory() {
-    const tracks = await getFilesWithTags({
-      extensions: ".mp3, .wav, .aac",
-      allowDirectory: true,
-    });
-
-    this.props.addTracks(tracks);
   }
 
   render() {
@@ -91,17 +96,17 @@ class FileReader extends Component {
           </PlaylistHeader>
           {/* TODO: Small font for playlist items */}
           <PlaylistEditor>
-            <DragDropContext onDragEnd={this.onDragEnd}>
+            <DragDropContext onDragEnd={onDragEnd}>
               <Droppable droppableId="droppable">
                 {(provided) => (
                   <div ref={provided.innerRef}>
-                    {tracks.map(({ artist, album, title, file }, index) => {
+                    {tracks.map(({ artist, album, title, id }, index) => {
                       // const currentPlaying =
                       //   isPlaying && item === tracks[currentTrackIndex];
                       const currentPlaying = false;
 
                       return (
-                        <Draggable key={file} draggableId={file} index={index}>
+                        <Draggable key={id} draggableId={id} index={index}>
                           {(draggableProvided, { isDragging }) => {
                             return (
                               <div
@@ -141,14 +146,14 @@ class FileReader extends Component {
           <button
             className="add-files"
             type="button"
-            onClick={() => this.getDirectory()}
+            onClick={() => getDirectory()}
           >
             Add a directory
           </button>
           <button
             className="add-files"
             type="button"
-            onClick={() => this.getTracks()}
+            onClick={() => getTracks()}
           >
             Add file(s)
           </button>

@@ -283,6 +283,74 @@ export default class AudioManager {
   get currentTime() {
     return this.audioElement.currentTime;
   }
+
+
+  addTracks(newTracks: Track[]) {
+    console.log({ newTracks })
+    const currentTracks = this.state.tracks;
+    this.state.tracks = [
+      ...currentTracks,
+      // sort new tracks before adding them
+      ...newTracks.sort((a, b) => {
+        if (a.album > b.album) return 1;
+        if (a.album < b.album) return -1;
+        if (a.track > b.track) return 1;
+        if (a.track < b.track) return -1;
+      }),
+    ];
+  }
+
+  setCurrentTrack(newIndex: number) {
+    this.state.currentTrackIndex = newIndex;
+  }
+
+  setNewTrackOrder(tracks: Track[]) {
+    this.state.tracks = tracks;
+  }
+
+
+
+  // case "ADD_TRACKS":
+  //     return {
+  //       ...state,
+  //       tracks: {
+  //         ...state.tracks,
+  //         ...action.data.tracks,
+  //       },
+  //       playlist: [
+  //         ...state.playlist,
+  //         // sort new tracks before adding them
+  //         ...Object.keys(action.data.tracks).sort((a, b) => {
+  //           const A = action.data.tracks[a];
+  //           const B = action.data.tracks[b];
+  //           if (A.album > B.album) return 1;
+  //           if (A.album < B.album) return -1;
+  //           if (A.track > B.track) return 1;
+  //           if (A.track < B.track) return -1;
+  //         }),
+  //       ],
+  //     };
+
+  // case "ARRANGE_TRACKS":
+  //   return {
+  //     ...state,
+  //     playlist: action.data.playlist,
+  //   };
+
+  // case "REMOVE_TRACK": {
+  //   const trackKey = state.playlist[action.datatrackIndex];
+  //   const { [trackKey]: removedTrack, ...cleanTracks } = state.tracks;
+  //   return {
+  //     ...state,
+  //     playlist: [
+  //       ...state.playlist.slice(0, action.data.trackIndex),
+  //       ...state.playlist.slice(action.data.trackIndex + 1),
+  //     ],
+  //     tracks: {
+  //       ...cleanTracks,
+  //     },
+  //   };
+  // }
 }
 
 export const audioManagerSingleton = new AudioManager();

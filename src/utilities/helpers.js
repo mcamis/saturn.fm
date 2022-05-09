@@ -4,6 +4,7 @@ import Track2 from "../songs/Cookies/02.mp3";
 import Track3 from "../songs/Cookies/03.mp3";
 import Track4 from "../songs/Cookies/04.mp3";
 import CookiesCover from "../songs/Cookies/cover.png";
+import { v4 as uuidv4 } from "uuid";
 
 const JP_LOCALES = ["ja-JP", "ja"];
 
@@ -207,6 +208,7 @@ export const defaultTracks = [
     albumArtUrl: CookiesCover,
     isDefault: true,
     srcPath: "",
+    id: uuidv4(),
   },
   {
     file: Track3,
@@ -218,6 +220,7 @@ export const defaultTracks = [
     albumArtUrl: CookiesCover,
     isDefault: true,
     srcPath: "",
+    id: uuidv4(),
   },
   {
     file: Track4,
@@ -229,5 +232,6 @@ export const defaultTracks = [
     albumArtUrl: CookiesCover,
     isDefault: true,
     srcPath: "",
+    id: uuidv4(),
   },
 ];

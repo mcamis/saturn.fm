@@ -22,7 +22,6 @@ export async function filePicker({
     fileInput.addEventListener("change", (e) => {
       resolve(e.target.files);
       document.body.removeChild(fileInput);
-
     });
 
     document.body.appendChild(fileInput);
@@ -87,10 +86,9 @@ async function createTracklist(files) {
 
   const withMetadata = await Promise.all(filesToAdd);
   return withMetadata.reduce((result, file) => {
-    const UUID = uuidv4();
-    result[UUID] = file; // eslint-disable-line no-param-reassign
+    result.push({ ...file, id: uuidv4() });
     return result;
-  }, {});
+  }, []);
 }
 
 export async function getFilesWithTags(options) {
