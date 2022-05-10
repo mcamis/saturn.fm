@@ -4,7 +4,6 @@ import { RepeatValues, ActionTypes, AudioStatus, Track, AudioManagerState } from
 import { defaultState, reducer } from "./state";
 const htmlAudioElement = new Audio();
 
-
 export class AudioManager {
   public state: AudioManagerState;
   private audioElement: HTMLAudioElement;
@@ -38,14 +37,8 @@ export class AudioManager {
 
       // TODO: Preloading & total track time?
       this.analyser = new StereoAnalyser(this.audioElement, this.audioContext);
-
     });
-
-
-
-
   }
-
 
   loadFirstTrack() {
     this.loadTrack(0);
@@ -234,7 +227,7 @@ export class AudioManager {
     this.updateState({ type: ActionTypes.repeat, payload });
   }
 
-  addTracks(newTracks: Track[]) {
+  addTracks = (newTracks: Track[]) => {
     this.updateState({ type: ActionTypes.addTracks, payload: newTracks });
   }
 

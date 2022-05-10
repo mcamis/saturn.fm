@@ -38,8 +38,11 @@ export const reducer = (state: AudioManagerState, action: Action): AudioManagerS
           }),
         ],
       };
-    // case ActionTypes.setNewTrackOrder:
-
+    case ActionTypes.setNewTrackOrder:
+      return {
+        ...state,
+        tracks: action.payload
+      };
     default:
       return state;
   }

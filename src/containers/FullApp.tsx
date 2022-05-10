@@ -148,7 +148,7 @@ const FullApp = () => {
           <FileReader
             addTracks={() => {}}
             removeTrack={() => {}}
-            toggleMenu={setShowFileInput}
+            toggleMenu={() => setShowFileInput(false)}
           />
         </Suspense>
       )}
