@@ -44,13 +44,6 @@ class Cubes extends React.Component {
     this.setupScene();
   }
 
-  shouldComponentUpdate(nextProps) {
-    if (this.props.isUiHidden !== nextProps.isUiHidden) {
-      return true;
-    }
-    return false;
-  }
-
   onResize() {
     const width = sceneWidth();
     const height = width * 0.75;
