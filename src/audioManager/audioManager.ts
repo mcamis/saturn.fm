@@ -127,11 +127,11 @@ export class AudioManager {
     this.revokeSongUrl(currentSrc);
   }
 
-  loadNextTrack() {
+  loadNextTrack = () => {
     this.loadTrack(this.getNextTrackIndex());
   }
 
-  loadPreviousTrack() {
+  loadPreviousTrack = () => {
     this.loadTrack(this.getPreviousTrackIndex());
   }
 
@@ -192,7 +192,7 @@ export class AudioManager {
     );
   }
 
-  previousTrack() {
+  previousTrack = () => {
     // TODO: Figure out saturn offset for skip back
     if (this.audioElement.currentTime >= 3) {
       this.audioElement.currentTime = 0;
@@ -206,7 +206,7 @@ export class AudioManager {
     this.updateState({ type: ActionTypes.audioStatus, payload: AudioStatus.Paused });
   }
 
-  stop() {
+  stop = () => {
     // TODO: Saturn behavior
     // const [firstSong] = this.tracks;
     this.audioElement.pause();
