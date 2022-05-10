@@ -82,7 +82,7 @@
     "core-js": "^3.6.5",
     "es6-tween": "^5.5.11",
     "eslint-plugin-react-hooks": "^4.0.4",
-    "jsmediatags": "^3.9.3",
+    "jsmediatags": "^3.9.5",
     "lint-staged": "^12.4.1",
     "postcss-loader": "^6.2.1",
     "prop-types": "^15.8.1",
@@ -95,5 +95,6 @@
     "ts-loader": "~9.3.0",
     "typescript": "^4.5.5",
     "uuid": "^8.2.0"
-  }
+  },
+  "packageManager": "yarn@3.2.0"
 }
