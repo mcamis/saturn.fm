@@ -17,7 +17,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {
   audioManagerSingleton,
-  PlayerState,
+  AudioStatus,
   RepeatValues,
 } from "../audioManager";
 
@@ -253,7 +253,7 @@ class Menu extends React.Component {
     this.setupOrbAnimation();
     this.setupEventListeners();
 
-    this.props.setAnimationCallback(this.animate);
+    // this.props.setAnimationCallback(this.animate);
   }
 
   setupEventListeners() {
@@ -326,11 +326,10 @@ class Menu extends React.Component {
     this.scene.add(spinningGlobe);
   }
 
-  getToolTip() {
+  getToolTip(repeat, audioStatus) {
     const { menu } = getLocalizedCopy();
-    const { repeat, playerState } = audioManagerSingleton.state;
-    const isPlaying = playerState === PlayerState.Playing;
-    const isPaused = playerState === PlayerState.Paused;
+    const isPlaying = audioStatus === AudioStatus.Playing;
+    const isPaused = audioStatus === AudioStatus.Paused;
 
     const tooltips = {
       disc: () => <p>{menu.disc}</p>,
@@ -599,7 +598,7 @@ class Menu extends React.Component {
           }}
         />
         <div className="tooltips" key={this.state.activeButton}>
-          {this.getToolTip()}
+          {this.getToolTip(this.props.repeat, this.props.audioStatus)}
         </div>
       </div>
     );

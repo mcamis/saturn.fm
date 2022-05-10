@@ -23,8 +23,7 @@ function useInterval(callback: () => void, delay: number) {
 
 const Header = () => {
   const [componentTime, setComponentTime] = useState(0);
-  const { audioElement, currentTrackIndex } = useAudioManagerContext();
-
+  const { audioElement, currentTrackIndex, ...rest } = useAudioManagerContext();
   useInterval(() => {
     setComponentTime(audioElement.currentTime);
   }, 1000);

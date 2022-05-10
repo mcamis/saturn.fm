@@ -649,11 +649,12 @@ blink {
   text-align: center;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 18px;
   button {
-    transition: background-color 250ms ease;
+    transition: background-color 250ms ease-in-out;
+    transition-property: color, border;
     background: none;
-    border: 1px solid white;
+    border: 1px solid rgba(255,255,255,.25);
     color: white;
     padding: 0.5em 1.5em;
 
@@ -670,10 +671,14 @@ blink {
     }
     &:hover,
     &:active {
-      background: rgba(255, 255, 255, 0.25);
+      color: black;
+      background: white;
+      border: none;
       cursor: pointer;
     }
-  }
+    &:active {
+      transform: translate(0, 4px);
+    }
 }
 
 .japanese {
@@ -688,4 +693,5 @@ blink {
     font-family: "PhoebeJP", sans-serif;
     padding-bottom: 8px;
   }
+}
 }
