@@ -1,4 +1,4 @@
-function average(arr) {
+function average(arr: Array<number> | Uint8Array) {
   // Prevent returning NaN
   if (!arr.length) {
     return 0;
@@ -50,11 +50,19 @@ const SMOOTHING = 0.1;
 //
 
 export default class StereoAnalyser {
-  constructor(audio, audioContext) {
+  private audio: HTMLAudioElement;
+  private audioContext: AudioContext;
+=
+
+  private dataArrayLeft: Uint8Array;
+  private dataArrayRight: Uint8Array;
+  private analyserLeft: AnalyserNode;
+  private analyserRight: AnalyserNode;
+  private frameId: number;
+
+  constructor(audio: HTMLAudioElement, audioContext: AudioContext) {
     this.audio = audio;
     this.audioContext = audioContext;
-    this.leftChannel = [];
-    this.rightChannel = [];
     this.setupAudioNodes();
   }
 
@@ -105,11 +113,9 @@ export default class StereoAnalyser {
     // getByteFrequencyData mutates its arguments
     analyserLeft.getByteFrequencyData(dataArrayLeft);
     analyserRight.getByteFrequencyData(dataArrayRight);
-    this.leftChannel = dataArrayLeft;
-    this.rightChannel = dataArrayRight;
 
     // Set to frameId so we can cancel later
-    this.frameId = requestAnimationFrame(this.runAnalysis);
+    this.frameId = window.requestAnimationFrame(this.runAnalysis);
   }
 
   /**
@@ -145,10 +151,10 @@ export default class StereoAnalyser {
   }
 
   get averageFFT() {
-    return [average(this.leftChannel), average(this.rightChannel)];
+    return [average(this.dataArrayLeft), average(this.dataArrayRight)];
   }
 
   get rawFFT() {
-    return [this.leftChannel, this.rightChannel];
+    return [this.dataArrayLeft, this.dataArrayRight];
   }
 }

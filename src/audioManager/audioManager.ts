@@ -51,7 +51,7 @@ export class AudioManager {
     this.loadTrack(0);
   }
 
-  togglePlayPause() {
+  togglePlayPause = () => {
     const { audioElement } = this;
     const canPlay = audioElement.paused || audioElement.ended;
 
@@ -217,7 +217,7 @@ export class AudioManager {
     this.updateState({ type: "setStopped" });
   }
 
-  toggleRepeat() {
+  toggleRepeat = () => {
     let payload;
     switch (this.state.repeat) {
       case RepeatValues.Off:
