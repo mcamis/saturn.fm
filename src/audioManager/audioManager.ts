@@ -1,7 +1,7 @@
 import StereoAnalyser from "./stereoAnalyser";
 import backupCover from "../images/chopin_third.jpeg";
-import { ActionTypes, RepeatValues, PlayerState, Track, AudioManagerState } from "./types";
-import { defaultState, reducer } from "./state";
+import { RepeatValues, AudioStatus, Track, AudioManagerState } from "./types";
+import { defaultState, reducer, ActionTypes } from "./state";
 const htmlAudioElement = new Audio();
 
 
@@ -10,17 +10,33 @@ export class AudioManager {
   private audioElement: HTMLAudioElement;
   private analyser: any;
   private stateUpdateListener: any;
+  private audioContext: AudioContext;
 
   constructor() {
     this.state = defaultState;
     this.audioElement = htmlAudioElement;
 
-    // TODO: Preloading & total track time?
-    this.analyser = new StereoAnalyser(this.audioElement);
-
     this.setupEventListeners();
     // this.syncManagerWithStore();
     this.loadFirstTrack();
+  }
+
+  setupAudioContext() {
+    // Safari is still prefixed
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    this.audioContext = new AudioContext();
+
+    // For Firefox & Mobile Safari AudioContext starts in a running state, even though it will block all audio play events
+    const isMobileSafari = /iP(hone|od|ad)/.test(navigator.platform);
+    const isFirefox = navigator.userAgent.indexOf("Firefox") > 0;
+    if (isFirefox || isMobileSafari) {
+      this.audioContext.suspend();
+    }
+
+    // TODO: Preloading & total track time?
+    this.analyser = new StereoAnalyser(this.audioElement, this.audioContext);
+
+
   }
 
   createAudioContext(cb: any) {
@@ -135,7 +151,7 @@ export class AudioManager {
     // );
 
     this.audioElement.addEventListener("canplaythrough", () => {
-      if (this.state.playerState === PlayerState.Playing) {
+      if (this.state.audioStatus === AudioStatus.Playing) {
         this.togglePlayPause();
       }
     });
@@ -143,13 +159,13 @@ export class AudioManager {
     this.audioElement.addEventListener("play", () => {
       this.updateMediaSession();
       this.analyser.start();
-      this.updateState({ type: ActionTypes.playerState, payload: PlayerState.Playing });
+      this.updateState({ type: ActionTypes.audioStatus, payload: AudioStatus.Playing });
     });
 
     this.audioElement.addEventListener("pause", () => {
       // TODO: Manually set pause state to fix stop
       this.analyser.pause();
-      this.updateState({ type: ActionTypes.playerState, payload: PlayerState.Paused });
+      this.updateState({ type: ActionTypes.audioStatus, payload: AudioStatus.Paused });
     });
 
     this.audioElement.addEventListener("ended", () => {
@@ -183,7 +199,7 @@ export class AudioManager {
 
   pause() {
     this.audioElement.pause();
-    this.updateState({ type: ActionTypes.playerState, payload: PlayerState.Paused });
+    this.updateState({ type: ActionTypes.audioStatus, payload: AudioStatus.Paused });
   }
 
   stop() {
@@ -193,7 +209,7 @@ export class AudioManager {
     // this.audioElement.src = firstSong;
     this.audioElement.currentTime = 0;
     // this.state.currentTrackIndex = 0;
-    // this.state.playerState = PlayerState.Stopped;
+    // this.state.audioStatus = AudioStatus.Stopped;
     this.updateState({ type: "setStopped" });
   }
 

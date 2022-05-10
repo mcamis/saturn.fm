@@ -5,7 +5,7 @@ export enum RepeatValues {
   All,
 }
 
-export enum PlayerState {
+export enum AudioStatus {
   Idle,
   Playing,
   Stopped,
@@ -29,19 +29,11 @@ export type AudioManagerState = {
   hasPendingSrcChange: boolean;
   currentTrackIndex: number;
   tracks: Track[];
-  playerState: PlayerState;
+  audioStatus: AudioStatus;
   audioElement: HTMLAudioElement;
+  audioContextState: AudioContextState
 };
 
-export enum ActionTypes {
-  currentTrackIndex = "currentTrackIndex",
-  playerState = "playerState",
-  SaveAndReload = "saveAndReload",
-  setStopped = "setStopped",
-  repeat = "repeat",
-  addTracks = "addTracks",
-  setNewTrackOrder = "setNewTrackOrder",
-}
 
 // type MediaSessionProps = {
 //   title: string;

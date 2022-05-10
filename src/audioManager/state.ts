@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { ActionTypes, RepeatValues, PlayerState, Track } from "./types";
+import { RepeatValues, AudioStatus, Track } from "./types";
 import Track2 from "../songs/Cookies/02.mp3";
 import Track3 from "../songs/Cookies/03.mp3";
 import Track4 from "../songs/Cookies/04.mp3";
@@ -7,21 +7,23 @@ import CookiesCover from "../songs/Cookies/cover.png";
 
 const htmlAudioElement = new Audio();
 
-export const defaultState = {
-  audioElement: htmlAudioElement,
-  repeat: RepeatValues.Off,
-  hasPendingSrcChange: false,
-  currentTrackIndex: 0,
-  tracks: defaultTracks,
-  playerState: PlayerState.Idle,
-};
+export enum ActionTypes {
+  currentTrackIndex = "currentTrackIndex",
+  audioStatus = "audioStatus",
+  SaveAndReload = "saveAndReload",
+  setStopped = "setStopped",
+  repeat = "repeat",
+  addTracks = "addTracks",
+  setNewTrackOrder = "setNewTrackOrder",
+}
+
 
 export const reducer = (state: any, action: any) => {
   switch (action.type) {
     case ActionTypes.currentTrackIndex:
       return { ...state, currentTrackIndex: action.payload };
-    case ActionTypes.playerState:
-      return { ...state, playerState: action.payload };
+    case ActionTypes.audioStatus:
+      return { ...state, audioStatus: action.payload };
     case ActionTypes.setStopped:
       return {
         ...state,
@@ -91,3 +93,14 @@ export const defaultTracks = [
     id: uuidv4(),
   },
 ];
+
+
+export const defaultState = {
+  audioElement: htmlAudioElement,
+  repeat: RepeatValues.Off,
+  hasPendingSrcChange: false,
+  currentTrackIndex: 0,
+  tracks: defaultTracks,
+  audioStatus: AudioStatus.Idle,
+  audioContextState: "suspended" as const
+};

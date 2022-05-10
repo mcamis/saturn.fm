@@ -1,5 +1,16 @@
-import autobind from "./autobind";
-import { average } from "./helpers";
+function average(arr) {
+  // Prevent returning NaN
+  if (!arr.length) {
+    return 0;
+  }
+
+  let fullValue = 0;
+  for (let i = 0; i < arr.length; i += 1) {
+    fullValue += arr[i];
+  }
+
+  return fullValue / arr.length;
+}
 
 const FFT_SIZE = 128;
 const SMOOTHING = 0.1;
@@ -39,12 +50,12 @@ const SMOOTHING = 0.1;
 //
 
 export default class StereoAnalyser {
-  constructor(audio) {
+  constructor(audio, audioContext) {
     this.audio = audio;
+    this.audioContext = audioContext;
     this.leftChannel = [];
     this.rightChannel = [];
     this.setupAudioNodes();
-    autobind(this);
   }
 
   /**
@@ -52,17 +63,6 @@ export default class StereoAnalyser {
    * @private
    */
   setupAudioNodes() {
-    // Safari is still prefixed
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    this.audioContext = new AudioContext({ sampleRate: 41000 });
-
-    // For Firefox & Mobile Safari AudioContext starts in a running state, even though it will block all audio play events
-    const isMobileSafari = /iP(hone|od|ad)/.test(navigator.platform);
-    const isFirefox = navigator.userAgent.indexOf("Firefox") > 0;
-    if (isFirefox || isMobileSafari) {
-      this.audioContext.suspend();
-    }
-
     const analyserLeft = this.createAnalyserNode();
     const analyserRight = this.createAnalyserNode();
     const splitter = this.audioContext.createChannelSplitter(2);
