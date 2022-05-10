@@ -50,14 +50,12 @@ const SMOOTHING = 0.1;
 //
 
 export default class StereoAnalyser {
-  private audio: HTMLAudioElement;
-  private audioContext: AudioContext;
-=
-
-  private dataArrayLeft: Uint8Array;
-  private dataArrayRight: Uint8Array;
   private analyserLeft: AnalyserNode;
   private analyserRight: AnalyserNode;
+  private audio: HTMLAudioElement;
+  private audioContext: AudioContext;
+  private dataArrayLeft: Uint8Array;
+  private dataArrayRight: Uint8Array;
   private frameId: number;
 
   constructor(audio: HTMLAudioElement, audioContext: AudioContext) {
@@ -108,7 +106,7 @@ export default class StereoAnalyser {
    * Syncs analysis data to `leftChannel` & `rightChannel` on display refresh rate
    * @private
    */
-  runAnalysis() {
+  runAnalysis = () => {
     const { analyserLeft, analyserRight, dataArrayLeft, dataArrayRight } = this;
     // getByteFrequencyData mutates its arguments
     analyserLeft.getByteFrequencyData(dataArrayLeft);
@@ -121,7 +119,7 @@ export default class StereoAnalyser {
   /**
    * @private
    */
-  startAnalyser() {
+  startAnalyser = () => {
     this.frameId = this.frameId || requestAnimationFrame(this.runAnalysis);
   }
 
@@ -134,18 +132,17 @@ export default class StereoAnalyser {
   }
 
   // Public methods ahoy
-
-  start() {
+  start = () => {
     if (this.audioContext.state !== "suspended") {
       this.startAnalyser();
     }
   }
 
-  pause() {
+  pause = () => {
     this.pauseAnalyser();
   }
 
-  stop() {
+  stop = () => {
     this.pauseAnalyser();
     this.audioContext.close();
   }

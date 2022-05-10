@@ -17,7 +17,7 @@ import {
   idleRotation,
   updateScaleAndColor,
 } from "../utilities/cubeTransforms";
-import { AudioStatus } from "../audioManager";
+import { audioManagerSingleton, AudioStatus } from "../audioManager";
 
 class Cubes extends React.Component {
   constructor(props) {
@@ -112,15 +112,15 @@ class Cubes extends React.Component {
 
         this[slot] = cubeModel;
         this.scene.add(cubeModel);
-        if (slot === "rightCube") this.props.setAnimationCallback(this.animate);
+        if (slot === "rightCube") this.animate();
       }
     );
   }
 
   animate() {
     // Only animated the cubes when audio is playing
-    if (this.props.audioManager.state.audioStatus === AudioStatus.Playing) {
-      const [leftChannel, rightChannel] = this.props.audioManager.analyserFFT;
+    if (this.props.audioStatus === AudioStatus.Playing) {
+      const [leftChannel, rightChannel] = audioManagerSingleton.analyserFFT;
 
       // Reset to middle after idle
       this.leftCube.position.y = -29;
@@ -156,6 +156,8 @@ class Cubes extends React.Component {
     }
 
     this.renderer.render(this.scene, this.camera);
+
+    window.requestAnimationFrame(this.animate);
   }
 
   render() {

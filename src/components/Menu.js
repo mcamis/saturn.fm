@@ -253,7 +253,7 @@ class Menu extends React.Component {
     this.setupOrbAnimation();
     this.setupEventListeners();
 
-    // this.props.setAnimationCallback(this.animate);
+    this.animate();
   }
 
   setupEventListeners() {
@@ -453,6 +453,7 @@ class Menu extends React.Component {
 
     this.renderer.render(this.scene, this.camera);
     this.textureAnimator.update(1000 * delta);
+    window.requestAnimationFrame(this.animate);
   }
 
   showIfHidden() {

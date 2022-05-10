@@ -71,7 +71,7 @@ function onDragEnd(result) {
 const FileReader = (props) => {
   const { tracks } = useAudioManagerContext();
   const { fileReader, playlist: playlistCopy } = getLocalizedCopy();
-  t;
+
   return (
     <Modal className="FileReader" header={fileReader.header}>
       <PlaylistWrapper>

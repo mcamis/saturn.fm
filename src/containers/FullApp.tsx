@@ -14,13 +14,12 @@ import introSrc from "../effects/intro.mp3";
 
 const FileReader = React.lazy(() => import("../components/FileReader"));
 
-// React.useEffect(() => {
-//   const audioElement = new Audio();
-//   audioElement.src = introSrc;
-//   audioElement.play();
-// }, []);
-
 const FullApp = () => {
+  React.useEffect(() => {
+    const audioElement = new Audio();
+    audioElement.src = introSrc;
+    audioElement.play();
+  }, []);
   // class App extends Component {
   //   constructor(props) {
   //     super(props);
@@ -119,50 +118,49 @@ const FullApp = () => {
     audioManagerSingleton.state.tracks[
       audioManagerSingleton.state.currentTrackIndex
     ];
-  const { audioContextState, repeat, audioStatus } = useAudioManagerContext();
+  const { repeat, audioStatus } = useAudioManagerContext();
+
+  const [showFileInput, setShowFileInput] = React.useState(false);
 
   return (
     <div>
-      {audioContextState !== "suspended" && (
-        <>
-          <Header />
-          <Menu
-            isUiHidden={false}
-            showIfHidden={() => {}}
-            toggleMenu={() => {}}
-            toggleAbout={() => {}}
-            hideDash={() => {}}
-            setAnimationCallback={() => {}}
-            repeat={repeat}
-            audioStatus={audioStatus}
+      <Header />
+      <Menu
+        isUiHidden={false}
+        showIfHidden={() => {}}
+        toggleMenu={setShowFileInput}
+        toggleAbout={() => {}}
+        hideDash={() => {}}
+        setAnimationCallback={() => {}}
+        repeat={repeat}
+        audioStatus={audioStatus}
+      />
+      <div className="dashboard" />
+      <Cubes
+        audioStatus={audioStatus}
+        isUiHidden={false}
+        isPaused={isPaused}
+        isPlaying={isPlaying}
+        setAnimationCallback={() => {}}
+      />
+      {showFileInput && (
+        <Suspense fallback={null}>
+          <FileReader
+            addTracks={() => {}}
+            removeTrack={() => {}}
+            toggleMenu={setShowFileInput}
           />
-          <div className="dashboard" />
-          <Cubes
-            isUiHidden={false}
-            isPaused={isPaused}
-            isPlaying={isPlaying}
-            setAnimationCallback={() => {}}
-          />
-          {false && (
-            <Suspense fallback={null}>
-              <FileReader
-                addTracks={() => {}}
-                removeTrack={() => {}}
-                toggleMenu={() => {}}
-              />
-            </Suspense>
-          )}
-          {false && (
-            <About
-              toggleAbout={
-                () => {}
-                //   this.setState((prevState) => ({
-                //     showAboutModal: !prevState.showAboutModal,
-                //   }))
-              }
-            />
-          )}
-        </>
+        </Suspense>
+      )}
+      {false && (
+        <About
+          toggleAbout={
+            () => {}
+            //   this.setState((prevState) => ({
+            //     showAboutModal: !prevState.showAboutModal,
+            //   }))
+          }
+        />
       )}
     </div>
   );
