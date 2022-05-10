@@ -1,6 +1,5 @@
 import dashboard from "../images/dashboard.png";
 import header from "../images/header.png";
-import globeSprite from "../images/globeSprite.png";
 import discSrc from "../images/disc.png";
 import moreSrc from "../images/more.png";
 import hideSrc from "../images/hide.png";
@@ -17,7 +16,6 @@ export function preloadImages() {
   const imageSrcs = [
     dashboard,
     header,
-    globeSprite,
     discSrc,
     moreSrc,
     hideSrc,

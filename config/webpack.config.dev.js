@@ -18,18 +18,4 @@ module.exports = merge(common, {
     port: 3000,
     historyApiFallback: true,
   },
-
-  // module: {
-  //   rules: [
-  //     {
-  //       test: /\.(ico|svg|mp3|png|jpeg|jpg|gif|ttf|eot|otf|woff|woff2)$/,
-  //       include: app.src,
-  //       use: [
-  //         {
-  //           loader: "file-loader",
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // },
 });
