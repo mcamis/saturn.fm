@@ -19,31 +19,17 @@ module.exports = merge(common, {
     historyApiFallback: true,
   },
 
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        include: app.src,
-        use: ["babel-loader"],
-      },
-      {
-        test: /\.(ico|svg|mp3|png|jpeg|jpg|gif)$/,
-        include: app.src,
-        use: [
-          {
-            loader: "file-loader",
-          },
-        ],
-      },
-      {
-        test: /\.(ttf|eot|otf|woff|woff2)$/,
-        include: app.src,
-        use: [
-          {
-            loader: "file-loader",
-          },
-        ],
-      },
-    ],
-  },
+  // module: {
+  //   rules: [
+  //     {
+  //       test: /\.(ico|svg|mp3|png|jpeg|jpg|gif|ttf|eot|otf|woff|woff2)$/,
+  //       include: app.src,
+  //       use: [
+  //         {
+  //           loader: "file-loader",
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
 });

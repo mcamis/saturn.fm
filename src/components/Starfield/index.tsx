@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import StarfieldScene from "./scene";
 import "./style.scss";
 
@@ -14,8 +14,7 @@ const useStarfieldScene = (containerRef: any, shouldShowSpaceship: boolean) => {
 
   React.useEffect(() => {
     scene?.toggleSpaceShipVisbility(shouldShowSpaceship);
-
-  }, [shouldShowSpaceship])
+  }, [shouldShowSpaceship]);
 };
 
 const StarField = ({ isUiHidden }: { isUiHidden: boolean }) => {

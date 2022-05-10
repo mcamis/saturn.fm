@@ -240,7 +240,7 @@ canvas {
   }
 }
 header {
-  user-select: none; /* Standard */
+  user-select: none; 
 
   @include pixelated;
   &:before {

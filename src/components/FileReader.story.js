@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 // Button.stories.js
 
-import React from "react";
+import * as React from "react";
 import FileReader from "./FileReader";
 
 import "../styles/index.scss";

@@ -1,4 +1,5 @@
-import React, { useContext, createContext, useSyncExternalStore } from "react";
+import * as React from "react";
+import { useContext, createContext, useSyncExternalStore } from "react";
 import { audioManagerSingleton } from "./audioManager";
 import type { AudioManagerState } from "./types";
 import { defaultState } from "./state";

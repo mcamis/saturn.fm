@@ -48,22 +48,20 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(tsx|ts)$/,
-        use: "ts-loader",
+        test: /\.(js|jsx|tsx|ts)$/,
         exclude: /node_modules/,
-      },
-      {
-        test: /\.js$/,
         use: [
           { loader: "babel-loader" },
           {
-            loader: "@linaria/webpack-loader",
+            loader: require.resolve("@linaria/webpack-loader"),
             options: {
               sourceMap: process.env.NODE_ENV !== "production",
             },
           },
+          { loader: "ts-loader" },
         ],
       },
+
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
@@ -71,6 +69,24 @@ module.exports = {
           "css-loader",
           "postcss-loader",
           "sass-loader",
+        ],
+      },
+      {
+        test: /\.(ico|svg|png|jpg|jpeg|gif|ttf|woff|woff2)$/,
+        include: app.src,
+        type: "asset/resource",
+      },
+      {
+        test: /\.mp3$/,
+        include: app.src,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].[ext]",
+              outputPath: "songs/",
+            },
+          },
         ],
       },
     ],
