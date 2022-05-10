@@ -1,5 +1,7 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 const webpack = require("webpack");
 // const nodeExternals = require('webpack-node-externals');
 const app = require("./helpers/app.js");
@@ -40,6 +42,9 @@ module.exports = {
         NODE_ENV: JSON.stringify(env.NODE_ENV),
       },
     }),
+    new MiniCssExtractPlugin({
+      filename: "linaria.css",
+    }),
   ],
   module: {
     rules: [
@@ -52,6 +57,32 @@ module.exports = {
         test: /\.(tsx|ts)$/,
         use: "ts-loader",
         exclude: /node_modules/,
+      },
+      {
+        test: /\.js$/,
+        use: [
+          { loader: "babel-loader" },
+          {
+            loader: "@linaria/webpack-loader",
+            options: {
+              sourceMap: process.env.NODE_ENV !== "production",
+            },
+          },
+        ],
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: process.env.NODE_ENV !== "production",
+            },
+          },
+        ],
       },
     ],
   },
