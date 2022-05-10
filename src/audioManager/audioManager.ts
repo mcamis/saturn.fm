@@ -61,10 +61,12 @@ export class AudioManager {
     }
   }
 
-  updateMediaSession() {
+  updateMediaSession = () => {
     const { title, artist, album, albumArtUrl } = this.state.tracks[
       this.state.currentTrackIndex
     ];
+    console.log('update~!', title);
+    console.log(albumArtUrl);
     this.audioElement.title = `「SATURN.FM」${title} - ${artist}`;
     if (!("mediaSession" in navigator)) return;
 
@@ -81,8 +83,8 @@ export class AudioManager {
     });
   }
 
-  getNextTrackIndex(): number {
-    if (this.state.repeat === RepeatValues.Single) {
+  getNextTrackIndex(isAuto: boolean): number {
+    if (this.state.repeat === RepeatValues.Single && isAuto) {
       return this.state.currentTrackIndex;
     }
     const isLastTrack =
@@ -120,8 +122,8 @@ export class AudioManager {
     this.revokeSongUrl(currentSrc);
   }
 
-  loadNextTrack = () => {
-    this.loadTrack(this.getNextTrackIndex());
+  loadNextTrack = (isAuto?: boolean) => {
+    this.loadTrack(this.getNextTrackIndex(!!isAuto));
   }
 
   loadPreviousTrack = () => {
@@ -166,7 +168,7 @@ export class AudioManager {
     });
 
     this.audioElement.addEventListener("ended", () => {
-      this.loadNextTrack();
+      this.loadNextTrack(true);
     });
 
     if (!("mediaSession" in navigator)) return;

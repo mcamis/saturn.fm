@@ -32,12 +32,11 @@ const FullApp = () => {
   //     const introClass = audioManagerSingleton ? "intro" : " ";
   //     const pausedClass = isPaused ? "paused" : "";
   //     const playingClass = isPlaying ? "playing" : "";
-  //     const showClass = this.state.show ? "show" : "";
   //     const languageClass = ["ja-JP", "ja"].includes(navigator.language)
   //       ? "japanese"
   //       : "";
 
-  //     return `${hiddenClass} ${introClass} ${pausedClass} ${playingClass} ${showClass} ${languageClass}`;
+  //     return `${hiddenClass} ${introClass} ${pausedClass} ${playingClass} ${languageClass}`;
   //   }
 
   const { repeat, audioStatus } = useAudioManagerContext();

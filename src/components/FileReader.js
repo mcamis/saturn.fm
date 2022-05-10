@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { styled } from "@linaria/react";
 import * as React from "react";
-import PropTypes from "prop-types";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { getFilesWithTags, reorder } from "../utilities/files";
 import { getLocalizedCopy } from "../utilities/helpers";
@@ -314,10 +313,10 @@ const PlaylistEditor = styled.div`
   }
 `;
 
-FileReader.propTypes = {
-  arrangeTracks: PropTypes.func.isRequired,
-  addTracks: PropTypes.func.isRequired,
-  removeTrack: PropTypes.func.isRequired,
-  toggleMenu: PropTypes.func.isRequired,
-};
+// FileReader.propTypes = {
+//   arrangeTracks: PropTypes.func.isRequired,
+//   addTracks: PropTypes.func.isRequired,
+//   removeTrack: PropTypes.func.isRequired,
+//   toggleMenu: PropTypes.func.isRequired,
+// };
 export default FileReader;
