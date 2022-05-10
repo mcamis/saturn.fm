@@ -35,6 +35,23 @@ export type AudioManagerState = {
 };
 
 
+export type Action = {
+  type: ActionTypes,
+  payload: any
+}
+
+export enum ActionTypes {
+  currentTrackIndex = "currentTrackIndex",
+  audioStatus = "audioStatus",
+  SaveAndReload = "saveAndReload",
+  setStopped = "setStopped",
+  repeat = "repeat",
+  addTracks = "addTracks",
+  setNewTrackOrder = "setNewTrackOrder",
+  audioContextState = "audioContextState"
+}
+
+
 // type MediaSessionProps = {
 //   title: string;
 //   artist: string;

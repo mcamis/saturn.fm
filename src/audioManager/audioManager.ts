@@ -1,7 +1,7 @@
 import StereoAnalyser from "./stereoAnalyser";
 import backupCover from "../images/chopin_third.jpeg";
-import { RepeatValues, AudioStatus, Track, AudioManagerState } from "./types";
-import { defaultState, reducer, ActionTypes } from "./state";
+import { RepeatValues, ActionTypes, AudioStatus, Track, AudioManagerState } from "./types";
+import { defaultState, reducer } from "./state";
 const htmlAudioElement = new Audio();
 
 
@@ -21,7 +21,7 @@ export class AudioManager {
     this.loadFirstTrack();
   }
 
-  setupAudioContext() {
+  init() {
     // Safari is still prefixed
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     this.audioContext = new AudioContext();
@@ -33,15 +33,21 @@ export class AudioManager {
       this.audioContext.suspend();
     }
 
-    // TODO: Preloading & total track time?
-    this.analyser = new StereoAnalyser(this.audioElement, this.audioContext);
+    this.audioContext.resume().then((e) => {
+      console.log('resumed!', e);
+      this.updateState({ type: ActionTypes.audioContextState, payload: this.audioContext.state });
+
+
+      // TODO: Preloading & total track time?
+      this.analyser = new StereoAnalyser(this.audioElement, this.audioContext);
+
+    });
+
+
 
 
   }
 
-  createAudioContext(cb: any) {
-    this.analyser.audioContext.resume().then(() => cb && cb());
-  }
 
   loadFirstTrack() {
     this.loadTrack(0);
@@ -236,27 +242,28 @@ export class AudioManager {
     this.updateState({ type: ActionTypes.addTracks, payload: newTracks });
   }
 
-  setCurrentTrack(newIndex: number) {
+  setCurrentTrack = (newIndex: number) => {
     // this.state.currentTrackIndex = newIndex;
     this.updateState({ type: ActionTypes.currentTrackIndex, payload: newIndex });
   }
 
-  setNewTrackOrder(tracks: Track[]) {
+  setNewTrackOrder = (tracks: Track[]) => {
     // this.state.tracks = tracks;
     this.updateState({ type: ActionTypes.setNewTrackOrder, payload: tracks });
   }
 
-  updateState(action: any) {
+  updateState = (action: any) => {
     const newState = reducer(this.state, action);
     this.state = newState;
     this.stateUpdateListener && this.stateUpdateListener(newState);
   }
-  subscribe(cb: any) {
+  subscribe = (cb: any) => {
     this.stateUpdateListener = cb;
 
     return (): void => (this.stateUpdateListener = null);
   }
-  getSnapshot() {
+  getSnapshot = () => {
+    console.log(this);
     return this.state;
   }
 
