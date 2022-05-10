@@ -166,8 +166,6 @@ class Cubes extends React.Component {
 }
 
 Cubes.propTypes = {
-  setAnimationCallback: PropTypes.func.isRequired,
-  audioManager: PropTypes.shape({}).isRequired,
   isPlaying: PropTypes.bool.isRequired,
   isUiHidden: PropTypes.bool.isRequired,
 };

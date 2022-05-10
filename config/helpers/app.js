@@ -15,7 +15,7 @@ module.exports = {
   dist: resolveApp("dist"),
   favicon: resolveApp("public/favicon.ico"),
   htmlTemplate: resolveApp("src/template.html"),
-  indexJs: resolveApp("src/index.js"),
+  indexJs: resolveApp("src/index.tsx"),
   public: resolveApp("public"),
   root: appDirectory,
   src: resolveApp("src"),

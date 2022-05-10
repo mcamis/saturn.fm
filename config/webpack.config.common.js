@@ -1,11 +1,10 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-
 const webpack = require("webpack");
 // const nodeExternals = require('webpack-node-externals');
 const app = require("./helpers/app.js");
 const env = require("./helpers/env.js");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   devtool: "cheap-module-source-map",
@@ -49,11 +48,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
-        include: app.src,
-        use: ["babel-loader"],
-      },
-      {
         test: /\.(tsx|ts)$/,
         use: "ts-loader",
         exclude: /node_modules/,
@@ -71,28 +65,19 @@ module.exports = {
         ],
       },
       {
-        test: /\.css$/,
+        test: /\.(sa|sc|c)ss$/,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-          },
-          {
-            loader: "css-loader",
-            options: {
-              sourceMap: process.env.NODE_ENV !== "production",
-            },
-          },
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          "postcss-loader",
+          "sass-loader",
         ],
       },
     ],
   },
-
-  node: {
-    fs: "empty",
-  },
-
+  externals: { "react-native-fs": "reactNativeFs", fs: "reactNativeFs" },
   resolve: {
-    extensions: [".js", ".jsx", ".tsx", ".ts"],
+    extensions: [".js", ".tsx", ".ts"],
     symlinks: false,
   },
 };

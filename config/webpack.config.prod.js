@@ -1,4 +1,4 @@
-const merge = require("webpack-merge");
+const { merge } = require("webpack-merge");
 
 const TerserPlugin = require("terser-webpack-plugin");
 // const {CleanWebpackPlugin} = require('clean-webpack-plugin');
@@ -63,20 +63,6 @@ module.exports = merge(common, {
               name: "[name].[ext]",
               outputPath: "fonts/",
             },
-          },
-        ],
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          {
-            loader: "style-loader", // creates style nodes from JS strings
-          },
-          {
-            loader: "css-loader", // translates CSS into CommonJS
-          },
-          {
-            loader: "sass-loader", // compiles Sass to CSS
           },
         ],
       },
