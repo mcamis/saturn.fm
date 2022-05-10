@@ -1,10 +1,9 @@
+import { cx } from "@linaria/core";
+import { styled } from "@linaria/react";
 import * as React from "react";
 import { Suspense } from "react";
-import {
-  audioManagerSingleton,
-  AudioStatus,
-  useAudioManagerContext,
-} from "../audioManager";
+import { AudioStatus, useAudioManagerContext } from "../audioManager";
+import Starfield from "../components/Starfield";
 import Cubes from "../components/Cubes";
 import Menu from "../components/Menu";
 import About from "../components/About";
@@ -15,10 +14,12 @@ import introSrc from "../effects/intro.mp3";
 const FileReader = React.lazy(() => import("../components/FileReader"));
 
 const FullApp = () => {
+  const [hasLoaded, setHasLoaded] = React.useState(false);
   React.useEffect(() => {
     const audioElement = new Audio();
     audioElement.src = introSrc;
     audioElement.play();
+    setHasLoaded(true);
   }, []);
 
   //   getClassNames() {
@@ -39,14 +40,7 @@ const FullApp = () => {
   //     return `${hiddenClass} ${introClass} ${pausedClass} ${playingClass} ${showClass} ${languageClass}`;
   //   }
 
-  // todo these updates are occuring outside of react;
-
-  const {
-    repeat,
-    tracks,
-    currentTrackIndex,
-    audioStatus,
-  } = useAudioManagerContext();
+  const { repeat, audioStatus } = useAudioManagerContext();
 
   const isPaused = audioStatus === AudioStatus.Paused;
   const isPlaying = audioStatus === AudioStatus.Playing;
@@ -56,7 +50,7 @@ const FullApp = () => {
   const [hideDash, setHideDash] = React.useState(false);
 
   return (
-    <div>
+    <AppWrapper className={cx(hasLoaded && "hasLoaded")}>
       <Header />
       <Menu
         isUiHidden={hideDash}
@@ -84,8 +78,33 @@ const FullApp = () => {
         </Suspense>
       )}
       {showAboutModal && <About toggleAbout={() => setShowAboutModal(false)} />}
-    </div>
+      <Starfield isUiHidden={false} />
+    </AppWrapper>
   );
 };
+
+const AppWrapper = styled.div`
+  height: 100%;
+  filter: brightness(0);
+
+  &.hasLoaded {
+    animation-name: menuBrightness;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards; // animation-delay: 10s;
+    animation-timing-function: ease-out;
+    animation-delay: 200ms;
+
+    @keyframes menuBrightness {
+      from {
+        filter: brightness(0);
+      }
+
+      to {
+        filter: brightness(1);
+      }
+    }
+  }
+`;
 
 export default FullApp;

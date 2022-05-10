@@ -6,7 +6,7 @@ import { Modal } from "./Modal";
 
 const About = (props) => {
   return (
-    <Modal header="About" className="About">
+    <Modal header="about">
       <MainContent>
         <p>
           <em>

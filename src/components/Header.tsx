@@ -3,8 +3,6 @@ import * as React from "react";
 import { useState, useEffect, useRef } from "react";
 import { formatTime } from "../utilities/helpers";
 import { useAudioManagerContext } from "../audioManager";
-import headerSrc from "../images/header.png";
-import knightSrc from "../images/knight-rider.png";
 
 // https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 function useInterval(callback: () => void, delay: number) {
@@ -33,7 +31,6 @@ const Header = () => {
     setComponentTime(audioElement.currentTime);
   }, 1000);
 
-  // TODO: Fix Safari missing prop changes / renders
   return (
     <Wrapper>
       <h3>Track</h3>
@@ -44,6 +41,40 @@ const Header = () => {
   );
 };
 
+/*
+//.playing {
+  header:after {
+    display: inline-block;
+  }
+}
+
+.hidden {
+  header {
+    animation-name: floatUpRelative;
+    animation-duration: 1000ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards; // animation-delay: 10s;
+    animation-timing-function: ease-out;
+
+    // animation-delay: 150ms;
+  }
+}
+
+paused:
+  header:after {
+    display: inline-block;
+    transform: translate(350%, 0);
+    animation-play-state: paused;
+
+    
+      header p:nth-of-type(2),
+  header:after {
+    animation: blink 1s infinite;
+  }
+  }
+  */
+
+// todo include pixelated?
 const Wrapper = styled.header`
   user-select: none;
 
@@ -55,13 +86,13 @@ const Wrapper = styled.header`
     height: 100%;
     z-index: -1;
     content: "";
-    background: url(${headerSrc}) top (center / 100%) no-repeat;
+    background: url("../images/header.png") top (center / 100%) no-repeat;
   }
 
   &:after {
     display: none;
     content: "";
-    background: url(${knightSrc}) no-repeat;
+    background: url("../images/knight-rider.png") no-repeat;
     background-position: center center;
     background-size: 100% 100%;
     height: 12%;
@@ -74,6 +105,39 @@ const Wrapper = styled.header`
     animation-iteration-count: infinite;
     animation-timing-function: linear;
     z-index: -2;
+  }
+
+  width: 79.5%;
+  margin: 0 auto;
+  position: relative;
+  padding: 2% 13.5% 0;
+  display: flex;
+  height: calc(calc(var(--scene-width) * 0.795) * 0.1417322835);
+  z-index: 10;
+  color: #014949;
+
+  h3 {
+    margin: 0;
+    display: inline-block;
+    font-size: calc(var(--scene-width) / 35);
+
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: "Phoebe Condensed Bold";
+    line-height: 1;
+  }
+  p {
+    line-height: 1;
+    margin: 0;
+    letter-spacing: 2px;
+    padding-left: 2%;
+
+    font-size: calc(var(--scene-width) / 18);
+
+    display: inline-block;
+  }
+  h3:nth-of-type(2) {
+    margin-left: 25%;
   }
 `;
 

@@ -1,7 +1,5 @@
 import * as React from "react";
-import styled from "styled-components";
-
-import headerBgSrc from "../images/header_bg.png";
+import { styled } from "@linaria/react";
 
 export const ModalHeader = ({ children }) => {
   return <Header>{children}</Header>;
@@ -20,7 +18,7 @@ const Header = styled.h2`
   margin: 0 auto;
   margin-bottom: 20px;
 
-  background: url(${headerBgSrc});
+  background: url("../images/header_bg.png");
   background-color: rgba(0, 0, 0, 0.5);
   background-size: 100% 100%;
   border-radius: 10px;

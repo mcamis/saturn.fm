@@ -1,6 +1,6 @@
+import { styled } from "@linaria/react";
 import * as React from "react";
 import StarfieldScene from "./scene";
-import "./style.scss";
 
 const useStarfieldScene = (containerRef: any, shouldShowSpaceship: boolean) => {
   const [scene, setScene] = React.useState(null);
@@ -22,11 +22,31 @@ const StarField = ({ isUiHidden }: { isUiHidden: boolean }) => {
 
   useStarfieldScene(containerRef, isUiHidden);
 
-  return (
-    <div className="starfield">
-      <div ref={containerRef} />
-    </div>
-  );
+  return <Wrapper ref={containerRef} />;
 };
+
+const Wrapper = styled.div`
+  top: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+
+  &:after {
+    content: "";
+    background: url("../../images/galaxy.png") no-repeat;
+    background-size: cover;
+    background-color: black;
+    position: absolute;
+    left: -35%;
+    right: -35%;
+    top: -35%;
+    bottom: -35%;
+    animation-name: spin;
+    animation-duration: 500s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    z-index: -1;
+  }
+`;
 
 export default StarField;

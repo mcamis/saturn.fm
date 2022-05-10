@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import { styled } from "@linaria/react";
 import * as React from "react";
 import PropTypes from "prop-types";
-import styled, { keyframes } from "styled-components";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { getFilesWithTags, reorder } from "../utilities/files";
 import { getLocalizedCopy } from "../utilities/helpers";
@@ -73,7 +73,7 @@ const FileReader = (props) => {
   const { fileReader, playlist: playlistCopy } = getLocalizedCopy();
 
   return (
-    <Modal className="FileReader" header={fileReader.header}>
+    <Modal header={fileReader.header}>
       <PlaylistWrapper>
         <PlaylistHeader>
           <div>{playlistCopy.number}</div>
@@ -216,20 +216,6 @@ const PlaylistHeader = styled.div`
   }
 `;
 
-const selectedItemPulse = keyframes`
-0% {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-50% {
-  background: rgba(255, 255, 255, 0.25);
-}
-
-100% {
-  background: rgba(255, 255, 255, 0.1);
-}
-`;
-
 const PlaylistEditor = styled.div`
   background-color: rgba(131, 23, 71, 0.65);
   width: 100%;
@@ -262,7 +248,7 @@ const PlaylistEditor = styled.div`
       padding: 0;
     }
     &:hover {
-      animation: ${selectedItemPulse} 3s infinite;
+      animation: selected-item-pulse 3s infinite;
     }
     &:active {
       cursor: grabbing !important;
@@ -312,6 +298,19 @@ const PlaylistEditor = styled.div`
       margin: 0 auto;
       line-height: inherit;
     }
+  }
+
+  @keyframes selected-item-pulse {
+    0% {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  50% {
+    background: rgba(255, 255, 255, 0.25);
+  }
+  
+  100% {
+    background: rgba(255, 255, 255, 0.1);
   }
 `;
 
