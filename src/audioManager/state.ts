@@ -11,7 +11,7 @@ const htmlAudioElement = new Audio();
 export const reducer = (state: AudioManagerState, action: Action): AudioManagerState => {
   switch (action.type) {
     case ActionTypes.currentTrackIndex:
-      return { ...state, currentTrackIndex: action.payload.currentTrackIndex };
+      return { ...state, currentTrackIndex: action.payload };
     case ActionTypes.audioStatus:
       return { ...state, audioStatus: action.payload };
     case ActionTypes.setStopped:

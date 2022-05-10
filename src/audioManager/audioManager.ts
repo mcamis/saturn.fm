@@ -34,9 +34,7 @@ export class AudioManager {
     }
 
     this.audioContext.resume().then((e) => {
-      console.log('resumed!', e);
       this.updateState({ type: ActionTypes.audioContextState, payload: this.audioContext.state });
-
 
       // TODO: Preloading & total track time?
       this.analyser = new StereoAnalyser(this.audioElement, this.audioContext);
@@ -237,8 +235,6 @@ export class AudioManager {
   }
 
   addTracks(newTracks: Track[]) {
-    console.log({ newTracks });
-
     this.updateState({ type: ActionTypes.addTracks, payload: newTracks });
   }
 
@@ -263,7 +259,6 @@ export class AudioManager {
     return (): void => (this.stateUpdateListener = null);
   }
   getSnapshot = () => {
-    console.log(this);
     return this.state;
   }
 
