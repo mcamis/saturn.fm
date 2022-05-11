@@ -19,6 +19,7 @@ import {
   updateScaleAndColor,
 } from "../utilities/cubeTransforms";
 import { audioManagerSingleton, AudioStatus } from "../audioManager";
+import { styled } from "@linaria/react";
 
 class Cubes extends React.Component {
   constructor(props) {
@@ -159,8 +160,7 @@ class Cubes extends React.Component {
 
   render() {
     return (
-      <div
-        className="cubes"
+      <MountWarpper
         ref={(mount) => {
           this.mount = mount;
         }}
@@ -168,6 +168,12 @@ class Cubes extends React.Component {
     );
   }
 }
+
+const MountWarpper = styled.div`
+  position: absolute;
+  bottom: 0;
+  pointer-events: none;
+`;
 
 Cubes.propTypes = {
   isPlaying: PropTypes.bool.isRequired,

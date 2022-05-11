@@ -64,31 +64,6 @@
   image-rendering: pixelated; /* Awesome future-browsers       */
 }
 
-@mixin menuBackground {
-  border-radius: 3px;
-  box-shadow: 0 0 0 2px rgba(53, 59, 101, 0.8),
-    0 0 0 3.5px rgba(149, 149, 149, 0.8), 0 0 0 5px rgba(53, 59, 101, 0.8);
-}
-
-@mixin fadeInFilter {
-  animation-name: menuBrightness;
-  animation-duration: 1s;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards; // animation-delay: 10s;
-  animation-timing-function: ease-out;
-  animation-delay: 500ms;
-
-  @keyframes menuBrightness {
-    from {
-      filter: brightness(0);
-    }
-
-    to {
-      filter: brightness(1);
-    }
-  }
-}
-
 /* Typography & Base Styling */
 
 * {
@@ -113,12 +88,6 @@ body {
   color: #444;
   margin: 0;
   background: black;
-
-  // @include pixelated;
-  .intro {
-    filter: brightness(0);
-    @include fadeInFilter;
-  }
 }
 
 p {
@@ -138,22 +107,6 @@ p {
   margin: 0 auto;
   overflow: hidden;
   position: relative;
-}
-
-canvas {
-  position: absolute;
-  bottom: 0;
-  @include pixelated;
-}
-
-.cubes canvas {
-  z-index: 89;
-}
-
-.menu {
-  canvas {
-    z-index: 90;
-  }
 }
 
 @keyframes fadeOut {
@@ -183,12 +136,10 @@ canvas {
   }
 }
 
-.music-picker {
-  background: white;
-}
-
 .exit-button {
-  @include menuBackground;
+  border-radius: 3px;
+  box-shadow: 0 0 0 2px rgba(53, 59, 101, 0.8),
+    0 0 0 3.5px rgba(149, 149, 149, 0.8), 0 0 0 5px rgba(53, 59, 101, 0.8);
   display: block;
   margin: 0 auto;
   margin-top: auto;
@@ -231,25 +182,7 @@ canvas {
   }
 }
 
-@keyframes blink {
-  0% {
-    opacity: 0;
-  }
-
-  49% {
-    opacity: 0;
-  }
-
-  50% {
-    opacity: 1;
-  }
-}
-
 .hidden {
-  .toast {
-    animation: blink 1s infinite, fadeOut 0ms linear 3s 1 forwards running !important;
-  }
-
   .dashboard,
   .cubes canvas,
   li {
@@ -375,19 +308,6 @@ canvas {
   }
 }
 
-blink {
-  animation: blink 1s infinite;
-}
-
-.toast {
-  position: fixed;
-  left: 50%;
-  top: 40%;
-  transform: translate(-50%, -50%);
-  width: 6em;
-  z-index: 9999;
-}
-
 @keyframes floatDownInRelative {
   from {
     transform: translateY(-105%);
@@ -430,11 +350,6 @@ blink {
       }
     }
   }
-}
-
-.flip {
-  transform: scaleX(-1);
-  display: inline-block;
 }
 
 .japanese {

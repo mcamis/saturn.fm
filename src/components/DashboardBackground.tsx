@@ -16,7 +16,7 @@ const DashboardHalf = styled.div<{ isRight?: boolean }>`
   position: absolute;
   bottom: 0;
   width: 50%;
-  z-index: 20;
+  z-index: -1;
   padding-bottom: 91%;
   left: 0;
   :after {

@@ -30,6 +30,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
+  z-index: -2;
 
   &:after {
     content: "";
@@ -52,7 +53,7 @@ const Wrapper = styled.div`
     from {
       transform: rotate(-0deg);
     }
-  
+
     to {
       transform: rotate(-360deg);
     }
