@@ -47,6 +47,16 @@ const Wrapper = styled.div`
     animation-timing-function: linear;
     z-index: -1;
   }
+
+  @keyframes spin {
+    from {
+      transform: rotate(-0deg);
+    }
+  
+    to {
+      transform: rotate(-360deg);
+    }
+  }
 `;
 
 export default StarField;

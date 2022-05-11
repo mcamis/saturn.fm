@@ -156,34 +156,6 @@ canvas {
   }
 }
 
-@keyframes spin {
-  from {
-    transform: rotate(-0deg);
-  }
-
-  to {
-    transform: rotate(-360deg);
-  }
-}
-
-@keyframes fadeInOut {
-  0% {
-    opacity: 0;
-  }
-
-  10% {
-    opacity: 1;
-  }
-
-  75% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
-
 @keyframes fadeOut {
   from {
     opacity: 1;
@@ -193,30 +165,6 @@ canvas {
     opacity: 0;
     pointer-events: none;
   }
-}
-
-.dashboard,
-.dashboard:after {
-  content: "";
-  background: url("../images/dashboard.png") no-repeat;
-  background-size: 100% 47%;
-  background-position: 0 100%;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 50%;
-  // height: 900px;
-
-  z-index: 20;
-  padding-bottom: 91%;
-  @include pixelated;
-}
-
-.dashboard:after {
-  left: 99.9%;
-  top: 0;
-  transform: scale(-1, 1);
-  width: 100%;
 }
 
 @keyframes knight-rider {
@@ -440,16 +388,6 @@ blink {
   z-index: 9999;
 }
 
-@keyframes floatInRelative {
-  from {
-    transform: translateY(100%);
-  }
-
-  to {
-    transform: translateY(0%);
-  }
-}
-
 @keyframes floatDownInRelative {
   from {
     transform: translateY(-105%);
@@ -480,16 +418,6 @@ blink {
     animation-delay: 700ms;
   }
 
-  .dashboard,
-  .cubes canvas {
-    animation-name: floatInRelative;
-    animation-duration: 1500ms;
-    animation-iteration-count: 1;
-    animation-fill-mode: backwards; // animation-delay: 10s;
-    animation-timing-function: linear;
-    animation-delay: 0;
-  }
-
   li {
     button,
     a {
@@ -507,36 +435,6 @@ blink {
 .flip {
   transform: scaleX(-1);
   display: inline-block;
-}
-
-.current-track-info {
-  font-size: 12px;
-  color: white;
-  position: absolute;
-  bottom: 50vw;
-  left: 10px;
-  z-index: 999;
-  opacity: 0;
-  text-transform: uppercase;
-  animation-name: fadeInOut;
-  animation-duration: 12s;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards; // animation-delay: 10s;
-  animation-timing-function: linear;
-
-  @media screen and (min-width: 800px) {
-    bottom: 10px;
-    left: 10px;
-  }
-
-  p {
-    margin: 0;
-  }
-  a {
-    text-decoration: underline;
-    font-weight: normal;
-    color: white;
-  }
 }
 
 .japanese {

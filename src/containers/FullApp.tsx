@@ -8,6 +8,7 @@ import Cubes from "../components/Cubes";
 import Menu from "../components/Menu";
 import About from "../components/About";
 import Header from "../components/Header";
+import DashboardBackground from "../components/DashboardBackground";
 
 import introSrc from "../effects/intro.mp3";
 
@@ -60,7 +61,6 @@ const FullApp = () => {
         repeat={repeat}
         audioStatus={audioStatus}
       />
-      <div className="dashboard" />
       <Cubes
         audioStatus={audioStatus}
         isUiHidden={hideDash}
@@ -77,6 +77,7 @@ const FullApp = () => {
         </Suspense>
       )}
       {showAboutModal && <About toggleAbout={() => setShowAboutModal(false)} />}
+      <DashboardBackground />
       <Starfield isUiHidden={false} />
     </AppWrapper>
   );
