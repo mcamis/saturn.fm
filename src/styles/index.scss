@@ -1,43 +1,3 @@
-/*
-                                                                      ..;===+.
-                                                                  .:=iiiiii=+=
-                                                               .=i))=;::+)i=+,
-                                                            ,=i);)I)))I):=i=;
-                                                         .=i==))))ii)))I:i++
-                                                       +)+))iiiiiiii))I=i+:'
-                                  .,:;;++++++;:,.       )iii+:::;iii))+i='
-                               .:;++=iiiiiiiiii=++;.    =::,,,:::=i));=+'
-                             ,;+==ii)))))))))))ii==+;,      ,,,:=i))+=:
-                           ,;+=ii))))))IIIIII))))ii===;.    ,,:=i)=i+
-                          ;+=ii)))IIIIITIIIIII))))iiii=+,   ,:=));=,
-                        ,+=i))IIIIIITTTTTITIIIIII)))I)i=+,,:+i)=i+
-                       ,+i))IIIIIITTTTTTTTTTTTI))IIII))i=::i))i='
-                      ,=i))IIIIITLLTTTTTTTTTTIITTTTIII)+;+i)+i`
-                      =i))IIITTLTLTTTTTTTTTIITTLLTTTII+:i)ii:'
-                     +i))IITTTLLLTTTTTTTTTTTTLLLTTTT+:i)))=,
-                     =))ITTTTTTTTTTTLTTTTTTLLLLLLTi:=)IIiii;
-                    .i)IIITTTTTTTTLTTTITLLLLLLLT);=)I)))))i;
-                    :))IIITTTTTLTTTTTTLLHLLLLL);=)II)IIIIi=:
-                    :i)IIITTTTTTTTTLLLHLLHLL)+=)II)ITTTI)i=
-                    .i)IIITTTTITTLLLHHLLLL);=)II)ITTTTII)i+
-                    =i)IIIIIITTLLLLLLHLL=:i)II)TTTTTTIII)i'
-                  +i)i)))IITTLLLLLLLLT=:i)II)TTTTLTTIII)i;
-                +ii)i:)IITTLLTLLLLT=;+i)I)ITTTTLTTTII))i;
-               =;)i=:,=)ITTTTLTTI=:i))I)TTTLLLTTTTTII)i;
-             +i)ii::,  +)IIITI+:+i)I))TTTTLLTTTTTII))=,
-           :=;)i=:,,    ,i++::i))I)ITTTTTTTTTTIIII)=+'
-         .+ii)i=::,,   ,,::=i)))iIITTTTTTTTIIIII)=+
-        ,==)ii=;:,,,,:::=ii)i)iIIIITIIITIIII))i+:'
-       +=:))i==;:::;=iii)+)=  `:i)))IIIII)ii+'
-     .+=:))iiiiiiii)))+ii;
-    .+=;))iiiiii)));ii+
-   .+=i:)))))))=+ii+
-  .;==i+::::=)i=;
-  ,+==iiiiii+,
-  `+=+++;`
-
-*/
-
 @font-face {
   font-family: "Phoebe";
   src: url("../fonts/PhoebeV4.ttf");
@@ -222,54 +182,6 @@ p {
       }
     }
   }
-
-  .tooltips {
-    display: none !important;
-  }
-}
-// TODO: ReactCSSTransitionGroup
-@keyframes toolTip {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-.tooltips {
-  p {
-    color: black;
-    position: absolute;
-    background: rgba(255, 255, 255, 0.5);
-    left: 50%;
-    transform: translate(-50%, 0) scale(0.8, 1);
-    bottom: 0;
-    z-index: 70;
-    padding: 6px 8px 0;
-    text-align: center;
-    line-height: calc(var(--scene-width) / 18);
-    font-size: calc(var(--scene-width) / 18);
-    display: inline-block;
-    margin: 0 0 15px;
-    z-index: 99;
-    // animation-name: toolTip;
-    animation-duration: 200ms;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-    animation-timing-function: linear;
-    animation-delay: 10s;
-    white-space: nowrap;
-    user-select: none;
-  }
-  img {
-    height: 30px;
-    width: auto;
-    bottom: 20px;
-  }
-  strong {
-    font-weight: 100;
-    color: rgb(255, 32, 52);
-  }
 }
 
 @keyframes floatDownInRelative {
@@ -293,15 +205,6 @@ p {
 }
 
 .show {
-  header {
-    animation-name: floatDownInRelative;
-    animation-duration: 600ms;
-    animation-iteration-count: 1;
-    animation-fill-mode: backwards; // animation-delay: 10s;
-    animation-timing-function: linear;
-    animation-delay: 700ms;
-  }
-
   li {
     button,
     a {

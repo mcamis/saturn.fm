@@ -42,12 +42,18 @@ const Header = () => {
 };
 
 /*
-//.playing {
-  header:after {
-    display: inline-block;
-  }
-}
 
+.show {
+  header {
+    animation-name: floatDownInRelative;
+    animation-duration: 600ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: backwards; // animation-delay: 10s;
+    animation-timing-function: linear;
+    animation-delay: 700ms;
+  }
+
+  
 .hidden {
   header {
     animation-name: floatUpRelative;
