@@ -91,20 +91,29 @@ paused:
 // todo include pixelated?
 const Wrapper = styled.header`
   user-select: none;
+  background: url("../images/header.png") top (center / 100%) no-repeat;
+  width: 79.5%;
+  margin: 0 auto;
+  position: relative;
+  padding: 2% 13.5% 0;
+  display: flex;
+  height: calc(calc(var(--scene-width) * 0.795) * 0.1417322835);
+  color: #014949;
 
   &:before {
-    width: 100%;
+    width: 54%;
     position: absolute;
-    top: 0;
-    left: 0;
+    bottom: 3px;
+    left: 50%;
     height: 100%;
     z-index: -1;
     content: "";
-    background: url("../images/header.png") top (center / 100%) no-repeat;
+    border-bottom: 10px solid black;
+    transform: translate(-50%, 0);
+}
   }
 
   &:after {
-    display: none;
     content: "";
     background: url("../images/knight-rider.png") no-repeat;
     background-position: center center;
@@ -118,17 +127,24 @@ const Wrapper = styled.header`
     animation-duration: 1000ms;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
-    z-index: -2;
+    z-index: -1;
   }
 
-  width: 79.5%;
-  margin: 0 auto;
-  position: relative;
-  padding: 2% 13.5% 0;
-  display: flex;
-  height: calc(calc(var(--scene-width) * 0.795) * 0.1417322835);
-  z-index: 10;
-  color: #014949;
+  @keyframes knight-rider {
+    0% {
+      transform: translateX(0) scaleX(0);
+    }
+    5% {
+      transform: translateX(50%) scaleX(1);
+    }
+  
+    90% {
+      transform: translateX(690%) scaleX(1);
+    }
+    100% {
+      transform: translateX(710%) scaleX(0);
+    }
+  }
 
   h3 {
     margin: 0;
