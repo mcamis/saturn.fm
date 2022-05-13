@@ -12,6 +12,7 @@ import {
 import {
   randomSize,
   randomPosition,
+  getRandomPositionsNotInCenter,
   sceneWidth,
 } from "../../utilities/helpers";
 
@@ -136,9 +137,10 @@ class StarfieldScene {
 
       // if the particle is too close move it to the back
       if (currentStar.position.z > 550) {
+        const [x,y] = getRandomPositionsNotInCenter(this.width, this.height);
         currentStar.position.z = -1000;
-        currentStar.position.x = randomPosition(this.width);
-        currentStar.position.y = randomPosition(this.height);
+        currentStar.position.x = x;
+        currentStar.position.y = y;
       }
     }
   }
@@ -159,21 +161,23 @@ class StarfieldScene {
     );
 
     // Seed starts across the full z range
-    for (let z = -500; z < 500; z += 10) {
+    for (let z = -800; z < 800; z += 10) {
       let material = whiteMaterial;
       if (z > 0 && z < 100) {
         material = redMaterial;
       } else if (z > 100 && z < 200) {
         material = yellowMaterial;
-      } else if (z > 100 && z < 200) {
+      } else if (z > 200 && z < 300) {
         material = blueMaterial;
       }
 
       const star = new Mesh(bufferGeometry, material);
 
-      // TODO: Better positioning so stars don't smack the viewer in the face
-      star.position.x = randomPosition(this.width);
-      star.position.y = randomPosition(this.height);
+    
+      const [x,y] = getRandomPositionsNotInCenter(this.width, this.height);
+
+      star.position.x = x;
+      star.position.y = y;
       star.position.z = z;
 
       const baseSize = randomSize();
