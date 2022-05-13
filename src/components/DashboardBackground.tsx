@@ -39,9 +39,9 @@ const DashboardHalf = styled.div<{ isRight?: boolean }>`
     z-index: 20;
     padding-bottom: 91%;
     width: 100%;
-    left: calc(100% - 1px);
+    right: -100%;
     top: 0;
-    transform: scale(-1, 1);
+    transform: scale(-1.001, 1);
     width: 100%;
   }
 `;
