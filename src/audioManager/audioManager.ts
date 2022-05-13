@@ -6,7 +6,7 @@ const htmlAudioElement = new Audio();
 
 export class AudioManager {
   public state: AudioManagerState;
-  private audioElement: HTMLAudioElement;
+  public audioElement: HTMLAudioElement;
   private analyser: any;
   private stateUpdateListener: any;
   private audioContext: AudioContext;
@@ -47,11 +47,10 @@ export class AudioManager {
   togglePlayPause = () => {
     const { audioElement } = this;
     const canPlay = audioElement.paused || audioElement.ended;
-
     // We haven't started playing yet, so set src to first track in playlist
     if (!audioElement.src) {
       // audioActions.setCurrentTrack(0);
-      // TODO: init to first track in src
+      // TODO: init to first track in src ?
     }
 
     if (canPlay) {
@@ -65,10 +64,8 @@ export class AudioManager {
     const { title, artist, album, albumArtUrl } = this.state.tracks[
       this.state.currentTrackIndex
     ];
-    console.log('update~!', title);
-    console.log(albumArtUrl);
     this.audioElement.title = `「SATURN.FM」${title} - ${artist}`;
-    if (!("mediaSession" in navigator)) return;
+    if (!navigator?.mediaSession) return;
 
     navigator.mediaSession.metadata = new window.MediaMetadata({
       title,
@@ -120,6 +117,7 @@ export class AudioManager {
     }
     this.updateState({ type: ActionTypes.currentTrackIndex, payload: trackIndex });
     this.revokeSongUrl(currentSrc);
+
   }
 
   loadNextTrack = (isAuto?: boolean) => {
@@ -132,6 +130,7 @@ export class AudioManager {
 
   playAndReport() {
     this.audioElement.play();
+    this.updateMediaSession();
   }
 
   // Prevent memory leaks and revoke ObjectURL if one exists
@@ -149,14 +148,13 @@ export class AudioManager {
     //   audioActions.loadingStart()
     // );
 
-    this.audioElement.addEventListener("canplaythrough", () => {
-      if (this.state.audioStatus === AudioStatus.Playing) {
-        this.togglePlayPause();
+    this.audioElement.addEventListener("loadeddata", () => {
+      if (this.state.audioStatus !== AudioStatus.Idle) {
+        this.playAndReport();
       }
     });
 
     this.audioElement.addEventListener("play", () => {
-      this.updateMediaSession();
       this.analyser.start();
       this.updateState({ type: ActionTypes.audioStatus, payload: AudioStatus.Playing });
     });
@@ -168,10 +166,11 @@ export class AudioManager {
     });
 
     this.audioElement.addEventListener("ended", () => {
+      // TODO: Handle last track without repeat set to "all"
       this.loadNextTrack(true);
     });
 
-    if (!("mediaSession" in navigator)) return;
+    if (!navigator?.mediaSession) return;
 
     navigator.mediaSession.setActionHandler("play", () =>
       this.togglePlayPause()

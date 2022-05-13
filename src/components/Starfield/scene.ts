@@ -152,7 +152,7 @@ class StarfieldScene {
     const bufferGeometry = new BufferGeometry();
 
     // prettier-ignore
-    const bufferVertices = new Float32Array([-1,-1,1,1,-1,1,1,1,1,1,1,1,-1,1,1,-1,-1,1,]);
+    const bufferVertices = new Float32Array([-1, -1, 1, 1, -1, 1, 1, 1, 1, 1, 1, 1, -1, 1, 1, -1, -1, 1,]);
     bufferGeometry.setAttribute(
       "position",
       new BufferAttribute(bufferVertices, 3)
@@ -185,7 +185,7 @@ class StarfieldScene {
     }
   }
 
-  setupSpaceship() {
+  setupSpaceship = () => {
     const loader = new GLTFLoader();
 
     loader.load("../models/saturn_v1.gltf", (gltf) => {
@@ -207,7 +207,7 @@ class StarfieldScene {
     });
   }
 
-  toggleSpaceShipVisbility(shouldShowSpaceship: boolean) {
+  toggleSpaceShipVisbility = (shouldShowSpaceship: boolean) => {
     this.shouldShowSpaceship = shouldShowSpaceship;
     if (!this.spaceship && shouldShowSpaceship) {
       this.setupSpaceship();

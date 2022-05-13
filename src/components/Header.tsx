@@ -4,7 +4,7 @@ import { styled } from "@linaria/react";
 import * as React from "react";
 import { useState, useEffect, useRef } from "react";
 import { formatTime } from "../utilities/helpers";
-import { useAudioManagerContext } from "../audioManager";
+import { audioManagerSingleton, useAudioManagerContext } from "../audioManager";
 
 // https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 function useInterval(callback: () => void, delay: number) {
@@ -34,9 +34,9 @@ const Header = ({
   showEntranceAnimation: boolean;
 }) => {
   const [componentTime, setComponentTime] = useState(0);
-  const { audioElement, currentTrackIndex, ...rest } = useAudioManagerContext();
+  const { currentTrackIndex } = useAudioManagerContext();
   useInterval(() => {
-    setComponentTime(audioElement.currentTime);
+    setComponentTime(audioManagerSingleton?.audioElement.currentTime);
   }, 1000);
 
   return (
@@ -117,7 +117,7 @@ const Wrapper = styled.header`
     }
   }
 `;
-const TopLayer = styled.header`
+const TopLayer = styled.div`
   user-select: none;
   background: url("../images/header.png") top (center / 100%) no-repeat;
   padding: 2.5% 17% 0;
@@ -155,7 +155,7 @@ const TopLayer = styled.header`
 const KnightRider = styled.div`
   width: 54%;
   position: absolute;
-  bottom: 5px;
+  bottom: 3px;
   left: 50%;
   z-index: -1;
   content: "";
@@ -168,9 +168,9 @@ const KnightRider = styled.div`
     background: url("../images/knight-rider.png") no-repeat;
     background-position: center center;
     background-size: 100% 100%;
-    height: 100%;
+    height: 120%;
     width: 8%;
-    bottom: 5%;
+    bottom: 0;
     position: absolute;
 
     animation-name: knight-rider;

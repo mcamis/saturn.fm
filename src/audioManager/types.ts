@@ -30,7 +30,6 @@ export type AudioManagerState = {
   currentTrackIndex: number;
   tracks: Track[];
   audioStatus: AudioStatus;
-  audioElement: HTMLAudioElement;
   audioContextState: AudioContextState
 };
 

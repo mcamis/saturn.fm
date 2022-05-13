@@ -3,9 +3,9 @@ import { Action, ActionTypes, RepeatValues, AudioStatus, Track, AudioManagerStat
 import Track2 from "../songs/Cookies/02.mp3";
 import Track3 from "../songs/Cookies/03.mp3";
 import Track4 from "../songs/Cookies/04.mp3";
+import Malibu from "../songs/shuffle.mp3";
+import Rodney from "../songs/shuffle.jpg";
 import CookiesCover from "../songs/Cookies/cover.png";
-
-const htmlAudioElement = new Audio();
 
 
 export const reducer = (state: AudioManagerState, action: Action): AudioManagerState => {
@@ -51,13 +51,13 @@ export const reducer = (state: AudioManagerState, action: Action): AudioManagerS
 
 export const defaultTracks = [
   {
-    file: Track2,
+    file: Malibu,
     track: 1,
-    album: "Music for Touching",
-    artist: "Cookies",
-    title: "Go Back",
+    album: "Diamond Inside of You",
+    artist: "Rodney Franklin",
+    title: "Malibu Shuffle",
     href: "",
-    albumArtUrl: CookiesCover,
+    albumArtUrl: Rodney,
     isDefault: true,
     srcPath: "",
     id: uuidv4(),
@@ -90,7 +90,6 @@ export const defaultTracks = [
 
 
 export const defaultState = {
-  audioElement: htmlAudioElement,
   repeat: RepeatValues.Off,
   hasPendingSrcChange: false,
   currentTrackIndex: 0,
