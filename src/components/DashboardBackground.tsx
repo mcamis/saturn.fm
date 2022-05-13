@@ -1,11 +1,20 @@
 import React from "react";
-import { css } from "@linaria/core";
+import { cx } from "@linaria/core";
 import { styled } from "@linaria/react";
 import { AnimationNames } from "../components/SharedKeyframeAnimations";
 
-const DashboardBackground = () => (
+const DashboardBackground = ({
+  showExitAnimation,
+}: {
+  showExitAnimation: boolean;
+}) => (
   <>
-    <DashboardHalf className={AnimationNames.appStartFloatInRelative} />
+    <DashboardHalf
+      className={cx(
+        true && AnimationNames.appStartFloatInRelative,
+        showExitAnimation && AnimationNames.exitTranslateDown
+      )}
+    />
   </>
 );
 const DashboardHalf = styled.div<{ isRight?: boolean }>`

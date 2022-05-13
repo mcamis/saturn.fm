@@ -120,7 +120,7 @@ const Wrapper = styled.header`
 const TopLayer = styled.header`
   user-select: none;
   background: url("../images/header.png") top (center / 100%) no-repeat;
-  padding: 2% 13.5% 0;
+  padding: 2.5% 17% 0;
   height: calc(calc(var(--scene-width) * 0.795) * 0.1417322835);
 
   display: flex;

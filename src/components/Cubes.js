@@ -9,6 +9,8 @@ import {
   DirectionalLight,
 } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { styled } from "@linaria/react";
+import { cx } from "@linaria/core";
 import autobind from "../utilities/autobind";
 import { AnimationNames } from "./SharedKeyframeAnimations";
 
@@ -19,7 +21,6 @@ import {
   updateScaleAndColor,
 } from "../utilities/cubeTransforms";
 import { audioManagerSingleton, AudioStatus } from "../audioManager";
-import { styled } from "@linaria/react";
 
 class Cubes extends React.Component {
   constructor(props) {
@@ -81,9 +82,6 @@ class Cubes extends React.Component {
     this.renderer = renderer;
     this.setupCube("leftCube", [-6.75, -29.3, 0]);
     this.setupCube("rightCube", [6.75, -29.7, 0]);
-    this.renderer.domElement.classList.add(
-      AnimationNames.appStartFloatInRelative
-    );
 
     this.mount.appendChild(this.renderer.domElement);
   }
@@ -164,6 +162,10 @@ class Cubes extends React.Component {
         ref={(mount) => {
           this.mount = mount;
         }}
+        className={cx(
+          true && AnimationNames.appStartFloatInRelative,
+          this.props.showExitAnimation && AnimationNames.exitTranslateDown
+        )}
       />
     );
   }

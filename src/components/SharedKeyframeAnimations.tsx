@@ -5,6 +5,7 @@ import { css } from "@linaria/core";
 // TODO: Linaria is breaking on enums
 export const AnimationNames = {
   appStartFloatInRelative: "appStartFloatInRelative",
+  exitTranslateDown: "exitTranslateDown",
 };
 /*
 
@@ -54,6 +55,23 @@ export const Animations = styled.div`
       to {
         transform: translateY(0%);
       }
+    }
+
+  .${AnimationNames.exitTranslateDown} {
+    animation-name: ${AnimationNames.exitTranslateDown};
+    animation-duration: 2000ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
+  }
+
+  @keyframes ${AnimationNames.exitTranslateDown} {
+    from {
+      transform: translateY(0%);
+    }
+
+    to {
+      transform: translateY(100%);
     }
   }
 `;

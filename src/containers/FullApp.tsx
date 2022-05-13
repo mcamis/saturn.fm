@@ -82,6 +82,7 @@ const FullApp = () => {
         isUiHidden={hideDash}
         isPaused={isPaused}
         isPlaying={isPlaying}
+        showExitAnimation={hideDash}
       />
       {showFileInput && (
         <Suspense fallback={null}>
@@ -93,8 +94,8 @@ const FullApp = () => {
         </Suspense>
       )}
       {showAboutModal && <About toggleAbout={() => setShowAboutModal(false)} />}
-      <DashboardBackground />
-      <Starfield isUiHidden={false} />
+      <DashboardBackground showExitAnimation={hideDash} />
+      <Starfield isUiHidden={hideDash} />
     </AppWrapper>
   );
 };

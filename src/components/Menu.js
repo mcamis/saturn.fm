@@ -598,9 +598,11 @@ class Menu extends React.Component {
           this.mount = mount;
         }}
       >
-        <Tooltip key={this.state.activeButton}>
-          {this.getToolTip(this.props.repeat, this.props.audioStatus)}
-        </Tooltip>
+        {!this.props.isUiHidden && (
+          <Tooltip key={this.state.activeButton}>
+            {this.getToolTip(this.props.repeat, this.props.audioStatus)}
+          </Tooltip>
+        )}
       </Wrapper>
     );
   }
