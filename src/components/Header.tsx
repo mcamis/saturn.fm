@@ -53,6 +53,15 @@ const Header = () => {
     animation-delay: 700ms;
   }
 
+@keyframes floatDownInRelative {
+  from {
+    transform: translateY(-105%);
+  }
+
+  to {
+    transform: translateY(0%);
+  }
+}
   
 .hidden {
   header {
@@ -64,6 +73,17 @@ const Header = () => {
 
     // animation-delay: 150ms;
   }
+
+
+@keyframes floatUpRelative {
+  from {
+    transform: translateY(0%);
+  }
+
+  to {
+    transform: translateY(-105%);
+  }
+}
 }
 
 paused:

@@ -6,6 +6,34 @@ import { css } from "@linaria/core";
 export const AnimationNames = {
   appStartFloatInRelative: "appStartFloatInRelative",
 };
+/*
+
+
+
+.hidden {
+  .dashboard,
+  .cubes canvas,
+  li {
+    animation-name: floatDownRelative;
+    animation-duration: 2000ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards; // animation-delay: 10s;
+    animation-timing-function: linear;
+  }
+}
+
+
+@keyframes floatDownRelative {
+  from {
+    transform: translateY(0%);
+  }
+
+  to {
+    transform: translateY(100%);
+  }
+}
+
+*/
 
 export const Animations = styled.div`
   :global() {

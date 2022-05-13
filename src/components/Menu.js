@@ -591,21 +591,25 @@ class Menu extends React.Component {
 
   render() {
     return (
-      <div>
-        <div
-          onClick={this.showIfHidden}
-          className="menu"
-          ref={(mount) => {
-            this.mount = mount;
-          }}
-        />
+      <Wrapper
+        onClick={this.showIfHidden}
+        className="menu"
+        ref={(mount) => {
+          this.mount = mount;
+        }}
+      >
         <Tooltip key={this.state.activeButton}>
           {this.getToolTip(this.props.repeat, this.props.audioStatus)}
         </Tooltip>
-      </div>
+      </Wrapper>
     );
   }
 }
+
+const Wrapper = styled.div`
+  position: absolute;
+  bottom: 0;
+`;
 
 const Tooltip = styled.div`
   p {
@@ -621,7 +625,7 @@ const Tooltip = styled.div`
     line-height: calc(var(--scene-width) / 18);
     font-size: calc(var(--scene-width) / 18);
     display: inline-block;
-    margin: 0 0 15px;
+    margin: 0 0 4px;
     z-index: 99;
     white-space: nowrap;
     user-select: none;
