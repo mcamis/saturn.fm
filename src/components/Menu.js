@@ -48,6 +48,7 @@ import hideSrc from "../effects/hide.mp3";
 import showSrc from "../effects/show.mp3";
 
 import autobind from "../utilities/autobind";
+import { styled } from "@linaria/react";
 
 // TODO: Set more magic numbers to constants
 const SHADOW_OFFSET = 1.025;
@@ -590,21 +591,57 @@ class Menu extends React.Component {
 
   render() {
     return (
-      <div>
-        <div
-          onClick={this.showIfHidden}
-          className="menu"
-          ref={(mount) => {
-            this.mount = mount;
-          }}
-        />
-        <div className="tooltips" key={this.state.activeButton}>
-          {this.getToolTip(this.props.repeat, this.props.audioStatus)}
-        </div>
-      </div>
+      <Wrapper
+        onClick={this.showIfHidden}
+        className="menu"
+        ref={(mount) => {
+          this.mount = mount;
+        }}
+      >
+        {!this.props.isUiHidden && (
+          <Tooltip key={this.state.activeButton}>
+            {this.getToolTip(this.props.repeat, this.props.audioStatus)}
+          </Tooltip>
+        )}
+      </Wrapper>
     );
   }
 }
+
+const Wrapper = styled.div`
+  position: absolute;
+  bottom: 0;
+`;
+
+const Tooltip = styled.div`
+  p {
+    color: black;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.5);
+    left: 50%;
+    transform: translate(-50%, 0) scale(0.8, 1);
+    bottom: 0;
+    z-index: 70;
+    padding: 6px 8px 0;
+    text-align: center;
+    line-height: calc(var(--scene-width) / 18);
+    font-size: calc(var(--scene-width) / 18);
+    display: inline-block;
+    margin: 0 0 4px;
+    z-index: 99;
+    white-space: nowrap;
+    user-select: none;
+  }
+  img {
+    height: 30px;
+    width: auto;
+    bottom: 20px;
+  }
+  strong {
+    font-weight: 100;
+    color: rgb(255, 32, 52);
+  }
+`;
 
 Menu.propTypes = {
   toggleMenu: PropTypes.func.isRequired,

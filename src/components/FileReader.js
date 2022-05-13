@@ -142,13 +142,9 @@ const FileReader = (props) => {
         </button>
       </EditorControlButtons>
       <PlaylistFooter>
-        <button
-          className="exit-button"
-          type="button"
-          onClick={props.toggleMenu}
-        >
+        <ExitButton type="button" onClick={props.toggleMenu}>
           Exit
-        </button>
+        </ExitButton>
       </PlaylistFooter>
     </Modal>
   );
@@ -311,6 +307,22 @@ const PlaylistEditor = styled.div`
   100% {
     background: rgba(255, 255, 255, 0.1);
   }
+`;
+
+const ExitButton = styled.button`
+  border-radius: 3px;
+  box-shadow: 0 0 0 2px rgba(53, 59, 101, 0.8),
+    0 0 0 3.5px rgba(149, 149, 149, 0.8), 0 0 0 5px rgba(53, 59, 101, 0.8);
+  display: block;
+  margin: 0 auto;
+  margin-top: auto;
+  color: white;
+  font-family: Phoebe;
+  font-size: 36px;
+  padding: 14px 14px 10px;
+  background-color: rgba(93, 21, 122, 0.8);
+  border: 0;
+  cursor: pointer;
 `;
 
 // FileReader.propTypes = {

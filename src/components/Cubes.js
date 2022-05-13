@@ -9,7 +9,10 @@ import {
   DirectionalLight,
 } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { styled } from "@linaria/react";
+import { cx } from "@linaria/core";
 import autobind from "../utilities/autobind";
+import { AnimationNames } from "./SharedKeyframeAnimations";
 
 import { sceneWidth } from "../utilities/helpers";
 import {
@@ -155,15 +158,24 @@ class Cubes extends React.Component {
 
   render() {
     return (
-      <div
-        className="cubes"
+      <MountWarpper
         ref={(mount) => {
           this.mount = mount;
         }}
+        className={cx(
+          true && AnimationNames.appStartFloatInRelative,
+          this.props.showExitAnimation && AnimationNames.exitTranslateDown
+        )}
       />
     );
   }
 }
+
+const MountWarpper = styled.div`
+  position: absolute;
+  bottom: 0;
+  pointer-events: none;
+`;
 
 Cubes.propTypes = {
   isPlaying: PropTypes.bool.isRequired,

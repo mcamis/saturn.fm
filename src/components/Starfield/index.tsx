@@ -30,6 +30,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
+  z-index: -2;
 
   &:after {
     content: "";
@@ -46,6 +47,16 @@ const Wrapper = styled.div`
     animation-iteration-count: infinite;
     animation-timing-function: linear;
     z-index: -1;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(-0deg);
+    }
+
+    to {
+      transform: rotate(-360deg);
+    }
   }
 `;
 
