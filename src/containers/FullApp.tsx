@@ -13,7 +13,18 @@ import DashboardBackground from "../components/DashboardBackground";
 import introSrc from "../effects/intro.mp3";
 
 const FileReader = React.lazy(() => import("../components/FileReader"));
-
+// Hook
+function usePrevious(value: any) {
+  // The ref object is a generic container whose current property is mutable ...
+  // ... and can hold any value, similar to an instance property on a class
+  const ref = React.useRef();
+  // Store current value in ref
+  React.useEffect(() => {
+    ref.current = value;
+  }, [value]); // Only re-run if value changes
+  // Return previous value (happens before update in useEffect above)
+  return ref.current;
+}
 const FullApp = () => {
   const [hasLoaded, setHasLoaded] = React.useState(false);
   React.useEffect(() => {
@@ -48,12 +59,17 @@ const FullApp = () => {
   const [showFileInput, setShowFileInput] = React.useState(false);
   const [showAboutModal, setShowAboutModal] = React.useState(false);
   const [hideDash, setHideDash] = React.useState(false);
+  const wasHidden = usePrevious(hideDash);
 
   return (
     <AppWrapper className={cx(hasLoaded && "hasLoaded")}>
-      <Header />
+      <Header
+        showExitAnimation={hideDash}
+        showEntranceAnimation={!hideDash && wasHidden}
+      />
       <Menu
         isUiHidden={hideDash}
+        showEntranceAnimation={!hideDash && wasHidden}
         showIfHidden={() => hideDash && setHideDash(false)}
         toggleMenu={setShowFileInput}
         toggleAbout={() => setShowAboutModal(true)}
