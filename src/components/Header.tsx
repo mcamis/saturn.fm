@@ -2,29 +2,10 @@ import { cx } from "@linaria/core";
 
 import { styled } from "@linaria/react";
 import * as React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { formatTime } from "../utilities/helpers";
 import { audioManagerSingleton, useAudioManagerContext } from "../audioManager";
-
-// https://overreacted.io/making-setinterval-declarative-with-react-hooks/
-function useInterval(callback: () => void, delay: number) {
-  const savedCallback = useRef<() => void>();
-
-  // Remember the latest callback.
-  useEffect(() => {
-    savedCallback.current = callback;
-  });
-
-  useEffect(() => {
-    function tick() {
-      savedCallback?.current();
-    }
-    if (delay !== null) {
-      const id = setInterval(tick, delay);
-      return () => clearInterval(id);
-    }
-  }, [delay]);
-}
+import { useInterval } from "../hooks";
 
 const Header = ({
   showExitAnimation,
@@ -35,6 +16,7 @@ const Header = ({
 }) => {
   const [componentTime, setComponentTime] = useState(0);
   const { currentTrackIndex } = useAudioManagerContext();
+
   useInterval(() => {
     setComponentTime(audioManagerSingleton?.audioElement.currentTime);
   }, 1000);

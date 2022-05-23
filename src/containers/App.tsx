@@ -5,8 +5,9 @@ import {
   AudioManagerContextProvider,
   useAudioManagerContext,
 } from "../audioManager";
-import { ContextCTA } from "../components/ContextCta";
+import { CreateAudioContextButton } from "../components/CreateAudioContextButton";
 
+// Don't load three.js until an audio context is reated
 const FullApp = React.lazy(() => import("./FullApp"));
 
 const App = () => {
@@ -19,7 +20,7 @@ const App = () => {
           <FullApp />
         </Suspense>
       )}
-      {audioContextState === "suspended" && <ContextCTA />}
+      {audioContextState === "suspended" && <CreateAudioContextButton />}
     </>
   );
 };

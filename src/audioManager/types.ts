@@ -22,6 +22,7 @@ export type Track = {
   isDefault: boolean;
   srcPath?: string;
   file?: File;
+  id: string;
 };
 
 export type AudioManagerState = {

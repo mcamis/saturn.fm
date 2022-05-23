@@ -3,18 +3,19 @@
 
 import * as React from "react";
 import FileReader from "./FileReader";
+import type { Track } from "../../audioManager";
 
 import "../styles/index.scss";
 
 const props = {
-  audio: {
-    tracks: defaultState.tracks,
-    playlist: defaultState.playlist,
-  },
+  tracks: [] as Track[],
   arrangeTracks: () => {},
   addTracks: () => {},
   removeTrack: () => {},
   toggleMenu: () => {},
+  fileReaderCopy: {
+    header: "Header",
+  },
 };
 
 const Template = (args) => <FileReader {...args} />;

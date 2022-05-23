@@ -2,7 +2,7 @@ import { styled } from "@linaria/react";
 import * as React from "react";
 import { audioManagerSingleton } from "../audioManager";
 
-export const ContextCTA = () => {
+export const CreateAudioContextButton = () => {
   return (
     <Wrapper>
       <button type="button" onClick={() => audioManagerSingleton.init()}>
@@ -25,6 +25,7 @@ text-align: center;
 align-items: center;
 justify-content: center;
 font-size: 18px;
+
 button {
   transition: background-color 250ms ease-in-out;
   transition-property: color, border;

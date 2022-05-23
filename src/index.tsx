@@ -20,6 +20,11 @@ window.addEventListener("orientationchange", () => {
   setManualViewportHeight();
 });
 
+// Mobile Safari still reports a wrong vh on load
+window.setTimeout(() => {
+  setManualViewportHeight();
+}, 0);
+
 const container = document.getElementById("root");
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
 root.render(<App />);

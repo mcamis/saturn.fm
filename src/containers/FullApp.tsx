@@ -9,22 +9,13 @@ import Menu from "../components/Menu";
 import About from "../components/About";
 import Header from "../components/Header";
 import DashboardBackground from "../components/DashboardBackground";
+import { usePrevious } from "../hooks";
 
 import introSrc from "../effects/intro.mp3";
 
 const FileReader = React.lazy(() => import("../components/FileReader"));
 // Hook
-function usePrevious(value: any) {
-  // The ref object is a generic container whose current property is mutable ...
-  // ... and can hold any value, similar to an instance property on a class
-  const ref = React.useRef();
-  // Store current value in ref
-  React.useEffect(() => {
-    ref.current = value;
-  }, [value]); // Only re-run if value changes
-  // Return previous value (happens before update in useEffect above)
-  return ref.current;
-}
+
 const FullApp = () => {
   const [hasLoaded, setHasLoaded] = React.useState(false);
   React.useEffect(() => {
@@ -33,23 +24,6 @@ const FullApp = () => {
     audioElement.play();
     setHasLoaded(true);
   }, []);
-
-  //   getClassNames() {
-  //     const isPlaying =
-  //       audioManagerSingleton.state.audioStatus === AudioStatus.Playing;
-  //     const isPaused =
-  //       audioManagerSingleton.state.audioStatus === AudioStatus.Paused;
-
-  //     const hiddenClass = this.state.isUiHidden ? "hidden" : "";
-  //     const introClass = audioManagerSingleton ? "intro" : " ";
-  //     const pausedClass = isPaused ? "paused" : "";
-  //     const playingClass = isPlaying ? "playing" : "";
-  //     const languageClass = ["ja-JP", "ja"].includes(navigator.language)
-  //       ? "japanese"
-  //       : "";
-
-  //     return `${hiddenClass} ${introClass} ${pausedClass} ${playingClass} ${languageClass}`;
-  //   }
 
   const { repeat, audioStatus } = useAudioManagerContext();
 
