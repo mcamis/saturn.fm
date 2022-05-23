@@ -28,7 +28,7 @@ function FileReader({ toggleMenu }: { toggleMenu: () => void }) {
   );
 }
 
-function FileReaderUI({
+export const FileReaderUI = ({
   toggleMenu,
   fileReaderCopy,
   tracks,
@@ -36,7 +36,7 @@ function FileReaderUI({
   toggleMenu: () => void;
   fileReaderCopy: any; // TODO copy types
   tracks: Track[];
-}) {
+}) => {
   return (
     <Modal header={fileReaderCopy.header}>
       <PlaylistWrapper>
@@ -106,7 +106,7 @@ function FileReaderUI({
       </PlaylistFooter>
     </Modal>
   );
-}
+};
 
 const EditorControlButtons = styled.div`
   margin-top: 2em;
@@ -302,4 +302,5 @@ const ExitButton = styled.button`
 //   removeTrack: PropTypes.func.isRequired,
 //   toggleMenu: PropTypes.func.isRequired,
 // };
+
 export default FileReader;

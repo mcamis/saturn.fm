@@ -2,10 +2,8 @@
 // Button.stories.js
 
 import * as React from "react";
-import FileReader from "./FileReader";
+import { FileReaderUI } from "./FileReader";
 import type { Track } from "../../audioManager";
-
-import "../styles/index.scss";
 
 const props = {
   tracks: [] as Track[],
@@ -18,7 +16,7 @@ const props = {
   },
 };
 
-const Template = (args) => <FileReader {...args} />;
+const Template = (args) => <FileReaderUI {...args} />;
 
 export const FirstStory = Template.bind({});
 

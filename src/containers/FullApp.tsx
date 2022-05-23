@@ -13,7 +13,9 @@ import { usePrevious } from "../hooks";
 
 import introSrc from "../effects/intro.mp3";
 
-const FileReader = React.lazy(() => import("../components/FileReader"));
+const FileReader = React.lazy(
+  () => import("../components/FileReader/FileReader")
+);
 // Hook
 
 const FullApp = () => {
