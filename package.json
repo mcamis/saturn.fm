@@ -83,6 +83,8 @@
     "@linaria/core": "^3.0.0-beta.15",
     "@linaria/react": "^3.0.0-beta.15",
     "@sentry/browser": "^6.19.7",
+    "@storybook/builder-webpack5": "^6.5.4",
+    "@storybook/manager-webpack5": "^6.5.4",
     "@types/react-beautiful-dnd": "^13.1.2",
     "core-js": "^3.6.5",
     "es6-tween": "^5.5.11",
