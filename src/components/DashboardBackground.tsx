@@ -11,7 +11,6 @@ const DashboardBackground = ({
   <>
     <DashboardHalf
       className={cx(
-        true && AnimationNames.appStartFloatInRelative,
         showExitAnimation && AnimationNames.exitTranslateDown
       )}
     />

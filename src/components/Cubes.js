@@ -163,7 +163,6 @@ class Cubes extends React.Component {
           this.mount = mount;
         }}
         className={cx(
-          true && AnimationNames.appStartFloatInRelative,
           this.props.showExitAnimation && AnimationNames.exitTranslateDown
         )}
       />
