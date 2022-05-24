@@ -2,6 +2,7 @@
 import { styled } from "@linaria/react";
 import * as React from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+
 import { getLocalizedCopy } from "../../utilities/helpers";
 import { Modal } from "../Modal";
 import { useAudioManagerContext } from "../../audioManager";
@@ -88,21 +89,21 @@ export const FileReaderUI = ({
         </PlaylistEditor>
       </PlaylistWrapper>
       <EditorControlButtons>
-        <button
+        <SaturnButton
           className="add-files"
           type="button"
           onClick={() => getDirectory()}
         >
           Add a directory
-        </button>
-        <button className="add-files" type="button" onClick={() => getTracks()}>
+        </SaturnButton>
+        <SaturnButton className="add-files" type="button" onClick={() => getTracks()}>
           Add file(s)
-        </button>
+        </SaturnButton>
       </EditorControlButtons>
       <PlaylistFooter>
-        <ExitButton type="button" onClick={toggleMenu}>
+        <SaturnButton type="button" onClick={toggleMenu}>
           Exit
-        </ExitButton>
+        </SaturnButton>
       </PlaylistFooter>
     </Modal>
   );
@@ -110,9 +111,17 @@ export const FileReaderUI = ({
 
 const EditorControlButtons = styled.div`
   margin-top: 2em;
+  display: grid;
+  grid-column-gap: 2em;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+
   button {
-    margin: 0 1em;
+    margin: 0;
   }
+
+
+
 `;
 
 const PlaylistWrapper = styled.div`
@@ -161,6 +170,10 @@ const PlaylistHeaderWrapper = styled.div`
 
   div:nth-child(1) {
     width: 40px;
+    font-size: 22px;
+    display: flex;
+    align-self: flex-end;
+    justify-content: center;
   }
   // Song
   div:nth-child(2) {
@@ -228,6 +241,7 @@ const PlaylistEditor = styled.div`
     // Handle
     div:nth-child(1) {
       width: 40px;
+      text-align: center;
     }
     //Song
     div:nth-child(2) {
@@ -280,11 +294,11 @@ const PlaylistEditor = styled.div`
   }
 `;
 
-const ExitButton = styled.button`
+const SaturnButton =  styled.button`
   border-radius: 3px;
   box-shadow: 0 0 0 2px rgba(53, 59, 101, 0.8),
     0 0 0 3.5px rgba(149, 149, 149, 0.8), 0 0 0 5px rgba(53, 59, 101, 0.8);
-  display: block;
+  display: inline-block;
   margin: 0 auto;
   margin-top: auto;
   color: white;
@@ -294,6 +308,7 @@ const ExitButton = styled.button`
   background-color: rgba(93, 21, 122, 0.8);
   border: 0;
   cursor: pointer;
+
 `;
 
 // FileReader.propTypes = {

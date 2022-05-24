@@ -97,6 +97,22 @@ const ChildrenWrapper = styled.div`
   height: 100%;
   flex-direction: column;
   align-items: center;
+
+  button {
+    border-radius: 3px;
+    box-shadow: 0 0 0 2px rgba(53, 59, 101, 0.8),
+      0 0 0 3.5px rgba(149, 149, 149, 0.8), 0 0 0 5px rgba(53, 59, 101, 0.8);
+    display: inline-block;
+    margin: 0 auto;
+    margin-top: auto;
+    color: white;
+    font-family: Phoebe;
+    font-size: 36px;
+    padding: 14px 14px 10px;
+    background-color: rgba(93, 21, 122, 0.8);
+    border: 0;
+    cursor: pointer;
+  }
 `;
 
 const MainContent = styled.div`

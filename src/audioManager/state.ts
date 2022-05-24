@@ -25,6 +25,7 @@ export const reducer = (state: AudioManagerState, action: Action): AudioManagerS
     case ActionTypes.audioContextState:
       return { ...state, audioContextState: action.payload };
     case ActionTypes.addTracks:
+    
       return {
         ...state,
         tracks: [
@@ -51,11 +52,11 @@ export const reducer = (state: AudioManagerState, action: Action): AudioManagerS
 
 export const defaultTracks = [
   {
-    file: Malibu,
+    file: Track2,
     track: 1,
-    album: "Diamond Inside of You",
-    artist: "Rodney Franklin",
-    title: "Malibu Shuffle",
+    album: "Music for Touching",
+    artist: "Cookies",
+    title: "Go Back",
     href: "",
     albumArtUrl: Rodney,
     isDefault: true,

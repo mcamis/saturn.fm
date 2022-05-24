@@ -16,7 +16,7 @@ const props = {
   },
 };
 
-const Template = (args) => <FileReaderUI {...args} />;
+const Template = (args: any) => <FileReaderUI {...args} />;
 
 export const FirstStory = Template.bind({});
 

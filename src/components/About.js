@@ -30,7 +30,7 @@ const About = (props) => {
         </ul>
       </MainContent>
       {/* TODO: Saturn style buttons */}
-      <button className="close" type="button" onClick={props.toggleAbout}>
+      <button type="button" onClick={props.toggleAbout}>
         Exit
       </button>
     </Modal>
@@ -73,6 +73,7 @@ const MainContent = styled.div`
     list-style-type: none;
     margin-bottom: 15px;
   }
+
 `;
 
 About.propTypes = {

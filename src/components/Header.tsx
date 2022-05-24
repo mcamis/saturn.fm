@@ -142,7 +142,7 @@ const KnightRider = styled.div`
   z-index: -1;
   content: "";
   background: black;
-  height: 10px;
+  height: 20px;
   transform: translate(-50%, 0);
 
   &:after {
