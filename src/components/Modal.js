@@ -98,7 +98,7 @@ const ChildrenWrapper = styled.div`
   flex-direction: column;
   align-items: center;
 
-  button {
+  > button {
     border-radius: 3px;
     box-shadow: 0 0 0 2px rgba(53, 59, 101, 0.8),
       0 0 0 3.5px rgba(149, 149, 149, 0.8), 0 0 0 5px rgba(53, 59, 101, 0.8);

@@ -63,8 +63,6 @@ const FullApp = () => {
       {showFileInput && (
         <Suspense fallback={null}>
           <FileReader
-            addTracks={() => {}}
-            removeTrack={() => {}}
             toggleMenu={() => setShowFileInput(false)}
           />
         </Suspense>
