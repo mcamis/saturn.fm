@@ -38,7 +38,7 @@ export class AudioManager {
       this.audioContext.suspend();
     }
 
-    this.audioContext.resume().then((e) => {
+    this.audioContext.resume().then(() => {
       this.updateState({
         type: ActionTypes.audioContextState,
         payload: this.audioContext.state,

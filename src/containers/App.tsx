@@ -25,8 +25,10 @@ const App = () => {
   );
 };
 
-export default () => (
+const AppWithAudioContextProvider = () => (
   <AudioManagerContextProvider>
     <App />
   </AudioManagerContextProvider>
 );
+
+export default AppWithAudioContextProvider;

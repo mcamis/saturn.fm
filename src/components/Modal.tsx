@@ -5,7 +5,7 @@ import modalBackgroundSrc from "../images/menubg.png";
 import { ModalHeader } from "./ModalHeader";
 
 type ModalProps = {
-  className: string;
+  className?: string;
   header: string;
   children: React.ReactNode;
 };

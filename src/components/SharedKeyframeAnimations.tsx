@@ -1,4 +1,3 @@
-import * as React from "react";
 import { styled } from "@linaria/react";
 
 // TODO: Linaria is breaking on enums

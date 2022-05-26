@@ -16,6 +16,11 @@ module.exports = {
     sourceType: "module",
     allowImportExportEverywhere: true,
     project: ["tsconfig.json"],
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 11,
+    sourceType: 'module',
   },
   plugins: ["react", "@typescript-eslint", "prettier", "import"],
   rules: {
@@ -28,6 +33,9 @@ module.exports = {
     "prettier/prettier": "error",
     "@typescript-eslint/lines-between-class-members": "off",
     "react/prop-types": "off",
+    "no-unused-vars": "off", // Eslint has trouble TS stuff like enums
+    "@typescript-eslint/no-unused-vars": "error"
+  
   },
   globals: {
     after: true,

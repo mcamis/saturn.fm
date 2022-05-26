@@ -12,6 +12,7 @@
    },
    "exclude": ["node_modules"],
    "include": [
+     "config/*.js",
      "types.d.ts",
      "**/*.ts",
      "**/*.tsx",
