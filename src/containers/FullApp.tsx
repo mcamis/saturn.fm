@@ -49,7 +49,7 @@ const FullApp = () => {
         repeat={repeat}
         audioStatus={audioStatus}
       />
-      <AudioReactiveCubes />
+      <AudioReactiveCubes shouldHide={hideDash} />
       {showFileInput && (
         <Suspense fallback={null}>
           <FileReader toggleMenu={() => setShowFileInput(false)} />

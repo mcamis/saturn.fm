@@ -1,5 +1,7 @@
+import { cx } from "@linaria/core";
 import { styled } from "@linaria/react";
 import * as React from "react";
+import { AnimationNames } from "../SharedKeyframeAnimations";
 import AudioReactiveCubesScene from "./scene";
 
 const useCubesScene = (containerRef: any) => {
@@ -15,12 +17,17 @@ const useCubesScene = (containerRef: any) => {
   }, []);
 };
 
-const AudioReactiveCubes = () => {
+const AudioReactiveCubes = ({ shouldHide }: { shouldHide: boolean }) => {
   const containerRef = React.useRef<undefined>();
 
   useCubesScene(containerRef);
 
-  return <Wrapper ref={containerRef} />;
+  return (
+    <Wrapper
+      className={cx(shouldHide && AnimationNames.exitTranslateDown)}
+      ref={containerRef}
+    />
+  );
 };
 
 const Wrapper = styled.div`
