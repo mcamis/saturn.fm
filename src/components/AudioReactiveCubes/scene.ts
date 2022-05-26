@@ -37,7 +37,7 @@ class AudioReactiveCubesScene {
     this.scene = new Scene();
     this.renderer = new WebGLRenderer({ alpha: true, antialias: false });
     this.domElement = this.renderer.domElement;
-    this.renderer.setPixelRatio(0.75);
+    this.renderer.setPixelRatio(0.35); // TODO: Make this responsive to actual pixel ratio
     this.renderer.setSize(this.width, this.height);
 
     this.debouncedResize = null;
