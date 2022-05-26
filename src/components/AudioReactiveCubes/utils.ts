@@ -1,29 +1,29 @@
 /* eslint-disable no-param-reassign */
 import { Tween, Easing } from "es6-tween";
-import { Color } from "three";
-import { logarithmic } from "./helpers";
+import { Color, Mesh } from "three";
+import { logarithmic } from "../../utilities/helpers";
 
 const COLOR_TWEENING_SCALE = 0.75;
 const MAX_ACTIVE_ROTATION = 0.03;
 const MIN_ACTIVE_ROTATION = 0.01;
 const IDLE_ROTATION = 0.0025;
 
-const randomRange = (max, min) => Math.random() * (max - min) + min;
+const randomRange = (max: number, min: number) => Math.random() * (max - min) + min;
 
-const colorTween = (target, channelFFT) => {
+const colorTween = (target: Mesh, channelFFT: number) => {
   const logVal = logarithmic(channelFFT * COLOR_TWEENING_SCALE);
   const hue = 142.5 - logVal;
 
   // // TODO: This HSL change is quick but doesn't exactly match the original behavior
   const { r, g, b } = new Color(`hsl(${hue > 0 ? hue : 0}, 100%, 48%)`);
 
-  return new Tween(target.material.color)
+  return new (Tween as any)((target as any).material.color)
     .to({ r, g, b }, 100)
     .easing(Easing.Linear.None)
     .start();
 };
 
-export const updateScaleAndColor = (cube, averageFFT) => {
+export const updateScaleAndColor = (cube: Mesh, averageFFT: number) => {
   colorTween(cube, averageFFT);
 
   const derivedInfluence = averageFFT * 0.007 > 1 ? 1 : averageFFT * 0.007;
@@ -39,7 +39,7 @@ export const updateScaleAndColor = (cube, averageFFT) => {
     .start();
 };
 
-export const activeRotation = (cube, modifier) => {
+export const activeRotation = (cube: Mesh, modifier?: number) => {
   // TODO: At random interval, flip directions
   const derivedMax = modifier
     ? -Math.abs(MAX_ACTIVE_ROTATION)
@@ -52,7 +52,7 @@ export const activeRotation = (cube, modifier) => {
   cube.rotateY(randomRange(derivedMax, derivedMin));
 };
 
-export const idleRotation = (cube, modifier = 1, down, up) => {
+export const idleRotation = (cube: Mesh, modifier = 1, down: boolean, up: boolean) => {
   if (up) {
     cube.position.y += 0.0075;
   } else if (down) {

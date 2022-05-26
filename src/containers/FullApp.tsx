@@ -3,12 +3,12 @@ import { styled } from "@linaria/react";
 import * as React from "react";
 import { Suspense } from "react";
 import { AudioStatus, useAudioManagerContext } from "../audioManager";
-import Starfield from "../components/Starfield";
-import Cubes from "../components/Cubes";
-import Menu from "../components/Menu";
 import About from "../components/About";
-import Header from "../components/Header";
+import AudioReactiveCubes from "../components/AudioReactiveCubes";
 import DashboardBackground from "../components/DashboardBackground";
+import Header from "../components/Header";
+import Menu from "../components/Menu";
+import Starfield from "../components/Starfield";
 import { usePrevious } from "../hooks";
 
 import introSrc from "../effects/intro.mp3";
@@ -16,7 +16,6 @@ import introSrc from "../effects/intro.mp3";
 const FileReader = React.lazy(
   () => import("../components/FileReader/FileReader")
 );
-// Hook
 
 const FullApp = () => {
   const [hasLoaded, setHasLoaded] = React.useState(false);
@@ -53,12 +52,8 @@ const FullApp = () => {
         repeat={repeat}
         audioStatus={audioStatus}
       />
-      <Cubes
-        audioStatus={audioStatus}
+      <AudioReactiveCubes
         isUiHidden={hideDash}
-        isPaused={isPaused}
-        isPlaying={isPlaying}
-        showExitAnimation={hideDash}
       />
       {showFileInput && (
         <Suspense fallback={null}>

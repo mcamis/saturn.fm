@@ -611,6 +611,7 @@ class Menu extends React.Component {
 const Wrapper = styled.div`
   position: absolute;
   bottom: 0;
+  z-index: 10;
 `;
 
 const Tooltip = styled.div`
