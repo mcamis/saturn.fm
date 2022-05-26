@@ -1,17 +1,11 @@
-import {
-  Scene,
-  PerspectiveCamera,
-  WebGLRenderer,
-} from "three";
-import {
-  sceneWidth,
-} from "../../utilities/helpers";
+import { Scene, PerspectiveCamera, WebGLRenderer } from "three";
+import { sceneWidth } from "../../utilities/helpers";
 
 type Options = {
   pixelRatio?: number;
   animationCallback?: () => void;
   // sceneSetupFn: () => PerspectiveCamera;
-}
+};
 
 // Unused draft of a basic three.js scene to extend for other components
 class BaseScene {
@@ -27,9 +21,9 @@ class BaseScene {
 
   constructor(options: Options) {
     this.options = {
-      pixelRatio: .75,
+      pixelRatio: 0.75,
       ...options,
-    }
+    };
     this.setDimensions();
     this.scene = new Scene();
     this.renderer = new WebGLRenderer({ alpha: true, antialias: false });
@@ -64,7 +58,7 @@ class BaseScene {
 
   onResize() {
     this.setDimensions();
-    if (!!this.camera) {
+    if (this.camera) {
       this.camera.aspect = this.width / this.height;
       this.camera?.updateProjectionMatrix();
     }
@@ -80,7 +74,6 @@ class BaseScene {
     this.renderer.render(this.scene, this.camera);
     window.requestAnimationFrame(this.animate.bind(this));
   }
-
 }
 
 export default BaseScene;

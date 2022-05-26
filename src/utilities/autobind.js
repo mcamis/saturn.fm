@@ -6,7 +6,7 @@
  * @returns {object} - input object, with each method's `this` bound to the instance
  */
 export default function autobind(obj) {
-  Object.getOwnPropertyNames(obj.constructor.prototype).forEach(prop => {
+  Object.getOwnPropertyNames(obj.constructor.prototype).forEach((prop) => {
     if (typeof obj[prop] === "function") {
       obj[prop] = obj[prop].bind(obj);
     }

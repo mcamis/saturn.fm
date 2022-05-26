@@ -52,14 +52,10 @@ const FullApp = () => {
         repeat={repeat}
         audioStatus={audioStatus}
       />
-      <AudioReactiveCubes
-        isUiHidden={hideDash}
-      />
+      <AudioReactiveCubes isUiHidden={hideDash} />
       {showFileInput && (
         <Suspense fallback={null}>
-          <FileReader
-            toggleMenu={() => setShowFileInput(false)}
-          />
+          <FileReader toggleMenu={() => setShowFileInput(false)} />
         </Suspense>
       )}
       {showAboutModal && <About toggleAbout={() => setShowAboutModal(false)} />}

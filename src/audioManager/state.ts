@@ -1,5 +1,12 @@
 import { v4 as uuidv4 } from "uuid";
-import { Action, ActionTypes, RepeatValues, AudioStatus, Track, AudioManagerState } from "./types";
+import {
+  Action,
+  ActionTypes,
+  RepeatValues,
+  AudioStatus,
+  Track,
+  AudioManagerState,
+} from "./types";
 import Track2 from "../songs/Cookies/02.mp3";
 import Track3 from "../songs/Cookies/03.mp3";
 import Track4 from "../songs/Cookies/04.mp3";
@@ -7,8 +14,10 @@ import Malibu from "../songs/shuffle.mp3";
 import Rodney from "../songs/shuffle.jpg";
 import CookiesCover from "../songs/Cookies/cover.png";
 
-
-export const reducer = (state: AudioManagerState, action: Action): AudioManagerState => {
+export const reducer = (
+  state: AudioManagerState,
+  action: Action
+): AudioManagerState => {
   switch (action.type) {
     case ActionTypes.currentTrackIndex:
       return { ...state, currentTrackIndex: action.payload };
@@ -25,7 +34,6 @@ export const reducer = (state: AudioManagerState, action: Action): AudioManagerS
     case ActionTypes.audioContextState:
       return { ...state, audioContextState: action.payload };
     case ActionTypes.addTracks:
-    
       return {
         ...state,
         tracks: [
@@ -42,13 +50,12 @@ export const reducer = (state: AudioManagerState, action: Action): AudioManagerS
     case ActionTypes.setNewTrackOrder:
       return {
         ...state,
-        tracks: action.payload
+        tracks: action.payload,
       };
     default:
       return state;
   }
 };
-
 
 export const defaultTracks = [
   {
@@ -89,12 +96,11 @@ export const defaultTracks = [
   },
 ];
 
-
 export const defaultState = {
   repeat: RepeatValues.Off,
   hasPendingSrcChange: false,
   currentTrackIndex: 0,
   tracks: defaultTracks,
   audioStatus: AudioStatus.Idle,
-  audioContextState: "suspended" as const
+  audioContextState: "suspended" as const,
 };

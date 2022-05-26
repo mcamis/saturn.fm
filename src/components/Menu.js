@@ -15,6 +15,7 @@ import {
 } from "three";
 import * as React from "react";
 import PropTypes from "prop-types";
+import { styled } from "@linaria/react";
 import {
   audioManagerSingleton,
   AudioStatus,
@@ -48,7 +49,6 @@ import hideSrc from "../effects/hide.mp3";
 import showSrc from "../effects/show.mp3";
 
 import autobind from "../utilities/autobind";
-import { styled } from "@linaria/react";
 
 // TODO: Set more magic numbers to constants
 const SHADOW_OFFSET = 1.025;

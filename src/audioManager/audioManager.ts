@@ -1,6 +1,12 @@
 import StereoAnalyser from "./stereoAnalyser";
 import backupCover from "../images/chopin_third.jpeg";
-import { RepeatValues, ActionTypes, AudioStatus, Track, AudioManagerState } from "./types";
+import {
+  RepeatValues,
+  ActionTypes,
+  AudioStatus,
+  Track,
+  AudioManagerState,
+} from "./types";
 import { defaultState, reducer } from "./state";
 const htmlAudioElement = new Audio();
 
@@ -33,7 +39,10 @@ export class AudioManager {
     }
 
     this.audioContext.resume().then((e) => {
-      this.updateState({ type: ActionTypes.audioContextState, payload: this.audioContext.state });
+      this.updateState({
+        type: ActionTypes.audioContextState,
+        payload: this.audioContext.state,
+      });
 
       // TODO: Preloading & total track time?
       this.analyser = new StereoAnalyser(this.audioElement, this.audioContext);
@@ -58,12 +67,11 @@ export class AudioManager {
     } else {
       audioElement.pause();
     }
-  }
+  };
 
   updateMediaSession = () => {
-    const { title, artist, album, albumArtUrl } = this.state.tracks[
-      this.state.currentTrackIndex
-    ];
+    const { title, artist, album, albumArtUrl } =
+      this.state.tracks[this.state.currentTrackIndex];
     this.audioElement.title = `「SATURN.FM」${title} - ${artist}`;
     if (!navigator?.mediaSession) return;
 
@@ -78,7 +86,7 @@ export class AudioManager {
         },
       ],
     });
-  }
+  };
 
   getNextTrackIndex(isAuto: boolean): number {
     if (this.state.repeat === RepeatValues.Single && isAuto) {
@@ -115,18 +123,20 @@ export class AudioManager {
     } else {
       this.audioElement.src = file ?? srcPath;
     }
-    this.updateState({ type: ActionTypes.currentTrackIndex, payload: trackIndex });
+    this.updateState({
+      type: ActionTypes.currentTrackIndex,
+      payload: trackIndex,
+    });
     this.revokeSongUrl(currentSrc);
-
   }
 
   loadNextTrack = (isAuto?: boolean) => {
     this.loadTrack(this.getNextTrackIndex(!!isAuto));
-  }
+  };
 
   loadPreviousTrack = () => {
     this.loadTrack(this.getPreviousTrackIndex());
-  }
+  };
 
   playAndReport() {
     this.audioElement.play();
@@ -156,13 +166,19 @@ export class AudioManager {
 
     this.audioElement.addEventListener("play", () => {
       this.analyser.start();
-      this.updateState({ type: ActionTypes.audioStatus, payload: AudioStatus.Playing });
+      this.updateState({
+        type: ActionTypes.audioStatus,
+        payload: AudioStatus.Playing,
+      });
     });
 
     this.audioElement.addEventListener("pause", () => {
       // TODO: Manually set pause state to fix stop
       this.analyser.pause();
-      this.updateState({ type: ActionTypes.audioStatus, payload: AudioStatus.Paused });
+      this.updateState({
+        type: ActionTypes.audioStatus,
+        payload: AudioStatus.Paused,
+      });
     });
 
     this.audioElement.addEventListener("ended", () => {
@@ -193,11 +209,14 @@ export class AudioManager {
     } else {
       this.loadPreviousTrack();
     }
-  }
+  };
 
   pause() {
     this.audioElement.pause();
-    this.updateState({ type: ActionTypes.audioStatus, payload: AudioStatus.Paused });
+    this.updateState({
+      type: ActionTypes.audioStatus,
+      payload: AudioStatus.Paused,
+    });
   }
 
   stop = () => {
@@ -209,7 +228,7 @@ export class AudioManager {
     // this.state.currentTrackIndex = 0;
     // this.state.audioStatus = AudioStatus.Stopped;
     this.updateState({ type: "setStopped" });
-  }
+  };
 
   toggleRepeat = () => {
     let payload;
@@ -226,35 +245,38 @@ export class AudioManager {
     }
 
     this.updateState({ type: ActionTypes.repeat, payload });
-  }
+  };
 
   addTracks = (newTracks: Track[]) => {
     this.updateState({ type: ActionTypes.addTracks, payload: newTracks });
-  }
+  };
 
   setCurrentTrack = (newIndex: number) => {
     // this.state.currentTrackIndex = newIndex;
-    this.updateState({ type: ActionTypes.currentTrackIndex, payload: newIndex });
-  }
+    this.updateState({
+      type: ActionTypes.currentTrackIndex,
+      payload: newIndex,
+    });
+  };
 
   setNewTrackOrder = (tracks: Track[]) => {
     // this.state.tracks = tracks;
     this.updateState({ type: ActionTypes.setNewTrackOrder, payload: tracks });
-  }
+  };
 
   updateState = (action: any) => {
     const newState = reducer(this.state, action);
     this.state = newState;
     this.stateUpdateListener && this.stateUpdateListener(newState);
-  }
+  };
   subscribe = (cb: any) => {
     this.stateUpdateListener = cb;
 
     return (): void => (this.stateUpdateListener = null);
-  }
+  };
   getSnapshot = () => {
     return this.state;
-  }
+  };
 
   get analyserFFT() {
     return this.analyser.averageFFT;
@@ -268,6 +290,5 @@ export class AudioManager {
     return this.audioElement.currentTime;
   }
 }
-
 
 export const audioManagerSingleton = new AudioManager();

@@ -11,7 +11,6 @@ import {
 } from "three";
 import {
   randomSize,
-  randomPosition,
   getRandomPositionsNotInCenter,
   sceneWidth,
 } from "../../utilities/helpers";
@@ -137,7 +136,7 @@ class StarfieldScene {
 
       // if the particle is too close move it to the back
       if (currentStar.position.z > 550) {
-        const [x,y] = getRandomPositionsNotInCenter(this.width, this.height);
+        const [x, y] = getRandomPositionsNotInCenter(this.width, this.height);
         currentStar.position.z = -1000;
         currentStar.position.x = x;
         currentStar.position.y = y;
@@ -173,8 +172,7 @@ class StarfieldScene {
 
       const star = new Mesh(bufferGeometry, material);
 
-    
-      const [x,y] = getRandomPositionsNotInCenter(this.width, this.height);
+      const [x, y] = getRandomPositionsNotInCenter(this.width, this.height);
 
       star.position.x = x;
       star.position.y = y;
@@ -209,14 +207,14 @@ class StarfieldScene {
       this.spaceship = shipModel;
       this.scene.add(shipModel);
     });
-  }
+  };
 
   toggleSpaceShipVisbility = (shouldShowSpaceship: boolean) => {
     this.shouldShowSpaceship = shouldShowSpaceship;
     if (!this.spaceship && shouldShowSpaceship) {
       this.setupSpaceship();
     }
-  }
+  };
 }
 
 export default StarfieldScene;

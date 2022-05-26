@@ -114,14 +114,14 @@ export default class StereoAnalyser {
 
     // Set to frameId so we can cancel later
     this.frameId = window.requestAnimationFrame(this.runAnalysis);
-  }
+  };
 
   /**
    * @private
    */
   startAnalyser = () => {
     this.frameId = this.frameId || requestAnimationFrame(this.runAnalysis);
-  }
+  };
 
   /**
    * @private
@@ -136,16 +136,16 @@ export default class StereoAnalyser {
     if (this.audioContext.state !== "suspended") {
       this.startAnalyser();
     }
-  }
+  };
 
   pause = () => {
     this.pauseAnalyser();
-  }
+  };
 
   stop = () => {
     this.pauseAnalyser();
     this.audioContext.close();
-  }
+  };
 
   get averageFFT() {
     return [average(this.dataArrayLeft), average(this.dataArrayRight)];

@@ -6,16 +6,16 @@ const useCubesScene = (containerRef: any) => {
   const [scene, setScene] = React.useState(null);
   React.useEffect(() => {
     scene && containerRef?.current?.appendChild(scene.domElement);
+    // only run when scene changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scene]);
 
   React.useEffect(() => {
     setScene(new AudioReactiveCubesScene());
   }, []);
-
-
 };
 
-const AudioReactiveCubes = ({ isUiHidden, }: { isUiHidden: boolean }) => {
+const AudioReactiveCubes = () => {
   const containerRef = React.useRef<undefined>();
 
   useCubesScene(containerRef);

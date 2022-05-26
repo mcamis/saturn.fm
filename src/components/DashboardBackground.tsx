@@ -10,9 +10,7 @@ const DashboardBackground = ({
 }) => (
   <>
     <DashboardHalf
-      className={cx(
-        showExitAnimation && AnimationNames.exitTranslateDown
-      )}
+      className={cx(showExitAnimation && AnimationNames.exitTranslateDown)}
     />
   </>
 );

@@ -1,10 +1,16 @@
 import * as React from "react";
-import styled, { css, keyframes } from "styled-components";
+import { styled } from "@linaria/react";
 
 import modalBackgroundSrc from "../images/menubg.png";
 import { ModalHeader } from "./ModalHeader";
 
-export const Modal = (props) => {
+type ModalProps = {
+  className: string;
+  header: string;
+  children: React.ReactNode;
+};
+
+export function Modal(props: ModalProps) {
   return (
     <FullscreenOverlay>
       <ContainerWithAnimatedBackground className={props.className}>
@@ -15,39 +21,7 @@ export const Modal = (props) => {
       </ContainerWithAnimatedBackground>
     </FullscreenOverlay>
   );
-};
-
-const menuBrightness = keyframes`
-  from {
-    filter: brightness(0);
-  }
-
-  to {
-    filter: brightness(1);
-  }
-`;
-
-const fadeInFilter = css`
-  animation-name: ${menuBrightness};
-  animation-duration: 1s;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-out;
-  animation-delay: 500ms;
-`;
-
-const pixelated = css`
-  image-rendering: optimizeSpeed; /* Older versions of FF */
-  image-rendering: -moz-crisp-edges; /* FF 6.0+  */
-  image-rendering: -webkit-optimize-contrast; /* Safari */
-  image-rendering: -o-crisp-edges; /* OS X & Windows Opera (12.02+) */
-  image-rendering: pixelated; /* Awesome future-browsers */
-`;
-
-const menuContentFadeIn = keyframes`
-  from { opacity: 0; }
-  to { opacity: 1; }
-`;
+}
 
 const FullscreenOverlay = styled.div`
   background: black;
@@ -74,20 +48,43 @@ const ContainerWithAnimatedBackground = styled.div`
     content: " ";
     display: block;
     filter: brightness(0);
-    ${fadeInFilter}
-    ${pixelated};
     background: url(${modalBackgroundSrc}) repeat-y;
     background-position: center top;
     background-size: 100% 880px;
     z-index: -1;
+
+    animation-name: menuBrightness;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-out;
+    animation-delay: 500ms;
+
+    @keyframes menuBrightness {
+      from {
+        filter: brightness(0);
+      }
+
+      to {
+        filter: brightness(1);
+      }
+    }
   }
 `;
 
 const ChildrenWrapper = styled.div`
+  @keyframes menuContentFadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
   max-width: 1000px;
   margin: 0 auto;
   opacity: 0;
-  animation-name: ${menuContentFadeIn};
+  animation-name: menuContentFadeIn;
   animation-duration: 10ms;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;

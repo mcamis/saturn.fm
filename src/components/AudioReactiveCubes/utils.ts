@@ -8,7 +8,8 @@ const MAX_ACTIVE_ROTATION = 0.03;
 const MIN_ACTIVE_ROTATION = 0.01;
 const IDLE_ROTATION = 0.0025;
 
-const randomRange = (max: number, min: number) => Math.random() * (max - min) + min;
+const randomRange = (max: number, min: number) =>
+  Math.random() * (max - min) + min;
 
 const colorTween = (target: Mesh, channelFFT: number) => {
   const logVal = logarithmic(channelFFT * COLOR_TWEENING_SCALE);
@@ -52,7 +53,12 @@ export const activeRotation = (cube: Mesh, modifier?: number) => {
   cube.rotateY(randomRange(derivedMax, derivedMin));
 };
 
-export const idleRotation = (cube: Mesh, modifier = 1, down: boolean, up: boolean) => {
+export const idleRotation = (
+  cube: Mesh,
+  modifier = 1,
+  down: boolean,
+  up: boolean
+) => {
   if (up) {
     cube.position.y += 0.0075;
   } else if (down) {

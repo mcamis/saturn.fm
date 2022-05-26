@@ -8,14 +8,8 @@ import {
   Mesh,
 } from "three";
 
-import {
-  sceneWidth,
-} from "../../utilities/helpers";
-import {
-  activeRotation,
-  idleRotation,
-  updateScaleAndColor,
-} from "./utils";
+import { sceneWidth } from "../../utilities/helpers";
+import { activeRotation, idleRotation, updateScaleAndColor } from "./utils";
 import { audioManagerSingleton, AudioStatus } from "../../audioManager";
 
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
@@ -45,7 +39,6 @@ class AudioReactiveCubesScene {
     this.domElement = this.renderer.domElement;
     this.renderer.setPixelRatio(0.75);
     this.renderer.setSize(this.width, this.height);
-
 
     this.debouncedResize = null;
 
@@ -140,8 +133,6 @@ class AudioReactiveCubesScene {
     this.renderer.render(this.scene, this.camera);
     window.requestAnimationFrame(this.animate.bind(this));
   }
-
-
 
   setupCube(slot: "leftCube" | "rightCube", [x, y, z]: number[]) {
     loader.load(

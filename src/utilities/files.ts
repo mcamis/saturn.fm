@@ -1,12 +1,12 @@
 import type { TagType } from "jsmediatags/types";
 import jsmediatags from "jsmediatags";
 import { v4 as uuidv4 } from "uuid";
-import type { Track } from '../audioManager'
+import type { Track } from "../audioManager";
 
 type FilePickerOptions = {
-  extensions?: string,
-  allowDirectory?: boolean
-}
+  extensions?: string;
+  allowDirectory?: boolean;
+};
 /**
  * Automatically generate a file input alert, resolves with a FileList instance
  * @param {*} extensions
@@ -55,8 +55,8 @@ async function generateTrackInfo(file: File) {
     // eslint-disable-next-line no-console
     console.log("Fetching Tags Error", err);
   }
-  const { tags: { artist, album, title, track, picture } = {} } = metadata as TagType;
-
+  const { tags: { artist, album, title, track, picture } = {} } =
+    metadata as TagType;
 
   let maybAlbumArtBlob;
   if (picture?.data) {
@@ -95,7 +95,7 @@ export async function getFilesWithTags(options: FilePickerOptions) {
   let fileList;
   try {
     fileList = await filePicker(options);
-    console.log(fileList)
+    console.log(fileList);
   } catch (err) {
     // eslint-disable-next-line no-console
     console.log(err);
@@ -106,7 +106,11 @@ export async function getFilesWithTags(options: FilePickerOptions) {
 }
 
 // a little function to help us with reordering the result
-export const reorder = (trackList: Track[], startIndex: number, endIndex: number) => {
+export const reorder = (
+  trackList: Track[],
+  startIndex: number,
+  endIndex: number
+) => {
   const result = Array.from(trackList);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);

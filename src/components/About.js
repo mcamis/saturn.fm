@@ -73,7 +73,6 @@ const MainContent = styled.div`
     list-style-type: none;
     margin-bottom: 15px;
   }
-
 `;
 
 About.propTypes = {

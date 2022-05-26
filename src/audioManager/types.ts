@@ -1,4 +1,3 @@
-
 export enum RepeatValues {
   Off,
   Single,
@@ -31,14 +30,13 @@ export type AudioManagerState = {
   currentTrackIndex: number;
   tracks: Track[];
   audioStatus: AudioStatus;
-  audioContextState: AudioContextState
+  audioContextState: AudioContextState;
 };
 
-
 export type Action = {
-  type: ActionTypes,
-  payload: any
-}
+  type: ActionTypes;
+  payload: any;
+};
 
 export enum ActionTypes {
   currentTrackIndex = "currentTrackIndex",
@@ -48,9 +46,8 @@ export enum ActionTypes {
   repeat = "repeat",
   addTracks = "addTracks",
   setNewTrackOrder = "setNewTrackOrder",
-  audioContextState = "audioContextState"
+  audioContextState = "audioContextState",
 }
-
 
 // type MediaSessionProps = {
 //   title: string;

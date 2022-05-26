@@ -19,8 +19,15 @@ export async function getDirectory() {
   audioManagerSingleton.addTracks(tracks);
 }
 
-export const getDraggableClasses = ({ isDragging, currentPlaying }: { isDragging: boolean, currentPlaying: boolean }) =>
-  `draggable ${isDragging ? "isDragging" : ""} ${currentPlaying ? "currentTrack" : ""
+export const getDraggableClasses = ({
+  isDragging,
+  currentPlaying,
+}: {
+  isDragging: boolean;
+  currentPlaying: boolean;
+}) =>
+  `draggable ${isDragging ? "isDragging" : ""} ${
+    currentPlaying ? "currentTrack" : ""
   }`;
 
 export function onDragEnd(result: DropResult) {

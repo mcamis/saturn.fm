@@ -96,7 +96,11 @@ export const FileReaderUI = ({
         >
           Add a directory
         </SaturnButton>
-        <SaturnButton className="add-files" type="button" onClick={() => getTracks()}>
+        <SaturnButton
+          className="add-files"
+          type="button"
+          onClick={() => getTracks()}
+        >
           Add file(s)
         </SaturnButton>
       </EditorControlButtons>
@@ -119,9 +123,6 @@ const EditorControlButtons = styled.div`
   button {
     margin: 0;
   }
-
-
-
 `;
 
 const PlaylistWrapper = styled.div`
@@ -294,7 +295,7 @@ const PlaylistEditor = styled.div`
   }
 `;
 
-const SaturnButton =  styled.button`
+const SaturnButton = styled.button`
   border-radius: 3px;
   box-shadow: 0 0 0 2px rgba(53, 59, 101, 0.8),
     0 0 0 3.5px rgba(149, 149, 149, 0.8), 0 0 0 5px rgba(53, 59, 101, 0.8);
@@ -308,7 +309,6 @@ const SaturnButton =  styled.button`
   background-color: rgba(93, 21, 122, 0.8);
   border: 0;
   cursor: pointer;
-
 `;
 
 // FileReader.propTypes = {
