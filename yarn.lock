@@ -977,6 +977,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"clsx@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "clsx@npm:1.2.1"
+  checksum: 30befca8019b2eb7dbad38cff6266cf543091dae2825c856a62a8ccf2c3ab9c2907c4d12b288b73101196767f66812365400a227581484a05f968b0307cfaf12
+  languageName: node
+  linkType: hard
+
 "color-convert@npm:^2.0.1":
   version: 2.0.1
   resolution: "color-convert@npm:2.0.1"
@@ -2896,13 +2903,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-compose@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "next-compose@npm:0.0.2"
-  checksum: 3d9020ff22ace803c2aae4c608501432134de69134a7b18d42960a480eadfc9a7231626374fcdea64f92edcff08058a82d1fc11cccc1823475a2da7e495e0e52
-  languageName: node
-  linkType: hard
-
 "next@npm:13.1.6":
   version: 13.1.6
   resolution: "next@npm:13.1.6"
@@ -3615,13 +3615,13 @@ __metadata:
     "@types/react-beautiful-dnd": ^13.1.2
     "@types/react-dom": 18.0.10
     "@typescript-eslint/eslint-plugin": ^5.13.0
+    clsx: ^1.2.1
     es6-tween: ^5.5.11
     eslint: 8.33.0
     eslint-config-next: 13.1.6
     file-loader: ^6.2.0
     jsmediatags: ^3.9.5
     next: 13.1.6
-    next-compose: ^0.0.2
     prop-types: ^15.8.1
     react: ^18.2.0
     react-beautiful-dnd: ^13.1.0

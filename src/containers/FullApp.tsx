@@ -20,14 +20,6 @@ import styles from './FullApp.module.scss'
 // );
 
 const FullApp = () => {
-  const [hasLoaded, setHasLoaded] = React.useState(false);
-  // React.useEffect(() => {
-  //   const audioElement = new Audio();
-  //   audioElement.src = introSrc;
-  //   audioElement.play();
-  //   setHasLoaded(true);
-  // }, []);
-
   const { repeat, audioStatus } = useAudioManagerContext();
 
   const [showFileInput, setShowFileInput] = React.useState(false);
@@ -41,7 +33,7 @@ const FullApp = () => {
         showExitAnimation={hideDash}
         showEntranceAnimation={!hideDash && wasHidden}
       />
-      {/* 
+      {/*
       <Menu
         isUiHidden={hideDash}
         showEntranceAnimation={!hideDash && wasHidden}
