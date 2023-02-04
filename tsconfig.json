@@ -4,17 +4,35 @@
     "noImplicitAny": true,
     "module": "esnext",
     "target": "esnext",
-    "jsx": "react",
+    "jsx": "preserve",
     "allowJs": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "typeRoots": ["./node_modules/@types", "./typings"],
-   },
-   "exclude": ["node_modules"],
-   "include": [
-     "config/*.js",
-     "types.d.ts",
-     "**/*.ts",
-     "**/*.tsx",
-   ] 
+    "typeRoots": [
+      "./node_modules/@types",
+      "./typings"
+    ],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "config/*.js",
+    "types.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ]
 }
