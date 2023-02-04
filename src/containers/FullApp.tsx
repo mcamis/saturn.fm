@@ -4,7 +4,7 @@ import * as React from "react";
 
 import { useAudioManagerContext } from "../audioManager";
 // import About from "../components/About";
-// import AudioReactiveCubes from "../components/AudioReactiveCubes";
+import AudioReactiveCubes from "../components/AudioReactiveCubes";
 import {DashboardBackground} from "../components/DashboardBackground";
 import Header from "../components/Header";
 import Menu from "../components/Menu";
@@ -44,8 +44,9 @@ const FullApp = () => {
         repeat={repeat}
         audioStatus={audioStatus}
       />
-       {/*
+       
       <AudioReactiveCubes shouldHide={hideDash} />
+      {/*
       {showFileInput && (
         <Suspense fallback={null}>
           <FileReader toggleMenu={() => setShowFileInput(false)} />
