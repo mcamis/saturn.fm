@@ -1,7 +1,7 @@
 
 .wrapper {
   height: 100%;
-  filter: brightness(0);
+  // filter: brightness(0);
 
   &.hasLoaded {
     animation-name: menuBrightness;

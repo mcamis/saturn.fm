@@ -6,7 +6,7 @@ import { useAudioManagerContext } from "../audioManager";
 // import About from "../components/About";
 // import AudioReactiveCubes from "../components/AudioReactiveCubes";
 // import DashboardBackground from "../components/DashboardBackground";
-// import Header from "../components/Header";
+import Header from "../components/Header";
 // import Menu from "../components/Menu";
 // import Starfield from "../components/Starfield";
 import { usePrevious } from "../hooks";
@@ -37,10 +37,11 @@ const FullApp = () => {
 
   return (
     <main className={styles.wrapper}>
-      {/* <Header
+      <Header
         showExitAnimation={hideDash}
         showEntranceAnimation={!hideDash && wasHidden}
       />
+      {/* 
       <Menu
         isUiHidden={hideDash}
         showEntranceAnimation={!hideDash && wasHidden}
