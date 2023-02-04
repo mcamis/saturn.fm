@@ -2,9 +2,9 @@ import * as React from "react";
 import PropTypes from "prop-types";
 
 import { Modal } from "./Modal";
-import {styles} from './About.module.scss'
+import styles from './About.module.scss'
 
-const About = (props) => {
+const About = (props: any) => {
   return (
     <Modal header="about">
       <div className={styles.wrapper}>
