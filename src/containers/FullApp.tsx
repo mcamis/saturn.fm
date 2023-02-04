@@ -10,14 +10,11 @@ import Header from "../components/Header";
 import Menu from "../components/Menu";
 import { Starfield } from "../components/Starfield/Starfield";
 import { usePrevious } from "../hooks";
-import introSrc from "../effects/intro.mp3";
 import styles from './FullApp.module.scss'
 
 const FileReader = dynamic(() => import("../components/FileReader/FileReader"), {
   loading: () => null,
 })
-
-
 
 const FullApp = () => {
   const { repeat, audioStatus } = useAudioManagerContext();
@@ -33,7 +30,6 @@ const FullApp = () => {
         showExitAnimation={hideDash}
         showEntranceAnimation={!hideDash && wasHidden}
       />
-     
       <Menu
         isUiHidden={hideDash}
         showEntranceAnimation={!hideDash && wasHidden}
@@ -44,11 +40,8 @@ const FullApp = () => {
         repeat={repeat}
         audioStatus={audioStatus}
       />
-       
       <AudioReactiveCubes shouldHide={hideDash} />
-
       {showFileInput && <FileReader toggleMenu={() => setShowFileInput(false)} /> }
-
     {showAboutModal && <About toggleAbout={() => setShowAboutModal(false)} />} 
       <DashboardBackground showExitAnimation={hideDash} />
       <Starfield isUiHidden={hideDash} /> 
