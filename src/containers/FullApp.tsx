@@ -1,6 +1,6 @@
 
 import * as React from "react";
-// import { Suspense } from "react";
+import dynamic from 'next/dynamic'
 
 import { useAudioManagerContext } from "../audioManager";
 import About from "../components/About";
@@ -11,13 +11,13 @@ import Menu from "../components/Menu";
 import { Starfield } from "../components/Starfield/Starfield";
 import { usePrevious } from "../hooks";
 import introSrc from "../effects/intro.mp3";
-
 import styles from './FullApp.module.scss'
 
+const FileReader = dynamic(() => import("../components/FileReader/FileReader"), {
+  loading: () => null,
+})
 
-// const FileReader = React.lazy(
-//   () => import("../components/FileReader/FileReader")
-// );
+
 
 const FullApp = () => {
   const { repeat, audioStatus } = useAudioManagerContext();
@@ -46,14 +46,10 @@ const FullApp = () => {
       />
        
       <AudioReactiveCubes shouldHide={hideDash} />
-      {/*
-      {showFileInput && (
-        <Suspense fallback={null}>
-          <FileReader toggleMenu={() => setShowFileInput(false)} />
-        </Suspense>
-      )}
-      */}
-      {showAboutModal && <About toggleAbout={() => setShowAboutModal(false)} />} 
+
+      {showFileInput && <FileReader toggleMenu={() => setShowFileInput(false)} /> }
+
+    {showAboutModal && <About toggleAbout={() => setShowAboutModal(false)} />} 
       <DashboardBackground showExitAnimation={hideDash} />
       <Starfield isUiHidden={hideDash} /> 
     </main>

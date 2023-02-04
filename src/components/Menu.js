@@ -555,7 +555,6 @@ class Menu extends React.Component {
   }
 
   createMenuElements() {
-    console.log('createMenuElements')
     const menuElements = createButtons(
       audioManagerSingleton,
       this.hideMenu,
