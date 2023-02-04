@@ -21,12 +21,12 @@ import styles from './FullApp.module.scss'
 
 const FullApp = () => {
   const [hasLoaded, setHasLoaded] = React.useState(false);
-  React.useEffect(() => {
-    const audioElement = new Audio();
-    audioElement.src = introSrc;
-    audioElement.play();
-    setHasLoaded(true);
-  }, []);
+  // React.useEffect(() => {
+  //   const audioElement = new Audio();
+  //   audioElement.src = introSrc;
+  //   audioElement.play();
+  //   setHasLoaded(true);
+  // }, []);
 
   const { repeat, audioStatus } = useAudioManagerContext();
 
@@ -36,7 +36,7 @@ const FullApp = () => {
   const wasHidden = usePrevious(hideDash);
 
   return (
-    <AppWrapper className={styles.wrapper}>
+    <main className={styles.wrapper}>
       {/* <Header
         showExitAnimation={hideDash}
         showEntranceAnimation={!hideDash && wasHidden}
@@ -60,7 +60,7 @@ const FullApp = () => {
       {showAboutModal && <About toggleAbout={() => setShowAboutModal(false)} />}
       <DashboardBackground showExitAnimation={hideDash} />
       <Starfield isUiHidden={hideDash} /> */}
-    </AppWrapper>
+    </main>
   );
 };
 
