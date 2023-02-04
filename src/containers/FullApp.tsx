@@ -3,7 +3,7 @@ import * as React from "react";
 // import { Suspense } from "react";
 
 import { useAudioManagerContext } from "../audioManager";
-// import About from "../components/About";
+import About from "../components/About";
 import AudioReactiveCubes from "../components/AudioReactiveCubes";
 import {DashboardBackground} from "../components/DashboardBackground";
 import Header from "../components/Header";
@@ -52,7 +52,8 @@ const FullApp = () => {
           <FileReader toggleMenu={() => setShowFileInput(false)} />
         </Suspense>
       )}
-      {showAboutModal && <About toggleAbout={() => setShowAboutModal(false)} />} */}
+      */}
+      {showAboutModal && <About toggleAbout={() => setShowAboutModal(false)} />} 
       <DashboardBackground showExitAnimation={hideDash} />
       <Starfield isUiHidden={hideDash} /> 
     </main>
