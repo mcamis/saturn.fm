@@ -8,7 +8,7 @@ import { useAudioManagerContext } from "../audioManager";
 // import DashboardBackground from "../components/DashboardBackground";
 import Header from "../components/Header";
 // import Menu from "../components/Menu";
-// import Starfield from "../components/Starfield";
+import { Starfield } from "../components/Starfield/Starfield";
 import { usePrevious } from "../hooks";
 import introSrc from "../effects/intro.mp3";
 
@@ -51,8 +51,8 @@ const FullApp = () => {
         </Suspense>
       )}
       {showAboutModal && <About toggleAbout={() => setShowAboutModal(false)} />}
-      <DashboardBackground showExitAnimation={hideDash} />
-      <Starfield isUiHidden={hideDash} /> */}
+      <DashboardBackground showExitAnimation={hideDash} />*/}
+      <Starfield isUiHidden={hideDash} /> 
     </main>
   );
 };
