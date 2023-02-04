@@ -5,7 +5,7 @@ import * as React from "react";
 import { useAudioManagerContext } from "../audioManager";
 // import About from "../components/About";
 // import AudioReactiveCubes from "../components/AudioReactiveCubes";
-// import DashboardBackground from "../components/DashboardBackground";
+import {DashboardBackground} from "../components/DashboardBackground";
 import Header from "../components/Header";
 // import Menu from "../components/Menu";
 import { Starfield } from "../components/Starfield/Starfield";
@@ -33,7 +33,7 @@ const FullApp = () => {
         showExitAnimation={hideDash}
         showEntranceAnimation={!hideDash && wasHidden}
       />
-      {/*
+     
       <Menu
         isUiHidden={hideDash}
         showEntranceAnimation={!hideDash && wasHidden}
@@ -44,14 +44,15 @@ const FullApp = () => {
         repeat={repeat}
         audioStatus={audioStatus}
       />
+       {/*
       <AudioReactiveCubes shouldHide={hideDash} />
       {showFileInput && (
         <Suspense fallback={null}>
           <FileReader toggleMenu={() => setShowFileInput(false)} />
         </Suspense>
       )}
-      {showAboutModal && <About toggleAbout={() => setShowAboutModal(false)} />}
-      <DashboardBackground showExitAnimation={hideDash} />*/}
+      {showAboutModal && <About toggleAbout={() => setShowAboutModal(false)} />} */}
+      <DashboardBackground showExitAnimation={hideDash} />
       <Starfield isUiHidden={hideDash} /> 
     </main>
   );
