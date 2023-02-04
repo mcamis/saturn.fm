@@ -18,6 +18,7 @@ export const AudioManagerContextProvider = ({
 }) => {
   const state = useSyncExternalStore(
     audioManagerSingleton.subscribe,
+    audioManagerSingleton.getSnapshot,
     audioManagerSingleton.getSnapshot
   );
   return <CONTEXT.Provider value={state}>{children}</CONTEXT.Provider>;

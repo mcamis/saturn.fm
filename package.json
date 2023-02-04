@@ -33,6 +33,7 @@
     "es6-tween": "^5.5.11",
     "eslint": "8.33.0",
     "eslint-config-next": "13.1.6",
+    "file-loader": "^6.2.0",
     "jsmediatags": "^3.9.5",
     "next": "13.1.6",
     "prop-types": "^15.8.1",
