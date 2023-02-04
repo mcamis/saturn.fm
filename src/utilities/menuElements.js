@@ -59,7 +59,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
     },
     animationDuration: 400,
     animationDelay: 220,
-    mapSrc: discSrc,
+    mapSrc: discSrc.src,
     showShadow: false,
   },
   {
@@ -68,7 +68,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
     onClick: () => {},
     animationDelay: 100,
     animationDuration: 400,
-    mapSrc: moreSrc,
+    mapSrc: moreSrc.src,
     showShadow: false,
   },
   {
@@ -77,7 +77,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
     onClick: hideMenu,
     animationDelay: 180,
     animationDuration: 400,
-    mapSrc: hideSrc,
+    mapSrc: hideSrc.src,
     showShadow: false,
   },
   {
@@ -86,7 +86,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
     onClick: audioManager.previousTrack,
     animationDelay: 500,
     animationDuration: 350,
-    mapSrc: rwdSrc,
+    mapSrc: rwdSrc.src,
     showShadow: false,
   },
   {
@@ -95,7 +95,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
     onClick: audioManager.togglePlayPause,
     animationDelay: 300,
     animationDuration: 350,
-    mapSrc: playSrc,
+    mapSrc: playSrc.src,
     showShadow: false,
   },
   {
@@ -104,7 +104,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
     onClick: audioManager.loadNextTrack,
     animationDelay: 280,
     animationDuration: 350,
-    mapSrc: ffwdSrc,
+    mapSrc: ffwdSrc.src,
   },
   {
     name: "repeat",
@@ -112,7 +112,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
     onClick: audioManager.toggleRepeat,
     animationDelay: 600,
     animationDuration: 300,
-    mapSrc: repeatSrc,
+    mapSrc: repeatSrc.src,
     showShadow: true,
   },
   {
@@ -121,7 +121,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
     onClick: audioManager.stop,
     animationDelay: 700,
     animationDuration: 300,
-    mapSrc: stopSrc,
+    mapSrc: stopSrc.src,
     showShadow: true,
   },
 
@@ -131,7 +131,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
   //   onClick: hideDash,
   //   animationDelay: 900,
   //   animationDuration: 300,
-  //   mapSrc: advancedSrc,
+  //   mapSrc: advancedSrc.src,
   // },
 ];
 

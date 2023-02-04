@@ -7,7 +7,7 @@ import { useAudioManagerContext } from "../audioManager";
 // import AudioReactiveCubes from "../components/AudioReactiveCubes";
 import {DashboardBackground} from "../components/DashboardBackground";
 import Header from "../components/Header";
-// import Menu from "../components/Menu";
+import Menu from "../components/Menu";
 import { Starfield } from "../components/Starfield/Starfield";
 import { usePrevious } from "../hooks";
 import introSrc from "../effects/intro.mp3";
