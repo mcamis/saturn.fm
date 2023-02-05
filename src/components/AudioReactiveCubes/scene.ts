@@ -1,4 +1,4 @@
-import * as TWEEN from "es6-tween";
+import * as TWEEN from "@tweenjs/tween.js"
 import {
   Scene,
   PerspectiveCamera,

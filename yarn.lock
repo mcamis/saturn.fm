@@ -334,6 +334,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tweenjs/tween.js@npm:^18.6.4":
+  version: 18.6.4
+  resolution: "@tweenjs/tween.js@npm:18.6.4"
+  checksum: 47208db3f6c32cde80284a852d0fca016284f90c4798eb4ebb2ebfc2e379504007bf0c031c2c33044df8a0878fd1942ebc4e0b7f5b8bcccf812b532ea1ee73eb
+  languageName: node
+  linkType: hard
+
 "@types/hoist-non-react-statics@npm:^3.3.0":
   version: 3.3.1
   resolution: "@types/hoist-non-react-statics@npm:3.3.1"
@@ -1362,13 +1369,6 @@ __metadata:
     is-date-object: ^1.0.1
     is-symbol: ^1.0.2
   checksum: 4ead6671a2c1402619bdd77f3503991232ca15e17e46222b0a41a5d81aebc8740a77822f5b3c965008e631153e9ef0580540007744521e72de8e33599fca2eed
-  languageName: node
-  linkType: hard
-
-"es6-tween@npm:^5.5.11":
-  version: 5.5.11
-  resolution: "es6-tween@npm:5.5.11"
-  checksum: 2d65f00c7fff4b31879ac941f5cd1e4aa990a1e278abf25b44876537db82f51bf5635e52f16fa147e3e28c8e4f5da53a62dd94e13280c0b0981e46145268923d
   languageName: node
   linkType: hard
 
@@ -3691,6 +3691,7 @@ __metadata:
   dependencies:
     "@next/font": 13.1.6
     "@sentry/browser": ^6.19.7
+    "@tweenjs/tween.js": ^18.6.4
     "@types/node": 18.11.18
     "@types/react": 18.0.27
     "@types/react-beautiful-dnd": ^13.1.2
@@ -3699,7 +3700,6 @@ __metadata:
     "@types/uuid": ^9.0.0
     "@typescript-eslint/eslint-plugin": ^5.13.0
     clsx: ^1.2.1
-    es6-tween: ^5.5.11
     eslint: 8.33.0
     eslint-config-next: 13.1.6
     eslint-config-prettier: ^8.6.0
@@ -3713,6 +3713,7 @@ __metadata:
     react-dom: ^18.2.0
     sass: ^1.58.0
     three: ^0.140.2
+    tween: ^0.9.0
     typescript: 4.9.5
     url-loader: ^4.1.1
     uuid: ^8.2.0
@@ -4118,6 +4119,13 @@ __metadata:
   peerDependencies:
     typescript: ">=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta"
   checksum: 1843f4c1b2e0f975e08c4c21caa4af4f7f65a12ac1b81b3b8489366826259323feb3fc7a243123453d2d1a02314205a7634e048d4a8009921da19f99755cdc48
+  languageName: node
+  linkType: hard
+
+"tween@npm:^0.9.0":
+  version: 0.9.0
+  resolution: "tween@npm:0.9.0"
+  checksum: 38c6b75a4f35ef5d2b5e7a3ee893aa860a57d1aee4431e91bc915904aeea933f026de2a262a9442362e0e0c59a128ec308dd799c4d0cf975b9a0eb0dd4caeb74
   languageName: node
   linkType: hard
 
