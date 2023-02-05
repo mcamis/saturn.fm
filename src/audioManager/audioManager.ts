@@ -8,7 +8,8 @@ import {
   AudioManagerState,
 } from "./types";
 import { defaultState, reducer } from "./state";
-let htmlAudioElement;
+
+let htmlAudioElement: undefined | HTMLAudioElement;
 if (typeof window !== "undefined") {
   htmlAudioElement = new Audio();
 }
@@ -30,8 +31,8 @@ export class AudioManager {
   }
 
   init() {
-    // Safari is still prefixed
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    // Safari is still prefixed?
+    const AudioContext = window.AudioContext;
     this.audioContext = new AudioContext();
 
     // For Firefox & Mobile Safari AudioContext starts in a running state, even though it will block all audio play events
@@ -85,7 +86,7 @@ export class AudioManager {
       album,
       artwork: [
         {
-          src: albumArtUrl ?? backupCover,
+          src: albumArtUrl ?? backupCover.src,
           sizes: "512x512",
         },
       ],

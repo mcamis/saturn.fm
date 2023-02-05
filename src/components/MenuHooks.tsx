@@ -96,9 +96,6 @@ const Menu = (props) => {
 
   return (
     <>
-      <div key={activeButton} className={styles.tooltip}>
-        {getToolTip(props.repeat, props.audioStatus, activeButton)}
-      </div>
       <div className={styles.wrapper}>
         <MenuItems
           setActiveButton={setActiveButton}
@@ -106,6 +103,9 @@ const Menu = (props) => {
           handleClick={handleMenuClick}
         />
       </div>
+      {!props.isUiHidden && <div key={activeButton} className={styles.tooltip}>
+        {getToolTip(props.repeat, props.audioStatus, activeButton)}
+      </div>}
     </>
   );
 };

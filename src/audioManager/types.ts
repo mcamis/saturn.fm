@@ -30,7 +30,7 @@ export type AudioManagerState = {
   currentTrackIndex: number;
   tracks: Track[];
   audioStatus: AudioStatus;
-  audioContextState: AudioContextState;
+  audioContextState: string;
 };
 
 export type Action = {
