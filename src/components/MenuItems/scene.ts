@@ -13,6 +13,7 @@ import {
 
 import {
   sceneWidth,
+  throttle
 } from "../../utilities/helpers";
 import * as TWEEN from "es6-tween";
 
@@ -37,12 +38,16 @@ class MenuItemsScene {
   private orbits: any;
   private raycaster: any;
   private mouse: any;
+  private buttonMeshes: any;
+  private activeButton: string;
   
 
   public domElement;
 
   constructor() {
     this.setDimensions();
+    const onMouseMoveThrottled = throttle(this.onMouseMove.bind(this), 100);
+    this.buttonMeshes = [];
     this.scene = new Scene();
     this.renderer = new WebGLRenderer({ alpha: true, antialias: false });
     this.domElement = this.renderer.domElement;
@@ -58,10 +63,46 @@ class MenuItemsScene {
     window.addEventListener("orientationchange", () => {
       this.onResize();
     });
+    this.domElement.addEventListener(
+      "mousemove",
+      (e) => onMouseMoveThrottled(e),
+      false
+    );
 
     this.setupScene();
     this.start();
   }
+
+
+  onMouseMove(e) {
+    const rect = this.renderer.domElement.getBoundingClientRect();
+    // TODO/WTF: Why is * 1.5 necessary!?
+    this.mouse.x = ((e.clientX - rect.left * 1.5) / (rect.width - rect.left)) * 2 - 1;
+    this.mouse.y = -((e.clientY - rect.top) / (rect.bottom - rect.top)) * 2 + 1;
+
+    this.manageActiveButton();
+  }
+
+  manageActiveButton() {
+    this.raycaster.setFromCamera(this.mouse, this.camera);
+    const intersects = this.raycaster.intersectObjects(this.buttonMeshes);
+    if (intersects.length > 0) {
+      const {
+        object: {
+          material: { name },
+        },
+      } = intersects[0];
+      if (name && name !== this.activeButton) {
+        // this.setState({ activeButton: name });
+        this.activeButton = name;
+        console.log(this.activeButton)
+      }
+      document.body.classList.add("pointer");
+    } else {
+      document.body.classList.remove("pointer");
+    }
+  }
+
 
   setDimensions() {
     const width = sceneWidth();
@@ -117,6 +158,7 @@ class MenuItemsScene {
     const plane = new Mesh(planeGeometry, planeMaterial);
     plane.position.set(x, y, z);
     this.scene.add(plane);
+    this.buttonMeshes.push(plane);
   }
 
   placeOrbitsInScene() {
