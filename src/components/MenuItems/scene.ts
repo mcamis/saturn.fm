@@ -276,7 +276,13 @@ class MenuItemsScene {
     this.currentVisibility = !shouldHide;
     console.log({ shouldHide });
 
-    if (!shouldHide) return;
+    if (!shouldHide) {
+      this.buttonMeshes.forEach((button: Mesh) => {
+        const { x, y, z } = button.position;
+        animateButtonPosition(button, new Vector3(x, y + 10, z));
+      });
+
+    } else {
 
     // TODO: Switch this to the real sound effect
     setTimeout(() => {
@@ -285,6 +291,7 @@ class MenuItemsScene {
         animateButtonPosition(button, new Vector3(x, y - 10, z));
       });
     }, 450); // TODO what is this magic number?
+  }
   }
 }
 
