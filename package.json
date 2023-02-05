@@ -25,7 +25,6 @@
   "dependencies": {
     "@next/bundle-analyzer": "^13.1.6",
     "@next/font": "13.1.6",
-    "@sentry/browser": "^6.19.7",
     "@tweenjs/tween.js": "^18.6.4",
     "@types/jsmediatags": "^3.9.3",
     "@types/node": "18.11.18",

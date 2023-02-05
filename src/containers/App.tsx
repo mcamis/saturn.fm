@@ -1,6 +1,4 @@
 import * as React from "react";
-import { Suspense } from "react";
-
 import {
   AudioManagerContextProvider,
   useAudioManagerContext,
@@ -10,8 +8,10 @@ import dynamic from "next/dynamic";
 import styles from "./App.module.scss";
 
 // Don't load three.js until an audio context is
-const FullApp = React.lazy(() => import("./FullApp"));
-const Starfield = React.lazy(() => import("../components/Starfield/Starfield"));
+const FullApp = dynamic(() => import("./FullApp"), { ssr: false });
+const Starfield = dynamic(() => import("../components/Starfield/Starfield"), {
+  ssr: false,
+});
 
 const App = () => {
   const [hasMounted, setHasMounted] = React.useState(false);
@@ -25,9 +25,7 @@ const App = () => {
   return (
     <>
       {audioContextState !== "suspended" && (
-        <Suspense fallback={null}>
-          <FullApp isUiHidden={isUiHidden} setIsUiHidden={setIsUiHidden} />
-        </Suspense>
+        <FullApp isUiHidden={isUiHidden} setIsUiHidden={setIsUiHidden} />
       )}
       {audioContextState === "suspended" && <CreateAudioContextButton />}
       {hasMounted && <Starfield isUiHidden={isUiHidden} />}

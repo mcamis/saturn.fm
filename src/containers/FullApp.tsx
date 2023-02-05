@@ -12,9 +12,7 @@ import styles from "./FullApp.module.scss";
 
 const FileReader = dynamic(
   () => import("../components/FileReader/FileReader"),
-  {
-    loading: () => null,
-  }
+  { ssr: false }
 );
 
 const FullApp = ({
@@ -34,7 +32,7 @@ const FullApp = ({
   React.useEffect(() => {
     if (isUiHidden) {
       setIsExitAnimationFinished(false);
-      window.setTimeout(() => setIsExitAnimationFinished(true), 2000);
+      window.setTimeout(() => setIsExitAnimationFinished(true), 2500);
     } else {
       setIsExitAnimationFinished(true);
     }

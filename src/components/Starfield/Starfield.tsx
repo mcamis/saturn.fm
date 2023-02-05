@@ -1,6 +1,7 @@
 import * as React from "react";
 import StarfieldScene from "./scene";
 import styles from "./Starfield.module.scss";
+import clsx from "clsx";
 
 const useStarfieldScene = (containerRef: any, shouldShowSpaceship: boolean) => {
   const [scene, setScene] = React.useState(null);
@@ -15,14 +16,23 @@ const useStarfieldScene = (containerRef: any, shouldShowSpaceship: boolean) => {
   React.useEffect(() => {
     scene?.toggleSpaceShipVisbility(shouldShowSpaceship);
   }, [shouldShowSpaceship]);
+
+  return !!scene;
 };
 
 export const Starfield = ({ isUiHidden }: { isUiHidden: boolean }) => {
   const containerRef = React.useRef<undefined>();
 
-  useStarfieldScene(containerRef, isUiHidden);
+  const hasRendered = useStarfieldScene(containerRef, isUiHidden);
 
-  return <div ref={containerRef} className={styles.wrapper} />;
+  return (
+    <div
+      ref={containerRef}
+      className={clsx(styles.wrapper, {
+        [styles.fadeIn]: hasRendered,
+      })}
+    />
+  );
 };
 
 export default Starfield;

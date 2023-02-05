@@ -143,9 +143,9 @@ class AudioReactiveCubesScene {
         console.error("gltf loading error");
         return;
       }
-      cubeMesh.material.color = cubeColor; // TODO what three.js type do I need here?
-      cubeMesh.material.dithering = true;
-      cubeMesh.material.flatShading = false;
+      (cubeMesh.material as any).color = cubeColor; // TODO what three.js type do I need here?
+      (cubeMesh.material as any).dithering = true;
+      (cubeMesh.material as any).flatShading = false;
       cubeMesh.position.set(x, y, z);
       cubeMesh.rotateX(0.075);
       if (slot === "rightCube") {
