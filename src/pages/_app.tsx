@@ -1,3 +1,5 @@
+import React from "react";
+import Script from "next/script";
 import type { AppProps } from "next/app";
 import { preloadImages } from "../utilities/preloadImages";
 import "../styles/index.scss";
@@ -25,5 +27,21 @@ if (typeof window !== "undefined") {
 }
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <Script src="https://www.googletagmanager.com/gtag/js?id=UA-134247163-1" />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag("js", new Date());
+    
+          gtag("config", "UA-134247163-1");
+        `}
+      </Script>
+      <Component {...pageProps} />
+    </>
+  );
 }
