@@ -1,5 +1,5 @@
 // Todo: Import specific tween functions as needed
-import * as TWEEN from "@tweenjs/tween.js"
+import * as TWEEN from "@tweenjs/tween.js";
 import {
   Clock,
   Scene,

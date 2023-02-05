@@ -1,14 +1,58 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import styles from "./Menu.module.scss";
 import { AudioStatus, RepeatValues } from "../audioManager";
-
 import { getLocalizedCopy } from "../utilities/helpers";
 import { audioManagerSingleton } from "../audioManager";
-
 import { MenuItems } from "./MenuItems/MenuItems";
+import styles from "./Menu.module.scss";
 
-function getToolTip(repeat, audioStatus, activeButton) {
+const Menu = (props) => {
+  const [activeButton, setActiveButton] = React.useState();
+
+  const handleMenuClick = (action: string) => {
+    switch (action) {
+      case "play":
+        return audioManagerSingleton.togglePlayPause();
+      case "fastforward":
+        return audioManagerSingleton.loadNextTrack();
+      case "disc":
+        return props.toggleMenu();
+      case "rewind":
+        return audioManagerSingleton.loadPreviousTrack();
+      case "repeat":
+        return audioManagerSingleton.toggleRepeat();
+      case "hide":
+        return props.toggleDashVisibility();
+      case "stop":
+        return audioManagerSingleton.stop();
+      case "advanced":
+        return props.toggleAbout();
+    }
+  };
+
+  return (
+    <>
+      <div className={styles.wrapper}>
+        <MenuItems
+          setActiveButton={setActiveButton}
+          activeButton={activeButton}
+          handleClick={handleMenuClick}
+        />
+      </div>
+      {!props.isUiHidden && (
+        <div key={activeButton} className={styles.tooltip}>
+          {getToolTip(props.repeat, props.audioStatus, activeButton)}
+        </div>
+      )}
+    </>
+  );
+};
+
+function getToolTip(
+  repeat: RepeatValues,
+  audioStatus: AudioStatus,
+  activeButton: string
+) {
   const { menu } = getLocalizedCopy();
   const isPlaying = audioStatus === AudioStatus.Playing;
   const isPaused = audioStatus === AudioStatus.Paused;
@@ -70,45 +114,6 @@ function getToolTip(repeat, audioStatus, activeButton) {
 
   return tooltips?.[activeButton]?.() ?? null;
 }
-const Menu = (props) => {
-  const [activeButton, setActiveButton] = React.useState();
-
-  const handleMenuClick = (action: string) => {
-    switch (action) {
-      case "play":
-        return audioManagerSingleton.togglePlayPause();
-      case "fastforward":
-        return audioManagerSingleton.loadNextTrack();
-      case "disc":
-        return props.toggleMenu();
-      case "rewind":
-        return audioManagerSingleton.loadPreviousTrack();
-      case "repeat":
-        return audioManagerSingleton.toggleRepeat();
-      case "hide":
-        return props.toggleDashVisibility();
-      case "stop":
-        return audioManagerSingleton.stop();
-      case "advanced":
-        return props.toggleAbout();
-    }
-  };
-
-  return (
-    <>
-      <div className={styles.wrapper}>
-        <MenuItems
-          setActiveButton={setActiveButton}
-          activeButton={activeButton}
-          handleClick={handleMenuClick}
-        />
-      </div>
-      {!props.isUiHidden && <div key={activeButton} className={styles.tooltip}>
-        {getToolTip(props.repeat, props.audioStatus, activeButton)}
-      </div>}
-    </>
-  );
-};
 
 Menu.propTypes = {
   toggleMenu: PropTypes.func.isRequired,

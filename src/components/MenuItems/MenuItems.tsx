@@ -28,6 +28,7 @@ export const MenuItems = ({
 }: {
   setActiveButton: (_: string) => void;
   activeButton: string;
+  handleClick: (_: string) => void;
 }) => {
   const containerRef = React.useRef<undefined>();
 

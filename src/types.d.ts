@@ -4,7 +4,7 @@ declare module "*.png";
 declare module "*.mp3";
 
 declare global {
-    interface Window {
-      webkitAudioContext: typeof AudioContext
-    }
+  interface Window {
+    webkitAudioContext: typeof AudioContext;
   }
+}

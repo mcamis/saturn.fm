@@ -6,7 +6,7 @@ import {
   MeshBasicMaterial,
   PlaneGeometry,
 } from "three";
-import { Tween, Easing } from "@tweenjs/tween.js"
+import { Tween, Easing } from "@tweenjs/tween.js";
 import discSrc from "../images/disc.png";
 import moreSrc from "../images/more.png";
 import hideSrc from "../images/hide.png";

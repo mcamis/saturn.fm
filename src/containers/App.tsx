@@ -23,7 +23,7 @@ const App = () => {
         </Suspense>
       )}
       {audioContextState === "suspended" && <CreateAudioContextButton />}
-      <Starfield isUiHidden={isUiHidden}/>
+      <Starfield isUiHidden={isUiHidden} />
     </>
   );
 };
