@@ -1,0 +1,23 @@
+.wrapper {
+  position: absolute;
+  bottom: 0;
+  pointer-events: "none";
+}
+
+.exitAnimation {
+  animation-name: dashboardExit;
+  animation-duration: 2000ms;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+
+  @keyframes dashboardExit {
+    from {
+      transform: translateY(0%);
+    }
+
+    to {
+      transform: translateY(100%);
+    }
+  }
+}

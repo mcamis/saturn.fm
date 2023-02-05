@@ -1,89 +1,80 @@
-import { cx } from "@linaria/core";
-import { styled } from "@linaria/react";
 import * as React from "react";
-import { Suspense } from "react";
+import dynamic from "next/dynamic";
 
 import { useAudioManagerContext } from "../audioManager";
 import About from "../components/About";
 import AudioReactiveCubes from "../components/AudioReactiveCubes";
-import DashboardBackground from "../components/DashboardBackground";
+import { DashboardBackground } from "../components/DashboardBackground";
 import Header from "../components/Header";
-import Menu from "../components/Menu";
-import Starfield from "../components/Starfield";
+import Menu from "../components/MenuHooks";
 import { usePrevious } from "../hooks";
-import introSrc from "../effects/intro.mp3";
+import styles from "./FullApp.module.scss";
 
-const FileReader = React.lazy(
-  () => import("../components/FileReader/FileReader")
+const FileReader = dynamic(
+  () => import("../components/FileReader/FileReader"),
+  { ssr: false }
 );
 
-const FullApp = () => {
-  const [hasLoaded, setHasLoaded] = React.useState(false);
-  React.useEffect(() => {
-    const audioElement = new Audio();
-    audioElement.src = introSrc;
-    audioElement.play();
-    setHasLoaded(true);
-  }, []);
-
+const FullApp = ({
+  isUiHidden,
+  setIsUiHidden,
+}: {
+  isUiHidden: boolean;
+  setIsUiHidden: (_: boolean) => void;
+}) => {
+  const [isExitAnimationFinished, setIsExitAnimationFinished] =
+    React.useState(false);
   const { repeat, audioStatus } = useAudioManagerContext();
-
   const [showFileInput, setShowFileInput] = React.useState(false);
   const [showAboutModal, setShowAboutModal] = React.useState(false);
-  const [hideDash, setHideDash] = React.useState(false);
-  const wasHidden = usePrevious(hideDash);
+  const wasHidden = usePrevious(isUiHidden);
 
+  React.useEffect(() => {
+    if (isUiHidden) {
+      setIsExitAnimationFinished(false);
+      window.setTimeout(() => setIsExitAnimationFinished(true), 2500);
+    } else {
+      setIsExitAnimationFinished(true);
+    }
+  }, [isUiHidden]);
+  React.useEffect(() => {
+    // TODO: move this to a ref
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Escape") {
+        isExitAnimationFinished && setIsUiHidden(false);
+      }
+    });
+  }, []);
   return (
-    <AppWrapper className={cx(hasLoaded && "hasLoaded")}>
+    <main
+      className={styles.wrapper}
+      onClick={() => {
+        if (isUiHidden && isExitAnimationFinished) {
+          setIsUiHidden(false);
+        }
+      }}
+    >
       <Header
-        showExitAnimation={hideDash}
-        showEntranceAnimation={!hideDash && wasHidden}
+        showExitAnimation={isUiHidden}
+        showEntranceAnimation={!isUiHidden && wasHidden}
       />
       <Menu
-        isUiHidden={hideDash}
-        showEntranceAnimation={!hideDash && wasHidden}
-        showIfHidden={() => hideDash && setHideDash(false)}
-        toggleMenu={setShowFileInput}
+        isUiHidden={isUiHidden}
+        showIfHidden={() => isUiHidden && setIsUiHidden(false)}
+        toggleMenu={() => setShowFileInput(true)}
         toggleAbout={() => setShowAboutModal(true)}
-        hideDash={() => setHideDash(true)}
+        toggleDashVisibility={() => setIsUiHidden(true)}
         repeat={repeat}
         audioStatus={audioStatus}
       />
-      <AudioReactiveCubes shouldHide={hideDash} />
+      <AudioReactiveCubes shouldHide={isUiHidden} />
       {showFileInput && (
-        <Suspense fallback={null}>
-          <FileReader toggleMenu={() => setShowFileInput(false)} />
-        </Suspense>
+        <FileReader toggleMenu={() => setShowFileInput(false)} />
       )}
       {showAboutModal && <About toggleAbout={() => setShowAboutModal(false)} />}
-      <DashboardBackground showExitAnimation={hideDash} />
-      <Starfield isUiHidden={hideDash} />
-    </AppWrapper>
+      <DashboardBackground isUiHidden={isUiHidden} />
+    </main>
   );
 };
-
-const AppWrapper = styled.div`
-  height: 100%;
-  filter: brightness(0);
-
-  &.hasLoaded {
-    animation-name: menuBrightness;
-    animation-duration: 1s;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards; // animation-delay: 10s;
-    animation-timing-function: ease-out;
-    animation-delay: 200ms;
-
-    @keyframes menuBrightness {
-      from {
-        filter: brightness(0);
-      }
-
-      to {
-        filter: brightness(1);
-      }
-    }
-  }
-`;
 
 export default FullApp;

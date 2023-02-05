@@ -28,9 +28,9 @@ export type AudioManagerState = {
   repeat: RepeatValues;
   hasPendingSrcChange: boolean;
   currentTrackIndex: number;
-  tracks: Track[];
+  tracks: Track[] | [];
   audioStatus: AudioStatus;
-  audioContextState: AudioContextState;
+  audioContextState: string;
 };
 
 export type Action = {

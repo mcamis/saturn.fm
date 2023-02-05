@@ -1,0 +1,29 @@
+.wrapper {
+  font-size: 16px !important;
+  text-align: left;
+  padding: 1em;
+  line-height: 22px;
+
+  box-shadow: 0 0 0 2px rgba(53, 59, 101, 0.8),
+    0 0 0 3.5px rgba(149, 149, 149, 0.8), 0 0 0 5px rgba(53, 59, 101, 0.8);
+  background-color: rgba(131, 23, 71, 0.65);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  em {
+    margin: 0.5em;
+    padding: 1em 1em 1em 2em;
+    display: inline-block;
+    border-left: 2px solid white;
+  }
+  a {
+    text-decoration: none;
+    color: #f2f2f2;
+    margin-left: 0.5em;
+  }
+  ul {
+    margin-top: 2em;
+  }
+  ul li {
+    list-style-type: none;
+    margin-bottom: 15px;
+  }
+}

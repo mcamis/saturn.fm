@@ -1,8 +1,7 @@
-import { cx } from "@linaria/core";
-import { styled } from "@linaria/react";
 import * as React from "react";
-import { AnimationNames } from "../SharedKeyframeAnimations";
 import AudioReactiveCubesScene from "./scene";
+import clsx from "clsx";
+import styles from "./AudioReactiveCubes.module.scss";
 
 const useCubesScene = (containerRef: any) => {
   const [scene, setScene] = React.useState(null);
@@ -18,22 +17,17 @@ const useCubesScene = (containerRef: any) => {
 };
 
 const AudioReactiveCubes = ({ shouldHide }: { shouldHide: boolean }) => {
-  const containerRef = React.useRef<undefined>();
-
+  const containerRef = React.useRef<undefined | HTMLDivElement>();
   useCubesScene(containerRef);
 
   return (
-    <Wrapper
-      className={cx(shouldHide && AnimationNames.exitTranslateDown)}
+    <div
       ref={containerRef}
+      className={clsx(styles.wrapper, {
+        [styles.exitAnimation]: shouldHide,
+      })}
     />
   );
 };
-
-const Wrapper = styled.div`
-  position: absolute;
-  bottom: 0;
-  pointer-events: none;
-`;
 
 export default AudioReactiveCubes;

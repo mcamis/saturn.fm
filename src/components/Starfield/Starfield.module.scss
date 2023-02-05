@@ -1,0 +1,30 @@
+.wrapper {
+  opacity: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: -2;
+}
+.fadeIn {
+  animation-name: fadeIn;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+
+  @media (prefers-reduced-motion) {
+    animation-delay: 5s;
+    animation-duration: 10s;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+}

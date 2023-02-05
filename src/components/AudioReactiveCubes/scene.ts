@@ -1,3 +1,4 @@
+import * as TWEEN from "@tweenjs/tween.js";
 import {
   Scene,
   PerspectiveCamera,
@@ -93,6 +94,7 @@ class AudioReactiveCubesScene {
   }
 
   animate() {
+    TWEEN.update();
     // Only animated the cubes when audio is playing
     if (audioManagerSingleton.state.audioStatus === AudioStatus.Playing) {
       const [leftChannel, rightChannel] = audioManagerSingleton.analyserFFT;
@@ -135,31 +137,28 @@ class AudioReactiveCubesScene {
   }
 
   setupCube(slot: "leftCube" | "rightCube", [x, y, z]: number[]) {
-    loader.load(
-      "./models/cubeBigger.gltf",
-      ({
-        scene: {
-          children: [, , cubeModel],
-        },
-      }) => {
-        // eslint-disable no-param-reassign
-        (cubeModel as any).material.color = cubeColor; // TODO what three.js type do I need here?
-        (cubeModel as any).material.dithering = true;
-        (cubeModel as any).material.flatShading = false;
-        cubeModel.position.set(x, y, z);
-        cubeModel.rotateX(0.075);
-        if (slot === "rightCube") {
-          cubeModel.rotateY(0.075);
-        } else {
-          cubeModel.rotateY(-0.1);
-        }
-
-        this[slot] = cubeModel as Mesh;
-        this.scene.add(cubeModel);
-
-        if (slot === "rightCube") this.start();
+    loader.load("./models/cubeBigger.gltf", (cubeModel) => {
+      const cubeMesh = cubeModel?.scene?.children?.[0] as Mesh;
+      if (!cubeMesh) {
+        console.error("gltf loading error");
+        return;
       }
-    );
+      (cubeMesh.material as any).color = cubeColor; // TODO what three.js type do I need here?
+      (cubeMesh.material as any).dithering = true;
+      (cubeMesh.material as any).flatShading = false;
+      cubeMesh.position.set(x, y, z);
+      cubeMesh.rotateX(0.075);
+      if (slot === "rightCube") {
+        cubeMesh.rotateY(0.075);
+      } else {
+        cubeMesh.rotateY(-0.1);
+      }
+
+      this[slot] = cubeMesh as Mesh;
+      this.scene.add(cubeMesh);
+
+      if (slot === "rightCube") this.start();
+    });
   }
 }
 

@@ -1,13 +1,13 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
 
 import { Modal } from "./Modal";
+import styles from "./About.module.scss";
 
-const About = (props) => {
+const About = (props: { toggleAbout: () => void }) => {
   return (
     <Modal header="about">
-      <MainContent>
+      <div className={styles.wrapper}>
         <p>
           <em>
             Your scientists were so preoccupied with whether or not they could,
@@ -28,7 +28,7 @@ const About = (props) => {
             https://github.com/mcamis/saturn.fm
           </SocialLink>
         </ul>
-      </MainContent>
+      </div>
       {/* TODO: Saturn style buttons */}
       <button type="button" onClick={props.toggleAbout}>
         Exit
@@ -37,44 +37,13 @@ const About = (props) => {
   );
 };
 
-const SocialLink = (props) => {
+const SocialLink = (props: { href: string; children: string }) => {
   return (
     <li>
       <a href={props.href}>{props.children}</a>
     </li>
   );
 };
-
-const MainContent = styled.div`
-  font-size: 16px !important;
-  text-align: left;
-  padding: 1em;
-  line-height: 22px;
-
-  box-shadow: 0 0 0 2px rgba(53, 59, 101, 0.8),
-    0 0 0 3.5px rgba(149, 149, 149, 0.8), 0 0 0 5px rgba(53, 59, 101, 0.8);
-  background-color: rgba(131, 23, 71, 0.65);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-  em {
-    margin: 0.5em;
-    padding: 1em 1em 1em 2em;
-    display: inline-block;
-    border-left: 2px solid white;
-  }
-  a {
-    text-decoration: none;
-    color: #f2f2f2;
-    margin-left: 0.5em;
-  }
-  ul {
-    margin-top: 2em;
-  }
-  ul li {
-    list-style-type: none;
-    margin-bottom: 15px;
-  }
-`;
-
 About.propTypes = {
   toggleAbout: PropTypes.func.isRequired,
 };

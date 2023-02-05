@@ -8,7 +8,11 @@ import {
   AudioManagerState,
 } from "./types";
 import { defaultState, reducer } from "./state";
-const htmlAudioElement = new Audio();
+
+let htmlAudioElement: undefined | HTMLAudioElement;
+if (typeof window !== "undefined") {
+  htmlAudioElement = new Audio();
+}
 
 export class AudioManager {
   public state: AudioManagerState;
@@ -27,8 +31,8 @@ export class AudioManager {
   }
 
   init() {
-    // Safari is still prefixed
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    // Safari is still prefixed?
+    const AudioContext = window.AudioContext;
     this.audioContext = new AudioContext();
 
     // For Firefox & Mobile Safari AudioContext starts in a running state, even though it will block all audio play events
@@ -72,7 +76,8 @@ export class AudioManager {
   updateMediaSession = () => {
     const { title, artist, album, albumArtUrl } =
       this.state.tracks[this.state.currentTrackIndex];
-    this.audioElement.title = `「SATURN.FM」${title} - ${artist}`;
+    if (this.audioElement)
+      this.audioElement.title = `「SATURN.FM」${title} - ${artist}`;
     if (!navigator?.mediaSession) return;
 
     navigator.mediaSession.metadata = new window.MediaMetadata({
@@ -81,7 +86,7 @@ export class AudioManager {
       album,
       artwork: [
         {
-          src: albumArtUrl ?? backupCover,
+          src: albumArtUrl ?? backupCover.src,
           sizes: "512x512",
         },
       ],
@@ -109,19 +114,20 @@ export class AudioManager {
    * Attempt to load the next track in the plalist
    */
   loadTrack(trackIndex: number) {
+    if (typeof window === "undefined") return;
     const { srcPath, file } = this.state.tracks[trackIndex] ?? {};
     // todo: stop
     if (!srcPath && !file) return;
-    const currentSrc = this.audioElement.src;
+    const currentSrc = this.audioElement?.src;
 
     if (file instanceof File) {
       const objectUrl = URL.createObjectURL(file);
       // todo make sure to revoke this URL at some point
-      // if (this.audioElement.src !== objectUrl) { // Why????
-      this.audioElement.src = objectUrl;
+      // if (this.audioElement?.src !== objectUrl) { // Why????
+      if (this.audioElement) this.audioElement.src = objectUrl;
       // }
     } else {
-      this.audioElement.src = file ?? srcPath;
+      if (this.audioElement) this.audioElement.src = file ?? srcPath;
     }
     this.updateState({
       type: ActionTypes.currentTrackIndex,
@@ -139,7 +145,7 @@ export class AudioManager {
   };
 
   playAndReport() {
-    this.audioElement.play();
+    this.audioElement?.play();
     this.updateMediaSession();
   }
 
@@ -148,23 +154,23 @@ export class AudioManager {
     try {
       URL.revokeObjectURL(objectUrl);
     } catch (e) {
-      console.log("what happens if this wasnt originall a file url?", e);
+      console.log("what happens if this wasnt originally a file url?", e);
     }
   }
 
   setupEventListeners() {
     // https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Mediaevents
-    // this.audioElement.addEventListener("loadstart", () =>
+    // this.audioElement?.addEventListener("loadstart", () =>
     //   audioActions.loadingStart()
     // );
 
-    this.audioElement.addEventListener("loadeddata", () => {
+    this.audioElement?.addEventListener("loadeddata", () => {
       if (this.state.audioStatus !== AudioStatus.Idle) {
         this.playAndReport();
       }
     });
 
-    this.audioElement.addEventListener("play", () => {
+    this.audioElement?.addEventListener("play", () => {
       this.analyser.start();
       this.updateState({
         type: ActionTypes.audioStatus,
@@ -172,7 +178,7 @@ export class AudioManager {
       });
     });
 
-    this.audioElement.addEventListener("pause", () => {
+    this.audioElement?.addEventListener("pause", () => {
       // TODO: Manually set pause state to fix stop
       this.analyser.pause();
       this.updateState({
@@ -181,12 +187,12 @@ export class AudioManager {
       });
     });
 
-    this.audioElement.addEventListener("ended", () => {
+    this.audioElement?.addEventListener("ended", () => {
       // TODO: Handle last track without repeat set to "all"
       this.loadNextTrack(true);
     });
 
-    if (!navigator?.mediaSession) return;
+    if (typeof window === "undefined" || !navigator?.mediaSession) return;
 
     navigator.mediaSession.setActionHandler("play", () =>
       this.togglePlayPause()
@@ -204,7 +210,7 @@ export class AudioManager {
 
   previousTrack = () => {
     // TODO: Figure out saturn offset for skip back
-    if (this.audioElement.currentTime >= 3) {
+    if (this.audioElement?.currentTime >= 3) {
       this.audioElement.currentTime = 0;
     } else {
       this.loadPreviousTrack();
@@ -212,7 +218,7 @@ export class AudioManager {
   };
 
   pause() {
-    this.audioElement.pause();
+    this.audioElement?.pause();
     this.updateState({
       type: ActionTypes.audioStatus,
       payload: AudioStatus.Paused,
@@ -222,9 +228,9 @@ export class AudioManager {
   stop = () => {
     // TODO: Saturn behavior
     // const [firstSong] = this.tracks;
-    this.audioElement.pause();
-    // this.audioElement.src = firstSong;
-    this.audioElement.currentTime = 0;
+    this.audioElement?.pause();
+    // this.audioElement?.src = firstSong;
+    if (this.audioElement) this.audioElement.currentTime = 0;
     // this.state.currentTrackIndex = 0;
     // this.state.audioStatus = AudioStatus.Stopped;
     this.updateState({ type: "setStopped" });
@@ -278,6 +284,13 @@ export class AudioManager {
     return this.state;
   };
 
+  handleMenuClick = (action: string) => {
+    switch (action) {
+      case "play":
+        this.playAndReport();
+    }
+  };
+
   get analyserFFT() {
     return this.analyser.averageFFT;
   }
@@ -287,7 +300,7 @@ export class AudioManager {
   }
 
   get currentTime() {
-    return this.audioElement.currentTime;
+    return this.audioElement?.currentTime;
   }
 }
 

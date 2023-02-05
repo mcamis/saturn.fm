@@ -1,0 +1,46 @@
+.wrapper {
+  content: "";
+  background: url("../images/dashboard.png") no-repeat;
+  background-size: 100% 47%;
+  background-position: 0 100%;
+  position: absolute;
+  bottom: 0;
+  width: 50%;
+  z-index: -1;
+  padding-bottom: 91%;
+  left: 0;
+  &:after {
+    content: "";
+    background: url("../images/dashboard.png") no-repeat;
+    background-size: 100% 47%;
+    background-position: 0 100%;
+    position: absolute;
+    bottom: 0;
+    width: 50%;
+    z-index: 20;
+    padding-bottom: 91%;
+    width: 100%;
+    right: -100%;
+    top: 0;
+    transform: scale(-1.001, 1);
+    width: 100%;
+  }
+}
+
+.exitAnimation {
+  animation-name: dashboardExit;
+  animation-duration: 2000ms;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+
+  @keyframes dashboardExit {
+    from {
+      transform: translateY(0%);
+    }
+
+    to {
+      transform: translateY(100%);
+    }
+  }
+}
