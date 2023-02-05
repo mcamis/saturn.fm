@@ -2,7 +2,6 @@ import React from "react";
 import clsx from "clsx";
 
 import styles from "./DashboardBackground.module.scss";
-import { AnimationNames } from "../components/SharedKeyframeAnimations";
 
 // className={cx(showExitAnimation && AnimationNames.exitTranslateDown)}
 export const DashboardBackground = ({

@@ -10,6 +10,7 @@ import Menu from "../components/MenuHooks";
 import { usePrevious } from "../hooks";
 import styles from "./FullApp.module.scss";
 
+
 const FileReader = dynamic(
   () => import("../components/FileReader/FileReader"),
   {
@@ -24,12 +25,35 @@ const FullApp = ({
   isUiHidden: boolean;
   setIsUiHidden: (_: boolean) => void;
 }) => {
+  const [isExitAnimationFinished, setIsExitAnimationFinished] = React.useState(false);
   const { repeat, audioStatus } = useAudioManagerContext();
   const [showFileInput, setShowFileInput] = React.useState(false);
   const [showAboutModal, setShowAboutModal] = React.useState(false);
   const wasHidden = usePrevious(isUiHidden);
+
+  React.useEffect(() => {
+    if(isUiHidden) {
+      setIsExitAnimationFinished(false);
+      window.setTimeout(() => setIsExitAnimationFinished(true), 2000)
+    } else{
+      setIsExitAnimationFinished(true);
+    }
+  }, [isUiHidden])
+  React.useEffect(() => {
+    // TODO: move this to a ref
+    document.addEventListener('keydown', (e) => {
+      if(e.code === "Escape") {
+        isExitAnimationFinished && setIsUiHidden(false)
+      }
+    })
+  }, [])
   return (
-    <main className={styles.wrapper}>
+    <main className={styles.wrapper} onClick={() => {
+      if(isUiHidden && isExitAnimationFinished) {
+        setIsUiHidden(false)
+
+      }
+    }}>
       <Header
         showExitAnimation={isUiHidden}
         showEntranceAnimation={!isUiHidden && wasHidden}

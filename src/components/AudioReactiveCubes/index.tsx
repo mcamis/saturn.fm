@@ -1,6 +1,7 @@
 import * as React from "react";
-import { AnimationNames } from "../SharedKeyframeAnimations";
 import AudioReactiveCubesScene from "./scene";
+import clsx from "clsx";
+import styles from "./AudioReactiveCubes.module.scss";
 
 const useCubesScene = (containerRef: any) => {
   const [scene, setScene] = React.useState(null);
@@ -17,14 +18,14 @@ const useCubesScene = (containerRef: any) => {
 
 const AudioReactiveCubes = ({ shouldHide }: { shouldHide: boolean }) => {
   const containerRef = React.useRef<undefined | HTMLDivElement>();
-
   useCubesScene(containerRef);
-  // className={shouldHide && AnimationNames.exitTranslateDown}
 
   return (
     <div
-      style={{ position: "absolute", bottom: "0", pointerEvents: "none" }}
       ref={containerRef}
+      className={clsx(styles.wrapper, {
+        [styles.exitAnimation]: shouldHide,
+      })}
     />
   );
 };
