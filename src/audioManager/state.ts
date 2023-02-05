@@ -7,10 +7,10 @@ import {
   Track,
   AudioManagerState,
 } from "./types";
-// import Track2 from "../songs/Cookies/02.mp3";
+import Track2 from "../songs/Cookies/02.mp3";
 // import Track3 from "../songs/Cookies/03.mp3";
 // import Track4 from "../songs/Cookies/04.mp3";
-// import Rodney from "../songs/shuffle.jpg";
+import Rodney from "../songs/shuffle.jpg";
 import CookiesCover from "../songs/Cookies/cover.png";
 
 export const reducer = (
@@ -56,18 +56,19 @@ export const reducer = (
   }
 };
 
-// const defaultTracks = [
-//   {
-//     track: 1,
-//     album: "Music for Touching",
-//     artist: "Cookies",
-//     title: "Go Back",
-//     href: "",
-//     albumArtUrl: Rodney.src,
-//     isDefault: true,
-//     srcPath: Track2,
-//     id: uuidv4(),
-//   },
+const defaultTracks = [
+  {
+    track: 1,
+    album: "Music for Touching",
+    artist: "Cookies",
+    title: "Go Back",
+    href: "",
+    albumArtUrl: Rodney.src,
+    isDefault: true,
+    srcPath: Track2,
+    id: uuidv4(),
+  },
+];
 //   {
 //     track: 2,
 //     album: "Music for Touching",
@@ -96,7 +97,7 @@ export const defaultState: AudioManagerState = {
   repeat: RepeatValues.Off,
   hasPendingSrcChange: false,
   currentTrackIndex: 0,
-  tracks: [],
+  tracks: defaultTracks,
   audioStatus: AudioStatus.Idle,
   audioContextState: "suspended" as const,
 };
