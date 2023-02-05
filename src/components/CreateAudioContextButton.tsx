@@ -6,6 +6,10 @@ import introSrc from "../effects/intro.mp3";
 export const CreateAudioContextButton = () => {
   return (
     <div className={styles.wrapper}>
+      <div className={styles.warning}>
+        <h1>⚠️ WARNING: PHOTOSENSITIVITY ⚠️</h1>
+        <p>This app displays flashing colors and shapes</p>
+      </div>
       <button
         type="button"
         onClick={() => {

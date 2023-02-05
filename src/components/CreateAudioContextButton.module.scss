@@ -4,6 +4,9 @@
   display: flex;
   align-items: center;
 
+  flex-direction: column;
+  justify-content: center;
+
   button {
     transition: background-color 250ms ease-in-out;
     transition-property: color, border;
@@ -40,5 +43,24 @@
     &:active {
       transform: translate(0, 4px);
     }
+  }
+}
+
+.warning {
+  font-family: sans-serif;
+  color: white;
+  background: black;
+  padding: 20px;
+  margin: 20px 20px 100px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,.25);
+
+  h1 {
+    font-weight: bold;
+  }
+
+  display: none;
+  @media (prefers-reduced-motion) {
+    display: block;
   }
 }

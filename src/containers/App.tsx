@@ -7,7 +7,7 @@ import {
 } from "../audioManager";
 import { CreateAudioContextButton } from "../components/CreateAudioContextButton";
 import dynamic from "next/dynamic";
-import styles from './App.module.scss';
+import styles from "./App.module.scss";
 
 // Don't load three.js until an audio context is
 const FullApp = React.lazy(() => import("./FullApp"));
@@ -20,7 +20,7 @@ const App = () => {
 
   React.useEffect(() => {
     setHasMounted(true);
-  }, [])
+  }, []);
 
   return (
     <>
