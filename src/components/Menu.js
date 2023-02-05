@@ -448,7 +448,7 @@ class Menu extends React.Component {
   }
 
   animate() {
-    TWEEN.update();
+    // TWEEN.update();
     this.orbitButton();
 
     const delta = this.clock.getDelta();

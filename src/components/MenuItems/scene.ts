@@ -32,10 +32,8 @@ import {
 export const planeGeometry = new PlaneGeometry(2, 2, 1, 1);
 import globeSprite from "../../images/globeSprite.png";
 
-
 // TODO: Set more magic numbers to constants
 const SHADOW_OFFSET = 1.025;
-
 
 class MenuItemsScene {
   private camera: PerspectiveCamera;
@@ -98,6 +96,8 @@ class MenuItemsScene {
     this.manageActiveButton();
   }
 
+
+
   manageActiveButton() {
     this.raycaster.setFromCamera(this.mouse, this.camera);
     const intersects = this.raycaster.intersectObjects(this.buttonMeshes);
@@ -109,6 +109,7 @@ class MenuItemsScene {
       } = intersects[0];
       if (name && name !== this.activeButton) {
         // this.setState({ activeButton: name });
+        this.activeButton = name;
         this.syncActiveItem(name)
       }
       document.body.classList.add("pointer");

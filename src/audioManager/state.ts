@@ -58,7 +58,6 @@ export const reducer = (
 
 export const defaultTracks = [
   {
-    file: Track2,
     track: 1,
     album: "Music for Touching",
     artist: "Cookies",
@@ -66,11 +65,10 @@ export const defaultTracks = [
     href: "",
     albumArtUrl: Rodney,
     isDefault: true,
-    srcPath: "",
+    srcPath: Track2,
     id: uuidv4(),
   },
   {
-    file: Track3,
     track: 2,
     album: "Music for Touching",
     artist: "Cookies",
@@ -78,11 +76,10 @@ export const defaultTracks = [
     href: "",
     albumArtUrl: CookiesCover,
     isDefault: true,
-    srcPath: "",
+    srcPath: Track3,
     id: uuidv4(),
   },
   {
-    file: Track4,
     track: 3,
     album: "Music for Touching",
     artist: "Cookies",
@@ -90,7 +87,7 @@ export const defaultTracks = [
     href: "",
     albumArtUrl: CookiesCover,
     isDefault: true,
-    srcPath: "",
+    srcPath: Track4,
     id: uuidv4(),
   },
 ];

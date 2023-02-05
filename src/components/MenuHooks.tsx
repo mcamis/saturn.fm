@@ -9,6 +9,7 @@ import {
 import {
   getLocalizedCopy,
 } from "../utilities/helpers";
+import { audioManagerSingleton } from "../audioManager";
 
 import {MenuItems} from './MenuItems/MenuItems'
 
@@ -76,13 +77,37 @@ function getToolTip(repeat, audioStatus, activeButton) {
 }
 const Menu = (props) => {
   const [activeButton, setActiveButton] = React.useState();
+
+  const handleMenuClick = (action: string) => {
+    console.log({action})
+    switch (action) {
+      case 'play':
+        return audioManagerSingleton.togglePlayPause();
+      case 'fastforward':
+        return audioManagerSingleton.loadNextTrack();
+      case 'disc':
+        return props.toggleMenu();
+        case 'rewind':
+          return audioManagerSingleton.loadPreviousTrack();
+          case 'repeat':
+            return audioManagerSingleton.toggleRepeat();
+            case 'hide':
+              return props.hideDash();
+              case 'stop':
+                return audioManagerSingleton.stop();
+                case 'advanced':
+                  return props.toggleAbout();
+        
+    }
+  }
+  
     return (
       <>
         <div key={activeButton} className={styles.tooltip}>
           {getToolTip(props.repeat, props.audioStatus, activeButton)}
         </div>
         <div className={styles.wrapper}>
-        <MenuItems setActiveButton={setActiveButton} activeButton={activeButton} />
+        <MenuItems setActiveButton={setActiveButton} activeButton={activeButton}  handleClick={handleMenuClick}/>
         </div>
       </>
     );

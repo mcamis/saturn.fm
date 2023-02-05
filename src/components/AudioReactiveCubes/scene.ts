@@ -1,3 +1,5 @@
+
+import * as TWEEN from "es6-tween";
 import {
   Scene,
   PerspectiveCamera,
@@ -93,6 +95,7 @@ class AudioReactiveCubesScene {
   }
 
   animate() {
+        TWEEN.update();
     // Only animated the cubes when audio is playing
     if (audioManagerSingleton.state.audioStatus === AudioStatus.Playing) {
       const [leftChannel, rightChannel] = audioManagerSingleton.analyserFFT;

@@ -114,6 +114,7 @@ export class AudioManager {
    */
   loadTrack(trackIndex: number) {
     if(typeof window === 'undefined') return;
+    console.log('neat');
     const { srcPath, file } = this.state.tracks[trackIndex] ?? {};
     // todo: stop
     if (!srcPath && !file) return;
@@ -144,6 +145,7 @@ export class AudioManager {
   };
 
   playAndReport() {
+    console.log('hi')
     this.audioElement?.play();
     this.updateMediaSession();
   }
@@ -282,6 +284,14 @@ export class AudioManager {
   getSnapshot = () => {
     return this.state;
   };
+
+  handleMenuClick = (action: string) => {
+    console.log({action})
+    switch (action) {
+      case 'play':
+        this.playAndReport();
+    }
+  }
 
   get analyserFFT() {
     return this.analyser.averageFFT;
