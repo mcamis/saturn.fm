@@ -50,7 +50,7 @@ export const planeGeometry = new PlaneGeometry(2, 2, 1, 1);
 export const shadowGeometry = new PlaneGeometry(1.5, 1.5, 1, 1);
 export const shadowTexture = new TextureLoader().load(orbShadow);
 
-export const menuItemMetadata = {
+export const menuButtons = {
  "disc": {
     position: [-2.25, 0, 1],
     animationDuration: 400,

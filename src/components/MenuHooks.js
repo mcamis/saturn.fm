@@ -23,32 +23,10 @@ import {
 } from "../audioManager";
 
 import {
-  throttle,
-  sceneWidth,
-  triggerButtonCallback,
-  TextureAnimator,
   getLocalizedCopy,
 } from "../utilities/helpers";
 
-import {
-  animateButtonPosition,
-  createButtons,
-  orbitGeometry,
-  purpleMesh,
-  pinkMesh,
-  planeGeometry,
-  shadowGeometry,
-  shadowTexture,
-} from "../utilities/menuElements";
 
-import globeSprite from "../images/globeSprite.png";
-
-import buttonSrc from "../effects/button-press.mp3";
-import highlightSrc from "../effects/button-highlight.mp3";
-import hideSrc from "../effects/hide.mp3";
-import showSrc from "../effects/show.mp3";
-
-import autobind from "../utilities/autobind";
 import {MenuItems} from './MenuItems/MenuItems'
 
 // TODO: Set more magic numbers to constants
@@ -124,7 +102,7 @@ const Menu = (props) => {
           {getToolTip(props.repeat, props.audioStatus, activeButton)}
         </div>
         <div className={styles.wrapper}>
-        <MenuItems />
+        <MenuItems setActiveButton={setActiveButton} activeButton={activeButton} />
         </div>
       </>
     );

@@ -2,21 +2,25 @@ import * as React from "react";
 import MenuItemScene from "./scene";
 import styles from './MenuItems.module.scss'
 
-const useMenuItemsScene = (containerRef: any) => {
+const useMenuItemsScene = (containerRef: any, setActiveButton: any, activeButton: string) => {
   const [scene, setScene] = React.useState(null);
   React.useEffect(() => {
     scene && containerRef?.current?.appendChild(scene.domElement);
   }, [scene]);
 
   React.useEffect(() => {
-    setScene(new MenuItemScene());
+    scene && scene.updateCurrentButton(activeButton);
+  }, [activeButton]);
+
+  React.useEffect(() => {
+    setScene(new MenuItemScene(setActiveButton));
   }, []);
 };
 
-export const MenuItems = () => {
+export const MenuItems = ({setActiveButton, activeButton}: {setActiveButton: (_:string) => void, activeButton: string}) => {
   const containerRef = React.useRef<undefined>();
 
-  useMenuItemsScene(containerRef);
+  useMenuItemsScene(containerRef, setActiveButton, activeButton);
 
   return <div ref={containerRef} />;
 };

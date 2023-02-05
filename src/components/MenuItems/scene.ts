@@ -22,7 +22,8 @@ import {
   purpleMesh,
   pinkMesh,
   menuElementsMetadata,
-  MenuButton
+  MenuButton,
+  menuButtons
 } from "../../utilities/menuElements";
 export const planeGeometry = new PlaneGeometry(2, 2, 1, 1);
 
@@ -40,11 +41,12 @@ class MenuItemsScene {
   private mouse: any;
   private buttonMeshes: any;
   private activeButton: string;
+  private syncActiveItem: any;
   
 
   public domElement;
 
-  constructor() {
+  constructor(setActiveButton: any) {
     this.setDimensions();
     const onMouseMoveThrottled = throttle(this.onMouseMove.bind(this), 100);
     this.buttonMeshes = [];
@@ -52,7 +54,7 @@ class MenuItemsScene {
     this.renderer = new WebGLRenderer({ alpha: true, antialias: false });
     this.domElement = this.renderer.domElement;
     this.renderer.setSize(this.width, this.height);
-
+    this.syncActiveItem = setActiveButton;
     this.debouncedResize = null;
 
     window.addEventListener("resize", () => {
@@ -94,8 +96,7 @@ class MenuItemsScene {
       } = intersects[0];
       if (name && name !== this.activeButton) {
         // this.setState({ activeButton: name });
-        this.activeButton = name;
-        console.log(this.activeButton)
+        this.syncActiveItem(name)
       }
       document.body.classList.add("pointer");
     } else {
@@ -159,6 +160,16 @@ class MenuItemsScene {
     plane.position.set(x, y, z);
     this.scene.add(plane);
     this.buttonMeshes.push(plane);
+  }
+
+  updateCurrentButton(button:string) {
+    if(!button) return;
+    const { position } = menuButtons[button] ?? {};
+    if(!position) return;
+    const [x, y] = position;
+    this.orbits.pink.position.set(x, y, 2);
+    this.orbits.purple.position.set(x, y, 2.03);
+
   }
 
   placeOrbitsInScene() {
