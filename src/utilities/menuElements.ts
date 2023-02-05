@@ -106,6 +106,12 @@ export const menuButtons = {
     animationDuration: 300,
     imageSrc: stopSrc.src,
     showShadow: true,
+  },
+  "advanced": {
+    position: [2.25, -4.3, 1],
+    onClick: () => {},
+    animationDelay: 900,
+    animationDuration: 300,
   }
 };
 

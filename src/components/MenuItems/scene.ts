@@ -9,11 +9,13 @@ import {
   MeshBasicMaterial,
   PlaneGeometry,
   Mesh,
+  Clock,
 } from "three";
 
 import {
   sceneWidth,
-  throttle
+  throttle,
+  TextureAnimator
 } from "../../utilities/helpers";
 import * as TWEEN from "es6-tween";
 
@@ -23,9 +25,16 @@ import {
   pinkMesh,
   menuElementsMetadata,
   MenuButton,
-  menuButtons
+  menuButtons,
+  shadowTexture,
+  shadowGeometry
 } from "../../utilities/menuElements";
 export const planeGeometry = new PlaneGeometry(2, 2, 1, 1);
+import globeSprite from "../../images/globeSprite.png";
+
+
+// TODO: Set more magic numbers to constants
+const SHADOW_OFFSET = 1.025;
 
 
 class MenuItemsScene {
@@ -42,6 +51,8 @@ class MenuItemsScene {
   private buttonMeshes: any;
   private activeButton: string;
   private syncActiveItem: any;
+  private textureAnimator: TextureAnimator;
+  private clock: Clock;
   
 
   public domElement;
@@ -56,6 +67,8 @@ class MenuItemsScene {
     this.renderer.setSize(this.width, this.height);
     this.syncActiveItem = setActiveButton;
     this.debouncedResize = null;
+    this.clock = new Clock();
+
 
     window.addEventListener("resize", () => {
       clearTimeout(this.debouncedResize);
@@ -104,7 +117,6 @@ class MenuItemsScene {
     }
   }
 
-
   setDimensions() {
     const width = sceneWidth();
     const height = width * 0.75;
@@ -135,9 +147,56 @@ class MenuItemsScene {
     // this.addMenuElements();
     this.placeOrbitsInScene();
     menuElementsMetadata.forEach(button => this.addButton(button))
+    this.setupSpinningGlobeButton();
   }
 
-  
+  setupSpinningGlobeButton() {
+    const [x, y, z] = [2.25, -4.3, 1];
+
+    const globeTexture = new TextureLoader().load(globeSprite.src);
+    globeTexture.magFilter = NearestFilter;
+    globeTexture.minFilter = NearestFilter;
+
+    this.textureAnimator = new TextureAnimator(globeTexture);
+
+    const globeMaterial = new MeshBasicMaterial({
+      map: globeTexture,
+      transparent: true,
+      name: "advanced",
+      userData: {
+        animationDelay: 900,
+        animationDuration: 300,
+        showShadow: true,
+        onClick: () => {}
+      },
+    });
+
+    const spinningGlobe = new Mesh(planeGeometry, globeMaterial);
+    spinningGlobe.position.set(x, y, z);
+    spinningGlobe.name = "advanced";
+
+    shadowTexture.magFilter = NearestFilter;
+    shadowTexture.minFilter = NearestFilter;
+
+    const shadowMaterial = new MeshBasicMaterial({
+      map: shadowTexture,
+      transparent: true,
+      opacity: 0.5,
+      userData: {
+        animationDelay: 900,
+        animationDuration: 300,
+      },
+    });
+
+    const shadowPlane = new Mesh(shadowGeometry, shadowMaterial);
+    shadowPlane.position.set(x, y - SHADOW_OFFSET, z - 0.5);
+    // shadowPlane.visible = window.innerWidth >= 400;
+    this.scene.add(shadowPlane);
+
+    this.buttonMeshes.push(spinningGlobe);
+    this.scene.add(spinningGlobe);
+  }
+
   addButton(button: MenuButton) {
     const [x, y, z] = button.position;
 
@@ -169,7 +228,6 @@ class MenuItemsScene {
     const [x, y] = position;
     this.orbits.pink.position.set(x, y, 2);
     this.orbits.purple.position.set(x, y, 2.03);
-
   }
 
   placeOrbitsInScene() {
@@ -203,8 +261,12 @@ class MenuItemsScene {
   }
 
   animate() {
+    const delta = this.clock.getDelta();
+
     this.animateOrbits();
     this.renderer.render(this.scene, this.camera);
+    this.textureAnimator.update(1000 * delta);
+
     this.rafId = window.requestAnimationFrame(this.animate.bind(this));
   }
 
