@@ -10,7 +10,6 @@ import {
   PlaneGeometry,
   Mesh,
 } from "three";
-import discSrc from "../../images/disc.png";
 
 import {
   sceneWidth,
@@ -21,6 +20,8 @@ import {
   orbitGeometry,
   purpleMesh,
   pinkMesh,
+  menuElementsMetadata,
+  MenuButton
 } from "../../utilities/menuElements";
 export const planeGeometry = new PlaneGeometry(2, 2, 1, 1);
 
@@ -91,33 +92,30 @@ class MenuItemsScene {
     this.camera = camera;
     // this.addMenuElements();
     this.placeOrbitsInScene();
-    this.addButton();
+    menuElementsMetadata.forEach(button => this.addButton(button))
   }
 
+  
+  addButton(button: MenuButton) {
+    const [x, y, z] = button.position;
 
-  // name: "disc",
-  // position: 
-  // onClick: () => {    },
-  // animationDuration: 400,
-  // animationDelay: 220,
-  // mapSrc: discSrc.src,
-  // showShadow: false,
-  addButton() {
-    const [x, y, z] = [-2.25, 0, 1];
-
-    const planeTexture = new TextureLoader().load(discSrc.src);
+    const planeTexture = new TextureLoader().load(button.mapSrc);
     planeTexture.magFilter = NearestFilter;
     planeTexture.minFilter = NearestFilter;
 
     const planeMaterial = new MeshBasicMaterial({
       map: planeTexture,
       transparent: true,
-      name: 'Test',
+      name: button.name,
+      userData: {
+        onClick: button.onClick,
+        animationDelay: button.animationDelay,
+        animationDuration: button.animationDuration,
+      },
     });
 
     const plane = new Mesh(planeGeometry, planeMaterial);
     plane.position.set(x, y, z);
-    // plane.rotateZ(0.75);
     this.scene.add(plane);
   }
 

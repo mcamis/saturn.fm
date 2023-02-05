@@ -50,6 +50,65 @@ export const planeGeometry = new PlaneGeometry(2, 2, 1, 1);
 export const shadowGeometry = new PlaneGeometry(1.5, 1.5, 1, 1);
 export const shadowTexture = new TextureLoader().load(orbShadow);
 
+export const menuItemMetadata = {
+ "disc": {
+    position: [-2.25, 0, 1],
+    animationDuration: 400,
+    animationDelay: 220,
+    imageSrc: discSrc.src,
+    showShadow: false,
+  },
+  "settings": {
+    position:  [0, 0, 1],
+    animationDelay: 100,
+    animationDuration: 400,
+    imageSrc: moreSrc.src,
+    showShadow: false,
+  },
+  "hide": {
+    position: [2.25, 0, 1],
+    animationDelay: 180,
+    animationDuration: 400,
+    imageSrc: hideSrc.src,
+    showShadow: false,
+  },
+  "rewind": {
+    position: [-2.25, -2.15, 1],  
+    animationDelay: 500,
+    animationDuration: 350,
+    imageSrc: rwdSrc.src,
+    showShadow: false,
+  },
+  "play": {
+    position: [0, -2.15, 1],
+    animationDelay: 300,
+    animationDuration: 350,
+    imageSrc: playSrc.src,
+    showShadow: false,
+  },
+  "fastforward": {
+    position: [2.25, -2.15, 1],
+    animationDelay: 280,
+    animationDuration: 350,
+    imageSrc: ffwdSrc.src,
+    showShadow: false,
+  },
+  "repeat": {
+    position: [-2.25, -4.3, 1],
+    animationDelay: 600,
+    animationDuration: 300,
+    imageSrc: repeatSrc.src,
+    showShadow: true,
+  },
+  "stop": {
+    position: [0, -4.3, 1],
+    animationDelay: 700,
+    animationDuration: 300,
+    imageSrc: stopSrc.src,
+    showShadow: true,
+  }
+};
+
 export const createButtons = ( hideMenu, toggleMenu) => [
   {
     name: "disc",
@@ -132,6 +191,88 @@ export const createButtons = ( hideMenu, toggleMenu) => [
   //   mapSrc: advancedSrc.src,
   // },
 ];
+
+export type MenuButton = {
+  name: string,
+  position: [number, number, number],
+  animationDuration: number,
+  animationDelay: number,
+  mapSrc: string,
+  showShadow: boolean,
+  onClick: any
+}
+
+export const menuElementsMetadata = [{
+  name: "disc",
+  position: [-2.25, 0, 1],
+  onClick: () => {    },
+  animationDuration: 400,
+  animationDelay: 220,
+  mapSrc: discSrc.src,
+  showShadow: false,
+},
+{
+  name: "settings",
+  position: [0, 0, 1],
+  onClick: () => {},
+  animationDelay: 100,
+  animationDuration: 400,
+  mapSrc: moreSrc.src,
+  showShadow: false,
+},
+{
+  name: "hide",
+  position: [2.25, 0, 1],
+  onClick: () => {},
+  animationDelay: 180,
+  animationDuration: 400,
+  mapSrc: hideSrc.src,
+  showShadow: false,
+},
+{
+  name: "rewind",
+  position: [-2.25, -2.15, 1],
+  onClick: () => {},
+  animationDelay: 500,
+  animationDuration: 350,
+  mapSrc: rwdSrc.src,
+  showShadow: false,
+},
+{
+  name: "play",
+  position: [0, -2.15, 1],
+  onClick: () => {},
+  animationDelay: 300,
+  animationDuration: 350,
+  mapSrc: playSrc.src,
+  showShadow: false,
+},
+{
+  name: "fastforward",
+  position: [2.25, -2.15, 1],
+  onClick: () => {},
+  animationDelay: 280,
+  animationDuration: 350,
+  mapSrc: ffwdSrc.src,
+},
+{
+  name: "repeat",
+  position: [-2.25, -4.3, 1],
+  onClick: () => {},
+  animationDelay: 600,
+  animationDuration: 300,
+  mapSrc: repeatSrc.src,
+  showShadow: true,
+},
+{
+  name: "stop",
+  position: [0, -4.3, 1],
+  onClick: () => {},
+  animationDelay: 700,
+  animationDuration: 300,
+  mapSrc: stopSrc.src,
+  showShadow: true,
+}];
 
 /* Animates a Vector3 to the target */
 export function slideDown(
