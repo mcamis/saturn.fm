@@ -154,7 +154,7 @@ export class AudioManager {
     try {
       URL.revokeObjectURL(objectUrl);
     } catch (e) {
-      console.log("what happens if this wasnt originall a file url?", e);
+      console.log("what happens if this wasnt originally a file url?", e);
     }
   }
 

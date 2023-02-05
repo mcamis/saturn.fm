@@ -25,11 +25,9 @@ const FullApp = ({
   setIsUiHidden: (_: boolean) => void;
 }) => {
   const { repeat, audioStatus } = useAudioManagerContext();
-
   const [showFileInput, setShowFileInput] = React.useState(false);
   const [showAboutModal, setShowAboutModal] = React.useState(false);
   const wasHidden = usePrevious(isUiHidden);
-  console.log({ isUiHidden });
   return (
     <main className={styles.wrapper}>
       <Header
