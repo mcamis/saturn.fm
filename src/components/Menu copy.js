@@ -63,7 +63,6 @@ class Menu extends React.Component {
     this.buttonEffect = new Audio();
     this.buttonEffect.src = buttonSrc;
     this.highlightEffect = new Audio();
-    console.log("test", highlightSrc);
     this.highlightEffect.src = highlightSrc;
 
     this.hideEffect = new Audio();

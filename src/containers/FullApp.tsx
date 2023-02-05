@@ -33,7 +33,6 @@ const FullApp = () => {
       />
       <Menu
         isUiHidden={hideDash}
-        showEntranceAnimation={!hideDash && wasHidden}
         showIfHidden={() => hideDash && setHideDash(false)}
         toggleMenu={() => setShowFileInput(true)}
         toggleAbout={() => setShowAboutModal(true)}

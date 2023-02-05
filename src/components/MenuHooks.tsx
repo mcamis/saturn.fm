@@ -74,7 +74,6 @@ const Menu = (props) => {
   const [activeButton, setActiveButton] = React.useState();
 
   const handleMenuClick = (action: string) => {
-    console.log({ action });
     switch (action) {
       case "play":
         return audioManagerSingleton.togglePlayPause();
