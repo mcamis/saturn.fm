@@ -1,5 +1,8 @@
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
 /** @type {import('next').NextConfig} */
-module.exports = {
+module.exports = withBundleAnalyzer({
   webpack(config, options) {
     const { isServer } = options;
     config.module.rules.push({
@@ -23,4 +26,4 @@ module.exports = {
     return config;
   },
   reactStrictMode: false,
-};
+});

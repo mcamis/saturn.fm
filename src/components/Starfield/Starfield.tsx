@@ -24,3 +24,5 @@ export const Starfield = ({ isUiHidden }: { isUiHidden: boolean }) => {
 
   return <div ref={containerRef} className={styles.wrapper} />;
 };
+
+export default Starfield;

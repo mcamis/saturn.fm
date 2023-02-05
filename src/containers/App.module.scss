@@ -1,0 +1,34 @@
+.galaxy {
+  top: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: -3;
+
+  &:after {
+    content: "";
+    background: url("../images/galaxy.png") no-repeat;
+    background-size: cover;
+    background-color: black;
+    position: absolute;
+    left: -35%;
+    right: -35%;
+    top: -35%;
+    bottom: -35%;
+    animation-name: spin;
+    animation-duration: 500s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    z-index: -1;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(-0deg);
+    }
+
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+}

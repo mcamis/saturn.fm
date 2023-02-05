@@ -4,31 +4,20 @@
   height: 100%;
   position: absolute;
   z-index: -2;
+  animation-name: fadeIn;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-direction: normal;
 
-  &:after {
-    content: "";
-    background: url("../../images/galaxy.png") no-repeat;
-    background-size: cover;
-    background-color: black;
-    position: absolute;
-    left: -35%;
-    right: -35%;
-    top: -35%;
-    bottom: -35%;
-    animation-name: spin;
-    animation-duration: 500s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-    z-index: -1;
+
+@keyframes fadeIn {
+  from {
+   opacity: 0;
   }
 
-  @keyframes spin {
-    from {
-      transform: rotate(-0deg);
-    }
-
-    to {
-      transform: rotate(-360deg);
-    }
+  to {
+   opacity: 1;
   }
+}
 }

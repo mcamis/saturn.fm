@@ -1,19 +1,26 @@
 import * as React from "react";
 import { Suspense } from "react";
-import { Starfield } from "../components/Starfield/Starfield";
 
 import {
   AudioManagerContextProvider,
   useAudioManagerContext,
 } from "../audioManager";
 import { CreateAudioContextButton } from "../components/CreateAudioContextButton";
+import dynamic from "next/dynamic";
+import styles from './App.module.scss';
 
-// Don't load three.js until an audio context is reated
+// Don't load three.js until an audio context is
 const FullApp = React.lazy(() => import("./FullApp"));
+const Starfield = React.lazy(() => import("../components/Starfield/Starfield"));
 
 const App = () => {
+  const [hasMounted, setHasMounted] = React.useState(false);
   const { audioContextState } = useAudioManagerContext();
   const [isUiHidden, setIsUiHidden] = React.useState(false);
+
+  React.useEffect(() => {
+    setHasMounted(true);
+  }, [])
 
   return (
     <>
@@ -23,7 +30,8 @@ const App = () => {
         </Suspense>
       )}
       {audioContextState === "suspended" && <CreateAudioContextButton />}
-      <Starfield isUiHidden={isUiHidden} />
+      {hasMounted && <Starfield isUiHidden={isUiHidden} />}
+      <div className={styles.galaxy} />
     </>
   );
 };
