@@ -1,4 +1,5 @@
-import * as React from "react";
+import clsx from 'clsx';
+
 import { useState } from "react";
 import { formatTime } from "../utilities/helpers";
 import { audioManagerSingleton, useAudioManagerContext } from "../audioManager";
@@ -12,19 +13,19 @@ const Header = ({
   showExitAnimation: boolean;
   showEntranceAnimation: boolean;
 }) => {
+  
   const [componentTime, setComponentTime] = useState(0);
   const { currentTrackIndex } = useAudioManagerContext();
 
   useInterval(() => {
     setComponentTime(audioManagerSingleton?.audioElement.currentTime);
   }, 1000);
-  // cx(
-  //   showExitAnimation && "showExitAnimation",
-  //   showEntranceAnimation && "showEntranceAnimation"
-  // )}
 
   return (
-    <header className={styles.wrapper}>
+    <header className={clsx(styles.wrapper, {
+      [styles.showExitAnimation]: showExitAnimation,
+      [styles.showEntranceAnimation]: showEntranceAnimation
+    })}>
       <div className={styles.topLayer}>
         <h3>Track</h3>
         <p className="track-number">{currentTrackIndex + 1}</p>

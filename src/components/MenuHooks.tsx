@@ -86,7 +86,7 @@ const Menu = (props) => {
       case "repeat":
         return audioManagerSingleton.toggleRepeat();
       case "hide":
-        return props.hideDash();
+        return props.toggleDashVisibility();
       case "stop":
         return audioManagerSingleton.stop();
       case "advanced":

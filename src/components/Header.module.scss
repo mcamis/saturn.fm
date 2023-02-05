@@ -2,40 +2,41 @@
   width: 79.5%;
   margin: 0 auto;
   position: relative;
+}
 
-  &.showExitAnimation {
-    animation: float-up 1s ease-out 1 forwards;
+.showExitAnimation {
+  animation: float-up 1s ease-out 1 forwards;
 
-    @keyframes float-up {
-      from {
-        transform: translateY(0%);
-      }
-
-      to {
-        transform: translateY(-105%);
-      }
+  @keyframes float-up {
+    from {
+      transform: translateY(0%);
     }
-  }
 
-  &.showEntranceAnimation {
-    animation-name: floatDownInRelative;
-    animation-duration: 600ms;
-    animation-iteration-count: 1;
-    animation-fill-mode: backwards; // animation-delay: 10s;
-    animation-timing-function: linear;
-    animation-delay: 700ms;
-
-    @keyframes floatDownInRelative {
-      from {
-        transform: translateY(-105%);
-      }
-
-      to {
-        transform: translateY(0%);
-      }
+    to {
+      transform: translateY(-105%);
     }
   }
 }
+
+.showEntranceAnimation {
+  animation-name: floatDownInRelative;
+  animation-duration: 600ms;
+  animation-iteration-count: 1;
+  animation-fill-mode: backwards; // animation-delay: 10s;
+  animation-timing-function: linear;
+  animation-delay: 700ms;
+
+  @keyframes floatDownInRelative {
+    from {
+      transform: translateY(-105%);
+    }
+
+    to {
+      transform: translateY(0%);
+    }
+  }
+}
+
 
 .topLayer {
   user-select: none;

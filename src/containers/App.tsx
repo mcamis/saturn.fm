@@ -13,16 +13,17 @@ const FullApp = React.lazy(() => import("./FullApp"));
 
 const App = () => {
   const { audioContextState } = useAudioManagerContext();
+  const [isUiHidden, setIsUiHidden] = React.useState(false);
 
   return (
     <>
       {audioContextState !== "suspended" && (
         <Suspense fallback={null}>
-          <FullApp />
+          <FullApp isUiHidden={isUiHidden} setIsUiHidden={setIsUiHidden} />
         </Suspense>
       )}
       {audioContextState === "suspended" && <CreateAudioContextButton />}
-      <Starfield />
+      <Starfield isUiHidden={isUiHidden}/>
     </>
   );
 };

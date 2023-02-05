@@ -17,35 +17,34 @@ const FileReader = dynamic(
   }
 );
 
-const FullApp = () => {
+const FullApp = ({isUiHidden, setIsUiHidden}) => {
   const { repeat, audioStatus } = useAudioManagerContext();
 
   const [showFileInput, setShowFileInput] = React.useState(false);
   const [showAboutModal, setShowAboutModal] = React.useState(false);
-  const [hideDash, setHideDash] = React.useState(false);
-  const wasHidden = usePrevious(hideDash);
-
+  const wasHidden = usePrevious(isUiHidden);
+  console.log({isUiHidden})
   return (
     <main className={styles.wrapper}>
       <Header
-        showExitAnimation={hideDash}
-        showEntranceAnimation={!hideDash && wasHidden}
+        showExitAnimation={isUiHidden}
+        showEntranceAnimation={!isUiHidden && wasHidden}
       />
       <Menu
-        isUiHidden={hideDash}
-        showIfHidden={() => hideDash && setHideDash(false)}
+        isUiHidden={isUiHidden}
+        showIfHidden={() => isUiHidden && setIsUiHidden(false)}
         toggleMenu={() => setShowFileInput(true)}
         toggleAbout={() => setShowAboutModal(true)}
-        hideDash={() => setHideDash(true)}
+        toggleDashVisibility={() => setIsUiHidden(true)}
         repeat={repeat}
         audioStatus={audioStatus}
       />
-      <AudioReactiveCubes shouldHide={hideDash} />
+      <AudioReactiveCubes shouldHide={isUiHidden} />
       {showFileInput && (
         <FileReader toggleMenu={() => setShowFileInput(false)} />
       )}
       {showAboutModal && <About toggleAbout={() => setShowAboutModal(false)} />}
-      <DashboardBackground showExitAnimation={hideDash} />
+      <DashboardBackground showExitAnimation={isUiHidden} />
     </main>
   );
 };
