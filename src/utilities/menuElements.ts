@@ -5,6 +5,8 @@ import {
   CylinderGeometry,
   MeshBasicMaterial,
   PlaneGeometry,
+  Vector3,
+  Mesh,
 } from "three";
 import { Tween, Easing } from "@tweenjs/tween.js";
 import discSrc from "../images/disc.png";
@@ -48,159 +50,76 @@ export const pinkMesh = new MeshBasicMaterial({
 
 export const planeGeometry = new PlaneGeometry(2, 2, 1, 1);
 export const shadowGeometry = new PlaneGeometry(1.5, 1.5, 1, 1);
-export const shadowTexture = new TextureLoader().load(orbShadow);
+export const shadowTexture = new TextureLoader().load(orbShadow.src);
 
-export const menuButtons = {
-  disc: {
-    position: [-2.25, 0, 1],
-    animationDuration: 400,
-    animationDelay: 220,
-    imageSrc: discSrc.src,
-    showShadow: false,
-  },
-  settings: {
-    position: [0, 0, 1],
-    animationDelay: 100,
-    animationDuration: 400,
-    imageSrc: moreSrc.src,
-    showShadow: false,
-  },
-  hide: {
-    position: [2.25, 0, 1],
-    animationDelay: 180,
-    animationDuration: 400,
-    imageSrc: hideSrc.src,
-    showShadow: false,
-  },
-  rewind: {
-    position: [-2.25, -2.15, 1],
-    animationDelay: 500,
-    animationDuration: 350,
-    imageSrc: rwdSrc.src,
-    showShadow: false,
-  },
-  play: {
-    position: [0, -2.15, 1],
-    animationDelay: 300,
-    animationDuration: 350,
-    imageSrc: playSrc.src,
-    showShadow: false,
-  },
-  fastforward: {
-    position: [2.25, -2.15, 1],
-    animationDelay: 280,
-    animationDuration: 350,
-    imageSrc: ffwdSrc.src,
-    showShadow: false,
-  },
-  repeat: {
-    position: [-2.25, -4.3, 1],
-    animationDelay: 600,
-    animationDuration: 300,
-    imageSrc: repeatSrc.src,
-    showShadow: true,
-  },
-  stop: {
-    position: [0, -4.3, 1],
-    animationDelay: 700,
-    animationDuration: 300,
-    imageSrc: stopSrc.src,
-    showShadow: true,
-  },
-  advanced: {
-    position: [2.25, -4.3, 1],
-    onClick: () => {},
-    animationDelay: 900,
-    animationDuration: 300,
-  },
-};
-
-export const createButtons = (hideMenu, toggleMenu) => [
-  {
-    name: "disc",
-    position: [-2.25, 0, 1],
-    onClick: () => {},
-    animationDuration: 400,
-    animationDelay: 220,
-    mapSrc: discSrc.src,
-    showShadow: false,
-  },
-  {
-    name: "settings",
-    position: [0, 0, 1],
-    onClick: () => {},
-    animationDelay: 100,
-    animationDuration: 400,
-    mapSrc: moreSrc.src,
-    showShadow: false,
-  },
-  {
-    name: "hide",
-    position: [2.25, 0, 1],
-    onClick: () => {},
-    animationDelay: 180,
-    animationDuration: 400,
-    mapSrc: hideSrc.src,
-    showShadow: false,
-  },
-  {
-    name: "rewind",
-    position: [-2.25, -2.15, 1],
-    onClick: () => {},
-    animationDelay: 500,
-    animationDuration: 350,
-    mapSrc: rwdSrc.src,
-    showShadow: false,
-  },
-  {
-    name: "play",
-    position: [0, -2.15, 1],
-    onClick: () => {},
-    animationDelay: 300,
-    animationDuration: 350,
-    mapSrc: playSrc.src,
-    showShadow: false,
-  },
-  {
-    name: "fastforward",
-    position: [2.25, -2.15, 1],
-    onClick: () => {},
-    animationDelay: 280,
-    animationDuration: 350,
-    mapSrc: ffwdSrc.src,
-  },
-  {
-    name: "repeat",
-    position: [-2.25, -4.3, 1],
-    onClick: () => {},
-    animationDelay: 600,
-    animationDuration: 300,
-    mapSrc: repeatSrc.src,
-    showShadow: true,
-  },
-  {
-    name: "stop",
-    position: [0, -4.3, 1],
-    onClick: () => {},
-    animationDelay: 700,
-    animationDuration: 300,
-    mapSrc: stopSrc.src,
-    showShadow: true,
-  },
-
-  // {
-  //   name: 'advanced',
-  //   position: [2.25, -4.3, 1],
-  //   onClick: hideDash,
-  //   animationDelay: 900,
-  //   animationDuration: 300,
-  //   mapSrc: advancedSrc.src,
-  // },
-];
+// export const menuButtons = {
+//   disc: {
+//     position: [-2.25, 0, 1],
+//     animationDuration: 400,
+//     animationDelay: 220,
+//     imageSrc: discSrc.src,
+//     showShadow: false,
+//   },
+//   settings: {
+//     position: [0, 0, 1],
+//     animationDelay: 100,
+//     animationDuration: 400,
+//     imageSrc: moreSrc.src,
+//     showShadow: false,
+//   },
+//   hide: {
+//     position: [2.25, 0, 1],
+//     animationDelay: 180,
+//     animationDuration: 400,
+//     imageSrc: hideSrc.src,
+//     showShadow: false,
+//   },
+//   rewind: {
+//     position: [-2.25, -2.15, 1],
+//     animationDelay: 500,
+//     animationDuration: 350,
+//     imageSrc: rwdSrc.src,
+//     showShadow: false,
+//   },
+//   play: {
+//     position: [0, -2.15, 1],
+//     animationDelay: 300,
+//     animationDuration: 350,
+//     imageSrc: playSrc.src,
+//     showShadow: false,
+//   },
+//   fastforward: {
+//     position: [2.25, -2.15, 1],
+//     animationDelay: 280,
+//     animationDuration: 350,
+//     imageSrc: ffwdSrc.src,
+//     showShadow: false,
+//   },
+//   repeat: {
+//     position: [-2.25, -4.3, 1],
+//     animationDelay: 600,
+//     animationDuration: 300,
+//     imageSrc: repeatSrc.src,
+//     showShadow: true,
+//   },
+//   stop: {
+//     position: [0, -4.3, 1],
+//     animationDelay: 700,
+//     animationDuration: 300,
+//     imageSrc: stopSrc.src,
+//     showShadow: true,
+//   },
+//   advanced: {
+//     position: [2.25, -4.3, 1],
+//     onClick: () => {},
+//     animationDelay: 900,
+//     animationDuration: 300,
+//   },
+// };
 
 export type MenuButton = {
   name: string;
-  position: [number, number, number];
+  position: number[];
   animationDuration: number;
   animationDelay: number;
   mapSrc: string;
@@ -208,7 +127,7 @@ export type MenuButton = {
   onClick: any;
 };
 
-export const menuElementsMetadata = [
+export const menuButtonsData = [
   {
     name: "disc",
     position: [-2.25, 0, 1],
@@ -261,6 +180,7 @@ export const menuElementsMetadata = [
     animationDelay: 280,
     animationDuration: 350,
     mapSrc: ffwdSrc.src,
+    showShadow: false,
   },
   {
     name: "repeat",
@@ -282,16 +202,19 @@ export const menuElementsMetadata = [
   },
 ];
 
+export const menuButtons = new Map();
+menuButtonsData.forEach((button) => menuButtons.set(button.name, button));
+
 /* Animates a Vector3 to the target */
 export function slideDown(
-  vectorToAnimate,
-  { x, y, z },
-  { easing = Easing.Quadratic.In, delay, duration = 2000 }
+  vectorToAnimate: Vector3,
+  { x, y, z }: { x: string; y: string; z: string },
+  { delay, duration }: { delay: number; duration: number }
 ) {
   // create the tween
   const tweenVector3 = new Tween(vectorToAnimate)
     .to({ x, y, z }, duration)
-    .easing(easing)
+    .easing(Easing.Quadratic.InOut)
     // .onUpdate(d => {
     //   if (options.update) {
     //     options.update(d);
@@ -308,10 +231,12 @@ export function slideDown(
   // return tweenVector3;
 }
 
-export function animateButtonPosition(plane, target) {
+export function animateButtonPosition(
+  plane: Mesh,
+  target: { x: string; y: string; z: string }
+) {
   slideDown(plane.position, target, {
-    duration: plane.material.userData.animationDuration,
-    delay: plane.material.userData.animationDelay,
-    easing: Easing.Quadratic.InOut,
+    duration: (plane.material as any)?.userData?.animationDuration ?? 2000,
+    delay: (plane.material as any)?.userData?.animationDelay ?? 200,
   });
 }

@@ -26,7 +26,7 @@ export const MenuItems = ({
   activeButton,
   handleClick,
 }: {
-  setActiveButton: (_: string) => void;
+  setActiveButton: any;
   activeButton: string;
   handleClick: (_: string) => void;
 }) => {

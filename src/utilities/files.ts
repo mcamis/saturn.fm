@@ -40,7 +40,7 @@ function getMediaTags(file: File) {
   return new Promise((resolve, reject) => {
     jsmediatags.read(file, {
       onSuccess: (tag: TagType) => resolve(tag),
-      onError: (error) => reject(error),
+      onError: (error: any) => reject(error),
     });
   });
 }

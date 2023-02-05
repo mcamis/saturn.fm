@@ -6,7 +6,7 @@ import { audioManagerSingleton } from "../audioManager";
 import { MenuItems } from "./MenuItems/MenuItems";
 import styles from "./Menu.module.scss";
 
-const Menu = (props) => {
+const Menu = (props: any) => {
   const [activeButton, setActiveButton] = React.useState();
 
   const handleMenuClick = (action: string) => {
@@ -111,15 +111,8 @@ function getToolTip(
     stop: () => <p>{menu.stop}</p>,
     advanced: () => <p>{menu.advanced}</p>,
   };
-
-  return tooltips?.[activeButton]?.() ?? null;
+  const currentTooltip = tooltips[activeButton as keyof typeof tooltips];
+  return currentTooltip ? currentTooltip() : null;
 }
-
-Menu.propTypes = {
-  toggleMenu: PropTypes.func.isRequired,
-  hideDash: PropTypes.func.isRequired,
-  isUiHidden: PropTypes.bool.isRequired,
-  showIfHidden: PropTypes.func.isRequired,
-};
 
 export default Menu;

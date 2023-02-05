@@ -17,7 +17,13 @@ const FileReader = dynamic(
   }
 );
 
-const FullApp = ({ isUiHidden, setIsUiHidden }) => {
+const FullApp = ({
+  isUiHidden,
+  setIsUiHidden,
+}: {
+  isUiHidden: boolean;
+  setIsUiHidden: (_: boolean) => void;
+}) => {
   const { repeat, audioStatus } = useAudioManagerContext();
 
   const [showFileInput, setShowFileInput] = React.useState(false);

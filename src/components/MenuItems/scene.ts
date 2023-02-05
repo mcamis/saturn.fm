@@ -13,13 +13,12 @@ import {
 } from "three";
 
 import { sceneWidth, throttle, TextureAnimator } from "../../utilities/helpers";
-import * as TWEEN from "es6-tween";
 
 import {
   orbitGeometry,
   purpleMesh,
   pinkMesh,
-  menuElementsMetadata,
+  menuButtonsData,
   MenuButton,
   menuButtons,
   shadowTexture,
@@ -80,7 +79,7 @@ class MenuItemsScene {
     this.start();
   }
 
-  onMouseMove(e) {
+  onMouseMove(e: MouseEvent) {
     const rect = this.renderer.domElement.getBoundingClientRect();
     // TODO/WTF: Why is * 1.5 necessary!?
     this.mouse.x =
@@ -137,7 +136,7 @@ class MenuItemsScene {
     this.camera = camera;
     // this.addMenuElements();
     this.placeOrbitsInScene();
-    menuElementsMetadata.forEach((button) => this.addButton(button));
+    menuButtonsData.forEach((button) => this.addButton(button));
     this.setupSpinningGlobeButton();
   }
 
@@ -214,7 +213,7 @@ class MenuItemsScene {
 
   updateCurrentButton(button: string) {
     if (!button) return;
-    const { position } = menuButtons[button] ?? {};
+    const { position } = menuButtons.get(button) ?? {};
     if (!position) return;
     const [x, y] = position;
     this.orbits.pink.position.set(x, y, 2);
