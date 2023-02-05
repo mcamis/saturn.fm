@@ -1,23 +1,7 @@
-// Todo: Import specific tween functions as needed
-import * as TWEEN from "es6-tween";
-import {
-  Clock,
-  Scene,
-  Vector2,
-  Raycaster,
-  PerspectiveCamera,
-  WebGLRenderer,
-  TextureLoader,
-  NearestFilter,
-  Mesh,
-  MeshBasicMaterial,
-  Vector3,
-} from "three";
 import * as React from "react";
 import PropTypes from "prop-types";
 import styles from './Menu.module.scss'
 import {
-  audioManagerSingleton,
   AudioStatus,
   RepeatValues,
 } from "../audioManager";
@@ -26,11 +10,7 @@ import {
   getLocalizedCopy,
 } from "../utilities/helpers";
 
-
 import {MenuItems} from './MenuItems/MenuItems'
-
-// TODO: Set more magic numbers to constants
-const SHADOW_OFFSET = 1.025;
 
 function getToolTip(repeat, audioStatus, activeButton) {
   const { menu } = getLocalizedCopy();
