@@ -7,7 +7,7 @@ import { Modal } from "../Modal";
 import { useAudioManagerContext } from "../../audioManager";
 import type { Track } from "../../audioManager";
 
-import styles from './FileReader.module.scss'
+import styles from "./FileReader.module.scss";
 
 import {
   getTracks,
@@ -91,20 +91,23 @@ export const FileReaderUI = ({
         </div>
       </div>
       <div className={styles.editorControlButtons}>
-        <button className={styles.saturnButton}
-          onClick={() => getDirectory()}
-        >
+        <button className={styles.saturnButton} onClick={() => getDirectory()}>
           Add a directory
         </button>
-        <button className={styles.saturnButton}
+        <button
+          className={styles.saturnButton}
           type="button"
           onClick={() => getTracks()}
         >
           Add file(s)
         </button>
       </div>
-      <div style={{marginTop: 'auto'}}>
-        <button className={styles.saturnButton} type="button" onClick={toggleMenu}>
+      <div style={{ marginTop: "auto" }}>
+        <button
+          className={styles.saturnButton}
+          type="button"
+          onClick={toggleMenu}
+        >
           Exit
         </button>
       </div>

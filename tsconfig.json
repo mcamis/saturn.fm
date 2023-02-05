@@ -8,15 +8,8 @@
     "allowJs": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "typeRoots": [
-      "./node_modules/@types",
-      "./typings"
-    ],
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "typeRoots": ["./node_modules/@types", "./typings"],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,
@@ -26,13 +19,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true
   },
-  "exclude": [
-    "node_modules"
-  ],
-  "include": [
-    "config/*.js",
-    "types.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ]
+  "exclude": ["node_modules"],
+  "include": ["config/*.js", "types.d.ts", "**/*.ts", "**/*.tsx"]
 }

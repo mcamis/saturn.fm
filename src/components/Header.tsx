@@ -3,7 +3,7 @@ import { useState } from "react";
 import { formatTime } from "../utilities/helpers";
 import { audioManagerSingleton, useAudioManagerContext } from "../audioManager";
 import { useInterval } from "../hooks";
-import styles from './Header.module.scss'
+import styles from "./Header.module.scss";
 
 const Header = ({
   showExitAnimation,
@@ -24,9 +24,7 @@ const Header = ({
   // )}
 
   return (
-    <header
-      className={styles.wrapper}
-    >
+    <header className={styles.wrapper}>
       <div className={styles.topLayer}>
         <h3>Track</h3>
         <p className="track-number">{currentTrackIndex + 1}</p>

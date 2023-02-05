@@ -9,10 +9,9 @@ import {
 } from "./types";
 import { defaultState, reducer } from "./state";
 let htmlAudioElement;
-if(typeof window !== 'undefined') {
-   htmlAudioElement = new Audio();
+if (typeof window !== "undefined") {
+  htmlAudioElement = new Audio();
 }
-
 
 export class AudioManager {
   public state: AudioManagerState;
@@ -76,7 +75,8 @@ export class AudioManager {
   updateMediaSession = () => {
     const { title, artist, album, albumArtUrl } =
       this.state.tracks[this.state.currentTrackIndex];
-      if(this.audioElement) this.audioElement.title = `「SATURN.FM」${title} - ${artist}`;
+    if (this.audioElement)
+      this.audioElement.title = `「SATURN.FM」${title} - ${artist}`;
     if (!navigator?.mediaSession) return;
 
     navigator.mediaSession.metadata = new window.MediaMetadata({
@@ -113,8 +113,8 @@ export class AudioManager {
    * Attempt to load the next track in the plalist
    */
   loadTrack(trackIndex: number) {
-    if(typeof window === 'undefined') return;
-    console.log('neat');
+    if (typeof window === "undefined") return;
+    console.log("neat");
     const { srcPath, file } = this.state.tracks[trackIndex] ?? {};
     // todo: stop
     if (!srcPath && !file) return;
@@ -124,10 +124,10 @@ export class AudioManager {
       const objectUrl = URL.createObjectURL(file);
       // todo make sure to revoke this URL at some point
       // if (this.audioElement?.src !== objectUrl) { // Why????
-      if(this.audioElement) this.audioElement.src = objectUrl;
+      if (this.audioElement) this.audioElement.src = objectUrl;
       // }
     } else {
-      if(this.audioElement)  this.audioElement.src = file ?? srcPath;
+      if (this.audioElement) this.audioElement.src = file ?? srcPath;
     }
     this.updateState({
       type: ActionTypes.currentTrackIndex,
@@ -145,7 +145,7 @@ export class AudioManager {
   };
 
   playAndReport() {
-    console.log('hi')
+    console.log("hi");
     this.audioElement?.play();
     this.updateMediaSession();
   }
@@ -193,7 +193,7 @@ export class AudioManager {
       this.loadNextTrack(true);
     });
 
-    if (typeof window === 'undefined' || !navigator?.mediaSession) return;
+    if (typeof window === "undefined" || !navigator?.mediaSession) return;
 
     navigator.mediaSession.setActionHandler("play", () =>
       this.togglePlayPause()
@@ -231,7 +231,7 @@ export class AudioManager {
     // const [firstSong] = this.tracks;
     this.audioElement?.pause();
     // this.audioElement?.src = firstSong;
-    if(this.audioElement) this.audioElement.currentTime = 0;
+    if (this.audioElement) this.audioElement.currentTime = 0;
     // this.state.currentTrackIndex = 0;
     // this.state.audioStatus = AudioStatus.Stopped;
     this.updateState({ type: "setStopped" });
@@ -286,12 +286,12 @@ export class AudioManager {
   };
 
   handleMenuClick = (action: string) => {
-    console.log({action})
+    console.log({ action });
     switch (action) {
-      case 'play':
+      case "play":
         this.playAndReport();
     }
-  }
+  };
 
   get analyserFFT() {
     return this.analyser.averageFFT;

@@ -4,14 +4,12 @@ module.exports = {
     config.module.rules.push({
       test: /\.mp3$/,
       use: {
-        loader: 'file-loader',
+        loader: "file-loader",
       },
     });
 
-    return config
+    return config;
   },
   reactStrictMode: false,
   styledComponents: false,
-
-}
-
+};

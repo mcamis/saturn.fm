@@ -22,7 +22,7 @@ const App = () => {
         </Suspense>
       )}
       {audioContextState === "suspended" && <CreateAudioContextButton />}
-      <Starfield /> 
+      <Starfield />
     </>
   );
 };
@@ -32,4 +32,3 @@ export const AppWithAudioContextProvider = () => (
     <App />
   </AudioManagerContextProvider>
 );
-

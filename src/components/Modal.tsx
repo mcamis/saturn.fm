@@ -1,13 +1,12 @@
 import * as React from "react";
 
-import styles from './Modal.module.scss'
+import styles from "./Modal.module.scss";
 
 type ModalProps = {
   className?: string;
   header: string;
   children: React.ReactNode;
 };
-
 
 export function Modal(props: ModalProps) {
   return (
@@ -21,5 +20,3 @@ export function Modal(props: ModalProps) {
     </div>
   );
 }
-
-

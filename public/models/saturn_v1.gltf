@@ -1,233 +1,180 @@
 {
-    "accessors" : [
-        {
-            "bufferView" : 0,
-            "componentType" : 5123,
-            "count" : 990,
-            "max" : [
-                601
-            ],
-            "min" : [
-                0
-            ],
-            "type" : "SCALAR"
-        },
-        {
-            "bufferView" : 1,
-            "componentType" : 5126,
-            "count" : 602,
-            "max" : [
-                6.058058738708496,
-                3.5010147094726562,
-                7.232009410858154
-            ],
-            "min" : [
-                -6.058058738708496,
-                0.12776929140090942,
-                -3.8189008235931396
-            ],
-            "type" : "VEC3"
-        },
-        {
-            "bufferView" : 2,
-            "componentType" : 5126,
-            "count" : 602,
-            "max" : [
-                1.0,
-                0.9997027516365051,
-                0.9739636182785034
-            ],
-            "min" : [
-                -1.0,
-                -0.999987781047821,
-                -1.0
-            ],
-            "type" : "VEC3"
-        },
-        {
-            "bufferView" : 3,
-            "componentType" : 5126,
-            "count" : 602,
-            "max" : [
-                0.9994399547576904,
-                0.99943996273214
-            ],
-            "min" : [
-                0.0005600372678600252,
-                0.004906117916107178
-            ],
-            "type" : "VEC2"
-        },
-        {
-            "bufferView" : 4,
-            "componentType" : 5126,
-            "count" : 3,
-            "max" : [
-                41.625
-            ],
-            "min" : [
-                0.0
-            ],
-            "type" : "SCALAR"
-        },
-        {
-            "bufferView" : 5,
-            "componentType" : 5126,
-            "count" : 9,
-            "max" : [
-                0.0,
-                0.0,
-                500.0
-            ],
-            "min" : [
-                0.0,
-                0.0,
-                -0.0
-            ],
-            "type" : "VEC3"
-        }
-    ],
-    "animations" : [
-        {
-            "channels" : [
-                {
-                    "sampler" : 0,
-                    "target" : {
-                        "node" : 1,
-                        "path" : "translation"
-                    }
-                }
-            ],
-            "name" : "First Entrance",
-            "samplers" : [
-                {
-                    "input" : 4,
-                    "interpolation" : "CUBICSPLINE",
-                    "output" : 5
-                }
-            ]
-        }
-    ],
-    "asset" : {
-        "generator" : "Khronos Blender glTF 2.0 exporter",
-        "version" : "2.0"
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5123,
+      "count": 990,
+      "max": [601],
+      "min": [0],
+      "type": "SCALAR"
     },
-    "bufferViews" : [
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 602,
+      "max": [6.058058738708496, 3.5010147094726562, 7.232009410858154],
+      "min": [-6.058058738708496, 0.12776929140090942, -3.8189008235931396],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 602,
+      "max": [1.0, 0.9997027516365051, 0.9739636182785034],
+      "min": [-1.0, -0.999987781047821, -1.0],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 602,
+      "max": [0.9994399547576904, 0.99943996273214],
+      "min": [0.0005600372678600252, 0.004906117916107178],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5126,
+      "count": 3,
+      "max": [41.625],
+      "min": [0.0],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5126,
+      "count": 9,
+      "max": [0.0, 0.0, 500.0],
+      "min": [0.0, 0.0, -0.0],
+      "type": "VEC3"
+    }
+  ],
+  "animations": [
+    {
+      "channels": [
         {
-            "buffer" : 0,
-            "byteLength" : 1980,
-            "byteOffset" : 0,
-            "target" : 34963
-        },
-        {
-            "buffer" : 0,
-            "byteLength" : 7224,
-            "byteOffset" : 1980,
-            "target" : 34962
-        },
-        {
-            "buffer" : 0,
-            "byteLength" : 7224,
-            "byteOffset" : 9204,
-            "target" : 34962
-        },
-        {
-            "buffer" : 0,
-            "byteLength" : 4816,
-            "byteOffset" : 16428,
-            "target" : 34962
-        },
-        {
-            "buffer" : 0,
-            "byteLength" : 12,
-            "byteOffset" : 21244
-        },
-        {
-            "buffer" : 0,
-            "byteLength" : 108,
-            "byteOffset" : 21256
+          "sampler": 0,
+          "target": {
+            "node": 1,
+            "path": "translation"
+          }
         }
-    ],
-    "buffers" : [
+      ],
+      "name": "First Entrance",
+      "samplers": [
         {
-            "byteLength" : 21364,
-            "uri" : "saturn_v1.bin"
+          "input": 4,
+          "interpolation": "CUBICSPLINE",
+          "output": 5
         }
-    ],
-    "images" : [
-        {
-            "name" : "texture.png",
-            "uri" : "texture.png.png"
+      ]
+    }
+  ],
+  "asset": {
+    "generator": "Khronos Blender glTF 2.0 exporter",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 1980,
+      "byteOffset": 0,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 7224,
+      "byteOffset": 1980,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 7224,
+      "byteOffset": 9204,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 4816,
+      "byteOffset": 16428,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 12,
+      "byteOffset": 21244
+    },
+    {
+      "buffer": 0,
+      "byteLength": 108,
+      "byteOffset": 21256
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 21364,
+      "uri": "saturn_v1.bin"
+    }
+  ],
+  "images": [
+    {
+      "name": "texture.png",
+      "uri": "texture.png.png"
+    }
+  ],
+  "materials": [
+    {
+      "name": "Material.004",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
         }
-    ],
-    "materials" : [
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Cube",
+      "primitives": [
         {
-            "name" : "Material.004",
-            "pbrMetallicRoughness" : {
-                "baseColorTexture" : {
-                    "index" : 0
-                }
-            }
+          "attributes": {
+            "NORMAL": 2,
+            "POSITION": 1,
+            "TEXCOORD_0": 3
+          },
+          "indices": 0,
+          "material": 0
         }
-    ],
-    "meshes" : [
-        {
-            "name" : "Cube",
-            "primitives" : [
-                {
-                    "attributes" : {
-                        "NORMAL" : 2,
-                        "POSITION" : 1,
-                        "TEXCOORD_0" : 3
-                    },
-                    "indices" : 0,
-                    "material" : 0
-                }
-            ]
-        }
-    ],
-    "nodes" : [
-        {
-            "name" : "Camera",
-            "rotation" : [
-                0.018957871943712234,
-                0.8327268958091736,
-                -0.5526216626167297,
-                0.028561757877469063
-            ],
-            "scale" : [
-                1.0000003576278687,
-                1.0000001192092896,
-                1.000000238418579
-            ],
-            "translation" : [
-                1.571183681488037,
-                6.392195701599121,
-                -14.352595329284668
-            ]
-        },
-        {
-            "mesh" : 0,
-            "name" : "Cube"
-        }
-    ],
-    "samplers" : [
-        {}
-    ],
-    "scene" : 0,
-    "scenes" : [
-        {
-            "name" : "Scene",
-            "nodes" : [
-                0,
-                1
-            ]
-        }
-    ],
-    "textures" : [
-        {
-            "sampler" : 0,
-            "source" : 0
-        }
-    ]
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "Camera",
+      "rotation": [
+        0.018957871943712234, 0.8327268958091736, -0.5526216626167297,
+        0.028561757877469063
+      ],
+      "scale": [1.0000003576278687, 1.0000001192092896, 1.000000238418579],
+      "translation": [1.571183681488037, 6.392195701599121, -14.352595329284668]
+    },
+    {
+      "mesh": 0,
+      "name": "Cube"
+    }
+  ],
+  "samplers": [{}],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [0, 1]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    }
+  ]
 }

@@ -1,8 +1,8 @@
-import type { AppProps } from 'next/app'
+import type { AppProps } from "next/app";
 import { preloadImages } from "../utilities/preloadImages";
 import "../styles/index.scss";
 
-if(typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   preloadImages();
 
   function setManualViewportHeight() {
@@ -25,7 +25,5 @@ if(typeof window !== 'undefined') {
 }
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return <Component {...pageProps} />;
 }
-
-

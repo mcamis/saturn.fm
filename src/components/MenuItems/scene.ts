@@ -12,11 +12,7 @@ import {
   Clock,
 } from "three";
 
-import {
-  sceneWidth,
-  throttle,
-  TextureAnimator
-} from "../../utilities/helpers";
+import { sceneWidth, throttle, TextureAnimator } from "../../utilities/helpers";
 import * as TWEEN from "es6-tween";
 
 import {
@@ -27,7 +23,7 @@ import {
   MenuButton,
   menuButtons,
   shadowTexture,
-  shadowGeometry
+  shadowGeometry,
 } from "../../utilities/menuElements";
 export const planeGeometry = new PlaneGeometry(2, 2, 1, 1);
 import globeSprite from "../../images/globeSprite.png";
@@ -51,7 +47,6 @@ class MenuItemsScene {
   private syncActiveItem: any;
   private textureAnimator: TextureAnimator;
   private clock: Clock;
-  
 
   public domElement;
 
@@ -66,7 +61,6 @@ class MenuItemsScene {
     this.syncActiveItem = setActiveButton;
     this.debouncedResize = null;
     this.clock = new Clock();
-
 
     window.addEventListener("resize", () => {
       clearTimeout(this.debouncedResize);
@@ -86,17 +80,15 @@ class MenuItemsScene {
     this.start();
   }
 
-
   onMouseMove(e) {
     const rect = this.renderer.domElement.getBoundingClientRect();
     // TODO/WTF: Why is * 1.5 necessary!?
-    this.mouse.x = ((e.clientX - rect.left * 1.5) / (rect.width - rect.left)) * 2 - 1;
+    this.mouse.x =
+      ((e.clientX - rect.left * 1.5) / (rect.width - rect.left)) * 2 - 1;
     this.mouse.y = -((e.clientY - rect.top) / (rect.bottom - rect.top)) * 2 + 1;
 
     this.manageActiveButton();
   }
-
-
 
   manageActiveButton() {
     this.raycaster.setFromCamera(this.mouse, this.camera);
@@ -110,7 +102,7 @@ class MenuItemsScene {
       if (name && name !== this.activeButton) {
         // this.setState({ activeButton: name });
         this.activeButton = name;
-        this.syncActiveItem(name)
+        this.syncActiveItem(name);
       }
       document.body.classList.add("pointer");
     } else {
@@ -134,9 +126,7 @@ class MenuItemsScene {
   }
 
   setupScene() {
-    const camera = new PerspectiveCamera(
-      2.5, this.width / this.height, 1, 500
-    );
+    const camera = new PerspectiveCamera(2.5, this.width / this.height, 1, 500);
     camera.aspect = this.width / this.height;
     camera.position.z = 360;
     camera.position.y = 0.5;
@@ -147,7 +137,7 @@ class MenuItemsScene {
     this.camera = camera;
     // this.addMenuElements();
     this.placeOrbitsInScene();
-    menuElementsMetadata.forEach(button => this.addButton(button))
+    menuElementsMetadata.forEach((button) => this.addButton(button));
     this.setupSpinningGlobeButton();
   }
 
@@ -168,7 +158,7 @@ class MenuItemsScene {
         animationDelay: 900,
         animationDuration: 300,
         showShadow: true,
-        onClick: () => {}
+        onClick: () => {},
       },
     });
 
@@ -222,10 +212,10 @@ class MenuItemsScene {
     this.buttonMeshes.push(plane);
   }
 
-  updateCurrentButton(button:string) {
-    if(!button) return;
+  updateCurrentButton(button: string) {
+    if (!button) return;
     const { position } = menuButtons[button] ?? {};
-    if(!position) return;
+    if (!position) return;
     const [x, y] = position;
     this.orbits.pink.position.set(x, y, 2);
     this.orbits.purple.position.set(x, y, 2.03);
@@ -277,7 +267,6 @@ class MenuItemsScene {
     purple.material.visible = true;
     pink.rotateY(-0.065);
     purple.rotateY(0.07);
-
   }
 }
 

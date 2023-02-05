@@ -1,19 +1,21 @@
-
 import * as React from "react";
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic";
 
 import { useAudioManagerContext } from "../audioManager";
 import About from "../components/About";
 import AudioReactiveCubes from "../components/AudioReactiveCubes";
-import {DashboardBackground} from "../components/DashboardBackground";
+import { DashboardBackground } from "../components/DashboardBackground";
 import Header from "../components/Header";
 import Menu from "../components/MenuHooks";
 import { usePrevious } from "../hooks";
-import styles from './FullApp.module.scss'
+import styles from "./FullApp.module.scss";
 
-const FileReader = dynamic(() => import("../components/FileReader/FileReader"), {
-  loading: () => null,
-})
+const FileReader = dynamic(
+  () => import("../components/FileReader/FileReader"),
+  {
+    loading: () => null,
+  }
+);
 
 const FullApp = () => {
   const { repeat, audioStatus } = useAudioManagerContext();
@@ -33,19 +35,20 @@ const FullApp = () => {
         isUiHidden={hideDash}
         showEntranceAnimation={!hideDash && wasHidden}
         showIfHidden={() => hideDash && setHideDash(false)}
-        toggleMenu={() =>setShowFileInput(true)}
+        toggleMenu={() => setShowFileInput(true)}
         toggleAbout={() => setShowAboutModal(true)}
         hideDash={() => setHideDash(true)}
         repeat={repeat}
         audioStatus={audioStatus}
       />
       <AudioReactiveCubes shouldHide={hideDash} />
-      {showFileInput && <FileReader toggleMenu={() => setShowFileInput(false)} /> }
-    {showAboutModal && <About toggleAbout={() => setShowAboutModal(false)} />} 
+      {showFileInput && (
+        <FileReader toggleMenu={() => setShowFileInput(false)} />
+      )}
+      {showAboutModal && <About toggleAbout={() => setShowAboutModal(false)} />}
       <DashboardBackground showExitAnimation={hideDash} />
     </main>
   );
 };
-
 
 export default FullApp;

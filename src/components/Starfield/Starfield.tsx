@@ -1,6 +1,6 @@
 import * as React from "react";
 import StarfieldScene from "./scene";
-import styles from './Starfield.module.scss'
+import styles from "./Starfield.module.scss";
 
 const useStarfieldScene = (containerRef: any, shouldShowSpaceship: boolean) => {
   const [scene, setScene] = React.useState(null);

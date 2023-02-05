@@ -21,7 +21,6 @@
     0 0 0 3.5px rgba(149, 149, 149, 0.8), 0 0 0 5px rgba(53, 59, 101, 0.8);
 }
 
-
 .playlistHeaderWrapper {
   background-color: rgba(131, 23, 71, 0.65);
   border-bottom: 1px solid rgba(255, 255, 255, 0.25);
@@ -152,17 +151,17 @@
 
   @keyframes selected-item-pulse {
     0% {
-    background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    50% {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    100% {
+      background: rgba(255, 255, 255, 0.1);
+    }
   }
-  
-  50% {
-    background: rgba(255, 255, 255, 0.25);
-  }
-  
-  100% {
-    background: rgba(255, 255, 255, 0.1);
-  }
-}
 }
 
 .saturnButton {

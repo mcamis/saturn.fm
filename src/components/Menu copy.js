@@ -15,7 +15,7 @@ import {
 } from "three";
 import * as React from "react";
 import PropTypes from "prop-types";
-import styles from './Menu.module.scss'
+import styles from "./Menu.module.scss";
 import {
   audioManagerSingleton,
   AudioStatus,
@@ -63,7 +63,7 @@ class Menu extends React.Component {
     this.buttonEffect = new Audio();
     this.buttonEffect.src = buttonSrc;
     this.highlightEffect = new Audio();
-    console.log('test', highlightSrc);
+    console.log("test", highlightSrc);
     this.highlightEffect.src = highlightSrc;
 
     this.hideEffect = new Audio();
