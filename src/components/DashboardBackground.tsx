@@ -1,15 +1,20 @@
 import React from "react";
+import clsx from "clsx";
 
 import styles from "./DashboardBackground.module.scss";
 import { AnimationNames } from "../components/SharedKeyframeAnimations";
 
 // className={cx(showExitAnimation && AnimationNames.exitTranslateDown)}
 export const DashboardBackground = ({
-  showExitAnimation,
+  isUiHidden,
 }: {
-  showExitAnimation: boolean;
+  isUiHidden: boolean;
 }) => (
   <>
-    <div className={styles.wrapper} />
+    <div
+      className={clsx(styles.wrapper, {
+        [styles.exitAnimation]: isUiHidden,
+      })}
+    />
   </>
 );

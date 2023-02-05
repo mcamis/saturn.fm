@@ -208,7 +208,7 @@ menuButtonsData.forEach((button) => menuButtons.set(button.name, button));
 /* Animates a Vector3 to the target */
 export function slideDown(
   vectorToAnimate: Vector3,
-  { x, y, z }: { x: string; y: string; z: string },
+  { x, y, z }: Vector3,
   { delay, duration }: { delay: number; duration: number }
 ) {
   // create the tween
@@ -231,10 +231,7 @@ export function slideDown(
   // return tweenVector3;
 }
 
-export function animateButtonPosition(
-  plane: Mesh,
-  target: { x: string; y: string; z: string }
-) {
+export function animateButtonPosition(plane: Mesh, target: Vector3) {
   slideDown(plane.position, target, {
     duration: (plane.material as any)?.userData?.animationDuration ?? 2000,
     delay: (plane.material as any)?.userData?.animationDelay ?? 200,

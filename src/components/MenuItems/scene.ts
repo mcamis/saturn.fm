@@ -10,11 +10,13 @@ import {
   PlaneGeometry,
   Mesh,
   Clock,
+  Vector3,
 } from "three";
 
 import { sceneWidth, throttle, TextureAnimator } from "../../utilities/helpers";
 
 import {
+  animateButtonPosition,
   orbitGeometry,
   purpleMesh,
   pinkMesh,
@@ -46,6 +48,7 @@ class MenuItemsScene {
   private syncActiveItem: any;
   private textureAnimator: TextureAnimator;
   private clock: Clock;
+  private currentVisibility: boolean;
 
   public domElement;
 
@@ -60,6 +63,7 @@ class MenuItemsScene {
     this.syncActiveItem = setActiveButton;
     this.debouncedResize = null;
     this.clock = new Clock();
+    this.currentVisibility = true;
 
     window.addEventListener("resize", () => {
       clearTimeout(this.debouncedResize);
@@ -262,10 +266,25 @@ class MenuItemsScene {
 
   animateOrbits() {
     const { pink, purple } = this.orbits;
-    pink.material.visible = true;
-    purple.material.visible = true;
+    pink.material.visible = this.currentVisibility;
+    purple.material.visible = this.currentVisibility;
     pink.rotateY(-0.065);
     purple.rotateY(0.07);
+  }
+
+  updateVisibility(shouldHide: boolean) {
+    this.currentVisibility = !shouldHide;
+    console.log({ shouldHide });
+
+    if (!shouldHide) return;
+
+    // TODO: Switch this to the real sound effect
+    setTimeout(() => {
+      this.buttonMeshes.forEach((button: Mesh) => {
+        const { x, y, z } = button.position;
+        animateButtonPosition(button, new Vector3(x, y - 10, z));
+      });
+    }, 450); // TODO what is this magic number?
   }
 }
 

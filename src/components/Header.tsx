@@ -1,6 +1,6 @@
 import clsx from "clsx";
-
 import { useState } from "react";
+
 import { formatTime } from "../utilities/helpers";
 import { audioManagerSingleton, useAudioManagerContext } from "../audioManager";
 import { useInterval } from "../hooks";

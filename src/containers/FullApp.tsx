@@ -48,7 +48,7 @@ const FullApp = ({
         <FileReader toggleMenu={() => setShowFileInput(false)} />
       )}
       {showAboutModal && <About toggleAbout={() => setShowAboutModal(false)} />}
-      <DashboardBackground showExitAnimation={isUiHidden} />
+      <DashboardBackground isUiHidden={isUiHidden} />
     </main>
   );
 };

@@ -137,31 +137,28 @@ class AudioReactiveCubesScene {
   }
 
   setupCube(slot: "leftCube" | "rightCube", [x, y, z]: number[]) {
-    loader.load(
-      "./models/cubeBigger.gltf",
-      (cubeModel) => {
-        const cubeMesh = cubeModel?.scene?.children?.[0] as Mesh;
-        if(!cubeMesh) {
-          console.error('gltf loading error')
-          return ;
-        }
-        cubeMesh.material.color = cubeColor; // TODO what three.js type do I need here?
-        cubeMesh.material.dithering = true;
-        cubeMesh.material.flatShading = false;
-        cubeMesh.position.set(x, y, z);
-        cubeMesh.rotateX(0.075);
-        if (slot === "rightCube") {
-          cubeMesh.rotateY(0.075);
-        } else {
-          cubeMesh.rotateY(-0.1);
-        }
-
-        this[slot] = cubeMesh as Mesh;
-        this.scene.add(cubeMesh);
-
-        if (slot === "rightCube") this.start();
+    loader.load("./models/cubeBigger.gltf", (cubeModel) => {
+      const cubeMesh = cubeModel?.scene?.children?.[0] as Mesh;
+      if (!cubeMesh) {
+        console.error("gltf loading error");
+        return;
       }
-    );
+      cubeMesh.material.color = cubeColor; // TODO what three.js type do I need here?
+      cubeMesh.material.dithering = true;
+      cubeMesh.material.flatShading = false;
+      cubeMesh.position.set(x, y, z);
+      cubeMesh.rotateX(0.075);
+      if (slot === "rightCube") {
+        cubeMesh.rotateY(0.075);
+      } else {
+        cubeMesh.rotateY(-0.1);
+      }
+
+      this[slot] = cubeMesh as Mesh;
+      this.scene.add(cubeMesh);
+
+      if (slot === "rightCube") this.start();
+    });
   }
 }
 

@@ -37,6 +37,7 @@ const Menu = (props: any) => {
           setActiveButton={setActiveButton}
           activeButton={activeButton}
           handleClick={handleMenuClick}
+          shouldHide={props.isUiHidden}
         />
       </div>
       {!props.isUiHidden && (
