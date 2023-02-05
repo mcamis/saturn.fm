@@ -8,7 +8,6 @@ import AudioReactiveCubes from "../components/AudioReactiveCubes";
 import {DashboardBackground} from "../components/DashboardBackground";
 import Header from "../components/Header";
 import Menu from "../components/MenuHooks";
-import { Starfield } from "../components/Starfield/Starfield";
 import { usePrevious } from "../hooks";
 import styles from './FullApp.module.scss'
 
@@ -44,7 +43,6 @@ const FullApp = () => {
       {showFileInput && <FileReader toggleMenu={() => setShowFileInput(false)} /> }
     {showAboutModal && <About toggleAbout={() => setShowAboutModal(false)} />} 
       <DashboardBackground showExitAnimation={hideDash} />
-      <Starfield isUiHidden={hideDash} /> 
     </main>
   );
 };

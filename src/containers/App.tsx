@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Suspense } from "react";
+import { Starfield } from "../components/Starfield/Starfield";
 
 import {
   AudioManagerContextProvider,
@@ -21,6 +22,7 @@ const App = () => {
         </Suspense>
       )}
       {audioContextState === "suspended" && <CreateAudioContextButton />}
+      <Starfield /> 
     </>
   );
 };
