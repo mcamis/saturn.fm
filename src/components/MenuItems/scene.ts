@@ -49,6 +49,7 @@ class MenuItemsScene {
   private textureAnimator: TextureAnimator;
   private clock: Clock;
   private currentVisibility: boolean;
+  private shadowMeshes: Mesh[];
 
   public domElement;
 
@@ -56,6 +57,7 @@ class MenuItemsScene {
     this.setDimensions();
     const onMouseMoveThrottled = throttle(this.onMouseMove.bind(this), 100);
     this.buttonMeshes = [];
+    this.shadowMeshes = [];
     this.scene = new Scene();
     this.renderer = new WebGLRenderer({ alpha: true, antialias: false });
     this.domElement = this.renderer.domElement;
@@ -169,6 +171,12 @@ class MenuItemsScene {
     spinningGlobe.position.set(x, y, z);
     spinningGlobe.name = "advanced";
 
+    this.buttonMeshes.push(spinningGlobe);
+    this.scene.add(spinningGlobe);
+    this.addShadow(x, y, z);
+  }
+
+  addShadow(x: number, y: number, z: number) {
     shadowTexture.magFilter = NearestFilter;
     shadowTexture.minFilter = NearestFilter;
 
@@ -184,11 +192,8 @@ class MenuItemsScene {
 
     const shadowPlane = new Mesh(shadowGeometry, shadowMaterial);
     shadowPlane.position.set(x, y - SHADOW_OFFSET, z - 0.5);
-    // shadowPlane.visible = window.innerWidth >= 400;
+    this.shadowMeshes.push(shadowPlane);
     this.scene.add(shadowPlane);
-
-    this.buttonMeshes.push(spinningGlobe);
-    this.scene.add(spinningGlobe);
   }
 
   addButton(button: MenuButton) {
@@ -213,6 +218,7 @@ class MenuItemsScene {
     plane.position.set(x, y, z);
     this.scene.add(plane);
     this.buttonMeshes.push(plane);
+    button.showShadow && this.addShadow(x, y, z);
   }
 
   updateCurrentButton(button: string) {
@@ -274,24 +280,26 @@ class MenuItemsScene {
 
   updateVisibility(shouldHide: boolean) {
     this.currentVisibility = !shouldHide;
-    console.log({ shouldHide });
 
     if (!shouldHide) {
+      setTimeout(() => {
+        this.shadowMeshes.forEach((shadow) => (shadow.visible = !shouldHide));
+      }, 1500); // TODO magic number
+
       this.buttonMeshes.forEach((button: Mesh) => {
         const { x, y, z } = button.position;
         animateButtonPosition(button, new Vector3(x, y + 10, z));
       });
-
     } else {
-
-    // TODO: Switch this to the real sound effect
-    setTimeout(() => {
-      this.buttonMeshes.forEach((button: Mesh) => {
-        const { x, y, z } = button.position;
-        animateButtonPosition(button, new Vector3(x, y - 10, z));
-      });
-    }, 450); // TODO what is this magic number?
-  }
+      // TODO: Switch this to the real sound effect
+      setTimeout(() => {
+        this.buttonMeshes.forEach((button: Mesh) => {
+          const { x, y, z } = button.position;
+          animateButtonPosition(button, new Vector3(x, y - 10, z));
+        });
+      }, 450); // TODO what is this magic number?
+      this.shadowMeshes.forEach((shadow) => (shadow.visible = !shouldHide));
+    }
   }
 }
 
