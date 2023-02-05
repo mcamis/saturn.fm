@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Modal } from "./Modal";
 import styles from "./About.module.scss";
 
-const About = (props: any) => {
+const About = (props: { toggleAbout: () => void}) => {
   return (
     <Modal header="about">
       <div className={styles.wrapper}>
@@ -37,7 +37,7 @@ const About = (props: any) => {
   );
 };
 
-const SocialLink = (props) => {
+const SocialLink = (props: {href: string, children: string}) => {
   return (
     <li>
       <a href={props.href}>{props.children}</a>
