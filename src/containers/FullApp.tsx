@@ -7,7 +7,7 @@ import About from "../components/About";
 import AudioReactiveCubes from "../components/AudioReactiveCubes";
 import {DashboardBackground} from "../components/DashboardBackground";
 import Header from "../components/Header";
-import Menu from "../components/Menu";
+import Menu from "../components/MenuHooks";
 import { Starfield } from "../components/Starfield/Starfield";
 import { usePrevious } from "../hooks";
 import styles from './FullApp.module.scss'

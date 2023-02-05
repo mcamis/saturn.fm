@@ -7,11 +7,12 @@ export const CreateAudioContextButton = () => {
   return (
     <div className={styles.wrapper}>
       <button type="button" onClick={() => {
+        // TODO: Sound effects manager
         const audioElement = new Audio();
         audioElement.src = introSrc;
         window.setTimeout(() => {
           audioElement.play();
-        }, 500) // TODO: Figure out this magic number
+        }, 500) // TODO: Figure out this magic number?
         audioManagerSingleton.init()
       }}>
         Click to Start

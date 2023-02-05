@@ -27,8 +27,8 @@ export const orbitGeometry = new CylinderGeometry(
   1,
   true
 );
-const orbitTexture = new TextureLoader().load(textureSrc);
-const pinkTexture = new TextureLoader().load(pinkSrc);
+const orbitTexture = new TextureLoader().load(textureSrc.src);
+const pinkTexture = new TextureLoader().load(pinkSrc.src);
 
 // NearestFilter gets us that sweet sweet pixelated look
 orbitTexture.magFilter = NearestFilter;
@@ -50,13 +50,11 @@ export const planeGeometry = new PlaneGeometry(2, 2, 1, 1);
 export const shadowGeometry = new PlaneGeometry(1.5, 1.5, 1, 1);
 export const shadowTexture = new TextureLoader().load(orbShadow);
 
-export const createButtons = (audioManager, hideMenu, toggleMenu) => [
+export const createButtons = ( hideMenu, toggleMenu) => [
   {
     name: "disc",
     position: [-2.25, 0, 1],
-    onClick: () => {
-      setTimeout(toggleMenu(true), 500);
-    },
+    onClick: () => {    },
     animationDuration: 400,
     animationDelay: 220,
     mapSrc: discSrc.src,
@@ -74,7 +72,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
   {
     name: "hide",
     position: [2.25, 0, 1],
-    onClick: hideMenu,
+    onClick: () => {},
     animationDelay: 180,
     animationDuration: 400,
     mapSrc: hideSrc.src,
@@ -83,7 +81,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
   {
     name: "rewind",
     position: [-2.25, -2.15, 1],
-    onClick: audioManager.previousTrack,
+    onClick: () => {},
     animationDelay: 500,
     animationDuration: 350,
     mapSrc: rwdSrc.src,
@@ -92,7 +90,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
   {
     name: "play",
     position: [0, -2.15, 1],
-    onClick: audioManager.togglePlayPause,
+    onClick: () => {},
     animationDelay: 300,
     animationDuration: 350,
     mapSrc: playSrc.src,
@@ -101,7 +99,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
   {
     name: "fastforward",
     position: [2.25, -2.15, 1],
-    onClick: audioManager.loadNextTrack,
+    onClick: () => {},
     animationDelay: 280,
     animationDuration: 350,
     mapSrc: ffwdSrc.src,
@@ -109,7 +107,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
   {
     name: "repeat",
     position: [-2.25, -4.3, 1],
-    onClick: audioManager.toggleRepeat,
+    onClick: () => {},
     animationDelay: 600,
     animationDuration: 300,
     mapSrc: repeatSrc.src,
@@ -118,7 +116,7 @@ export const createButtons = (audioManager, hideMenu, toggleMenu) => [
   {
     name: "stop",
     position: [0, -4.3, 1],
-    onClick: audioManager.stop,
+    onClick: () => {},
     animationDelay: 700,
     animationDuration: 300,
     mapSrc: stopSrc.src,
