@@ -31,6 +31,6 @@ export function preloadImages() {
 
   imageSrcs.forEach((srcUrl) => {
     const img = new Image();
-    img.src = srcUrl;
+    img.src = srcUrl.src;
   });
 }
