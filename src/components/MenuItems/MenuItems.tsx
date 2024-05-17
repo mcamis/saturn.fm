@@ -22,7 +22,6 @@ const useMenuItemsScene = (
   }, []);
 
   React.useEffect(() => {
-    console.log({ shouldHide });
     scene && scene.updateVisibility(shouldHide);
   }, [shouldHide]);
 };

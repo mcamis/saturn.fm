@@ -7,7 +7,6 @@ import { CreateAudioContextButton } from "../components/CreateAudioContextButton
 import dynamic from "next/dynamic";
 import styles from "./App.module.scss";
 
-// Don't load three.js until an audio context is
 const FullApp = dynamic(() => import("./FullApp"), { ssr: false });
 const Starfield = dynamic(() => import("../components/Starfield/Starfield"), {
   ssr: false,

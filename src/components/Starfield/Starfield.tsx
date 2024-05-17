@@ -23,13 +23,13 @@ const useStarfieldScene = (containerRef: any, shouldShowSpaceship: boolean) => {
 export const Starfield = ({ isUiHidden }: { isUiHidden: boolean }) => {
   const containerRef = React.useRef<undefined>();
 
-  const hasRendered = useStarfieldScene(containerRef, isUiHidden);
+  const isCanvasAttachedToDOM = useStarfieldScene(containerRef, isUiHidden);
 
   return (
     <div
       ref={containerRef}
       className={clsx(styles.wrapper, {
-        [styles.fadeIn]: hasRendered,
+        [styles.fadeIn]: isCanvasAttachedToDOM,
       })}
     />
   );
